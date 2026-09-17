@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>geora</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --color-bg: #FAF9F4;
+        --color-ink: #1A1A16;
+        --color-ink-muted: #6B6A5E;
+        --color-accent: #3452FF;
+        --color-success: #3F7D52;
+        --color-warning: #B8863B;
+        --color-danger: #B0483A;
+        --color-border: #E4E1D6;
+        --font-headline: 'Fraunces', serif;
+        --font-body: 'IBM Plex Sans', sans-serif;
+        --font-mono: 'IBM Plex Mono', monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: var(--font-body);
+        background: var(--color-bg);
+        color: var(--color-ink);
+      }
+
+      .page {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 56px 16px 96px;
+      }
+
+      .section {
+        padding-block: 40px;
+      }
+
+      .section:not(:last-child) {
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      /* Hero */
+      .hero {
+        text-align: center;
+      }
+
+      .hero-logo {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--color-accent);
+        margin-bottom: 20px;
+      }
+
+      .hero-title {
+        font-family: var(--font-headline);
+        font-weight: 600;
+        font-size: clamp(2.25rem, 6vw, 3.4rem);
+        line-height: 1.08;
+        letter-spacing: -0.01em;
+        margin: 0 0 18px;
+      }
+
+      .hero-subtitle {
+        font-family: var(--font-body);
+        color: var(--color-ink-muted);
+        font-size: 1.05rem;
+        line-height: 1.55;
+        margin: 0 auto;
+        max-width: 46ch;
+      }
+
+      /* SearchForm */
+      .search-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .form-field label {
+        font-size: 0.85rem;
+        color: var(--color-ink-muted);
+      }
+
+      .form-hint {
+        font-size: 0.75rem;
+        color: var(--color-ink-muted);
+        opacity: 0.85;
+        margin: 2px 0 0;
+      }
+
+      .form-field input,
+      .email-gate input {
+        font-family: var(--font-body);
+        border: 1px solid var(--color-ink);
+        border-radius: 5px;
+        padding: 10px 12px;
+        font-size: 1rem;
+        background: var(--color-bg);
+        color: var(--color-ink);
+      }
+
+      .form-field input:focus,
+      .email-gate input:focus {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 1px;
+      }
+
+      .search-form button,
+      .email-gate button {
+        font-family: var(--font-body);
+        background: var(--color-accent);
+        color: #ffffff;
+        border: 1px solid var(--color-accent);
+        border-radius: 5px;
+        padding: 11px 16px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      .search-form button:disabled {
+        background: var(--color-ink-muted);
+        border-color: var(--color-ink-muted);
+        cursor: not-allowed;
+      }
+
+      /* Mechanical button feel: a hard-edged "thickness" below the
+         button via box-shadow (not a blurred drop shadow), which the
+         button visually presses into on click. Applied to the two main
+         call-to-action buttons. */
+      .btn-mechanical {
+        box-shadow: 0 3px 0 var(--color-ink);
+        transform: translateY(0);
+        transition: transform 0.08s ease, box-shadow 0.08s ease;
+      }
+
+      .btn-mechanical:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 0 var(--color-ink);
+      }
+
+      .btn-mechanical:active:not(:disabled) {
+        transform: translateY(3px);
+        box-shadow: 0 0 0 var(--color-ink);
+      }
+
+      .btn-mechanical:disabled {
+        box-shadow: 0 3px 0 var(--color-ink-muted);
+      }
+
+      .form-error {
+        color: var(--color-danger);
+        font-size: 0.85rem;
+        margin: 0;
+      }
+
+      /* RadarChart */
+      .radar-chart-canvas {
+        position: relative;
+        width: 100%;
+        max-width: 500px;
+        height: 420px;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 480px) {
+        .radar-chart-canvas {
+          height: 320px;
+        }
+      }
+
+      .radar-chart-note {
+        text-align: center;
+        color: var(--color-ink-muted);
+        font-size: 0.8rem;
+        margin: 12px 0 0;
+      }
+
+      /* CacheNotice */
+      .cache-notice {
+        text-align: center;
+        color: var(--color-ink-muted);
+        font-size: 0.8rem;
+        margin: 0 0 20px;
+      }
+
+      /* ScoreChangeNote */
+      .score-change-note {
+        text-align: center;
+        color: var(--color-ink-muted);
+        font-size: 0.8rem;
+        line-height: 1.5;
+        max-width: 46ch;
+        margin: 0 auto 20px;
+      }
+
+      /* One-time post-unlock highlight sweep. Applied only by App.jsx
+         right after a successful unlock, removed again after it plays. */
+      .scan-sweep-once {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .scan-sweep-once::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -60%;
+        width: 40%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(52, 82, 255, 0.16), transparent);
+        animation: scan-sweep-once-play 0.7s ease-out;
+        pointer-events: none;
+      }
+
+      @keyframes scan-sweep-once-play {
+        from {
+          left: -60%;
+        }
+        to {
+          left: 120%;
+        }
+      }
+
+      /* ScoreSummary */
+      .score-summary {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 32px;
+      }
+
+      .score-row-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 6px;
+      }
+
+      .score-row-label {
+        font-weight: 600;
+      }
+
+      .score-row-value,
+      .accordion-score {
+        font-family: var(--font-mono);
+        font-variant-numeric: tabular-nums;
+        font-size: 1.375rem;
+        font-weight: 600;
+      }
+
+      .score-bar-track {
+        height: 6px;
+        border-radius: 3px;
+        background: var(--color-border);
+        overflow: hidden;
+      }
+
+      .score-bar-fill {
+        height: 100%;
+      }
+
+      .score-row-description {
+        color: var(--color-ink-muted);
+        font-size: 0.85rem;
+        margin: 6px 0 0;
+      }
+
+      /* BreakdownAccordion */
+      .breakdown-wrapper {
+        position: relative;
+      }
+
+      .breakdown-content {
+        transition: filter 0.4s ease;
+      }
+
+      .breakdown-locked {
+        filter: blur(4px);
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .breakdown-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
+        transform: scale(1);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+      }
+
+      /* Applied the instant `unlocked` flips true, while the overlay is
+         still mounted for one more transition: the lock card shrinks and
+         fades instead of disappearing the moment the prop changes. */
+      .breakdown-overlay-unlocking {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+
+      /* AccordionItem */
+      .accordion-item {
+        border-top: 1px solid var(--color-border);
+      }
+
+      .accordion-header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        background: none;
+        border: none;
+        padding: 16px 0;
+        font-family: var(--font-body);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        color: var(--color-ink);
+      }
+
+      .accordion-header-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .accordion-toggle {
+        color: var(--color-ink-muted);
+        font-weight: 400;
+      }
+
+      .accordion-body {
+        padding: 0 0 20px;
+        color: var(--color-ink-muted);
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+
+      .accordion-body p {
+        margin: 0 0 12px;
+      }
+
+      /* EmailGate */
+      .email-gate {
+        background: var(--color-bg);
+        border: 1px solid var(--color-ink);
+        border-radius: 6px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-width: 320px;
+        text-align: center;
+      }
+
+      .email-gate-title {
+        font-family: var(--font-body);
+        margin: 0;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
