@@ -14,6 +14,8 @@ npm-debug.log*
 
 # Dependencies (in case tooling is added later)
 node_modules/
+venv/
+backend/venv/
 
 # Build output
 dist/
@@ -22,3 +24,6 @@ build/
 # Environment
 .env
 .env.local
+
+# Local lead capture data (user PII, must not be committed)
+backend/data/
