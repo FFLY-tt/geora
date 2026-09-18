@@ -16,10 +16,10 @@ import re
 
 import requests
 
-from config import settings
-from engines._fetch_utils import fetch_page_text
+from shared.config import settings
+from shared._fetch_utils import fetch_page_text
 from engines._plain_finding_generator import make_plain_finding
-from engines._text_format import PLAIN_LANGUAGE_FORMAT_RULES, find_banned_formatting, sanitize_banned_formatting
+from shared._text_format import PLAIN_LANGUAGE_FORMAT_RULES, find_banned_formatting, sanitize_banned_formatting
 from models import DimensionScore
 
 DIMENSION_NAME = "evidence_density"

@@ -21,9 +21,13 @@ backend/venv/
 dist/
 build/
 
+# Python bytecode cache
+__pycache__/
+*.pyc
+
 # Environment
 .env
 .env.local
 
 # Local lead capture data (user PII, must not be committed)
-backend/data/
+backend/diagnose_service/data/

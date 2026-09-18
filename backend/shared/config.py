@@ -8,13 +8,16 @@ calling `os.getenv` / `os.environ` directly.
 
 import os
 from dataclasses import dataclass
+from pathlib import Path
 
 from dotenv import load_dotenv
 
-# Load variables from a local .env file (if present) into the process
-# environment. This is a no-op in production environments where the
+# Load variables from backend/.env (shared by every service under
+# backend/, one API-key set for all of them) rather than a cwd-relative
+# .env, since diagnose_service/ and agent_service/ each run with a
+# different working directory. No-op in production, where the
 # variables are already injected by the platform.
-load_dotenv()
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 
 @dataclass(frozen=True)
