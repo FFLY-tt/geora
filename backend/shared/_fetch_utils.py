@@ -18,7 +18,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-from config import settings
+from shared.config import settings
 
 
 def fetch_page_text(url: str) -> str:

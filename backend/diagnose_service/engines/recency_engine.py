@@ -22,7 +22,7 @@ from email.utils import parsedate_to_datetime
 import requests
 from bs4 import BeautifulSoup
 
-from config import settings
+from shared.config import settings
 from engines._plain_finding_generator import make_plain_finding
 from models import DimensionScore
 

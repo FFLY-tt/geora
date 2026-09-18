@@ -7,6 +7,13 @@ contain any scoring or business logic of its own — that belongs in
 """
 
 import asyncio
+import sys
+from pathlib import Path
+
+# Make backend/shared importable regardless of where this process is
+# launched from (this file lives in backend/diagnose_service/, shared/
+# is its sibling under backend/).
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

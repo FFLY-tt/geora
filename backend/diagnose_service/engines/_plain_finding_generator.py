@@ -31,9 +31,9 @@ import re
 
 import requests
 
-from config import settings
-from engines._report_style_guide import PLAIN_LANGUAGE_SYSTEM_PROMPT
-from engines._text_format import find_report_violations, sanitize_banned_formatting, strip_leaked_label
+from shared.config import settings
+from shared._report_style_guide import PLAIN_LANGUAGE_SYSTEM_PROMPT
+from shared._text_format import find_report_violations, sanitize_banned_formatting, strip_leaked_label
 
 MAX_ATTEMPTS = 2
 

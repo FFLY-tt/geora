@@ -30,4 +30,4 @@ __pycache__/
 .env.local
 
 # Local lead capture data (user PII, must not be committed)
-backend/data/
+backend/diagnose_service/data/
