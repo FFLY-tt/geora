@@ -1,0 +1,79 @@
+name: CI
+
+# Push to any branch, plus pull requests targeting main.
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  agent-service-tests:
+    name: agent_service tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13.13"
+
+      - name: Install dependencies
+        run: pip install -r backend/agent_service/requirements.txt
+
+      - name: Run tests
+        run: cd backend/agent_service && python -m unittest discover tests
+
+  diagnose-service-check:
+    name: diagnose_service checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13.13"
+
+      - name: Install dependencies
+        run: pip install -r backend/diagnose_service/requirements.txt
+
+      - name: Run tests, or an import check if there are no tests yet
+        run: |
+          cd backend/diagnose_service
+          if [ -d tests ]; then
+            python -m unittest discover tests
+          else
+            python -c "import server"
+          fi
+
+  frontend-diagnose-build:
+    name: frontend/diagnose build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: cd frontend/diagnose && npm ci
+
+      - name: Build
+        run: cd frontend/diagnose && npm run build
+
+  frontend-dashboard-build:
+    name: frontend/dashboard build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: cd frontend/dashboard && npm ci
+
+      - name: Build
+        run: cd frontend/dashboard && npm run build
