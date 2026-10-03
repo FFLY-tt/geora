@@ -31,3 +31,6 @@ __pycache__/
 
 # Local lead capture data (user PII, must not be committed)
 backend/diagnose_service/data/
+
+# agent_service's own runtime cache, kept separate from diagnose_service's
+backend/agent_service/data/
