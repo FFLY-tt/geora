@@ -14,7 +14,7 @@ backend/
   shared/            # config, page fetching, text/report formatting rules —
                       # imported by both services, defined once
   diagnose_service/  # the free diagnostic tool (5 scoring engines) — live
-  agent_service/      # decision / content / monitor agents — scaffold only
+  agent_service/      # decision / content / monitor agents — technical package, Answer Capsules, and Decide are live; the rest is still scaffold
 frontend/
   diagnose/          # the free diagnostic tool's UI — live
   dashboard/          # agent product UI (post-paywall) — scaffold only
@@ -29,7 +29,7 @@ cd backend/diagnose_service && uvicorn server:app --reload --port 8000
 cd frontend/diagnose && npm install && npm run dev   # http://localhost:5173
 ```
 
-Agent service (scaffold, `/api/health` only so far):
+Agent service (`/api/health`, `/api/technical-package`, `/api/answer-capsules`, and `/api/decide` so far):
 
 ```
 cd backend/agent_service && uvicorn server:app --reload --port 8001

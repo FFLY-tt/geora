@@ -31,9 +31,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from _cache_store import get_cached, save_cached
 from answer_capsule_engine import generate_answer_capsules
+from decide_engine import decide
 from models import (
     AnswerCapsuleRequest,
     AnswerCapsuleResponse,
+    DecideRequest,
+    DecideResponse,
     TechnicalPackageRequest,
     TechnicalPackageResponse,
 )
@@ -103,3 +106,16 @@ async def answer_capsules(request: AnswerCapsuleRequest) -> AnswerCapsuleRespons
     result = {"domain": request.domain, "company_name": request.company_name, **capsule_result}
     cached_entry = await asyncio.to_thread(save_cached, ANSWER_CAPSULE_CACHE, request.domain, result)
     return AnswerCapsuleResponse(**cached_entry)
+
+
+@app.post("/api/decide", response_model=DecideResponse)
+async def decide_route(request: DecideRequest) -> DecideResponse:
+    """
+    Deterministic rule engine: ranks the reason dimensions from a prior
+    diagnosis by priority, so the caller knows what to fix first. No
+    LLM call, no external API, not cached, since it is pure computation
+    over input already provided in the request.
+    """
+    dimensions = [dimension.model_dump() for dimension in request.dimensions]
+    result = decide(request.domain, request.company_name, dimensions)
+    return DecideResponse(**result)
