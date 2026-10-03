@@ -33,6 +33,7 @@ etc.) are kept as-is for debugging.
 
 import json
 import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
 
@@ -46,6 +47,16 @@ from models import DimensionScore
 DIMENSION_NAME = "citation_visibility"
 
 MAX_GENERATION_ATTEMPTS = 3
+
+# Each of the 5 brand-free queries is sent to Perplexity this many times,
+# since a single real-world call can hit or miss on its own regardless of
+# genuine visibility; averaging across repeats turns that into an actual
+# mention RATE per question instead of a one-shot coin flip.
+RUNS_PER_QUERY = 3
+
+# Upper bound on how many of the RUNS_PER_QUERY * REQUIRED_QUERY_COUNT
+# Perplexity calls are in flight at once.
+MAX_CONCURRENT_CALLS = 5
 
 _CATEGORY_AND_QUERY_SYSTEM_PROMPT = f"""
 You are a B2B market research analyst. You will be given the visible text
@@ -257,78 +268,154 @@ def _call_perplexity(query: str) -> dict:
     return response.json()
 
 
+def _execute_single_run(query: str, domain_lower: str, company_lower: str) -> dict:
+    """
+    One Perplexity call for `query`. Whether a mention "counts" is decided
+    by plain, deterministic lowercase substring matching, same as before:
+    domain found in a citation URL, or the company name found in the
+    answer text. Never raises: a request failure is reported as status
+    "error" so RUNS_PER_QUERY of these can run per query without one
+    failed call aborting the others.
+    """
+    try:
+        raw_response = _call_perplexity(query)
+    except requests.RequestException as exc:
+        return {"status": "error", "error": str(exc)}
+
+    choices = raw_response.get("choices", [])
+    answer_text = ""
+    if choices:
+        answer_text = choices[0].get("message", {}).get("content", "") or ""
+
+    # Perplexity's "sonar" models return a top-level "citations" field: a
+    # list of source URLs used to ground the answer.
+    citations = raw_response.get("citations", []) or []
+
+    matched_citations = [c for c in citations if domain_lower in c.lower()]
+    company_mentioned_in_answer = company_lower in answer_text.lower()
+    is_hit = bool(matched_citations) or company_mentioned_in_answer
+
+    return {
+        "status": "ok",
+        "answer_text": answer_text,
+        "all_citations": citations,
+        "matched_citations": matched_citations,
+        "company_mentioned_in_answer": company_mentioned_in_answer,
+        "is_hit": is_hit,
+    }
+
+
+def _run_queries_multiple_times(queries: list[str], domain_lower: str, company_lower: str) -> dict[str, list[dict]]:
+    """
+    Call Perplexity RUNS_PER_QUERY times for each query (REQUIRED_QUERY_COUNT
+    * RUNS_PER_QUERY calls total, e.g. 5 * 3 = 15), with at most
+    MAX_CONCURRENT_CALLS calls in flight at once via a plain thread pool —
+    _call_perplexity is a blocking requests call, so threads, not asyncio,
+    are what let these run concurrently.
+
+    Returns {query: [run_1_result, run_2_result, run_3_result]}. Each
+    result is placed into its run's own slot by run index rather than by
+    completion order, so which Perplexity call happens to finish first
+    never changes the run numbering in the result.
+    """
+    runs_by_query: dict[str, list[dict | None]] = {query: [None] * RUNS_PER_QUERY for query in queries}
+
+    def _work(query: str, run_index: int) -> tuple[str, int, dict]:
+        result = _execute_single_run(query, domain_lower, company_lower)
+        result["run"] = run_index + 1
+        return query, run_index, result
+
+    with ThreadPoolExecutor(max_workers=MAX_CONCURRENT_CALLS) as executor:
+        futures = [
+            executor.submit(_work, query, run_index)
+            for query in queries
+            for run_index in range(RUNS_PER_QUERY)
+        ]
+        for future in as_completed(futures):
+            query, run_index, result = future.result()
+            runs_by_query[query][run_index] = result
+
+    return runs_by_query
+
+
 def _build_plain_finding_success(
     category: str,
-    queries_attempted: int,
-    queries_hit: int,
-    hit_queries: list,
+    valid_query_count: int,
+    average_mention_rate: float,
     per_query_results: list,
 ) -> str:
     """Founder-readable finding for a completed run, built only from real counts and quotes."""
-    example_hit = hit_queries[0]["query"] if hit_queries else None
-    misses = [entry for entry in per_query_results if not entry["is_hit"]]
-    example_miss = misses[0]["query"] if misses else None
+    valid_entries = sorted(
+        (entry for entry in per_query_results if entry["mention_rate"] is not None),
+        key=lambda entry: entry["mention_rate"],
+    )
+    worst = valid_entries[0]
+    best = valid_entries[-1]
+    average_pct = round(average_mention_rate * 100)
+    total_calls = valid_query_count * RUNS_PER_QUERY
 
-    if queries_hit == 0:
-        example_query = (
-            per_query_results[0]["query"] if per_query_results else "a customer question in this category"
-        )
+    if average_pct == 0:
         return (
-            f"When we asked AI search tools {queries_attempted} realistic questions a customer in the "
-            f'"{category}" space would ask before knowing any vendor names, like "{example_query}", none '
-            "of the answers mentioned this brand or linked to its site. That means right now, if a "
-            "customer starts their research on AI instead of a search engine, they won't run into this "
-            "brand at all. Whichever competitors do get mentioned win that customer's attention first. "
-            f'Today, publish one page that directly and plainly answers a question like "{example_query}", '
-            "since AI tools tend to quote content that answers a question head on."
+            f"We asked AI search tools {valid_query_count} realistic questions a customer in the "
+            f'"{category}" space would ask before knowing any vendor names, like "{worst["query"]}", and '
+            f"asked each one {RUNS_PER_QUERY} separate times. Not one of those {total_calls} answers "
+            "mentioned this brand or linked to its site. That means right now, if a customer starts their "
+            "research on AI instead of a search engine, they consistently won't run into this brand at "
+            "all. Whichever competitors do get mentioned win that customer's attention first. Today, "
+            f'publish one page that directly and plainly answers a question like "{worst["query"]}", since '
+            "AI tools tend to quote content that answers a question head on."
         )
 
-    if queries_hit == queries_attempted:
+    if average_pct == 100:
         return (
-            f"When we asked AI search tools {queries_attempted} realistic customer questions about the "
-            f'"{category}" space, without ever mentioning this brand by name, it came up naturally in '
-            f'every single one, for example when asked "{example_hit}". That is a strong sign customers '
-            "researching this category through AI are already running into this brand on their own. "
+            f"We asked AI search tools {valid_query_count} realistic customer questions about the "
+            f'"{category}" space, without ever mentioning this brand by name, and asked each one '
+            f'{RUNS_PER_QUERY} separate times. It came up naturally in every single answer, for example '
+            f'when asked "{best["query"]}". That is a strong sign customers researching this category '
+            "through AI are already running into this brand consistently, not just by luck on one try. "
             "Today, keep an eye on this over time. AI answers shift as new content gets indexed, so what's "
             "working now may need refreshing in a few months."
         )
 
     return (
-        f"When we asked AI search tools {queries_attempted} realistic customer questions about the "
-        f'"{category}" space, without mentioning this brand by name, it came up naturally in '
-        f'{queries_hit} of them, for example when asked "{example_hit}". But for other questions, like '
-        f'"{example_miss}", it did not come up at all. That is a mixed signal. This brand is on AI\'s radar '
-        "for some customer questions but invisible for others, so some customers researching this category "
-        "will simply never encounter it. Today, take one of the missed questions and write a page that "
-        "answers it directly and specifically."
+        f"We asked AI search tools {valid_query_count} realistic customer questions about the "
+        f'"{category}" space, without mentioning this brand by name, and asked each one {RUNS_PER_QUERY} '
+        f"separate times. Across all of those answers, this brand was mentioned an average of "
+        f'{average_pct}% of the time, coming up most reliably for a question like "{best["query"]}" and '
+        f'almost never for one like "{worst["query"]}". That is a mixed signal. This brand is on AI\'s '
+        "radar for some customer questions but inconsistent or invisible for others, so some customers "
+        "researching this category will simply never encounter it. Today, take the weakest question and "
+        "write a page that answers it directly and specifically."
     )
 
 
 def _build_facts_summary_success(
     category: str,
-    queries_attempted: int,
-    queries_hit: int,
-    hit_queries: list,
+    valid_query_count: int,
+    average_mention_rate: float,
     per_query_results: list,
 ) -> str:
     """Plain-text real facts handed to the AI writer — see engines._plain_finding_generator."""
-    example_hit = hit_queries[0]["query"] if hit_queries else None
-    misses = [entry for entry in per_query_results if not entry["is_hit"]]
-    example_miss = misses[0]["query"] if misses else None
+    valid_entries = sorted(
+        (entry for entry in per_query_results if entry["mention_rate"] is not None),
+        key=lambda entry: entry["mention_rate"],
+    )
+    worst = valid_entries[0]
+    best = valid_entries[-1]
+    average_pct = round(average_mention_rate * 100)
 
     lines = [
         "Dimension: how often AI search tools mention this company when a customer researches its "
         "category without already knowing the brand name.",
         f'Category this company competes in: "{category}"',
-        f"We tested {queries_attempted} realistic customer questions in this category, written so "
-        "they never mention the brand name.",
-        f"The brand came up naturally in the AI answer for {queries_hit} out of {queries_attempted} "
-        "of those questions.",
+        f"We tested {valid_query_count} realistic customer questions in this category, written so they "
+        f"never mention the brand name, and asked each question {RUNS_PER_QUERY} separate times.",
+        f"Across all of those answers, the brand was mentioned an average of {average_pct}% of the time.",
+        f'Question mentioned most reliably: "{best["query"]}", mentioned in '
+        f'{round(best["mention_rate"] * 100)}% of its answers.',
+        f'Question mentioned least reliably: "{worst["query"]}", mentioned in '
+        f'{round(worst["mention_rate"] * 100)}% of its answers.',
     ]
-    if example_hit:
-        lines.append(f'Example question where the brand came up: "{example_hit}"')
-    if example_miss:
-        lines.append(f'Example question where the brand did not come up: "{example_miss}"')
     return "\n".join(lines)
 
 
@@ -522,69 +609,60 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
     domain_lower = domain.lower()
     company_lower = company_name.lower()
 
+    runs_by_query = _run_queries_multiple_times(queries, domain_lower, company_lower)
+
     per_query_results = []
     raw_answers: dict[str, str] = {}
-    hit_queries = []
-    failed_queries = []
+    fully_failed_queries = []
 
     for query in queries:
-        try:
-            raw_response = _call_perplexity(query)
-        except requests.RequestException as exc:
-            failed_queries.append({"query": query, "error": str(exc)})
-            continue
+        runs = runs_by_query[query]
+        successful_runs = [run for run in runs if run["status"] == "ok"]
+        hits = sum(1 for run in successful_runs if run["is_hit"])
+        # A question's mention rate is only ever computed from its own
+        # successful runs; a failed call simply isn't counted either way,
+        # it never counts as a miss.
+        mention_rate = (hits / len(successful_runs)) if successful_runs else None
 
-        choices = raw_response.get("choices", [])
-        answer_text = ""
-        if choices:
-            answer_text = choices[0].get("message", {}).get("content", "") or ""
+        per_query_results.append(
+            {
+                "query": query,
+                "runs_per_query": RUNS_PER_QUERY,
+                "runs": runs,
+                "successful_runs": len(successful_runs),
+                "failed_runs": RUNS_PER_QUERY - len(successful_runs),
+                "mention_rate": mention_rate,
+            }
+        )
 
-        # Perplexity's "sonar" models return a top-level "citations" field:
-        # a list of source URLs used to ground the answer.
-        citations = raw_response.get("citations", []) or []
+        if successful_runs:
+            # One representative answer per query for topic_relevance,
+            # which expects a single string per query (raw_answers is a
+            # dict[query, answer_text]) — the first successful run's
+            # answer, so that downstream shape never has to change.
+            raw_answers[query] = next(run["answer_text"] for run in successful_runs)
+        else:
+            fully_failed_queries.append(query)
 
-        # Whether a mention "counts" is decided by plain, deterministic
-        # lowercase substring matching below — not a second model call.
-        # Given the same answer_text/citations, this always returns the
-        # same is_hit; any run-to-run variance in the score traces back to
-        # the query generation step above, not to this check.
-        matched_citations = [c for c in citations if domain_lower in c.lower()]
-        company_mentioned_in_answer = company_lower in answer_text.lower()
-        is_hit = bool(matched_citations) or company_mentioned_in_answer
+    valid_queries = [entry for entry in per_query_results if entry["mention_rate"] is not None]
 
-        raw_answers[query] = answer_text
-
-        result_entry = {
-            "query": query,
-            "is_hit": is_hit,
-            "matched_citations": matched_citations,
-            "all_citations": citations,
-            "company_mentioned_in_answer": company_mentioned_in_answer,
-        }
-        per_query_results.append(result_entry)
-
-        if is_hit:
-            hit_queries.append(result_entry)
-
-    total_attempted = len(per_query_results)
-
-    if total_attempted == 0:
-        # Every single request failed (network error, invalid key, etc.).
-        # We genuinely could not determine anything real, so we do not
-        # report a numeric score.
+    if not valid_queries:
+        # Every single call failed across all queries and all runs
+        # (network error, invalid key, etc.). We genuinely could not
+        # determine anything real, so we do not report a numeric score.
         fallback = (
             "We had good customer questions ready to test"
             + (f', like "{queries[0]}",' if queries else "")
-            + " but every attempt to ask AI search tools those questions failed to get a response, "
-            "so we don't have a real reading for this check. This is usually a temporary connection "
-            "issue, not something wrong with the brand. Today, just try running the report again in "
-            "a few minutes."
+            + f" and asked each one {RUNS_PER_QUERY} separate times, but every single attempt to ask AI "
+            "search tools those questions failed to get a response, so we don't have a real reading for "
+            "this check. This is usually a temporary connection issue, not something wrong with the "
+            "brand. Today, just try running the report again in a few minutes."
         )
         facts_summary = (
             "Dimension: how often AI search tools mention this company when a customer researches "
             "its category without already knowing the brand name.\n"
-            "Status: We had real customer test questions ready, but every attempt to get an answer "
-            "from AI search tools failed this time."
+            f"Status: We had real customer test questions ready and asked each one {RUNS_PER_QUERY} "
+            "times, but every attempt to get an answer from AI search tools failed this time."
         )
         plain_finding, format_generation_log = make_plain_finding(facts_summary, fallback)
         return DimensionScore(
@@ -595,16 +673,20 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
                 "reason": "All Perplexity requests failed; no real data was obtained.",
                 "category": category,
                 "queries": queries,
-                "failed_queries": failed_queries,
+                "runs_per_query": RUNS_PER_QUERY,
+                "per_query_results": per_query_results,
+                "fully_failed_queries": fully_failed_queries,
                 "generation_log": format_generation_log,
                 "plain_finding": plain_finding,
             },
         )
 
-    score = round(100 * len(hit_queries) / total_attempted)
+    mention_rates = [entry["mention_rate"] for entry in valid_queries]
+    average_mention_rate = sum(mention_rates) / len(mention_rates)
+    score = round(100 * average_mention_rate)
 
-    fallback = _build_plain_finding_success(category, total_attempted, len(hit_queries), hit_queries, per_query_results)
-    facts_summary = _build_facts_summary_success(category, total_attempted, len(hit_queries), hit_queries, per_query_results)
+    fallback = _build_plain_finding_success(category, len(valid_queries), average_mention_rate, per_query_results)
+    facts_summary = _build_facts_summary_success(category, len(valid_queries), average_mention_rate, per_query_results)
     plain_finding, format_generation_log = make_plain_finding(facts_summary, fallback)
 
     return DimensionScore(
@@ -614,12 +696,13 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
             "status": "ok",
             "category": category,
             "generation_attempts": generation_log,
-            "queries_attempted": total_attempted,
-            "queries_hit": len(hit_queries),
-            "hit_queries": hit_queries,
-            "all_query_results": per_query_results,
+            "runs_per_query": RUNS_PER_QUERY,
+            "queries_total": len(queries),
+            "queries_valid": len(valid_queries),
+            "average_mention_rate": round(average_mention_rate, 3),
+            "per_query_results": per_query_results,
+            "fully_failed_queries": fully_failed_queries,
             "raw_answers": raw_answers,
-            "failed_queries": failed_queries,
             "generation_log": format_generation_log,
             "plain_finding": plain_finding,
         },
