@@ -1,9 +1,11 @@
 """
-Shared HTTP fetching helper for engines that need the visible body text of
-a web page (evidence_engine, fact_engine, citation_engine, and
+Shared HTTP fetching helper for engines that need a web page's content
+(evidence_engine, fact_engine, citation_engine, technical_engine, and
 agent_service's answer_capsule_engine/technical_package_engine). Kept in
-one place so every caller fetches and extracts text the same way instead
-of duplicating it.
+one place so every caller fetches the same way instead of duplicating it.
+Most callers want extracted visible body text (fetch_page_text); a
+caller that needs the actual markup itself — structured data blocks,
+heading tags — wants the raw HTML instead (fetch_page_html).
 
 The network step is a plain `requests` GET, unchanged — the request
 itself is not routed through trafilatura's own downloader, only its HTML
@@ -106,3 +108,19 @@ def fetch_page_text(url: str, method: str = "main") -> str:
     response.raise_for_status()
 
     return extract_text_from_html(response.text, method=method)
+
+
+def fetch_page_html(url: str) -> str:
+    """
+    Fetch `url` (an https:// scheme is added if missing) and return its
+    raw, unprocessed HTML — for callers that need actual markup
+    (structured data blocks, heading tags) rather than extracted body
+    text. Same request settings as fetch_page_text. Raises
+    requests.RequestException on network/HTTP failure.
+    """
+    full_url = url if url.startswith("http") else f"https://{url}"
+    headers = {"User-Agent": settings.http_user_agent}
+    response = requests.get(full_url, headers=headers, timeout=settings.request_timeout_seconds)
+    response.raise_for_status()
+
+    return response.text
