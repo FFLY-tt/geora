@@ -15,13 +15,23 @@ which handles JS rendering and anti-bot bypassing server-side. That
 integration is intentionally NOT implemented here to keep this
 dependency-light.
 
-Text extraction is trafilatura first (it targets the actual article/body
-content and excludes boilerplate like nav bars and footers far better
-than a blanket tag-strip), falling back to the original whole-page
-BeautifulSoup extraction whenever trafilatura comes back empty or with
-too little text to be useful — e.g. a page structure it doesn't
-recognize. This engine depends on getting SOME real text back rather
-than none at all, so the fallback exists specifically for that case.
+Text extraction has two modes, picked per call via the `method`
+parameter:
+
+- "main" (the default): trafilatura first, since it targets the actual
+  article/body content and excludes boilerplate like nav bars and
+  footers far better than a blanket tag-strip. Falls back to the
+  original whole-page BeautifulSoup extraction whenever trafilatura
+  comes back empty or with too little text to be useful.
+- "full": always the whole-page BeautifulSoup extraction, skipping
+  trafilatura entirely. Investigation (see evidence_engine.py's
+  docstring) found trafilatura treats homepage testimonial quotes and
+  stat cards as boilerplate and drops them — on close.com this dropped
+  evidence_density's score by ~16 points, confirmed across repeated
+  calls, not AI scoring noise. For a caller where exactly that dropped
+  content (named customer quotes, "$100,000 saved", "50% increase")
+  IS the evidence being judged, "full" is the correct mode, not a
+  fallback.
 """
 
 import re
@@ -49,13 +59,25 @@ def _extract_text_with_beautifulsoup(html: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
-def extract_text_from_html_with_method(html: str) -> tuple[str, str]:
+def extract_text_from_html_with_method(html: str, method: str = "main") -> tuple[str, str]:
     """
-    Extract the main body text from raw HTML, returning (text, method)
-    so callers that care can see which approach actually produced the
-    text: "trafilatura" or "beautifulsoup_fallback". Never raises on
-    empty or malformed HTML; worst case both approaches return "".
+    Extract body text from raw HTML, returning (text, used_method).
+
+    `method="main"` (default) tries trafilatura first and only falls
+    back to BeautifulSoup if it comes back empty or too short;
+    `method="full"` skips trafilatura entirely and always uses the
+    whole-page BeautifulSoup extraction. See this module's docstring
+    for why "full" exists — it is a deliberate mode, not a fallback.
+
+    `used_method` is one of "trafilatura", "beautifulsoup_fallback"
+    (method="main" but trafilatura was empty/too short), or
+    "beautifulsoup_full" (method="full" was requested directly). Never
+    raises on empty or malformed HTML; worst case both approaches
+    return "".
     """
+    if method == "full":
+        return _extract_text_with_beautifulsoup(html), "beautifulsoup_full"
+
     extracted = trafilatura.extract(html)
     if extracted:
         collapsed = re.sub(r"\s+", " ", extracted).strip()
@@ -65,21 +87,22 @@ def extract_text_from_html_with_method(html: str) -> tuple[str, str]:
     return _extract_text_with_beautifulsoup(html), "beautifulsoup_fallback"
 
 
-def extract_text_from_html(html: str) -> str:
-    """Pure function: raw HTML in, extracted visible body text out. See extract_text_from_html_with_method for which method was used."""
-    text, _method = extract_text_from_html_with_method(html)
+def extract_text_from_html(html: str, method: str = "main") -> str:
+    """Pure function: raw HTML in, extracted visible body text out. See extract_text_from_html_with_method for `method` and which approach was actually used."""
+    text, _used_method = extract_text_from_html_with_method(html, method=method)
     return text
 
 
-def fetch_page_text(url: str) -> str:
+def fetch_page_text(url: str, method: str = "main") -> str:
     """
     Fetch `url` (an https:// scheme is added if missing) and return its
-    extracted visible body text. Raises requests.RequestException on
-    network/HTTP failure.
+    extracted visible body text. `method` is passed straight through to
+    extract_text_from_html — see that function and this module's
+    docstring. Raises requests.RequestException on network/HTTP failure.
     """
     full_url = url if url.startswith("http") else f"https://{url}"
     headers = {"User-Agent": settings.http_user_agent}
     response = requests.get(full_url, headers=headers, timeout=settings.request_timeout_seconds)
     response.raise_for_status()
 
-    return extract_text_from_html(response.text)
+    return extract_text_from_html(response.text, method=method)
