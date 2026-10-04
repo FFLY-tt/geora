@@ -22,3 +22,10 @@
 - Only touch the files the task explicitly allows. If the task seems to need more, stop and ask first.
 - Do not refactor existing code unless asked. List anything you noticed in your final report instead.
 - Code, comments and commit messages in English.
+
+## Language
+- Always reply to the repo owner in Simplified Chinese: explanations, questions, progress updates,
+  and final reports.
+- Keep these in English: code, code comments, commit messages, branch names, file contents,
+  and anything written into the repository.
+- Keep technical terms, file names, function names and command output as they are, without translating them.
