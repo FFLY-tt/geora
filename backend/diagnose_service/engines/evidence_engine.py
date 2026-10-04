@@ -6,9 +6,21 @@ asks a DeepSeek chat model to judge whether the copy contains concrete
 evidence (numbers, citations, specific feature descriptions) or is mostly
 vague marketing language.
 
-Page fetching itself is delegated to engines._fetch_utils.fetch_page_text
-(shared with fact_engine.py) — see that module's docstring for the note
-about anti-bot limitations and the Jina AI Reader API as a future upgrade.
+Page fetching itself is delegated to shared._fetch_utils.fetch_page_text
+(shared with fact_engine.py etc.) — see that module's docstring for the
+note about anti-bot limitations and the Jina AI Reader API as a future
+upgrade.
+
+Calls fetch_page_text with method="full" (whole-page BeautifulSoup
+extraction) rather than the "main" default (trafilatura-first).
+Investigation found trafilatura treats homepage testimonial quotes and
+stat cards ("$100,000 saved", "50% increase", named customers) as
+boilerplate and strips them — on close.com this measured a ~16 point
+drop in evidence_density's score, confirmed across 3 repeated calls on
+each side, not AI scoring noise. For this engine specifically, that
+dropped content is not noise to clean up, it IS the evidence being
+judged, so "full" is the correct mode here even though every other
+caller of fetch_page_text keeps the "main" default.
 """
 
 import json
@@ -133,7 +145,7 @@ def check_evidence_density(domain: str) -> DimensionScore:
     valid judgment. Never fabricates a score in those cases.
     """
     try:
-        page_text = fetch_page_text(domain)
+        page_text = fetch_page_text(domain, method="full")
     except requests.RequestException as exc:
         fallback = (
             f"We couldn't open the homepage at {domain} to see what's actually written on it, so "
