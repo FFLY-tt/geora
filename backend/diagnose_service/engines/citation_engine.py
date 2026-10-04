@@ -41,6 +41,7 @@ from shared.config import settings
 from shared._fetch_utils import fetch_page_text
 from engines._plain_finding_generator import make_plain_finding
 from engines._query_cache import CACHE_TTL, get_cached_queries, save_queries
+from engines._source_map import build_source_map
 from shared._text_format import PLAIN_LANGUAGE_FORMAT_RULES, find_banned_formatting, sanitize_banned_formatting
 from models import DimensionScore
 
@@ -646,6 +647,18 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
 
     valid_queries = [entry for entry in per_query_results if entry["mention_rate"] is not None]
 
+    # One entry per successful answer, for build_source_map — computed
+    # here regardless of outcome so it's available whether or not any
+    # query ended up "valid" (it degrades to an empty-but-valid stats
+    # shape on its own when there are no successful answers at all).
+    answers_for_source_map = [
+        {"query": entry["query"], "citations": run["all_citations"]}
+        for entry in per_query_results
+        for run in entry["runs"]
+        if run["status"] == "ok"
+    ]
+    source_map = build_source_map(domain, answers_for_source_map)
+
     if not valid_queries:
         # Every single call failed across all queries and all runs
         # (network error, invalid key, etc.). We genuinely could not
@@ -676,6 +689,7 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
                 "runs_per_query": RUNS_PER_QUERY,
                 "per_query_results": per_query_results,
                 "fully_failed_queries": fully_failed_queries,
+                "source_map": source_map,
                 "generation_log": format_generation_log,
                 "plain_finding": plain_finding,
             },
@@ -702,6 +716,7 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
             "average_mention_rate": round(average_mention_rate, 3),
             "per_query_results": per_query_results,
             "fully_failed_queries": fully_failed_queries,
+            "source_map": source_map,
             "raw_answers": raw_answers,
             "generation_log": format_generation_log,
             "plain_finding": plain_finding,
