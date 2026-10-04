@@ -4,6 +4,7 @@ import SearchForm from './components/SearchForm'
 import CacheNotice from './components/CacheNotice'
 import ScoreChangeNote from './components/ScoreChangeNote'
 import CitationResultCard from './components/CitationResultCard'
+import RadarChart from './components/RadarChart'
 import ScoreSummary from './components/ScoreSummary'
 import BreakdownAccordion from './components/BreakdownAccordion'
 import { runDiagnosis, captureLead } from './api'
@@ -85,7 +86,9 @@ export default function App() {
               <CitationResultCard
                 citation={result.dimensions.find((dim) => dim.dimension === 'citation_visibility')}
               />
-              <ScoreSummary dimensions={result.dimensions} />
+              {/* citation_visibility is the outcome card above, not one of the 5 reasons below it. */}
+              <RadarChart dimensions={result.dimensions.filter((dim) => dim.dimension !== 'citation_visibility')} />
+              <ScoreSummary dimensions={result.dimensions.filter((dim) => dim.dimension !== 'citation_visibility')} />
             </div>
           </section>
 

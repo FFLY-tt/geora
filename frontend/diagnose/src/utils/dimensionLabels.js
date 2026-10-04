@@ -24,6 +24,10 @@ export const DIMENSION_LABELS = {
     label: 'Review sites agree with you',
     description: 'Whether key facts match across the web',
   },
+  technical_readability: {
+    label: 'Easy for AI to read',
+    description: 'Whether AI crawlers can reach and understand your pages',
+  },
 }
 
 /**
