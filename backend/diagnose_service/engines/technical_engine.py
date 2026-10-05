@@ -13,8 +13,11 @@ Three factors, each worth a fixed share of the 100-point score:
    fraction of those 4 that are actually allowed.
 2. Structured data (30 points): whether the page has a parseable
    <script type="application/ld+json"> block with a recognized @type
-   (Organization, Product, SoftwareApplication, FAQPage, WebSite).
-3. Heading structure (30 points): exactly one <h1> earns 15 points,
+   (Organization, Product, SoftwareApplication, FAQPage, WebSite)
+   anywhere in it, including nested inside an @graph array — the
+   common schema.org pattern of bundling several entities under one
+   top-level @graph list.
+3. Heading structure (30 points): at least one <h1> earns 15 points,
    at least two <h2> elements earns the other 15, independently.
 
 Check weights are our own judgment. The three factors themselves come
@@ -46,6 +49,7 @@ STRUCTURED_DATA_POINTS = 30
 
 HEADING_POINTS_H1 = 15
 HEADING_POINTS_H2 = 15
+MIN_H1_COUNT = 1
 MIN_H2_COUNT = 2
 
 METHOD_NOTE = "Check weights are our own judgment. The three factors come from GEO-16 (Kumar and Palkhouski, 2025)."
@@ -90,11 +94,36 @@ def _check_crawler_access(domain: str) -> dict:
     }
 
 
+def _find_json_ld_types(node) -> list[str]:
+    """
+    Recursively collect every @type found anywhere in a parsed JSON-LD
+    structure: at the top level, nested inside an @graph array (the
+    common schema.org pattern of bundling several entities under one
+    top-level @graph list), or nested any other way. @type itself may
+    be a single string or a list of strings; both forms are handled.
+    """
+    found = []
+    if isinstance(node, dict):
+        node_type = node.get("@type")
+        if node_type is not None:
+            candidates = node_type if isinstance(node_type, list) else [node_type]
+            found.extend(candidate for candidate in candidates if isinstance(candidate, str))
+        for value in node.values():
+            found.extend(_find_json_ld_types(value))
+    elif isinstance(node, list):
+        for item in node:
+            found.extend(_find_json_ld_types(item))
+    return found
+
+
 def _check_structured_data(soup: BeautifulSoup) -> dict:
     """
     Look at every <script type="application/ld+json"> block on the
-    page and record which ones parse as valid JSON with a recognized
-    @type. Full points if at least one recognized type was found.
+    page and recursively collect every @type found anywhere inside it.
+    A block that isn't valid JSON is skipped rather than failing the
+    whole check. `found_types` lists every distinct @type actually
+    found, recognized or not; `points` is full marks as soon as at
+    least one of them is a recognized type.
     """
     found_types = []
     for script_tag in soup.find_all("script", attrs={"type": "application/ld+json"}):
@@ -104,30 +133,24 @@ def _check_structured_data(soup: BeautifulSoup) -> dict:
             parsed = json.loads(script_tag.string)
         except json.JSONDecodeError:
             continue
-        nodes = parsed if isinstance(parsed, list) else [parsed]
-        for node in nodes:
-            if not isinstance(node, dict):
-                continue
-            node_type = node.get("@type")
-            type_candidates = node_type if isinstance(node_type, list) else [node_type]
-            for candidate in type_candidates:
-                if candidate in RECOGNIZED_JSON_LD_TYPES:
-                    found_types.append(candidate)
+        found_types.extend(_find_json_ld_types(parsed))
 
-    has_recognized_type = bool(found_types)
+    unique_types = sorted(set(found_types))
+    has_recognized_type = any(found_type in RECOGNIZED_JSON_LD_TYPES for found_type in unique_types)
+
     return {
         "points": STRUCTURED_DATA_POINTS if has_recognized_type else 0,
         "max_points": STRUCTURED_DATA_POINTS,
-        "found_types": sorted(set(found_types)),
+        "found_types": unique_types,
     }
 
 
 def _check_heading_structure(soup: BeautifulSoup) -> dict:
-    """Exactly one <h1> earns its points; at least MIN_H2_COUNT <h2> elements earns the rest, independently."""
+    """At least MIN_H1_COUNT <h1> earns its points; at least MIN_H2_COUNT <h2> elements earns the rest, independently."""
     h1_count = len(soup.find_all("h1"))
     h2_count = len(soup.find_all("h2"))
 
-    h1_points = HEADING_POINTS_H1 if h1_count == 1 else 0
+    h1_points = HEADING_POINTS_H1 if h1_count >= MIN_H1_COUNT else 0
     h2_points = HEADING_POINTS_H2 if h2_count >= MIN_H2_COUNT else 0
 
     return {
@@ -229,8 +252,8 @@ def _build_fallback_plain_finding(crawler_access: dict, structured_data: dict, h
         issues.append(f"robots.txt blocks {', '.join(crawler_access['blocked_crawlers'])} from reading this site")
     if not structured_data["found_types"]:
         issues.append("the page has no structured data telling AI tools what kind of page it is")
-    if heading_structure["h1_count"] != 1:
-        issues.append(f"the page has {heading_structure['h1_count']} h1 headings instead of exactly one")
+    if heading_structure["h1_count"] < MIN_H1_COUNT:
+        issues.append("the page has no h1 heading at all")
     if heading_structure["h2_count"] < MIN_H2_COUNT:
         issues.append(f"the page has only {heading_structure['h2_count']} h2 headings")
 

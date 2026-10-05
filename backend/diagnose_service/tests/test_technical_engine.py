@@ -50,6 +50,46 @@ _HTML_PARTIAL_MARKS = """
 </body></html>
 """
 
+_HTML_GRAPH_NESTED = """
+<html><head>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "Example"}, {"@type": "Organization", "name": "Example Inc"}]}</script>
+</head><body>
+<h1>Welcome to Example</h1>
+<h2>Features</h2>
+<h2>Pricing</h2>
+</body></html>
+"""
+
+_HTML_TYPE_AS_ARRAY = """
+<html><head>
+<script type="application/ld+json">{"@type": ["LocalBusiness", "Organization"], "name": "Example Inc"}</script>
+</head><body>
+<h1>Welcome to Example</h1>
+<h2>Features</h2>
+<h2>Pricing</h2>
+</body></html>
+"""
+
+_HTML_MALFORMED_PLUS_VALID_LD_JSON = """
+<html><head>
+<script type="application/ld+json">{this is not valid json,,,</script>
+<script type="application/ld+json">{"@type": "Organization", "name": "Example Inc"}</script>
+</head><body>
+<h1>Welcome to Example</h1>
+<h2>Features</h2>
+<h2>Pricing</h2>
+</body></html>
+"""
+
+_HTML_MULTIPLE_H1 = """
+<html><head></head><body>
+<h1>Welcome to Example</h1>
+<h1>A second h1, which real sites sometimes have</h1>
+<h2>Features</h2>
+<h2>Pricing</h2>
+</body></html>
+"""
+
 _ROBOTS_TXT_ALLOW_ALL = ""
 
 _ROBOTS_TXT_BLOCK_ALL = """
@@ -141,6 +181,32 @@ class TechnicalEngineTests(unittest.TestCase):
 
         self.assertEqual(result.score, -1)
         self.assertEqual(result.details["status"], "insufficient_data")
+
+    def test_type_nested_inside_graph_is_found(self):
+        result = _run_with(_HTML_GRAPH_NESTED, _ROBOTS_TXT_ALLOW_ALL)
+
+        self.assertEqual(result.details["structured_data"]["points"], 30)
+        self.assertEqual(result.details["structured_data"]["found_types"], ["Organization", "WebSite"])
+
+    def test_type_as_array_is_found(self):
+        result = _run_with(_HTML_TYPE_AS_ARRAY, _ROBOTS_TXT_ALLOW_ALL)
+
+        self.assertEqual(result.details["structured_data"]["points"], 30)
+        self.assertEqual(result.details["structured_data"]["found_types"], ["LocalBusiness", "Organization"])
+
+    def test_malformed_ld_json_block_is_skipped_not_fatal(self):
+        result = _run_with(_HTML_MALFORMED_PLUS_VALID_LD_JSON, _ROBOTS_TXT_ALLOW_ALL)
+
+        # The broken block is silently skipped; the valid one right
+        # after it still counts, and nothing raises.
+        self.assertEqual(result.details["structured_data"]["points"], 30)
+        self.assertEqual(result.details["structured_data"]["found_types"], ["Organization"])
+
+    def test_multiple_h1_still_earns_full_heading_points(self):
+        result = _run_with(_HTML_MULTIPLE_H1, _ROBOTS_TXT_ALLOW_ALL)
+
+        self.assertEqual(result.details["heading_structure"]["h1_count"], 2)
+        self.assertEqual(result.details["heading_structure"]["points"], 30)
 
     def test_deterministic_output_for_same_input(self):
         first = _run_with(_HTML_PARTIAL_MARKS, _ROBOTS_TXT_BLOCK_TWO)
