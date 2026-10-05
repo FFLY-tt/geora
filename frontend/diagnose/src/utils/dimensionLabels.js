@@ -37,11 +37,3 @@ export const DIMENSION_LABELS = {
 export function getDimensionLabel(dimensionKey) {
   return DIMENSION_LABELS[dimensionKey]?.label || dimensionKey
 }
-
-/**
- * Short description for a dimension key, or an empty string if it isn't
- * in the map above.
- */
-export function getDimensionDescription(dimensionKey) {
-  return DIMENSION_LABELS[dimensionKey]?.description || ''
-}
