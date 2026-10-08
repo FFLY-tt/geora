@@ -14,9 +14,18 @@
 - Never push to main. Never merge into main. Never force push. Never rewrite history.
   Never delete branches. The repo owner reviews and merges every branch personally.
 - If tests fail, do not commit or push. Report the failure instead.
-- After pushing, report: branch name, each commit hash and message, the files in each commit,
-  and this link for opening a pull request:
+- After pushing, open a pull request into main with
+  `gh pr create --base main --head <branch-name>`.
+  Title: same style as the commit summary line.
+  Body, in English: a short summary of what changed and why, the test results,
+  and the list of changed files.
+- Never merge pull requests. Never run `gh pr merge`. Never close or edit other people's
+  pull requests. The repo owner merges every pull request personally.
+- If `gh` is not installed or not logged in, do not try to install or log in yourself.
+  Push the branch and give the compare link instead:
   https://github.com/FFLY-tt/geora/compare/main...<branch-name>
+- In the final report, give the pull request link, the branch name, each commit hash and
+  message, the files in each commit, and the CI result once it finishes.
 
 ## Scope
 - Only touch the files the task explicitly allows. If the task seems to need more, stop and ask first.
