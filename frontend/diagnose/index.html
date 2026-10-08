@@ -270,7 +270,10 @@
          radar chart took over showing relative magnitude. */
       .score-list {
         list-style: none;
-        margin: 24px 0 0;
+        margin: 24px 0 -28px; /* -28px = 12px (this list's own row gap) minus .section's 40px
+                                  padding-block, so the gap from the last row down to the
+                                  section's border-bottom matches the gap between rows instead
+                                  of being section padding plus a row gap. */
         padding: 0;
         display: flex;
         flex-direction: column;
