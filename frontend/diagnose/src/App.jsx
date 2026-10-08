@@ -3,6 +3,7 @@ import Hero from './components/Hero'
 import SearchForm from './components/SearchForm'
 import CacheNotice from './components/CacheNotice'
 import ScoreChangeNote from './components/ScoreChangeNote'
+import CitationResultCard from './components/CitationResultCard'
 import RadarChart from './components/RadarChart'
 import ScoreSummary from './components/ScoreSummary'
 import BreakdownAccordion from './components/BreakdownAccordion'
@@ -82,8 +83,12 @@ export default function App() {
             <CacheNotice />
             <ScoreChangeNote previousScores={result.previous_scores} currentScores={result.dimensions} />
             <div className={justUnlocked ? 'scan-sweep-once' : ''}>
-              <RadarChart dimensions={result.dimensions} />
-              <ScoreSummary dimensions={result.dimensions} />
+              <CitationResultCard
+                citation={result.dimensions.find((dim) => dim.dimension === 'citation_visibility')}
+              />
+              {/* citation_visibility is the outcome card above, not one of the 5 reasons below it. */}
+              <RadarChart dimensions={result.dimensions.filter((dim) => dim.dimension !== 'citation_visibility')} />
+              <ScoreSummary dimensions={result.dimensions.filter((dim) => dim.dimension !== 'citation_visibility')} />
             </div>
           </section>
 

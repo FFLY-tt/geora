@@ -23,6 +23,7 @@ from engines.evidence_engine import check_evidence_density
 from engines.fact_engine import check_fact_consistency
 from engines.recency_engine import check_recency
 from engines.relevance_engine import check_topic_relevance
+from engines.technical_engine import check_technical_readability
 from leads_store import save_lead
 from models import DiagnosisRequest, DiagnosisResponse, LeadCaptureRequest
 from result_cache import get_cached_result, get_previous_scores, save_result
@@ -53,10 +54,11 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
     There is no parameter to force a recompute — see result_cache.py for
     why this is a deliberate product decision, not a missing feature.
 
-    citation_visibility, evidence_density, content_recency and
-    fact_consistency are all independent, so they run concurrently.
-    topic_relevance reuses the 5 buyer questions citation_engine
-    generated, so it runs after that result is available.
+    citation_visibility, evidence_density, content_recency,
+    fact_consistency, and technical_readability are all independent, so
+    they run concurrently. topic_relevance reuses the 5 buyer questions
+    citation_engine generated, so it runs after that result is
+    available.
     """
     cached = get_cached_result(request.domain)
     if cached:
@@ -71,9 +73,10 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
     evidence_task = asyncio.to_thread(check_evidence_density, request.domain)
     recency_task = asyncio.to_thread(check_recency, request.domain)
     fact_task = asyncio.to_thread(check_fact_consistency, request.company_name, request.domain)
+    technical_task = asyncio.to_thread(check_technical_readability, request.domain)
 
-    citation_result, evidence_result, recency_result, fact_result = await asyncio.gather(
-        citation_task, evidence_task, recency_task, fact_task
+    citation_result, evidence_result, recency_result, fact_result, technical_result = await asyncio.gather(
+        citation_task, evidence_task, recency_task, fact_task, technical_task
     )
 
     relevance_result = await asyncio.to_thread(check_topic_relevance, request.domain, citation_result)
@@ -87,6 +90,7 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
             evidence_result.model_dump(),
             recency_result.model_dump(),
             fact_result.model_dump(),
+            technical_result.model_dump(),
         ],
     }
     cached_entry = await asyncio.to_thread(save_result, request.domain, result)

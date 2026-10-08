@@ -17,10 +17,30 @@ OUTCOME_DIMENSION = "citation_visibility"
 
 PRIORITY_FORMULA = "priority = ((100 - score) * weight) / fix_cost"
 
-# The 4 reason dimensions that drive the ranking. `weight_basis` records
+def _build_technical_action(details: dict) -> str:
+    """
+    technical_readability's action is the one dynamic template: which
+    specific crawlers are blocked, or whether structured data is
+    missing, changes what the single most useful next step actually
+    is, so it is computed from this run's real details instead of a
+    fixed string like every other dimension below.
+    """
+    blocked = (details.get("crawler_access") or {}).get("blocked_crawlers") or []
+    found_types = (details.get("structured_data") or {}).get("found_types") or []
+
+    if blocked:
+        return f"Allow {', '.join(blocked)} in your robots.txt, since they are currently blocked from reading this site."
+    if not found_types:
+        return "Add structured data to your homepage. The technical package can generate this for you."
+    return "Clean up your page headings so AI crawlers can tell what the page is about at a glance."
+
+
+# The 5 reason dimensions that drive the ranking. `weight_basis` records
 # where each weight came from, so a reader can tell a measured number
-# from a judgment call. `action` is a fixed, plain-language template for
-# this dimension; it never promises a specific amount of improvement.
+# from a judgment call. `action` is normally a fixed, plain-language
+# template for this dimension that never promises a specific amount of
+# improvement; technical_readability's is a function instead, computed
+# from this run's details (see _build_technical_action above).
 REASON_DIMENSIONS: dict[str, dict] = {
     "content_recency": {
         "weight": 0.68,
@@ -54,6 +74,17 @@ REASON_DIMENSIONS: dict[str, dict] = {
         "deliverable_status": "available",
         "action": "Give customers direct, self-contained answers to the real questions they are asking in this category.",
     },
+    "technical_readability": {
+        "weight": 0.63,
+        "weight_basis": (
+            "measured: GEO-16 study, structured data correlation, the lower of two related factors, "
+            "chosen conservatively"
+        ),
+        "fix_cost": 1,
+        "deliverable": "technical_package",
+        "deliverable_status": "available",
+        "action": _build_technical_action,
+    },
 }
 
 
@@ -62,10 +93,15 @@ def _sort_key(item: dict) -> tuple:
     return (-item["priority"], -item["impact"], item["dimension"])
 
 
-def _build_action_item(dimension: str, score: int, config: dict) -> dict:
+def _build_action_item(dimension: str, score: int, details: dict, config: dict) -> dict:
     gap = 100 - score
     impact = round(gap * config["weight"], 2)
     priority = round(impact / config["fix_cost"], 1)
+
+    action = config["action"]
+    if callable(action):
+        action = action(details)
+
     return {
         "dimension": dimension,
         "score": score,
@@ -75,7 +111,7 @@ def _build_action_item(dimension: str, score: int, config: dict) -> dict:
         "fix_cost": config["fix_cost"],
         "impact": impact,
         "priority": priority,
-        "action": config["action"],
+        "action": action,
         "deliverable": config["deliverable"],
         "deliverable_status": config["deliverable_status"],
     }
@@ -114,7 +150,7 @@ def decide(domain: str, company_name: str, dimensions: list[dict]) -> dict:
             needs_data.append({"dimension": dimension, "reason": details.get("reason", "No reason provided.")})
             continue
 
-        ranked_candidates.append(_build_action_item(dimension, score, config))
+        ranked_candidates.append(_build_action_item(dimension, score, details, config))
 
     ranked_candidates.sort(key=_sort_key)
     all_ranked = [{"rank": index + 1, **item} for index, item in enumerate(ranked_candidates)]

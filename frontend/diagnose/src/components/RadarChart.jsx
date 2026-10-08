@@ -24,8 +24,11 @@ function resolveCssColor(variableName, fallback) {
   return value || fallback
 }
 
+// Props: dimensions — the 5 reason dimensions only (citation_visibility
+// is the outcome, shown separately by CitationResultCard, and is never
+// passed to this component).
 export default function RadarChart({ dimensions }) {
-  const hasInsufficientData = dimensions.some((dim) => dim.score === -1)
+  const notMeasured = dimensions.filter((dim) => dim.score === -1)
 
   const accentColor = useMemo(() => resolveCssColor('--color-accent', '#3452FF'), [])
   const borderColor = useMemo(() => resolveCssColor('--color-border', '#E4E1D6'), [])
@@ -35,13 +38,17 @@ export default function RadarChart({ dimensions }) {
     datasets: [
       {
         label: 'Score',
-        // A score of -1 means "insufficient data", plotted as 0 on the
-        // chart; the note below the chart makes that distinction clear.
-        data: dimensions.map((dim) => (dim.score === -1 ? 0 : dim.score)),
+        // score === -1 means "insufficient data" — plotted as a real
+        // gap (null), never as a fabricated 0. spanGaps: false makes
+        // Chart.js actually break the shape at that axis instead of
+        // drawing a line through it, so a missing dimension reads as
+        // "not measured", not as "scored zero".
+        data: dimensions.map((dim) => (dim.score === -1 ? null : dim.score)),
         borderColor: accentColor,
         backgroundColor: `${accentColor}2e`, // ~18% alpha fill
         borderWidth: 2,
         pointBackgroundColor: accentColor,
+        spanGaps: false,
       },
     ],
   }
@@ -74,9 +81,9 @@ export default function RadarChart({ dimensions }) {
       <div className="radar-chart-canvas">
         <Radar data={data} options={options} />
       </div>
-      {hasInsufficientData && (
+      {notMeasured.length > 0 && (
         <p className="radar-chart-note">
-          * Some dimensions show as 0 due to insufficient data
+          Not measured: {notMeasured.map((dim) => getDimensionLabel(dim.dimension)).join(', ')}
         </p>
       )}
     </div>
