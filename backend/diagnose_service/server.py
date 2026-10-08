@@ -56,8 +56,8 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
 
     citation_visibility, evidence_density, content_recency,
     fact_consistency, and technical_readability are all independent, so
-    they run concurrently. topic_relevance depends on
-    citation_visibility's raw answers, so it runs after that result is
+    they run concurrently. topic_relevance reuses the 5 buyer questions
+    citation_engine generated, so it runs after that result is
     available.
     """
     cached = get_cached_result(request.domain)
@@ -79,7 +79,7 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
         citation_task, evidence_task, recency_task, fact_task, technical_task
     )
 
-    relevance_result = await asyncio.to_thread(check_topic_relevance, citation_result)
+    relevance_result = await asyncio.to_thread(check_topic_relevance, request.domain, citation_result)
 
     result = {
         "company_name": request.company_name,
