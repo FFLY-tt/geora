@@ -123,6 +123,65 @@ class DecideEngineTests(unittest.TestCase):
         content_recency_item = next(item for item in result["all_ranked"] if item["dimension"] == "content_recency")
         self.assertEqual(content_recency_item["priority"], 0.0)
 
+    def test_technical_readability_action_names_blocked_crawlers(self):
+        dimensions = [
+            _dim(
+                "technical_readability",
+                40,
+                {
+                    "crawler_access": {"blocked_crawlers": ["GPTBot", "ClaudeBot"]},
+                    "structured_data": {"found_types": []},
+                },
+            ),
+        ]
+        result = decide("example.com", "Example Inc.", dimensions)
+
+        item = result["all_ranked"][0]
+        self.assertIn("GPTBot", item["action"])
+        self.assertIn("ClaudeBot", item["action"])
+
+    def test_technical_readability_action_points_to_technical_package_when_no_structured_data(self):
+        dimensions = [
+            _dim(
+                "technical_readability",
+                70,
+                {
+                    "crawler_access": {"blocked_crawlers": []},
+                    "structured_data": {"found_types": []},
+                },
+            ),
+        ]
+        result = decide("example.com", "Example Inc.", dimensions)
+
+        item = result["all_ranked"][0]
+        self.assertIn("technical package", item["action"])
+
+    def test_technical_readability_ranks_alongside_the_other_4_reasons(self):
+        dimensions = [
+            _dim("topic_relevance", 55),
+            _dim("evidence_density", 40),
+            _dim("content_recency", 25),
+            _dim("fact_consistency", 45),
+            _dim(
+                "technical_readability",
+                30,
+                {"crawler_access": {"blocked_crawlers": []}, "structured_data": {"found_types": ["Organization"]}},
+            ),
+            _dim("citation_visibility", 30),
+        ]
+        result = decide("example.com", "Example Inc.", dimensions)
+
+        ranked_dimensions = [item["dimension"] for item in result["all_ranked"]]
+        self.assertEqual(len(ranked_dimensions), 5)
+        self.assertIn("technical_readability", ranked_dimensions)
+        # gap=70, weight=0.63 -> impact=44.1, fix_cost=1 -> priority=44.1,
+        # higher than content_recency's 51.0? No: 44.1 < 51.0, so this
+        # should rank second, right behind content_recency.
+        self.assertEqual(ranked_dimensions[0], "content_recency")
+        self.assertEqual(ranked_dimensions[1], "technical_readability")
+        technical_item = next(item for item in result["all_ranked"] if item["dimension"] == "technical_readability")
+        self.assertEqual(technical_item["priority"], 44.1)
+
     def test_empty_dimensions_returns_empty_lists_without_error(self):
         result = decide("example.com", "Example Inc.", [])
 

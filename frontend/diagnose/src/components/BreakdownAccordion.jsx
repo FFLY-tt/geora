@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import AccordionItem from './AccordionItem'
 import EmailGate from './EmailGate'
+import SourceMap from './SourceMap'
 
 // Must match the CSS transition durations on .breakdown-content (filter)
 // and .breakdown-overlay-unlocking (opacity/transform) in index.html.
@@ -25,12 +26,18 @@ export default function BreakdownAccordion({ dimensions, unlocked, onUnlock }) {
     return () => clearTimeout(timer)
   }, [unlocked])
 
+  // citation_visibility carries details.source_map; SourceMap itself
+  // handles citation being absent or score === -1 (shows its own
+  // "No source data" state rather than this component guessing).
+  const citation = dimensions.find((dim) => dim.dimension === 'citation_visibility')
+
   return (
     <div className="breakdown-wrapper">
       <div className={`breakdown-content ${unlocked ? '' : 'breakdown-locked'}`}>
         {dimensions.map((dim) => (
           <AccordionItem key={dim.dimension} dimension={dim} />
         ))}
+        <SourceMap citation={citation} />
       </div>
 
       {showOverlay && (

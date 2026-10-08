@@ -9,20 +9,24 @@ export const DIMENSION_LABELS = {
     description: 'How often AI answers mention or cite this brand',
   },
   topic_relevance: {
-    label: 'Topic relevance',
+    label: 'Matches what buyers ask',
     description: 'How directly content answers real customer questions',
   },
   evidence_density: {
-    label: 'Evidence density',
+    label: 'Real numbers, not hype',
     description: 'How much real data backs up the content',
   },
   content_recency: {
-    label: 'Recency',
+    label: 'Fresh and up to date',
     description: 'How recently key pages were last updated',
   },
   fact_consistency: {
-    label: 'Fact consistency',
+    label: 'Review sites agree with you',
     description: 'Whether key facts match across the web',
+  },
+  technical_readability: {
+    label: 'Easy for AI to read',
+    description: 'Whether AI crawlers can reach and understand your pages',
   },
 }
 
@@ -32,12 +36,4 @@ export const DIMENSION_LABELS = {
  */
 export function getDimensionLabel(dimensionKey) {
   return DIMENSION_LABELS[dimensionKey]?.label || dimensionKey
-}
-
-/**
- * Short description for a dimension key, or an empty string if it isn't
- * in the map above.
- */
-export function getDimensionDescription(dimensionKey) {
-  return DIMENSION_LABELS[dimensionKey]?.description || ''
 }
