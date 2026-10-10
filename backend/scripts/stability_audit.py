@@ -32,9 +32,24 @@ first reuse the exact same (category, queries) pair within that
 window. The report verifies this held and says so explicitly, rather
 than assuming it.
 
+--no-judgment-cache: evidence_density and topic_relevance now cache
+their aggregated judgment per exact input (engines._judgment_cache,
+added after this script first proved that was needed). That cache
+makes a 5-run stability check of range 0 trivially true from run 2
+onward regardless of whether the underlying listing/judgment method
+is itself stable — it would only prove the cache works, not that the
+method does. Passing --no-judgment-cache monkeypatches
+evidence_engine/relevance_engine's get_cached_judgment (always a miss)
+and save_judgment (a no-op) for the life of this process, so every
+single run performs a genuinely fresh LLM call with no cache
+involved at all — see _install_judgment_cache_bypass. This never
+touches any engine's scoring logic, only which function object those
+two names resolve to within these two modules.
+
 Usage:
     python backend/scripts/stability_audit.py "Feroot Security" feroot.com
     python backend/scripts/stability_audit.py "Feroot Security" feroot.com --runs 5 --yes
+    python backend/scripts/stability_audit.py "Feroot Security" feroot.com --runs 5 --yes --no-judgment-cache
 
 Output (see OUTPUT_DIR):
   <domain>_runs.jsonl   — one line per run, every dimension's score,
@@ -53,6 +68,7 @@ import threading
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from unittest.mock import patch
 
 import requests
 
@@ -86,6 +102,26 @@ DIMENSION_ORDER = [
 # A score swing of more than this many points across runs triggers the
 # detailed step-by-step divergence analysis in the report.
 RANGE_FLAG_THRESHOLD = 5
+
+
+def _install_judgment_cache_bypass() -> list:
+    """
+    See --no-judgment-cache in the module docstring. Returns the list
+    of started patchers so the caller can .stop() them; does not
+    modify any engine source file or scoring logic, only which
+    function object get_cached_judgment/save_judgment resolve to
+    within evidence_engine/relevance_engine for the life of this
+    process.
+    """
+    patchers = [
+        patch.object(evidence_engine, "get_cached_judgment", return_value=None),
+        patch.object(evidence_engine, "save_judgment", lambda *args, **kwargs: None),
+        patch.object(relevance_engine, "get_cached_judgment", return_value=None),
+        patch.object(relevance_engine, "save_judgment", lambda *args, **kwargs: None),
+    ]
+    for patcher in patchers:
+        patcher.start()
+    return patchers
 
 # Fields/snippet length kept per LLM call so the report is readable
 # without being a second copy of every raw answer.
@@ -561,15 +597,62 @@ def _buyer_questions_section(records: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def build_report(company_name: str, domain: str, records: list[dict]) -> str:
+def _evidence_density_category_table(records: list[dict]) -> str:
+    """
+    Per-run breakdown of how many verified evidence items landed in
+    each of evidence_density's 4 categories (see
+    engines/evidence_engine.py's EVIDENCE_CATEGORIES), so a reviewer
+    can see exactly which category is driving a score change rather
+    than only the final score. Returns "" if no run has this
+    structured breakdown available (e.g. every run was
+    insufficient_data).
+    """
+    categories: list[str] | None = None
+    rows = []
+    for record in records:
+        details = record["dimensions"]["evidence_density"]["details"]
+        counts = details.get("counts_by_category")
+        if counts is None:
+            continue
+        if categories is None:
+            categories = list(counts.keys())
+        rows.append(
+            [str(record["run"])]
+            + [str(counts.get(category, "")) for category in categories]
+            + [str(record["dimensions"]["evidence_density"]["score"])]
+        )
+
+    if categories is None:
+        return ""
+
+    header_cells = ["run"] + categories + ["score"]
+    lines = [
+        "#### Evidence category counts per run (`evidence_density`)",
+        "",
+        "| " + " | ".join(header_cells) + " |",
+        "|" + "---|" * len(header_cells),
+    ]
+    lines.extend("| " + " | ".join(row) + " |" for row in rows)
+    return "\n".join(lines)
+
+
+def build_report(company_name: str, domain: str, records: list[dict], judgment_cache_bypassed: bool = False) -> str:
     generated_at = datetime.now(timezone.utc).isoformat()
     score_table, stats_by_dimension = _score_summary_table(records)
+    cache_note = (
+        "Judgment cache: **bypassed** for this run (--no-judgment-cache) — every run performed a fresh "
+        "LLM judgment with no caching involved at all."
+        if judgment_cache_bypassed
+        else "Judgment cache: enabled (default) — a run after the first may be a cache hit; see each "
+        "dimension's own details for cache_status."
+    )
 
     sections = [
         f"# Stability audit: {company_name} ({domain})",
         "",
         f"Generated: {generated_at}",
         f"Runs: {len(records)}",
+        cache_note,
         "",
         _buyer_questions_section(records),
         "",
@@ -594,6 +677,12 @@ def build_report(company_name: str, domain: str, records: list[dict]) -> str:
             sections.append("")
             sections.append(_divergence_report(dimension_name, records))
         sections.append("")
+
+        if dimension_name == "evidence_density":
+            category_table = _evidence_density_category_table(records)
+            if category_table:
+                sections.append(category_table)
+                sections.append("")
 
     sections.append(_citation_mention_section(records))
     sections.append("")
@@ -661,6 +750,14 @@ def main() -> None:
     parser.add_argument("domain")
     parser.add_argument("--runs", type=int, default=5)
     parser.add_argument("--yes", action="store_true", help="Skip the confirmation prompt")
+    parser.add_argument(
+        "--no-judgment-cache",
+        action="store_true",
+        help=(
+            "Bypass evidence_engine/relevance_engine's judgment cache entirely for this run (neither read "
+            "nor write), so every run performs a fresh LLM judgment instead of a cache hit from run 2 onward"
+        ),
+    )
     args = parser.parse_args()
 
     if not _confirm(args.runs, args.yes):
@@ -668,29 +765,36 @@ def main() -> None:
         return
 
     _install_http_logging()
+    judgment_cache_patchers = _install_judgment_cache_bypass() if args.no_judgment_cache else []
+    if args.no_judgment_cache:
+        print("--no-judgment-cache: every run below performs a fresh LLM judgment, no caching involved.")
 
     results_path = OUTPUT_DIR / f"{args.domain}_runs.jsonl"
     records: list[dict] = []
 
-    for run_index in range(1, args.runs + 1):
-        print(f"Run {run_index}/{args.runs} for {args.company_name} ({args.domain})...")
-        dimensions = _run_all_dimensions(args.company_name, args.domain)
-        record = {
-            "run": run_index,
-            "company_name": args.company_name,
-            "domain": args.domain,
-            "timestamp": datetime.now(timezone.utc).isoformat(),
-            "dimensions": dimensions,
-        }
-        records.append(record)
-        _append_jsonl(results_path, record)
-        scores = {name: dimensions[name]["score"] for name in DIMENSION_ORDER}
-        print(f"  scores: {scores}")
+    try:
+        for run_index in range(1, args.runs + 1):
+            print(f"Run {run_index}/{args.runs} for {args.company_name} ({args.domain})...")
+            dimensions = _run_all_dimensions(args.company_name, args.domain)
+            record = {
+                "run": run_index,
+                "company_name": args.company_name,
+                "domain": args.domain,
+                "timestamp": datetime.now(timezone.utc).isoformat(),
+                "dimensions": dimensions,
+            }
+            records.append(record)
+            _append_jsonl(results_path, record)
+            scores = {name: dimensions[name]["score"] for name in DIMENSION_ORDER}
+            print(f"  scores: {scores}")
 
-        if run_index < args.runs:
-            time.sleep(SECONDS_BETWEEN_RUNS)
+            if run_index < args.runs:
+                time.sleep(SECONDS_BETWEEN_RUNS)
+    finally:
+        for patcher in judgment_cache_patchers:
+            patcher.stop()
 
-    report = build_report(args.company_name, args.domain, records)
+    report = build_report(args.company_name, args.domain, records, judgment_cache_bypassed=args.no_judgment_cache)
     report_path = OUTPUT_DIR / f"report_{args.domain}.md"
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(report, encoding="utf-8")
