@@ -32,8 +32,27 @@ _company_name_mentioned and _domain_matches_citation): a substring match
 on an ordinary English word used as a company name — "Close", "Linear" —
 false-positives on completely unrelated sentences ("close the deal", "a
 linear process"), which quietly inflated the mention rate for exactly
-those companies. See _COMMON_WORD_COMPANY_NAMES for the extra bar those
-specific names are held to.
+those companies. See _COMMON_WORD_COMPANY_NAMES for the list of names
+held to a stricter bar.
+
+That stricter bar went through one revision already. The first version
+required the domain to ALSO appear in the answer text (or a citation to
+match it) before a common-word name counted as a hit. Checked against
+real data, that was too strict in the other direction: every one of a
+sample of flipped cases was a genuine brand recommendation ("Close is a
+strong fit for small sales teams...") with no domain anywhere in the
+answer, so the rule was silently discarding real mentions, not just
+"close the deal"-style noise. The current version instead: a
+domain-matching citation is still an automatic hit (cheap, exact, no
+LLM needed); otherwise every sentence containing the name is handed to
+DeepSeek along with the real company name, domain, and category, asking
+whether the sentence is actually about the company or just uses the
+word in its ordinary sense (see _judge_common_word_mention). A claimed
+"yes" is only trusted if the quoted evidence sentence is a real,
+word-for-word substring of the actual answer text. If that disambiguation
+call itself fails, the run is marked "uncertain" — not guessed at as
+either a hit or a miss, and excluded from the mention-rate denominator
+for that question (see check_citation_visibility).
 
 Every returned DimensionScore also carries a `plain_finding` string: a
 founder-readable explanation (what's wrong, why it happens in business
@@ -167,6 +186,140 @@ def _domain_matches_citation(citation_url: str, domain_lower: str) -> bool:
     if host is None:
         return False
     return _is_own_domain(host, domain_lower)
+
+
+def _find_sentences_mentioning_name(company_name: str, answer_text: str) -> list[str]:
+    """
+    Split `answer_text` into sentences and return every one containing a
+    whole-word match of `company_name` — the candidate sentences a
+    common-word company name needs an LLM judgment on, since the word
+    merely appearing isn't enough evidence on its own (see
+    _judge_common_word_mention).
+    """
+    name = company_name.strip()
+    if not name:
+        return []
+    pattern = r"\b" + re.escape(name) + r"\b"
+    sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", answer_text) if s.strip()]
+    return [sentence for sentence in sentences if re.search(pattern, sentence, re.IGNORECASE)]
+
+
+_COMMON_WORD_DISAMBIGUATION_SYSTEM_PROMPT = """
+ROLE
+You are checking whether a word, which also happens to be an ordinary English word, is being used in a piece of text to refer to a specific real company by that name, or is just being used as the ordinary English word with no connection to that company.
+
+You will be given the company's real name, its website domain, and the general category it competes in, then one or more sentences from a real AI-generated answer, all containing that word. Decide whether the sentences are actually talking about the real company, or just happen to use the same word as an everyday word with an unrelated meaning.
+
+Respond with ONLY a JSON object, no other text, no markdown formatting, no code fences, in this exact shape:
+{"refers_to_company": true or false, "evidence_sentence": "<the exact sentence, copied word for word from the sentences you were given, that best supports your answer, or an empty string if refers_to_company is false>"}
+
+If refers_to_company is true, evidence_sentence must be an exact, word-for-word copy of one of the sentences you were given — never invent, paraphrase, or combine sentences.
+""".strip()
+
+
+def _call_deepseek_for_common_word_disambiguation(
+    company_name: str, domain: str, category: str, candidate_sentences: list[str]
+) -> dict:
+    """
+    Ask DeepSeek whether `candidate_sentences` (each already confirmed to
+    contain a whole-word match of `company_name`) are actually about the
+    real company, given its name, domain, and category as context.
+    Raises requests.RequestException on network/HTTP failure, ValueError
+    if the response isn't valid JSON in the expected shape.
+    """
+    url = f"{settings.deepseek_api_base_url}/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {settings.deepseek_api_key}",
+        "Content-Type": "application/json",
+        "User-Agent": settings.http_user_agent,
+    }
+    user_content = (
+        f"Company name: {company_name}\n"
+        f"Company domain: {domain}\n"
+        f"Category the company competes in: {category}\n\n"
+        f'Sentences containing the word "{company_name}":\n'
+        + "\n".join(f"- {sentence}" for sentence in candidate_sentences)
+    )
+    payload = {
+        "model": settings.deepseek_model,
+        "messages": [
+            {"role": "system", "content": _COMMON_WORD_DISAMBIGUATION_SYSTEM_PROMPT},
+            {"role": "user", "content": user_content},
+        ],
+        "temperature": 0,
+    }
+    response = requests.post(
+        url,
+        headers=headers,
+        json=payload,
+        timeout=settings.request_timeout_seconds,
+    )
+    response.raise_for_status()
+    raw_response = response.json()
+
+    content = raw_response["choices"][0]["message"]["content"]
+    cleaned = re.sub(r"^```(?:json)?|```$", "", content.strip(), flags=re.MULTILINE).strip()
+    parsed = json.loads(cleaned)
+
+    if "refers_to_company" not in parsed:
+        raise ValueError(f"DeepSeek response missing expected fields: {parsed!r}")
+
+    return parsed
+
+
+def _judge_common_word_mention(company_name: str, domain: str, category: str, answer_text: str) -> dict:
+    """
+    For a common-word company name with no domain-matching citation,
+    decide whether `answer_text` actually mentions the real company.
+
+    No candidate sentences at all -> "no_mention", no LLM call. Otherwise
+    asks DeepSeek (see _call_deepseek_for_common_word_disambiguation) and
+    only trusts a "yes" if the evidence sentence it quotes is a real,
+    word-for-word substring of `answer_text` — never a fabricated quote.
+    An LLM call failure is caught and reported as "uncertain" rather than
+    guessed at as either a hit or a miss.
+
+    Returns {"classification": "hit" | "no_mention" | "uncertain",
+    "candidate_sentences": [...], "llm_judgment": dict | None,
+    "evidence_sentence": str | None}. Never raises.
+    """
+    candidate_sentences = _find_sentences_mentioning_name(company_name, answer_text)
+
+    if not candidate_sentences:
+        return {
+            "classification": "no_mention",
+            "candidate_sentences": [],
+            "llm_judgment": None,
+            "evidence_sentence": None,
+        }
+
+    try:
+        judgment = _call_deepseek_for_common_word_disambiguation(company_name, domain, category, candidate_sentences)
+    except (requests.RequestException, KeyError, IndexError, ValueError, json.JSONDecodeError) as exc:
+        return {
+            "classification": "uncertain",
+            "candidate_sentences": candidate_sentences,
+            "llm_judgment": None,
+            "evidence_sentence": None,
+            "error": str(exc),
+        }
+
+    refers_to_company = bool(judgment.get("refers_to_company"))
+    evidence_sentence = (judgment.get("evidence_sentence") or "").strip()
+
+    # The claimed evidence sentence must really appear in the real
+    # answer text — never trust the model's own claim that a quote is
+    # real without checking it.
+    if refers_to_company and (not evidence_sentence or evidence_sentence not in answer_text):
+        refers_to_company = False
+        evidence_sentence = ""
+
+    return {
+        "classification": "hit" if refers_to_company else "no_mention",
+        "candidate_sentences": candidate_sentences,
+        "llm_judgment": judgment,
+        "evidence_sentence": evidence_sentence or None,
+    }
 
 
 def _call_deepseek_for_category(homepage_text: str) -> str:
@@ -399,23 +552,35 @@ def _call_perplexity(query: str) -> dict:
     return response.json()
 
 
-def _execute_single_run(query: str, domain_lower: str, company_name: str, name_is_common_word: bool) -> dict:
+def _execute_single_run(
+    query: str, domain: str, company_name: str, category: str, name_is_common_word: bool
+) -> dict:
     """
-    One Perplexity call for `query`. Whether a mention "counts" is
-    decided by whole-word company-name matching (_company_name_mentioned)
-    and strict hostname-based domain matching (_domain_matches_citation)
-    — never a plain substring check, see this module's docstring.
+    One Perplexity call for `query`.
 
-    When `name_is_common_word` is True (see _COMMON_WORD_COMPANY_NAMES), a
-    name match in the answer text is not accepted on its own: it only
-    counts as a hit alongside the domain itself also appearing somewhere
-    in the answer text, or a citation link actually matching the domain.
-    For every other company name, a name match or a domain-matching
-    citation is enough on its own, same as before.
+    Non-common-word names: a whole-word name match
+    (_company_name_mentioned) or a domain-matching citation
+    (_domain_matches_citation) is enough on its own, no LLM call —
+    unchanged, see this module's docstring.
 
-    Never raises: a request failure is reported as status "error" so
-    RUNS_PER_QUERY of these can run per query without one failed call
-    aborting the others.
+    Common-word names (see _COMMON_WORD_COMPANY_NAMES): a
+    domain-matching citation is still an automatic hit, no LLM call.
+    Otherwise a name match alone is NOT trusted — see
+    _judge_common_word_mention for the candidate-sentence + LLM
+    disambiguation this falls back to, and why.
+
+    Every result carries `mention_rule` (which of the three paths above
+    decided it: "whole_word", "citation_domain_match", or
+    "llm_disambiguation") and `mention_classification` ("hit",
+    "no_mention", or "uncertain" — only reachable via
+    llm_disambiguation). `is_hit` is True/False, except None when
+    mention_classification is "uncertain": that run is deliberately
+    neither a hit nor a miss (see check_citation_visibility, which
+    excludes it from the mention-rate denominator).
+
+    Never raises: a Perplexity request failure is reported as status
+    "error" so RUNS_PER_QUERY of these can run per query without one
+    failed call aborting the others.
     """
     try:
         raw_response = _call_perplexity(query)
@@ -430,32 +595,57 @@ def _execute_single_run(query: str, domain_lower: str, company_name: str, name_i
     # Perplexity's "sonar" models return a top-level "citations" field: a
     # list of source URLs used to ground the answer.
     citations = raw_response.get("citations", []) or []
-
+    domain_lower = domain.lower()
     matched_citations = [c for c in citations if _domain_matches_citation(c, domain_lower)]
-    company_mentioned_in_answer = _company_name_mentioned(company_name, answer_text)
-    domain_mentioned_in_answer = domain_lower in answer_text.lower()
 
-    if name_is_common_word:
-        # A common-word name alone is too weak a signal on its own; also
-        # require the domain itself to appear somewhere in the answer
-        # text, or fall back to a real domain-matching citation.
-        is_hit = bool(matched_citations) or (company_mentioned_in_answer and domain_mentioned_in_answer)
-    else:
-        is_hit = bool(matched_citations) or company_mentioned_in_answer
-
-    return {
+    base_result = {
         "status": "ok",
         "answer_text": answer_text,
         "all_citations": citations,
         "matched_citations": matched_citations,
-        "company_mentioned_in_answer": company_mentioned_in_answer,
-        "domain_mentioned_in_answer": domain_mentioned_in_answer,
+    }
+
+    if not name_is_common_word:
+        company_mentioned_in_answer = _company_name_mentioned(company_name, answer_text)
+        is_hit = bool(matched_citations) or company_mentioned_in_answer
+        return {
+            **base_result,
+            "mention_rule": "whole_word",
+            "mention_classification": "hit" if is_hit else "no_mention",
+            "candidate_sentences": [],
+            "llm_judgment": None,
+            "evidence_sentence": None,
+            "is_hit": is_hit,
+        }
+
+    if matched_citations:
+        return {
+            **base_result,
+            "mention_rule": "citation_domain_match",
+            "mention_classification": "hit",
+            "candidate_sentences": [],
+            "llm_judgment": None,
+            "evidence_sentence": None,
+            "is_hit": True,
+        }
+
+    disambiguation = _judge_common_word_mention(company_name, domain, category, answer_text)
+    classification = disambiguation["classification"]
+    is_hit = None if classification == "uncertain" else classification == "hit"
+
+    return {
+        **base_result,
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": classification,
+        "candidate_sentences": disambiguation["candidate_sentences"],
+        "llm_judgment": disambiguation["llm_judgment"],
+        "evidence_sentence": disambiguation["evidence_sentence"],
         "is_hit": is_hit,
     }
 
 
 def _run_queries_multiple_times(
-    queries: list[str], domain_lower: str, company_name: str, name_is_common_word: bool
+    queries: list[str], domain: str, company_name: str, category: str, name_is_common_word: bool
 ) -> dict[str, list[dict]]:
     """
     Call Perplexity RUNS_PER_QUERY times for each query (REQUIRED_QUERY_COUNT
@@ -472,7 +662,7 @@ def _run_queries_multiple_times(
     runs_by_query: dict[str, list[dict | None]] = {query: [None] * RUNS_PER_QUERY for query in queries}
 
     def _work(query: str, run_index: int) -> tuple[str, int, dict]:
-        result = _execute_single_run(query, domain_lower, company_name, name_is_common_word)
+        result = _execute_single_run(query, domain, company_name, category, name_is_common_word)
         result["run"] = run_index + 1
         return query, run_index, result
 
@@ -759,23 +949,30 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
         # this is the actual fix for run-to-run score instability.
         save_queries(_query_cache_key(domain), category, queries)
 
-    domain_lower = domain.lower()
     name_is_common_word = _is_common_word_company_name(company_name)
 
-    runs_by_query = _run_queries_multiple_times(queries, domain_lower, company_name, name_is_common_word)
+    runs_by_query = _run_queries_multiple_times(queries, domain, company_name, category, name_is_common_word)
 
     per_query_results = []
     raw_answers: dict[str, str] = {}
     fully_failed_queries = []
+    total_uncertain_runs = 0
 
     for query in queries:
         runs = runs_by_query[query]
         successful_runs = [run for run in runs if run["status"] == "ok"]
-        hits = sum(1 for run in successful_runs if run["is_hit"])
+        # "uncertain" runs (the common-word LLM disambiguation call
+        # itself failed) are neither a hit nor a miss — excluded from
+        # both the hit count and the denominator, never guessed at
+        # either way. See _execute_single_run / _judge_common_word_mention.
+        uncertain_runs = [run for run in successful_runs if run["mention_classification"] == "uncertain"]
+        countable_runs = [run for run in successful_runs if run["mention_classification"] != "uncertain"]
+        total_uncertain_runs += len(uncertain_runs)
+        hits = sum(1 for run in countable_runs if run["is_hit"])
         # A question's mention rate is only ever computed from its own
-        # successful runs; a failed call simply isn't counted either way,
-        # it never counts as a miss.
-        mention_rate = (hits / len(successful_runs)) if successful_runs else None
+        # countable runs; a failed or uncertain call simply isn't
+        # counted either way, it never counts as a miss.
+        mention_rate = (hits / len(countable_runs)) if countable_runs else None
 
         per_query_results.append(
             {
@@ -784,6 +981,7 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
                 "runs": runs,
                 "successful_runs": len(successful_runs),
                 "failed_runs": RUNS_PER_QUERY - len(successful_runs),
+                "uncertain_runs": len(uncertain_runs),
                 "mention_rate": mention_rate,
             }
         )
@@ -840,6 +1038,7 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
                 "queries": queries,
                 "runs_per_query": RUNS_PER_QUERY,
                 "name_is_common_word": name_is_common_word,
+                "total_uncertain_runs": total_uncertain_runs,
                 "per_query_results": per_query_results,
                 "fully_failed_queries": fully_failed_queries,
                 "source_map": source_map,
@@ -868,6 +1067,7 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
             "queries_valid": len(valid_queries),
             "average_mention_rate": round(average_mention_rate, 3),
             "name_is_common_word": name_is_common_word,
+            "total_uncertain_runs": total_uncertain_runs,
             "per_query_results": per_query_results,
             "fully_failed_queries": fully_failed_queries,
             "source_map": source_map,
