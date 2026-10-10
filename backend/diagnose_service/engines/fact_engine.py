@@ -11,10 +11,30 @@ protection, which this project does not do. Instead, this engine asks
 Perplexity (which already indexes and cites those sites) what it knows
 about the company from G2/Capterra, and treats Perplexity's cited answer
 as the third-party source to compare against the official homepage.
+
+Investigated after this engine scored the same company (feroot.com) 95,
+35, and 10 within a few days. The official-side fetch turned out to be
+stable (the same homepage + guessed pricing URL every time) and
+Perplexity cited the exact same G2/Capterra URLs on every run — the
+instability was not which review pages got found. It was: Perplexity's
+own generated summary of what those pages say has different wording
+and emphasis run to run (it is called once, uncached, with no
+temperature pinned), and the single DeepSeek comparison call that
+judges whether a given field "really disagrees" is itself not
+perfectly consistent (temperature 0.2, called once). Feeding that into
+_score_from_conflict_count — a steep step function where each
+additional conflict is worth tens of points — turned a 1-conflict swing
+in judgment into a 25-85 point swing in score. The fix follows
+evidence_engine.py's pattern: the comparison judgment (not the
+Perplexity fetch) runs JUDGMENT_RUNS times concurrently on the SAME
+fixed pair of texts, and the reported score is the median across
+whichever runs found something comparable.
 """
 
 import json
 import re
+import statistics
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
 
@@ -27,6 +47,12 @@ from models import DimensionScore
 DIMENSION_NAME = "fact_consistency"
 
 MAX_FORMAT_ATTEMPTS = 2
+
+# The fact comparison is judged this many times, concurrently, on the
+# same fixed pair of texts, and the median score across whichever runs
+# found something comparable is what's reported (see module docstring
+# for why).
+JUDGMENT_RUNS = 3
 
 _FACT_COMPARISON_SYSTEM_PROMPT = f"""
 You are a strict fact-checking auditor. You will be given two pieces of
@@ -209,6 +235,57 @@ def _get_clean_fact_comparison(company_name: str, official_text: str, third_part
         entry["third_party_says"] = sanitize_banned_formatting(entry.get("third_party_says", ""))
     format_check_log.append({"attempt": "sanitized", "issues": []})
     return comparison, format_check_log
+
+
+def _run_single_comparison(company_name: str, official_text: str, third_party_text: str, run_index: int) -> dict:
+    """
+    Run one full fact comparison (including its own internal formatting
+    retry). Never raises: a failure is recorded as an "error" entry and
+    excluded from the median, the same way a failed run is excluded in
+    evidence_engine's multi-run scoring.
+
+    A run that found nothing comparable between the two texts (empty
+    compared_fields) is recorded with score=None and also excluded from
+    the median — "nothing was comparable" is not a 0-conflict "they
+    agree" verdict and must never be scored as one.
+    """
+    try:
+        comparison, format_check_log = _get_clean_fact_comparison(company_name, official_text, third_party_text)
+    except (requests.RequestException, ValueError, KeyError, json.JSONDecodeError) as exc:
+        return {"run": run_index, "status": "error", "error": str(exc)}
+
+    compared_fields = comparison["compared_fields"]
+    conflicts = comparison["conflicts"]
+    score = _score_from_conflict_count(len(conflicts)) if compared_fields else None
+
+    return {
+        "run": run_index,
+        "status": "ok",
+        "compared_fields": compared_fields,
+        "conflicts": conflicts,
+        "score": score,
+        "format_check": format_check_log,
+    }
+
+
+def _run_comparisons_concurrently(company_name: str, official_text: str, third_party_text: str) -> list[dict]:
+    """
+    Run JUDGMENT_RUNS independent fact comparisons concurrently on the
+    SAME fixed pair of texts (each is its own DeepSeek call with no
+    shared state, so there's nothing to race on) and return the results
+    in run-index order, regardless of which call actually finished
+    first.
+    """
+    results: list[dict] = [None] * JUDGMENT_RUNS  # type: ignore[list-item]
+    with ThreadPoolExecutor(max_workers=JUDGMENT_RUNS) as executor:
+        future_to_run = {
+            executor.submit(_run_single_comparison, company_name, official_text, third_party_text, run_index): run_index
+            for run_index in range(1, JUDGMENT_RUNS + 1)
+        }
+        for future in as_completed(future_to_run):
+            run_index = future_to_run[future]
+            results[run_index - 1] = future.result()
+    return results
 
 
 def _score_from_conflict_count(conflict_count: int) -> int:
@@ -422,9 +499,11 @@ def check_fact_consistency(company_name: str, domain: str) -> DimensionScore:
             },
         )
 
-    try:
-        comparison, format_check_log = _get_clean_fact_comparison(company_name, official_text, answer_text)
-    except (requests.RequestException, ValueError, KeyError, json.JSONDecodeError) as exc:
+    runs = _run_comparisons_concurrently(company_name, official_text, answer_text)
+    successful_runs = [run for run in runs if run["status"] == "ok"]
+
+    if not successful_runs:
+        errors = "; ".join(f"run {run['run']}: {run['error']}" for run in runs)
         fallback = (
             "We gathered both sources but hit a technical hiccup while comparing them, so there's "
             "no real verdict this run. Today, just try running the report again."
@@ -441,22 +520,23 @@ def check_fact_consistency(company_name: str, domain: str) -> DimensionScore:
             score=-1,
             details={
                 "status": "insufficient_data",
-                "reason": f"DeepSeek comparison failed: {exc}",
+                "reason": f"DeepSeek comparison failed on all {JUDGMENT_RUNS} runs: {errors}",
                 "query": query,
                 "citations": citations,
                 "official_urls_fetched": official_urls_fetched,
+                "runs": runs,
                 "generation_log": generation_log,
                 "plain_finding": plain_finding,
             },
         )
 
-    compared_fields = comparison["compared_fields"]
-    conflicts = comparison["conflicts"]
+    scored_runs = [run for run in successful_runs if run["score"] is not None]
 
-    if not compared_fields:
-        # Nothing was actually comparable between the two sources (e.g.
-        # neither mentions pricing, regions, or features) — there is no
-        # real basis to claim "no conflicts found".
+    if not scored_runs:
+        # Every successful run agreed there was nothing actually
+        # comparable between the two sources (e.g. neither mentions
+        # pricing, regions, or features) — there is no real basis to
+        # claim "no conflicts found".
         fallback = (
             "We compared the official site against what independent listings say about "
             f'"{company_name}", but neither side actually mentioned enough specifics, like '
@@ -483,12 +563,20 @@ def check_fact_consistency(company_name: str, domain: str) -> DimensionScore:
                 "query": query,
                 "citations": citations,
                 "official_urls_fetched": official_urls_fetched,
+                "runs": runs,
                 "generation_log": generation_log,
                 "plain_finding": plain_finding,
             },
         )
 
-    score = _score_from_conflict_count(len(conflicts))
+    score = round(statistics.median(run["score"] for run in scored_runs))
+    # Show the compared_fields/conflicts from whichever scored run's
+    # own score is closest to the reported median (ties broken by run
+    # order), so the quoted comparison actually lines up with the score
+    # shown rather than coming from an arbitrary run.
+    representative_run = min(scored_runs, key=lambda run: (abs(run["score"] - score), run["run"]))
+    compared_fields = representative_run["compared_fields"]
+    conflicts = representative_run["conflicts"]
 
     fallback = _build_fallback_plain_finding(company_name, compared_fields, conflicts)
     facts_summary = _build_facts_summary(company_name, compared_fields, conflicts)
@@ -504,7 +592,8 @@ def check_fact_consistency(company_name: str, domain: str) -> DimensionScore:
             "official_urls_fetched": official_urls_fetched,
             "compared_fields": compared_fields,
             "conflicts": conflicts,
-            "format_check": format_check_log,
+            "runs": runs,
+            "median_score": score,
             "generation_log": generation_log,
             "plain_finding": plain_finding,
         },
