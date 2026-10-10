@@ -26,6 +26,7 @@ class Settings:
 
     perplexity_api_key: str | None
     deepseek_api_key: str | None
+    contact_email: str | None = None
 
     # --- Perplexity API ---------------------------------------------------
     perplexity_api_base_url: str = "https://api.perplexity.ai"
@@ -53,6 +54,7 @@ def _load_settings() -> Settings:
     return Settings(
         perplexity_api_key=os.getenv("PERPLEXITY_API_KEY") or None,
         deepseek_api_key=os.getenv("DEEPSEEK_API_KEY") or None,
+        contact_email=os.getenv("CONTACT_EMAIL") or None,
     )
 
 
