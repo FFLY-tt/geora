@@ -171,5 +171,168 @@ class CitationEngineMultiRunTests(unittest.TestCase):
         self.assertEqual(stub.call_count, 15)
 
 
+class CompanyNameMatchingTests(unittest.TestCase):
+    """_execute_single_run's whole-word name matching and strict domain matching, tested directly against the real function (no HTTP, just _call_perplexity mocked)."""
+
+    def _run_with_answer(self, answer_text: str, citations: list[str], domain_lower: str, company_name: str, name_is_common_word: bool) -> dict:
+        with patch.object(
+            citation_engine,
+            "_call_perplexity",
+            return_value={"choices": [{"message": {"content": answer_text}}], "citations": citations},
+        ):
+            return citation_engine._execute_single_run("some query", domain_lower, company_name, name_is_common_word)
+
+    def test_close_the_deal_does_not_count_as_mentioning_close(self):
+        result = self._run_with_answer(
+            "You should close the deal quickly to win this customer.",
+            ["https://unrelated.com"],
+            "close.com",
+            "Close",
+            name_is_common_word=True,
+        )
+        # The whole word "close" really is there...
+        self.assertTrue(result["company_mentioned_in_answer"])
+        # ...but for a common-word name, that alone is not enough: the
+        # domain never appears anywhere, and no citation matches it, so
+        # this must not count as a real hit.
+        self.assertFalse(result["is_hit"])
+
+    def test_close_crm_is_a_good_choice_needs_domain_too_for_a_common_word_name(self):
+        # The name is mentioned in a real recommendation (not an idiom),
+        # but the domain is not mentioned anywhere and no citation
+        # matches it either -- under the common-word rule this still
+        # isn't a confirmed hit, since name-only is exactly the weak
+        # signal this rule exists to not trust.
+        result = self._run_with_answer(
+            "Close CRM is a good choice for growing sales teams.",
+            ["https://unrelated.com"],
+            "close.com",
+            "Close",
+            name_is_common_word=True,
+        )
+        self.assertTrue(result["company_mentioned_in_answer"])
+        self.assertFalse(result["domain_mentioned_in_answer"])
+        self.assertFalse(result["is_hit"])
+
+    def test_common_word_name_with_domain_also_mentioned_counts_as_hit(self):
+        result = self._run_with_answer(
+            "Close (close.com) is a good choice for growing sales teams.",
+            ["https://unrelated.com"],
+            "close.com",
+            "Close",
+            name_is_common_word=True,
+        )
+        self.assertTrue(result["is_hit"])
+
+    def test_common_word_name_via_matching_citation_counts_as_hit(self):
+        result = self._run_with_answer(
+            "Some generic answer that never names any vendor by name.",
+            ["https://close.com/product"],
+            "close.com",
+            "Close",
+            name_is_common_word=True,
+        )
+        self.assertTrue(result["is_hit"])
+
+    def test_non_common_word_name_match_alone_is_enough(self):
+        result = self._run_with_answer(
+            "Feroot Security is a strong option for this.",
+            ["https://unrelated.com"],
+            "feroot.com",
+            "Feroot Security",
+            name_is_common_word=False,
+        )
+        self.assertTrue(result["is_hit"])
+
+    def test_name_glued_to_other_letters_is_not_a_whole_word_match(self):
+        result = self._run_with_answer(
+            "FerootSecurityPlus helps with this, unrelated to the real brand.",
+            [],
+            "feroot.com",
+            "Feroot Security",
+            name_is_common_word=False,
+        )
+        self.assertFalse(result["company_mentioned_in_answer"])
+        self.assertFalse(result["is_hit"])
+
+    def test_notdomain_does_not_match_citation(self):
+        result = self._run_with_answer(
+            "Some generic answer.",
+            ["https://notferoot.com/page"],
+            "feroot.com",
+            "Feroot Security",
+            name_is_common_word=False,
+        )
+        self.assertEqual(result["matched_citations"], [])
+        self.assertFalse(result["is_hit"])
+
+    def test_subdomain_matches_citation(self):
+        result = self._run_with_answer(
+            "Some generic answer.",
+            ["https://app.feroot.com/page"],
+            "feroot.com",
+            "Feroot Security",
+            name_is_common_word=False,
+        )
+        self.assertEqual(result["matched_citations"], ["https://app.feroot.com/page"])
+        self.assertTrue(result["is_hit"])
+
+    def test_is_common_word_company_name(self):
+        self.assertTrue(citation_engine._is_common_word_company_name("Close"))
+        self.assertTrue(citation_engine._is_common_word_company_name("  Linear  "))
+        self.assertTrue(citation_engine._is_common_word_company_name("ZOOM"))
+        self.assertFalse(citation_engine._is_common_word_company_name("Feroot Security"))
+        self.assertFalse(citation_engine._is_common_word_company_name("ExampleCo"))
+
+
+class QueryGenerationTests(unittest.TestCase):
+    """The 2-step category -> queries generation, and that homepage text never reaches the queries call."""
+
+    def test_queries_call_never_receives_homepage_text(self):
+        homepage_text = "UNIQUE_HOMEPAGE_MARKER_TEXT_12345 describing the real product in detail."
+        category = "browser side security and privacy compliance monitoring"
+        received_args = []
+
+        def fake_call_for_queries(received_category):
+            received_args.append(received_category)
+            return list(QUERIES)
+
+        with patch.object(citation_engine, "_call_deepseek_for_category", return_value=category), \
+             patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries):
+            result_category, result_queries, _log = citation_engine._generate_category_and_brand_free_queries(
+                COMPANY_NAME, DOMAIN, homepage_text
+            )
+
+        self.assertEqual(result_category, category)
+        self.assertEqual(result_queries, QUERIES)
+        self.assertEqual(len(received_args), 1)
+        # The queries call received ONLY the category string -- nothing
+        # from the real homepage text leaked into it.
+        self.assertEqual(received_args[0], category)
+        self.assertNotIn("UNIQUE_HOMEPAGE_MARKER_TEXT_12345", received_args[0])
+
+    def test_contaminated_batch_is_retried_without_recalling_category(self):
+        homepage_text = "Some real homepage text."
+        category = "browser side security and privacy compliance monitoring"
+        call_count = {"n": 0}
+
+        def fake_call_for_queries(received_category):
+            call_count["n"] += 1
+            if call_count["n"] == 1:
+                # First attempt is contaminated with the brand name.
+                return [f"{COMPANY_NAME} is great", "q2", "q3", "q4", "q5"]
+            return list(QUERIES)
+
+        with patch.object(citation_engine, "_call_deepseek_for_category", return_value=category) as mock_category, \
+             patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries):
+            _result_category, result_queries, _log = citation_engine._generate_category_and_brand_free_queries(
+                COMPANY_NAME, DOMAIN, homepage_text
+            )
+
+        mock_category.assert_called_once()  # category classification happens exactly once, never retried
+        self.assertEqual(call_count["n"], 2)  # queries regenerated once after contamination
+        self.assertEqual(result_queries, QUERIES)
+
+
 if __name__ == "__main__":
     unittest.main()
