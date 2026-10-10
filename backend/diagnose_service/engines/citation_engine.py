@@ -15,7 +15,10 @@ nothing real. The fix is to never let the brand name reach the query:
    text (via DeepSeek), described the way an analyst/buyer would put it,
    not the company's own marketing language.
 2. Generate brand-free buyer questions for that category (also via
-   DeepSeek) — questions a buyer would ask before knowing any vendor name.
+   DeepSeek, but from the category description ALONE — see
+   _call_deepseek_for_queries for why the homepage text is deliberately
+   withheld from this second call) — questions a buyer would ask before
+   knowing any vendor name.
 3. Query Perplexity with only those brand-free questions, and check
    whether the company or its domain shows up organically in the answer
    or citations.
@@ -23,6 +26,33 @@ nothing real. The fix is to never let the brand name reach the query:
 Any generated batch of questions that turns out to contain the company
 name or domain is discarded and regenerated — it never reaches Perplexity
 or the score.
+
+Whether a mention "counts" is no longer a plain substring check (see
+_company_name_mentioned and _domain_matches_citation): a substring match
+on an ordinary English word used as a company name — "Close", "Linear" —
+false-positives on completely unrelated sentences ("close the deal", "a
+linear process"), which quietly inflated the mention rate for exactly
+those companies. See _COMMON_WORD_COMPANY_NAMES for the list of names
+held to a stricter bar.
+
+That stricter bar went through one revision already. The first version
+required the domain to ALSO appear in the answer text (or a citation to
+match it) before a common-word name counted as a hit. Checked against
+real data, that was too strict in the other direction: every one of a
+sample of flipped cases was a genuine brand recommendation ("Close is a
+strong fit for small sales teams...") with no domain anywhere in the
+answer, so the rule was silently discarding real mentions, not just
+"close the deal"-style noise. The current version instead: a
+domain-matching citation is still an automatic hit (cheap, exact, no
+LLM needed); otherwise every sentence containing the name is handed to
+DeepSeek along with the real company name, domain, and category, asking
+whether the sentence is actually about the company or just uses the
+word in its ordinary sense (see _judge_common_word_mention). A claimed
+"yes" is only trusted if the quoted evidence sentence is a real,
+word-for-word substring of the actual answer text. If that disambiguation
+call itself fails, the run is marked "uncertain" — not guessed at as
+either a hit or a miss, and excluded from the mention-rate denominator
+for that question (see check_citation_visibility).
 
 Every returned DimensionScore also carries a `plain_finding` string: a
 founder-readable explanation (what's wrong, why it happens in business
@@ -41,7 +71,7 @@ from shared.config import settings
 from shared._fetch_utils import fetch_page_text
 from engines._plain_finding_generator import make_plain_finding
 from engines._query_cache import CACHE_TTL, get_cached_queries, save_queries
-from engines._source_map import build_source_map
+from engines._source_map import _extract_domain, _is_own_domain, build_source_map
 from shared._text_format import PLAIN_LANGUAGE_FORMAT_RULES, find_banned_formatting, sanitize_banned_formatting
 from models import DimensionScore
 
@@ -59,23 +89,36 @@ RUNS_PER_QUERY = 3
 # Perplexity calls are in flight at once.
 MAX_CONCURRENT_CALLS = 5
 
-_CATEGORY_AND_QUERY_SYSTEM_PROMPT = f"""
+_CATEGORY_SYSTEM_PROMPT = f"""
 You are a B2B market research analyst. You will be given the visible text
-of a company's homepage. Do two things:
+of a company's homepage.
 
-1. Identify the specific, narrow customer-facing category or niche this
+Identify the specific, narrow customer-facing category or niche this
 company competes in. Describe it the way an independent industry analyst
 or a customer researching solutions would describe it, NOT using the
 company's own marketing language, and NOT using the company's name.
 
-2. Generate exactly 5 realistic questions or search queries that a
-customer in this category would type into an AI assistant BEFORE knowing
-about any specific vendor. Each question must describe a problem, task,
-or need in the category. They must NOT mention this company's name, its
-domain, or any of its specific product names.
+Respond with ONLY a JSON object, no other text, in this exact shape:
+{{"category": "<short customer-facing category description>"}}
+
+{PLAIN_LANGUAGE_FORMAT_RULES}
+""".strip()
+
+# Deliberately does NOT ask for or accept homepage text as input — see
+# _call_deepseek_for_queries for why.
+_QUERY_SYSTEM_PROMPT = f"""
+You are a B2B market research analyst. You will be given a short
+description of a customer-facing category or niche, with no company name
+attached to it.
+
+Generate exactly 5 realistic questions or search queries that a customer
+in this category would type into an AI assistant BEFORE knowing about any
+specific vendor. Each question must describe a problem, task, or need in
+the category. They must NOT mention any specific company name, domain, or
+product name — you were not given one, so do not invent one either.
 
 Respond with ONLY a JSON object, no other text, in this exact shape:
-{{"category": "<short customer-facing category description>", "queries": ["<query 1>", "<query 2>", "<query 3>", "<query 4>", "<query 5>"]}}
+{{"queries": ["<query 1>", "<query 2>", "<query 3>", "<query 4>", "<query 5>"]}}
 
 {PLAIN_LANGUAGE_FORMAT_RULES}
 """.strip()
@@ -85,13 +128,104 @@ Respond with ONLY a JSON object, no other text, in this exact shape:
 # from different runs incomparable even if visibility genuinely didn't change.
 REQUIRED_QUERY_COUNT = 5
 
+# Bump this whenever the question-generation METHOD changes in a way that
+# could make previously-cached questions unrepresentative of the new
+# method (e.g. this version: no longer handing homepage text to the query
+# generation call). Folded into the cache key (see _query_cache_key) so
+# questions generated the old way are never silently served as if they
+# were generated the new way — a cache miss on the new key just
+# regenerates fresh, correctly, instead of needing any change to
+# engines._query_cache itself.
+_QUERY_GENERATION_VERSION = "v2"
 
-def _call_deepseek_for_category_and_queries(homepage_text: str) -> dict:
+# Company names that are also ordinary English words. A plain whole-word
+# match on one of these is not reliable evidence of a real brand mention
+# — "close the deal", "a linear process" — so these names are held to a
+# stricter bar (see _is_common_word_company_name and check_citation_visibility).
+_COMMON_WORD_COMPANY_NAMES = {
+    "close", "linear", "notion", "monday", "box", "front", "loom", "slack", "zoom",
+}
+
+
+def _query_cache_key(domain: str) -> str:
+    """The real cache key used for question generation: domain + method version. See _QUERY_GENERATION_VERSION."""
+    return f"{domain}#{_QUERY_GENERATION_VERSION}"
+
+
+def _is_common_word_company_name(company_name: str) -> bool:
+    """True when `company_name` itself (case-insensitive, whole name) is one of _COMMON_WORD_COMPANY_NAMES."""
+    return company_name.strip().lower() in _COMMON_WORD_COMPANY_NAMES
+
+
+def _company_name_mentioned(company_name: str, answer_text: str) -> bool:
     """
-    Ask DeepSeek to classify the company's buyer-facing category and
-    generate brand-free buyer queries for it, based on real homepage text.
-    Raises requests.RequestException on network/HTTP failure, and
-    ValueError if the response isn't valid JSON in the expected shape.
+    Whole-word, case-insensitive match for `company_name` inside
+    `answer_text` — not a substring check, so a company named "Close" is
+    not falsely matched by the word "close" inside "close the deal".
+    Works for multi-word names ("Feroot Security") by requiring a word
+    boundary only at the start and end of the whole phrase, not between
+    its internal words (so the space between "Feroot" and "Security"
+    matches literally, the way the name is actually written).
+    """
+    name = company_name.strip()
+    if not name:
+        return False
+    pattern = r"\b" + re.escape(name) + r"\b"
+    return bool(re.search(pattern, answer_text, re.IGNORECASE))
+
+
+def _domain_matches_citation(citation_url: str, domain_lower: str) -> bool:
+    """
+    True only if `citation_url`'s own hostname equals `domain_lower` or
+    is a real subdomain of it. Reuses engines._source_map's own
+    domain-matching logic (hostname extraction + exact-or-subdomain
+    check) instead of a substring check, so "notferoot.com" can never
+    match "feroot.com" and "app.feroot.com" correctly does.
+    """
+    host = _extract_domain(citation_url)
+    if host is None:
+        return False
+    return _is_own_domain(host, domain_lower)
+
+
+def _find_sentences_mentioning_name(company_name: str, answer_text: str) -> list[str]:
+    """
+    Split `answer_text` into sentences and return every one containing a
+    whole-word match of `company_name` — the candidate sentences a
+    common-word company name needs an LLM judgment on, since the word
+    merely appearing isn't enough evidence on its own (see
+    _judge_common_word_mention).
+    """
+    name = company_name.strip()
+    if not name:
+        return []
+    pattern = r"\b" + re.escape(name) + r"\b"
+    sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", answer_text) if s.strip()]
+    return [sentence for sentence in sentences if re.search(pattern, sentence, re.IGNORECASE)]
+
+
+_COMMON_WORD_DISAMBIGUATION_SYSTEM_PROMPT = """
+ROLE
+You are checking whether a word, which also happens to be an ordinary English word, is being used in a piece of text to refer to a specific real company by that name, or is just being used as the ordinary English word with no connection to that company.
+
+You will be given the company's real name, its website domain, and the general category it competes in, then one or more sentences from a real AI-generated answer, all containing that word. Decide whether the sentences are actually talking about the real company, or just happen to use the same word as an everyday word with an unrelated meaning.
+
+Respond with ONLY a JSON object, no other text, no markdown formatting, no code fences, in this exact shape:
+{"refers_to_company": true or false, "evidence_sentence": "<the exact sentence, copied word for word from the sentences you were given, that best supports your answer, or an empty string if refers_to_company is false>"}
+
+If refers_to_company is true, evidence_sentence must be an exact, word-for-word copy of one of the sentences you were given — never invent, paraphrase, or combine sentences.
+""".strip()
+
+
+def _call_deepseek_for_common_word_disambiguation(
+    company_name: str, domain: str, category: str, candidate_sentences: list[str]
+) -> dict:
+    """
+    Ask DeepSeek whether `candidate_sentences` (each already confirmed to
+    contain a whole-word match of `company_name`) are actually about the
+    real company, given its name, domain, and category as context.
+    Raises requests.RequestException on network/HTTP failure, ValueError
+    if the response isn't valid JSON in the expected shape.
     """
     url = f"{settings.deepseek_api_base_url}/v1/chat/completions"
     headers = {
@@ -99,16 +233,112 @@ def _call_deepseek_for_category_and_queries(homepage_text: str) -> dict:
         "Content-Type": "application/json",
         "User-Agent": settings.http_user_agent,
     }
-    # Temperature 0 (not just "low") for this call specifically: the real
-    # fix for run-to-run score instability is caching this result per
-    # domain (see engines._query_cache) so the exact same questions get
-    # reused, not regenerated. But whenever we DO have to regenerate (cache
-    # miss/expiry), temperature 0 minimizes wording drift between that
-    # fresh generation and whatever was cached before.
+    user_content = (
+        f"Company name: {company_name}\n"
+        f"Company domain: {domain}\n"
+        f"Category the company competes in: {category}\n\n"
+        f'Sentences containing the word "{company_name}":\n'
+        + "\n".join(f"- {sentence}" for sentence in candidate_sentences)
+    )
     payload = {
         "model": settings.deepseek_model,
         "messages": [
-            {"role": "system", "content": _CATEGORY_AND_QUERY_SYSTEM_PROMPT},
+            {"role": "system", "content": _COMMON_WORD_DISAMBIGUATION_SYSTEM_PROMPT},
+            {"role": "user", "content": user_content},
+        ],
+        "temperature": 0,
+    }
+    response = requests.post(
+        url,
+        headers=headers,
+        json=payload,
+        timeout=settings.request_timeout_seconds,
+    )
+    response.raise_for_status()
+    raw_response = response.json()
+
+    content = raw_response["choices"][0]["message"]["content"]
+    cleaned = re.sub(r"^```(?:json)?|```$", "", content.strip(), flags=re.MULTILINE).strip()
+    parsed = json.loads(cleaned)
+
+    if "refers_to_company" not in parsed:
+        raise ValueError(f"DeepSeek response missing expected fields: {parsed!r}")
+
+    return parsed
+
+
+def _judge_common_word_mention(company_name: str, domain: str, category: str, answer_text: str) -> dict:
+    """
+    For a common-word company name with no domain-matching citation,
+    decide whether `answer_text` actually mentions the real company.
+
+    No candidate sentences at all -> "no_mention", no LLM call. Otherwise
+    asks DeepSeek (see _call_deepseek_for_common_word_disambiguation) and
+    only trusts a "yes" if the evidence sentence it quotes is a real,
+    word-for-word substring of `answer_text` — never a fabricated quote.
+    An LLM call failure is caught and reported as "uncertain" rather than
+    guessed at as either a hit or a miss.
+
+    Returns {"classification": "hit" | "no_mention" | "uncertain",
+    "candidate_sentences": [...], "llm_judgment": dict | None,
+    "evidence_sentence": str | None}. Never raises.
+    """
+    candidate_sentences = _find_sentences_mentioning_name(company_name, answer_text)
+
+    if not candidate_sentences:
+        return {
+            "classification": "no_mention",
+            "candidate_sentences": [],
+            "llm_judgment": None,
+            "evidence_sentence": None,
+        }
+
+    try:
+        judgment = _call_deepseek_for_common_word_disambiguation(company_name, domain, category, candidate_sentences)
+    except (requests.RequestException, KeyError, IndexError, ValueError, json.JSONDecodeError) as exc:
+        return {
+            "classification": "uncertain",
+            "candidate_sentences": candidate_sentences,
+            "llm_judgment": None,
+            "evidence_sentence": None,
+            "error": str(exc),
+        }
+
+    refers_to_company = bool(judgment.get("refers_to_company"))
+    evidence_sentence = (judgment.get("evidence_sentence") or "").strip()
+
+    # The claimed evidence sentence must really appear in the real
+    # answer text — never trust the model's own claim that a quote is
+    # real without checking it.
+    if refers_to_company and (not evidence_sentence or evidence_sentence not in answer_text):
+        refers_to_company = False
+        evidence_sentence = ""
+
+    return {
+        "classification": "hit" if refers_to_company else "no_mention",
+        "candidate_sentences": candidate_sentences,
+        "llm_judgment": judgment,
+        "evidence_sentence": evidence_sentence or None,
+    }
+
+
+def _call_deepseek_for_category(homepage_text: str) -> str:
+    """
+    Ask DeepSeek to classify the company's buyer-facing category from
+    its real homepage text. Raises requests.RequestException on
+    network/HTTP failure, ValueError if the response isn't valid JSON
+    in the expected shape.
+    """
+    url = f"{settings.deepseek_api_base_url}/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {settings.deepseek_api_key}",
+        "Content-Type": "application/json",
+        "User-Agent": settings.http_user_agent,
+    }
+    payload = {
+        "model": settings.deepseek_model,
+        "messages": [
+            {"role": "system", "content": _CATEGORY_SYSTEM_PROMPT},
             {"role": "user", "content": homepage_text[:8000]},
         ],
         "temperature": 0,
@@ -123,28 +353,81 @@ def _call_deepseek_for_category_and_queries(homepage_text: str) -> dict:
     raw_response = response.json()
 
     content = raw_response["choices"][0]["message"]["content"]
-    # Models occasionally wrap JSON in a code fence despite instructions;
-    # strip that defensively before parsing.
     cleaned = re.sub(r"^```(?:json)?|```$", "", content.strip(), flags=re.MULTILINE).strip()
     parsed = json.loads(cleaned)
 
-    if "category" not in parsed or "queries" not in parsed:
+    if "category" not in parsed:
         raise ValueError(f"DeepSeek response missing expected fields: {parsed!r}")
 
-    return parsed
+    return (parsed["category"] or "").strip()
+
+
+def _call_deepseek_for_queries(category: str) -> list[str]:
+    """
+    Ask DeepSeek to generate brand-free buyer queries for `category`
+    ALONE. The real homepage text is deliberately never given to this
+    call: handing it the homepage text let the model lift wording
+    straight from the page, which biased the generated questions toward
+    vocabulary this exact site already happens to use — making "does the
+    site answer this question" an easier test to pass than a genuinely
+    independent buyer question would be. Raises requests.RequestException
+    on network/HTTP failure, ValueError if the response isn't valid JSON
+    in the expected shape.
+    """
+    url = f"{settings.deepseek_api_base_url}/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {settings.deepseek_api_key}",
+        "Content-Type": "application/json",
+        "User-Agent": settings.http_user_agent,
+    }
+    # Temperature 0 (not just "low") for this call specifically: the real
+    # fix for run-to-run score instability is caching this result per
+    # domain (see engines._query_cache, via _query_cache_key) so the exact
+    # same questions get reused, not regenerated. But whenever we DO have
+    # to regenerate (cache miss/expiry), temperature 0 minimizes wording
+    # drift between that fresh generation and whatever was cached before.
+    payload = {
+        "model": settings.deepseek_model,
+        "messages": [
+            {"role": "system", "content": _QUERY_SYSTEM_PROMPT},
+            {"role": "user", "content": category},
+        ],
+        "temperature": 0,
+    }
+    response = requests.post(
+        url,
+        headers=headers,
+        json=payload,
+        timeout=settings.request_timeout_seconds,
+    )
+    response.raise_for_status()
+    raw_response = response.json()
+
+    content = raw_response["choices"][0]["message"]["content"]
+    cleaned = re.sub(r"^```(?:json)?|```$", "", content.strip(), flags=re.MULTILINE).strip()
+    parsed = json.loads(cleaned)
+
+    if "queries" not in parsed:
+        raise ValueError(f"DeepSeek response missing expected fields: {parsed!r}")
+
+    return parsed["queries"]
 
 
 def _generate_category_and_brand_free_queries(
     company_name: str, domain: str, homepage_text: str
-) -> tuple[str | None, list[str] | None, list[dict]]:
+) -> tuple[str, list[str] | None, list[dict]]:
     """
-    Repeatedly ask DeepSeek for a (category, queries) pair until it
-    produces exactly REQUIRED_QUERY_COUNT queries that do not contain the
-    company name or domain anywhere. A batch that is contaminated OR is
-    not exactly the required count is discarded entirely — never trimmed,
-    padded, or reused — and counts as a failed attempt. Requiring an exact
-    count (rather than accepting "however many came back") keeps the
-    "N out of 5 queries hit" ratio comparable across separate runs.
+    Two-step generation, split across two separate DeepSeek calls (see
+    _call_deepseek_for_category and _call_deepseek_for_queries): classify
+    the category from the real homepage text once, then repeatedly ask
+    for a fresh batch of 5 queries from that SAME category description
+    alone until it produces exactly REQUIRED_QUERY_COUNT queries that do
+    not contain the company name or domain anywhere. A batch that is
+    contaminated OR is not exactly the required count is discarded
+    entirely — never trimmed, padded, or reused — and counts as a failed
+    attempt. Requiring an exact count (rather than accepting "however many
+    came back") keeps the "N out of 5 queries hit" ratio comparable across
+    separate runs.
 
     A batch is also checked for banned formatting (em dashes, double
     hyphens, parentheses, brackets) in the category and every query. That
@@ -154,21 +437,21 @@ def _generate_category_and_brand_free_queries(
     is sanitized and used, instead of discarding good test data over a
     stray character.
 
-    Returns (category, queries, attempts_log). category/queries are None
-    if no valid, correctly-sized batch was produced within
+    Returns (category, queries, attempts_log). queries is None if no
+    valid, correctly-sized batch was produced within
     MAX_GENERATION_ATTEMPTS.
     Propagates requests.RequestException / ValueError / json.JSONDecodeError
-    from the underlying API call immediately (a network/API failure is not
-    retried as if it were a contamination problem).
+    from either underlying API call immediately (a network/API failure is
+    not retried as if it were a contamination problem).
     """
+    category = _call_deepseek_for_category(homepage_text)
+
     company_name_lower = company_name.lower()
     domain_lower = domain.lower()
     attempts_log = []
 
     for attempt_number in range(1, MAX_GENERATION_ATTEMPTS + 1):
-        result = _call_deepseek_for_category_and_queries(homepage_text)
-        category = (result.get("category") or "").strip()
-        raw_queries = [q.strip() for q in result.get("queries", []) if isinstance(q, str) and q.strip()]
+        raw_queries = [q.strip() for q in _call_deepseek_for_queries(category) if isinstance(q, str) and q.strip()]
 
         contains_brand = any(
             company_name_lower in q.lower() or (domain_lower and domain_lower in q.lower()) for q in raw_queries
@@ -176,7 +459,7 @@ def _generate_category_and_brand_free_queries(
         wrong_count = len(raw_queries) != REQUIRED_QUERY_COUNT
         is_last_attempt = attempt_number == MAX_GENERATION_ATTEMPTS
 
-        if category and raw_queries and not contains_brand and not wrong_count:
+        if raw_queries and not contains_brand and not wrong_count:
             format_issues = set(find_banned_formatting(category))
             for query in raw_queries:
                 format_issues.update(find_banned_formatting(query))
@@ -226,19 +509,19 @@ def _generate_category_and_brand_free_queries(
         elif wrong_count:
             reason = f"Expected exactly {REQUIRED_QUERY_COUNT} queries, got {len(raw_queries)}"
         else:
-            reason = "DeepSeek returned an empty category or query list"
+            reason = "DeepSeek returned an empty query list"
 
         attempts_log.append(
             {
                 "attempt": attempt_number,
                 "outcome": "rejected",
                 "reason": reason,
-                "category": category or None,
+                "category": category,
                 "rejected_queries": raw_queries,
             }
         )
 
-    return None, None, attempts_log
+    return category, None, attempts_log
 
 
 def _call_perplexity(query: str) -> dict:
@@ -269,12 +552,33 @@ def _call_perplexity(query: str) -> dict:
     return response.json()
 
 
-def _execute_single_run(query: str, domain_lower: str, company_lower: str) -> dict:
+def _execute_single_run(
+    query: str, domain: str, company_name: str, category: str, name_is_common_word: bool
+) -> dict:
     """
-    One Perplexity call for `query`. Whether a mention "counts" is decided
-    by plain, deterministic lowercase substring matching, same as before:
-    domain found in a citation URL, or the company name found in the
-    answer text. Never raises: a request failure is reported as status
+    One Perplexity call for `query`.
+
+    Non-common-word names: a whole-word name match
+    (_company_name_mentioned) or a domain-matching citation
+    (_domain_matches_citation) is enough on its own, no LLM call —
+    unchanged, see this module's docstring.
+
+    Common-word names (see _COMMON_WORD_COMPANY_NAMES): a
+    domain-matching citation is still an automatic hit, no LLM call.
+    Otherwise a name match alone is NOT trusted — see
+    _judge_common_word_mention for the candidate-sentence + LLM
+    disambiguation this falls back to, and why.
+
+    Every result carries `mention_rule` (which of the three paths above
+    decided it: "whole_word", "citation_domain_match", or
+    "llm_disambiguation") and `mention_classification` ("hit",
+    "no_mention", or "uncertain" — only reachable via
+    llm_disambiguation). `is_hit` is True/False, except None when
+    mention_classification is "uncertain": that run is deliberately
+    neither a hit nor a miss (see check_citation_visibility, which
+    excludes it from the mention-rate denominator).
+
+    Never raises: a Perplexity request failure is reported as status
     "error" so RUNS_PER_QUERY of these can run per query without one
     failed call aborting the others.
     """
@@ -291,22 +595,58 @@ def _execute_single_run(query: str, domain_lower: str, company_lower: str) -> di
     # Perplexity's "sonar" models return a top-level "citations" field: a
     # list of source URLs used to ground the answer.
     citations = raw_response.get("citations", []) or []
+    domain_lower = domain.lower()
+    matched_citations = [c for c in citations if _domain_matches_citation(c, domain_lower)]
 
-    matched_citations = [c for c in citations if domain_lower in c.lower()]
-    company_mentioned_in_answer = company_lower in answer_text.lower()
-    is_hit = bool(matched_citations) or company_mentioned_in_answer
-
-    return {
+    base_result = {
         "status": "ok",
         "answer_text": answer_text,
         "all_citations": citations,
         "matched_citations": matched_citations,
-        "company_mentioned_in_answer": company_mentioned_in_answer,
+    }
+
+    if not name_is_common_word:
+        company_mentioned_in_answer = _company_name_mentioned(company_name, answer_text)
+        is_hit = bool(matched_citations) or company_mentioned_in_answer
+        return {
+            **base_result,
+            "mention_rule": "whole_word",
+            "mention_classification": "hit" if is_hit else "no_mention",
+            "candidate_sentences": [],
+            "llm_judgment": None,
+            "evidence_sentence": None,
+            "is_hit": is_hit,
+        }
+
+    if matched_citations:
+        return {
+            **base_result,
+            "mention_rule": "citation_domain_match",
+            "mention_classification": "hit",
+            "candidate_sentences": [],
+            "llm_judgment": None,
+            "evidence_sentence": None,
+            "is_hit": True,
+        }
+
+    disambiguation = _judge_common_word_mention(company_name, domain, category, answer_text)
+    classification = disambiguation["classification"]
+    is_hit = None if classification == "uncertain" else classification == "hit"
+
+    return {
+        **base_result,
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": classification,
+        "candidate_sentences": disambiguation["candidate_sentences"],
+        "llm_judgment": disambiguation["llm_judgment"],
+        "evidence_sentence": disambiguation["evidence_sentence"],
         "is_hit": is_hit,
     }
 
 
-def _run_queries_multiple_times(queries: list[str], domain_lower: str, company_lower: str) -> dict[str, list[dict]]:
+def _run_queries_multiple_times(
+    queries: list[str], domain: str, company_name: str, category: str, name_is_common_word: bool
+) -> dict[str, list[dict]]:
     """
     Call Perplexity RUNS_PER_QUERY times for each query (REQUIRED_QUERY_COUNT
     * RUNS_PER_QUERY calls total, e.g. 5 * 3 = 15), with at most
@@ -322,7 +662,7 @@ def _run_queries_multiple_times(queries: list[str], domain_lower: str, company_l
     runs_by_query: dict[str, list[dict | None]] = {query: [None] * RUNS_PER_QUERY for query in queries}
 
     def _work(query: str, run_index: int) -> tuple[str, int, dict]:
-        result = _execute_single_run(query, domain_lower, company_lower)
+        result = _execute_single_run(query, domain, company_name, category, name_is_common_word)
         result["run"] = run_index + 1
         return query, run_index, result
 
@@ -427,12 +767,14 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
     Perplexity with them, and check whether the company or its domain
     shows up organically in the answer or citations.
 
-    The (category, queries) pair is cached per domain (engines._query_cache)
-    for CACHE_TTL: repeatedly regenerating fresh wording on every run was
-    the actual root cause of citation_visibility swinging wildly between
-    back-to-back runs against the same domain, since different wording
-    produces different Perplexity searches. A cache hit skips both the
-    homepage fetch and the DeepSeek call entirely.
+    The (category, queries) pair is cached per domain (engines._query_cache,
+    keyed via _query_cache_key so a change in generation method never
+    reuses questions generated the old way) for CACHE_TTL: repeatedly
+    regenerating fresh wording on every run was the actual root cause of
+    citation_visibility swinging wildly between back-to-back runs against
+    the same domain, since different wording produces different
+    Perplexity searches. A cache hit skips both the homepage fetch and
+    the DeepSeek call entirely.
 
     Returns a DimensionScore with score in [0, 100], or score == -1 when
     the check could not be performed at all (missing API keys, homepage
@@ -463,7 +805,7 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
             },
         )
 
-    cached = get_cached_queries(domain)
+    cached = get_cached_queries(_query_cache_key(domain))
 
     if cached:
         category, queries = cached
@@ -605,25 +947,32 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
         # Cache this domain's (category, queries) so the NEXT diagnosis run
         # reuses the exact same test instead of generating fresh wording —
         # this is the actual fix for run-to-run score instability.
-        save_queries(domain, category, queries)
+        save_queries(_query_cache_key(domain), category, queries)
 
-    domain_lower = domain.lower()
-    company_lower = company_name.lower()
+    name_is_common_word = _is_common_word_company_name(company_name)
 
-    runs_by_query = _run_queries_multiple_times(queries, domain_lower, company_lower)
+    runs_by_query = _run_queries_multiple_times(queries, domain, company_name, category, name_is_common_word)
 
     per_query_results = []
     raw_answers: dict[str, str] = {}
     fully_failed_queries = []
+    total_uncertain_runs = 0
 
     for query in queries:
         runs = runs_by_query[query]
         successful_runs = [run for run in runs if run["status"] == "ok"]
-        hits = sum(1 for run in successful_runs if run["is_hit"])
+        # "uncertain" runs (the common-word LLM disambiguation call
+        # itself failed) are neither a hit nor a miss — excluded from
+        # both the hit count and the denominator, never guessed at
+        # either way. See _execute_single_run / _judge_common_word_mention.
+        uncertain_runs = [run for run in successful_runs if run["mention_classification"] == "uncertain"]
+        countable_runs = [run for run in successful_runs if run["mention_classification"] != "uncertain"]
+        total_uncertain_runs += len(uncertain_runs)
+        hits = sum(1 for run in countable_runs if run["is_hit"])
         # A question's mention rate is only ever computed from its own
-        # successful runs; a failed call simply isn't counted either way,
-        # it never counts as a miss.
-        mention_rate = (hits / len(successful_runs)) if successful_runs else None
+        # countable runs; a failed or uncertain call simply isn't
+        # counted either way, it never counts as a miss.
+        mention_rate = (hits / len(countable_runs)) if countable_runs else None
 
         per_query_results.append(
             {
@@ -632,6 +981,7 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
                 "runs": runs,
                 "successful_runs": len(successful_runs),
                 "failed_runs": RUNS_PER_QUERY - len(successful_runs),
+                "uncertain_runs": len(uncertain_runs),
                 "mention_rate": mention_rate,
             }
         )
@@ -687,6 +1037,8 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
                 "category": category,
                 "queries": queries,
                 "runs_per_query": RUNS_PER_QUERY,
+                "name_is_common_word": name_is_common_word,
+                "total_uncertain_runs": total_uncertain_runs,
                 "per_query_results": per_query_results,
                 "fully_failed_queries": fully_failed_queries,
                 "source_map": source_map,
@@ -714,6 +1066,8 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
             "queries_total": len(queries),
             "queries_valid": len(valid_queries),
             "average_mention_rate": round(average_mention_rate, 3),
+            "name_is_common_word": name_is_common_word,
+            "total_uncertain_runs": total_uncertain_runs,
             "per_query_results": per_query_results,
             "fully_failed_queries": fully_failed_queries,
             "source_map": source_map,

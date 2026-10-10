@@ -171,5 +171,277 @@ class CitationEngineMultiRunTests(unittest.TestCase):
         self.assertEqual(stub.call_count, 15)
 
 
+class CompanyNameMatchingTests(unittest.TestCase):
+    """_execute_single_run's whole-word name matching and strict domain matching for NON-common-word names, tested directly (no HTTP, just _call_perplexity mocked)."""
+
+    def _run_with_answer(self, answer_text: str, citations: list[str], domain: str, company_name: str) -> dict:
+        with patch.object(
+            citation_engine,
+            "_call_perplexity",
+            return_value={"choices": [{"message": {"content": answer_text}}], "citations": citations},
+        ):
+            return citation_engine._execute_single_run("some query", domain, company_name, CATEGORY, name_is_common_word=False)
+
+    def test_non_common_word_name_match_alone_is_enough(self):
+        result = self._run_with_answer(
+            "Feroot Security is a strong option for this.",
+            ["https://unrelated.com"],
+            "feroot.com",
+            "Feroot Security",
+        )
+        self.assertEqual(result["mention_rule"], "whole_word")
+        self.assertTrue(result["is_hit"])
+
+    def test_name_glued_to_other_letters_is_not_a_whole_word_match(self):
+        result = self._run_with_answer(
+            "FerootSecurityPlus helps with this, unrelated to the real brand.",
+            [],
+            "feroot.com",
+            "Feroot Security",
+        )
+        self.assertFalse(result["is_hit"])
+
+    def test_notdomain_does_not_match_citation(self):
+        result = self._run_with_answer(
+            "Some generic answer.",
+            ["https://notferoot.com/page"],
+            "feroot.com",
+            "Feroot Security",
+        )
+        self.assertEqual(result["matched_citations"], [])
+        self.assertFalse(result["is_hit"])
+
+    def test_subdomain_matches_citation(self):
+        result = self._run_with_answer(
+            "Some generic answer.",
+            ["https://app.feroot.com/page"],
+            "feroot.com",
+            "Feroot Security",
+        )
+        self.assertEqual(result["matched_citations"], ["https://app.feroot.com/page"])
+        self.assertTrue(result["is_hit"])
+
+    def test_non_common_word_name_never_calls_the_llm(self):
+        with patch.object(citation_engine, "_call_deepseek_for_common_word_disambiguation") as mock_llm:
+            self._run_with_answer(
+                "Feroot Security is a strong option for this.",
+                [],
+                "feroot.com",
+                "Feroot Security",
+            )
+        mock_llm.assert_not_called()
+
+    def test_is_common_word_company_name(self):
+        self.assertTrue(citation_engine._is_common_word_company_name("Close"))
+        self.assertTrue(citation_engine._is_common_word_company_name("  Linear  "))
+        self.assertTrue(citation_engine._is_common_word_company_name("ZOOM"))
+        self.assertFalse(citation_engine._is_common_word_company_name("Feroot Security"))
+        self.assertFalse(citation_engine._is_common_word_company_name("ExampleCo"))
+
+
+class CommonWordDisambiguationTests(unittest.TestCase):
+    """_execute_single_run's LLM-backed disambiguation path for common-word company names (Close, Linear, ...)."""
+
+    def _run_with_answer(self, answer_text: str, citations: list[str], disambiguation_result=None, disambiguation_error=None) -> tuple[dict, "unittest.mock.MagicMock"]:
+        patches = [
+            patch.object(
+                citation_engine,
+                "_call_perplexity",
+                return_value={"choices": [{"message": {"content": answer_text}}], "citations": citations},
+            ),
+        ]
+        if disambiguation_error is not None:
+            llm_patch = patch.object(citation_engine, "_call_deepseek_for_common_word_disambiguation", side_effect=disambiguation_error)
+        else:
+            llm_patch = patch.object(citation_engine, "_call_deepseek_for_common_word_disambiguation", return_value=disambiguation_result)
+        patches.append(llm_patch)
+
+        with patches[0], patches[1] as mock_llm:
+            result = citation_engine._execute_single_run("some query", "close.com", "Close", CATEGORY, name_is_common_word=True)
+        return result, mock_llm
+
+    def test_close_the_deal_llm_says_no_is_not_a_hit(self):
+        result, mock_llm = self._run_with_answer(
+            "You should close the deal quickly to win this customer.",
+            ["https://unrelated.com"],
+            disambiguation_result={"refers_to_company": False, "evidence_sentence": ""},
+        )
+        mock_llm.assert_called_once()
+        self.assertEqual(result["mention_rule"], "llm_disambiguation")
+        self.assertEqual(result["mention_classification"], "no_mention")
+        self.assertFalse(result["is_hit"])
+
+    def test_close_is_a_strong_fit_llm_says_yes_with_real_evidence_is_a_hit(self):
+        answer_text = "Close is a strong fit for small sales teams. It combines calling, texting, and email."
+        result, mock_llm = self._run_with_answer(
+            answer_text,
+            [],
+            disambiguation_result={
+                "refers_to_company": True,
+                "evidence_sentence": "Close is a strong fit for small sales teams.",
+            },
+        )
+        mock_llm.assert_called_once()
+        self.assertEqual(result["mention_classification"], "hit")
+        self.assertTrue(result["is_hit"])
+        self.assertEqual(result["evidence_sentence"], "Close is a strong fit for small sales teams.")
+
+    def test_llm_says_yes_but_evidence_not_in_real_text_is_not_a_hit(self):
+        answer_text = "Close is a strong fit for small sales teams. It combines calling, texting, and email."
+        result, _mock_llm = self._run_with_answer(
+            answer_text,
+            [],
+            disambiguation_result={
+                "refers_to_company": True,
+                "evidence_sentence": "This sentence was never actually in the real answer.",
+            },
+        )
+        # A fabricated quote is never trusted, even when the model says "yes".
+        self.assertEqual(result["mention_classification"], "no_mention")
+        self.assertFalse(result["is_hit"])
+        self.assertIsNone(result["evidence_sentence"])
+
+    def test_citation_domain_match_skips_the_llm_entirely(self):
+        result, mock_llm = self._run_with_answer(
+            "Some generic answer that never names any vendor by name.",
+            ["https://close.com/product"],
+            disambiguation_result={"refers_to_company": False, "evidence_sentence": ""},
+        )
+        mock_llm.assert_not_called()
+        self.assertEqual(result["mention_rule"], "citation_domain_match")
+        self.assertEqual(result["mention_classification"], "hit")
+        self.assertTrue(result["is_hit"])
+
+    def test_no_candidate_sentences_skips_the_llm_entirely(self):
+        result, mock_llm = self._run_with_answer(
+            "Some generic answer that never uses the word at all.",
+            [],
+            disambiguation_result={"refers_to_company": False, "evidence_sentence": ""},
+        )
+        mock_llm.assert_not_called()
+        self.assertEqual(result["mention_classification"], "no_mention")
+        self.assertFalse(result["is_hit"])
+
+    def test_llm_call_failure_is_marked_uncertain(self):
+        result, _mock_llm = self._run_with_answer(
+            "Close is a strong fit for this team.",
+            [],
+            disambiguation_error=requests.ConnectionError("boom"),
+        )
+        self.assertEqual(result["mention_classification"], "uncertain")
+        self.assertIsNone(result["is_hit"])
+
+
+class _ExecuteSingleRunStub:
+    """
+    Thread-safe stand-in for citation_engine._execute_single_run, returning
+    a fixed sequence of mention_classification values per query, so the
+    higher-level mention_rate/denominator logic in check_citation_visibility
+    can be tested without re-deriving classifications from scratch.
+    """
+
+    def __init__(self, classifications_by_query: dict[str, list[str]]):
+        self._classifications_by_query = classifications_by_query
+        self._lock = threading.Lock()
+        self._next_index = {query: 0 for query in classifications_by_query}
+
+    def __call__(self, query, domain, company_name, category, name_is_common_word) -> dict:
+        with self._lock:
+            index = self._next_index[query]
+            self._next_index[query] += 1
+
+        classification = self._classifications_by_query[query][index]
+        is_hit = None if classification == "uncertain" else classification == "hit"
+        return {
+            "status": "ok",
+            "answer_text": f"answer for run {index} of {query}",
+            "all_citations": [],
+            "matched_citations": [],
+            "mention_rule": "llm_disambiguation",
+            "mention_classification": classification,
+            "candidate_sentences": [],
+            "llm_judgment": None,
+            "evidence_sentence": None,
+            "is_hit": is_hit,
+        }
+
+
+class UncertainDenominatorTests(unittest.TestCase):
+    """check_citation_visibility excludes 'uncertain' runs from both the hit count and the mention_rate denominator."""
+
+    def test_uncertain_runs_excluded_from_denominator_and_hit_count(self):
+        fake_settings = Settings(perplexity_api_key="test-key", deepseek_api_key=None)
+        classifications = {
+            # 1 hit, 1 uncertain, 1 no_mention -> countable runs = 2, hits = 1 -> mention_rate 0.5.
+            QUERIES[0]: ["hit", "uncertain", "no_mention"],
+            QUERIES[1]: ["hit", "hit", "hit"],
+            QUERIES[2]: ["hit", "hit", "hit"],
+            QUERIES[3]: ["hit", "hit", "hit"],
+            QUERIES[4]: ["hit", "hit", "hit"],
+        }
+        stub = _ExecuteSingleRunStub(classifications)
+
+        with patch.object(citation_engine, "settings", fake_settings), \
+             patch.object(citation_engine, "get_cached_queries", return_value=(CATEGORY, QUERIES)), \
+             patch.object(citation_engine, "_execute_single_run", side_effect=stub), \
+             patch.object(citation_engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING):
+            result = citation_engine.check_citation_visibility(COMPANY_NAME, DOMAIN)
+
+        entry = next(e for e in result.details["per_query_results"] if e["query"] == QUERIES[0])
+        self.assertEqual(entry["successful_runs"], 3)
+        self.assertEqual(entry["uncertain_runs"], 1)
+        self.assertAlmostEqual(entry["mention_rate"], 0.5)
+        self.assertEqual(result.details["total_uncertain_runs"], 1)
+
+
+class QueryGenerationTests(unittest.TestCase):
+    """The 2-step category -> queries generation, and that homepage text never reaches the queries call."""
+
+    def test_queries_call_never_receives_homepage_text(self):
+        homepage_text = "UNIQUE_HOMEPAGE_MARKER_TEXT_12345 describing the real product in detail."
+        category = "browser side security and privacy compliance monitoring"
+        received_args = []
+
+        def fake_call_for_queries(received_category):
+            received_args.append(received_category)
+            return list(QUERIES)
+
+        with patch.object(citation_engine, "_call_deepseek_for_category", return_value=category), \
+             patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries):
+            result_category, result_queries, _log = citation_engine._generate_category_and_brand_free_queries(
+                COMPANY_NAME, DOMAIN, homepage_text
+            )
+
+        self.assertEqual(result_category, category)
+        self.assertEqual(result_queries, QUERIES)
+        self.assertEqual(len(received_args), 1)
+        # The queries call received ONLY the category string -- nothing
+        # from the real homepage text leaked into it.
+        self.assertEqual(received_args[0], category)
+        self.assertNotIn("UNIQUE_HOMEPAGE_MARKER_TEXT_12345", received_args[0])
+
+    def test_contaminated_batch_is_retried_without_recalling_category(self):
+        homepage_text = "Some real homepage text."
+        category = "browser side security and privacy compliance monitoring"
+        call_count = {"n": 0}
+
+        def fake_call_for_queries(received_category):
+            call_count["n"] += 1
+            if call_count["n"] == 1:
+                # First attempt is contaminated with the brand name.
+                return [f"{COMPANY_NAME} is great", "q2", "q3", "q4", "q5"]
+            return list(QUERIES)
+
+        with patch.object(citation_engine, "_call_deepseek_for_category", return_value=category) as mock_category, \
+             patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries):
+            _result_category, result_queries, _log = citation_engine._generate_category_and_brand_free_queries(
+                COMPANY_NAME, DOMAIN, homepage_text
+            )
+
+        mock_category.assert_called_once()  # category classification happens exactly once, never retried
+        self.assertEqual(call_count["n"], 2)  # queries regenerated once after contamination
+        self.assertEqual(result_queries, QUERIES)
+
+
 if __name__ == "__main__":
     unittest.main()
