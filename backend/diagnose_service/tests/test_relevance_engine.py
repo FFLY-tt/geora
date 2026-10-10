@@ -213,5 +213,61 @@ class RelevanceEngineTests(unittest.TestCase):
         self.assertEqual(first.details["per_question_results"], second.details["per_question_results"])
 
 
+class UrlNormalizationTests(unittest.TestCase):
+    def test_trailing_slash_www_and_fragment_all_normalize_the_same(self):
+        normalized = {
+            relevance_engine._normalize_url("example.com/"),
+            relevance_engine._normalize_url("https://www.example.com"),
+            relevance_engine._normalize_url("example.com/#top"),
+        }
+
+        self.assertEqual(normalized, {"https://example.com"})
+
+    def test_different_paths_stay_distinct(self):
+        self.assertNotEqual(
+            relevance_engine._normalize_url("https://www.example.com/pricing"),
+            relevance_engine._normalize_url("https://www.example.com/features"),
+        )
+
+
+class SelectAdditionalPagesDedupTests(unittest.TestCase):
+    def test_trailing_slash_variants_of_same_page_are_not_double_counted(self):
+        from bs4 import BeautifulSoup
+
+        html = """
+        <html><body>
+        <a href="https://example.com/pricing">Pricing</a>
+        <a href="https://example.com/pricing/">Pricing again</a>
+        <a href="https://example.com/features">Features</a>
+        </body></html>
+        """
+        soup = BeautifulSoup(html, "html.parser")
+
+        pages = relevance_engine._select_additional_pages(soup, "https://example.com/")
+
+        # The two pricing links normalize to the same page, so only one
+        # of them is kept, and the features link fills the slot that
+        # would otherwise have been wasted on the duplicate.
+        self.assertEqual(len(pages), 2)
+        normalized_pages = {relevance_engine._normalize_url(p) for p in pages}
+        self.assertEqual(normalized_pages, {"https://example.com/pricing", "https://example.com/features"})
+
+    def test_link_back_to_homepage_in_any_form_is_excluded(self):
+        from bs4 import BeautifulSoup
+
+        html = """
+        <html><body>
+        <a href="https://www.example.com">Home</a>
+        <a href="https://example.com/">Home again</a>
+        <a href="https://example.com/pricing">Pricing</a>
+        </body></html>
+        """
+        soup = BeautifulSoup(html, "html.parser")
+
+        pages = relevance_engine._select_additional_pages(soup, "https://example.com/")
+
+        self.assertEqual(pages, ["https://example.com/pricing"])
+
+
 if __name__ == "__main__":
     unittest.main()

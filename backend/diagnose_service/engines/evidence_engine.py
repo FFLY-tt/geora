@@ -21,10 +21,21 @@ each side, not AI scoring noise. For this engine specifically, that
 dropped content is not noise to clean up, it IS the evidence being
 judged, so "full" is the correct mode here even though every other
 caller of fetch_page_text keeps the "main" default.
+
+The same homepage text judged by DeepSeek is itself noisy run to run
+(observed scores swinging from 42 to 62 on identical input on
+close.com). To damp that out, the page is judged JUDGMENT_RUNS times
+concurrently and the reported score is the median across whichever
+runs succeeded, not an average: a median isn't pulled toward a single
+extreme run the way an average is. A run that fails is simply excluded
+from the median rather than failing the whole check; only a complete
+failure of every run falls back to score == -1.
 """
 
 import json
 import re
+import statistics
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
 
@@ -37,6 +48,11 @@ from models import DimensionScore
 DIMENSION_NAME = "evidence_density"
 
 MAX_FORMAT_ATTEMPTS = 2
+
+# The homepage text is judged this many times, concurrently, and the
+# median score across successful runs is what's reported (see module
+# docstring for why).
+JUDGMENT_RUNS = 3
 
 _EVIDENCE_JUDGE_SYSTEM_PROMPT = f"""
 You are a strict content auditor working on behalf of an outside analyst.
@@ -135,6 +151,46 @@ def _get_clean_evidence_judgment(page_text: str) -> tuple[dict, list]:
     return judgment, format_check_log
 
 
+def _run_single_judgment(page_text: str, run_index: int) -> dict:
+    """
+    Run one full evidence judgment (including its own internal
+    formatting retry). Never raises: a failure is recorded as an
+    "error" entry and simply excluded from the median, the same way a
+    failed run is excluded from citation_engine's multi-run scoring.
+    """
+    try:
+        judgment, format_check_log = _get_clean_evidence_judgment(page_text)
+    except (requests.RequestException, ValueError, KeyError, json.JSONDecodeError) as exc:
+        return {"run": run_index, "status": "error", "error": str(exc)}
+
+    return {
+        "run": run_index,
+        "status": "ok",
+        "score": max(0, min(100, int(judgment["score"]))),
+        "reasoning": judgment["reasoning"],
+        "format_check": format_check_log,
+    }
+
+
+def _run_judgments_concurrently(page_text: str) -> list[dict]:
+    """
+    Run JUDGMENT_RUNS independent evidence judgments concurrently (each
+    is its own DeepSeek call with no shared state, so there's nothing
+    to race on) and return the results in run-index order, regardless
+    of which call actually finished first.
+    """
+    results: list[dict] = [None] * JUDGMENT_RUNS  # type: ignore[list-item]
+    with ThreadPoolExecutor(max_workers=JUDGMENT_RUNS) as executor:
+        future_to_run = {
+            executor.submit(_run_single_judgment, page_text, run_index): run_index
+            for run_index in range(1, JUDGMENT_RUNS + 1)
+        }
+        for future in as_completed(future_to_run):
+            run_index = future_to_run[future]
+            results[run_index - 1] = future.result()
+    return results
+
+
 def check_evidence_density(domain: str) -> DimensionScore:
     """
     Score how evidence-dense (vs. vague marketing) the domain's homepage
@@ -212,9 +268,11 @@ def check_evidence_density(domain: str) -> DimensionScore:
             },
         )
 
-    try:
-        judgment, format_check_log = _get_clean_evidence_judgment(page_text)
-    except (requests.RequestException, ValueError, KeyError, json.JSONDecodeError) as exc:
+    runs = _run_judgments_concurrently(page_text)
+    successful_runs = [run for run in runs if run["status"] == "ok"]
+
+    if not successful_runs:
+        errors = "; ".join(f"run {run['run']}: {run['error']}" for run in runs)
         fallback = (
             "We fetched the homepage, but hit a technical hiccup while judging whether its content "
             "is backed by real substance, so there's no real verdict this run. This is usually "
@@ -231,18 +289,24 @@ def check_evidence_density(domain: str) -> DimensionScore:
             score=-1,
             details={
                 "status": "insufficient_data",
-                "reason": f"DeepSeek evaluation failed: {exc}",
+                "reason": f"DeepSeek evaluation failed on all {JUDGMENT_RUNS} runs: {errors}",
+                "runs": runs,
                 "fetched_text_preview": page_text[:500],
                 "generation_log": generation_log,
                 "plain_finding": plain_finding,
             },
         )
 
-    score = int(judgment["score"])
-    score = max(0, min(100, score))
+    score = round(statistics.median(run["score"] for run in successful_runs))
+    # Show the reasoning from whichever successful run's own score is
+    # closest to the reported median (ties broken by run order), so the
+    # quoted reasoning actually lines up with the score shown rather
+    # than coming from an arbitrary run.
+    representative_run = min(successful_runs, key=lambda run: (abs(run["score"] - score), run["run"]))
+    reasoning = representative_run["reasoning"]
 
-    fallback = _build_fallback_plain_finding(score, judgment["reasoning"])
-    facts_summary = _build_facts_summary(score, judgment["reasoning"])
+    fallback = _build_fallback_plain_finding(score, reasoning)
+    facts_summary = _build_facts_summary(score, reasoning)
     plain_finding, generation_log = make_plain_finding(facts_summary, fallback)
 
     return DimensionScore(
@@ -250,8 +314,9 @@ def check_evidence_density(domain: str) -> DimensionScore:
         score=score,
         details={
             "status": "ok",
-            "reasoning": judgment["reasoning"],
-            "format_check": format_check_log,
+            "reasoning": reasoning,
+            "runs": runs,
+            "median_score": score,
             "fetched_text_preview": page_text[:500],
             "fetched_text_length": len(page_text),
             "generation_log": generation_log,

@@ -107,29 +107,55 @@ def _fetch_homepage_response(domain: str) -> requests.Response:
     return response
 
 
+def _normalize_url(url: str) -> str:
+    """
+    Canonicalize a URL for deduplication only (never used as the actual
+    URL to fetch): forces https, drops a leading "www.", drops the
+    fragment, and drops a trailing slash from the path. Without this,
+    the same page reached through two different URL forms (e.g.
+    "https://www.example.com/" vs "https://example.com") would be
+    counted as two distinct pages, wasting one of the limited
+    MAX_ADDITIONAL_PAGES slots re-reading a page already covered by the
+    homepage (or by another link to it).
+    """
+    if not url.startswith("http"):
+        url = f"https://{url}"
+    parsed = urlparse(url)
+    netloc = parsed.netloc.lower()
+    if netloc.startswith("www."):
+        netloc = netloc[len("www."):]
+    path = parsed.path.rstrip("/")
+    return f"https://{netloc}{path}"
+
+
 def _select_additional_pages(soup: BeautifulSoup, base_url: str) -> list[str]:
     """
     Pick up to MAX_ADDITIONAL_PAGES same-domain links from the homepage,
     preferring link text/URL paths that match _IMPORTANT_PAGE_KEYWORDS —
     the pages most likely to actually answer a buyer's pre-purchase
     question — before falling back to other same-domain links.
+
+    Dedup (including against the homepage itself) is done on each
+    link's normalized form, so a link that's actually the same page as
+    one already picked never consumes a slot — that slot instead goes
+    to the next distinct candidate link, since truncation to
+    MAX_ADDITIONAL_PAGES happens only after this full pass.
     """
     base_host = urlparse(base_url).netloc
-    base_path = urlparse(base_url).path.rstrip("/")
 
     preferred: list[str] = []
     other: list[str] = []
-    seen: set[str] = set()
+    seen_normalized: set[str] = {_normalize_url(base_url)}
 
     for a in soup.find_all("a", href=True):
         href = urljoin(base_url, a["href"]).split("#")[0]
         parsed = urlparse(href)
         if parsed.netloc != base_host:
             continue  # only same-domain pages
-        clean_path = parsed.path.rstrip("/")
-        if clean_path == base_path or href in seen:
-            continue  # skip the homepage itself and duplicates
-        seen.add(href)
+        normalized = _normalize_url(href)
+        if normalized in seen_normalized:
+            continue  # skip the homepage itself and any page already picked, in any URL form
+        seen_normalized.add(normalized)
 
         text = a.get_text(strip=True).lower()
         href_lower = href.lower()
