@@ -29,6 +29,17 @@ temperature 0 and takes the majority (a 3-way split counts as
 "partial"), and any claimed evidence sentence is checked against the
 actual fetched page text — a quote DeepSeek can't back up with a real
 sentence is treated as fabricated and downgraded to "missing".
+
+backend/scripts/stability_audit.py proved that even with byte-identical
+page content, this judgment call is itself not perfectly consistent —
+the exact same (question, page text) input sent repeatedly came back
+with a different classification on some runs. Each question's final,
+already-majority-voted result is cached by engines._judgment_cache,
+keyed on the question plus the exact page text judged (never raw
+HTML), so a repeated diagnosis against unchanged pages returns the
+identical classification every time with no further DeepSeek calls —
+see that module's docstring, and PROMPT_VERSION below for how a prompt
+change invalidates old cache entries.
 """
 
 import json
@@ -41,10 +52,16 @@ from bs4 import BeautifulSoup
 
 from shared.config import settings
 from shared._fetch_utils import extract_text_from_html, fetch_page_text
+from engines._judgment_cache import get_cached_judgment, make_judgment_cache_key, save_judgment
 from engines._plain_finding_generator import make_plain_finding
 from models import DimensionScore
 
 DIMENSION_NAME = "topic_relevance"
+
+# Bump this whenever _RELEVANCE_JUDGE_SYSTEM_PROMPT's wording changes
+# in a way that could make a previously-cached judgment unrepresentative
+# of the new prompt. Folded into the judgment cache key.
+PROMPT_VERSION = "v1"
 
 # Up to this many same-domain pages beyond the homepage are read, so the
 # judgment isn't limited to whatever happens to be on the homepage alone.
@@ -250,7 +267,18 @@ def _judge_question(question: str, pages_text: str, page_texts_by_url: dict[str,
     from the vote, so a bad run never fails the whole question, and a
     question where every run fails is reported with
     generation_failed=True instead of a fabricated classification.
+
+    Checks engines._judgment_cache first, keyed on the question plus
+    the exact page text being judged (see module docstring); a cache
+    hit skips every DeepSeek call for this question entirely. Only a
+    real (non-generation_failed) result is ever written to the cache.
     """
+    cache_input = f"QUESTION: {question}\n\nPAGES:\n{pages_text}"
+    cache_key = make_judgment_cache_key(DIMENSION_NAME, PROMPT_VERSION, settings.deepseek_model, cache_input)
+    cached = get_cached_judgment(cache_key)
+    if cached is not None:
+        return {**cached, "cache_status": "cache_hit"}
+
     runs = []
     for run_index in range(1, JUDGMENT_RUNS_PER_QUESTION + 1):
         try:
@@ -297,6 +325,7 @@ def _judge_question(question: str, pages_text: str, page_texts_by_url: dict[str,
             "source_url": None,
             "runs": runs,
             "generation_failed": True,
+            "cache_status": "fresh_judgment",
         }
 
     majority = _majority_classification([run["classification"] for run in successful_runs])
@@ -308,7 +337,7 @@ def _judge_question(question: str, pages_text: str, page_texts_by_url: dict[str,
     # attach, and these stay None.
     matching_run = next((run for run in successful_runs if run["classification"] == majority), None)
 
-    return {
+    result = {
         "question": question,
         "classification": majority,
         "evidence_sentence": matching_run["evidence_sentence"] if matching_run else None,
@@ -316,6 +345,8 @@ def _judge_question(question: str, pages_text: str, page_texts_by_url: dict[str,
         "runs": runs,
         "generation_failed": False,
     }
+    save_judgment(cache_key, result)
+    return {**result, "cache_status": "fresh_judgment"}
 
 
 def check_topic_relevance(domain: str, citation_result: DimensionScore) -> DimensionScore:

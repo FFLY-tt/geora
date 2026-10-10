@@ -4,9 +4,18 @@ Tests for relevance_engine.check_topic_relevance.
 Every DeepSeek call and network request is mocked: no API key is
 required, and none of this ever touches the network, so it runs the
 same locally and in CI.
+
+RelevanceEngineTests itself bypasses the judgment cache entirely (see
+_run_with) so each of those tests always exercises a fresh judgment,
+the same as before the cache existed. The cache's own behavior is
+covered separately by JudgmentCacheIntegrationTests, against a real
+(temp-directory) cache file rather than a mocked one, to prove the
+wiring between relevance_engine and engines._judgment_cache actually
+works end to end.
 """
 
 import sys
+import tempfile
 import unittest
 from contextlib import ExitStack
 from pathlib import Path
@@ -22,6 +31,7 @@ sys.path.insert(0, str(_BACKEND_DIR))
 sys.path.insert(0, str(_SERVICE_DIR))
 
 import engines.relevance_engine as relevance_engine  # noqa: E402
+import engines._judgment_cache as judgment_cache  # noqa: E402
 from models import DimensionScore  # noqa: E402
 from shared.config import Settings  # noqa: E402
 
@@ -96,6 +106,10 @@ def _run_with(citation_result, deepseek_side_effect, page_texts=None, homepage_f
         stack.enter_context(
             patch.object(relevance_engine, "_call_deepseek_for_relevance_judgment", side_effect=deepseek_side_effect)
         )
+        # These tests are about the judgment logic itself, not caching
+        # — always force a fresh judgment, never a cache hit/write.
+        stack.enter_context(patch.object(relevance_engine, "get_cached_judgment", return_value=None))
+        stack.enter_context(patch.object(relevance_engine, "save_judgment", return_value=None))
         if homepage_fetch_error is not None:
             stack.enter_context(patch.object(relevance_engine, "_fetch_homepage_response", side_effect=homepage_fetch_error))
         else:
@@ -267,6 +281,122 @@ class SelectAdditionalPagesDedupTests(unittest.TestCase):
         pages = relevance_engine._select_additional_pages(soup, "https://example.com/")
 
         self.assertEqual(pages, ["https://example.com/pricing"])
+
+
+class JudgmentCacheIntegrationTests(unittest.TestCase):
+    """
+    Exercises the REAL engines._judgment_cache module (redirected to a
+    temp file), not a mock of it, to prove relevance_engine's wiring
+    to the cache actually works end to end — not just that the cache
+    module itself works in isolation (see test_judgment_cache.py).
+    """
+
+    def setUp(self):
+        self._tmp_dir = tempfile.TemporaryDirectory()
+        tmp_path = Path(self._tmp_dir.name)
+        self._cache_patches = [
+            patch.object(judgment_cache, "_DATA_DIR", tmp_path),
+            patch.object(judgment_cache, "_CACHE_FILE", tmp_path / "judgment_cache.json"),
+        ]
+        for p in self._cache_patches:
+            p.start()
+
+    def tearDown(self):
+        for p in self._cache_patches:
+            p.stop()
+        self._tmp_dir.cleanup()
+
+    def _run_with_real_cache(self, citation_result, deepseek_side_effect, page_texts=None):
+        page_texts = page_texts or {}
+
+        def fake_fetch_page_text(url, method="main"):
+            return page_texts.get(url, "")
+
+        with ExitStack() as stack:
+            stack.enter_context(patch.object(relevance_engine, "settings", _FAKE_SETTINGS))
+            stack.enter_context(patch.object(relevance_engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING))
+            stack.enter_context(patch.object(relevance_engine, "extract_text_from_html", return_value=HOMEPAGE_TEXT))
+            stack.enter_context(patch.object(relevance_engine, "fetch_page_text", side_effect=fake_fetch_page_text))
+            stack.enter_context(
+                patch.object(relevance_engine, "_call_deepseek_for_relevance_judgment", side_effect=deepseek_side_effect)
+            )
+            stack.enter_context(
+                patch.object(relevance_engine, "_fetch_homepage_response", return_value=_fake_homepage_response())
+            )
+            return relevance_engine.check_topic_relevance(DOMAIN, citation_result)
+
+    def test_second_call_with_identical_input_hits_cache_no_llm_call(self):
+        citation_result = _citation_result_with_questions(QUESTIONS)
+        call_count = {"n": 0}
+
+        def counting_deepseek(question, pages_text):
+            call_count["n"] += 1
+            return {"classification": "answered", "evidence_sentence": _REAL_EVIDENCE_SENTENCE, "source_url": HOMEPAGE_URL}
+
+        first = self._run_with_real_cache(citation_result, counting_deepseek)
+        calls_after_first = call_count["n"]
+        self.assertGreater(calls_after_first, 0)
+        self.assertTrue(all(r["cache_status"] == "fresh_judgment" for r in first.details["per_question_results"]))
+
+        second = self._run_with_real_cache(citation_result, counting_deepseek)
+
+        self.assertEqual(call_count["n"], calls_after_first, "second run must not call DeepSeek again")
+        self.assertTrue(all(r["cache_status"] == "cache_hit" for r in second.details["per_question_results"]))
+        self.assertEqual(first.score, second.score)
+        # Same classification/evidence/runs on both — only cache_status
+        # legitimately differs (fresh_judgment vs cache_hit).
+        first_without_cache_status = [
+            {k: v for k, v in entry.items() if k != "cache_status"} for entry in first.details["per_question_results"]
+        ]
+        second_without_cache_status = [
+            {k: v for k, v in entry.items() if k != "cache_status"} for entry in second.details["per_question_results"]
+        ]
+        self.assertEqual(first_without_cache_status, second_without_cache_status)
+
+    def test_changing_a_character_of_the_input_forces_a_fresh_judgment(self):
+        citation_result = _citation_result_with_questions(QUESTIONS)
+        call_count = {"n": 0}
+
+        def counting_deepseek(question, pages_text):
+            call_count["n"] += 1
+            return {"classification": "answered", "evidence_sentence": _REAL_EVIDENCE_SENTENCE, "source_url": HOMEPAGE_URL}
+
+        self._run_with_real_cache(citation_result, counting_deepseek)
+        calls_after_first = call_count["n"]
+
+        with patch.object(relevance_engine, "extract_text_from_html", return_value=HOMEPAGE_TEXT + "X"):
+            def fake_fetch_page_text(url, method="main"):
+                return ""
+
+            with ExitStack() as stack:
+                stack.enter_context(patch.object(relevance_engine, "settings", _FAKE_SETTINGS))
+                stack.enter_context(patch.object(relevance_engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING))
+                stack.enter_context(patch.object(relevance_engine, "fetch_page_text", side_effect=fake_fetch_page_text))
+                stack.enter_context(
+                    patch.object(relevance_engine, "_call_deepseek_for_relevance_judgment", side_effect=counting_deepseek)
+                )
+                stack.enter_context(
+                    patch.object(relevance_engine, "_fetch_homepage_response", return_value=_fake_homepage_response())
+                )
+                relevance_engine.check_topic_relevance(DOMAIN, citation_result)
+
+        self.assertGreater(call_count["n"], calls_after_first, "a changed input must trigger a fresh judgment")
+
+    def test_prompt_version_bump_forces_a_fresh_judgment(self):
+        citation_result = _citation_result_with_questions(QUESTIONS)
+        call_count = {"n": 0}
+
+        def counting_deepseek(question, pages_text):
+            call_count["n"] += 1
+            return {"classification": "answered", "evidence_sentence": _REAL_EVIDENCE_SENTENCE, "source_url": HOMEPAGE_URL}
+
+        self._run_with_real_cache(citation_result, counting_deepseek)
+        calls_after_first = call_count["n"]
+
+        with patch.object(relevance_engine, "PROMPT_VERSION", "v2-changed"):
+            self._run_with_real_cache(citation_result, counting_deepseek)
+
+        self.assertGreater(call_count["n"], calls_after_first, "a bumped prompt version must trigger a fresh judgment")
 
 
 if __name__ == "__main__":
