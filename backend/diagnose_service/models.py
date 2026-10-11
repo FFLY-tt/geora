@@ -44,6 +44,14 @@ class DiagnosisResponse(BaseModel):
         None,
         description="Map of dimension name to score from the last time this domain was checked, before this run. Only populated when this response is a fresh recompute (not a cache hit) and a prior result exists; null otherwise.",
     )
+    provenance: dict | None = Field(
+        None,
+        description="What this result was computed from: run_date, method_versions per dimension, question_set (category_id, version, status), and pages read per dimension with text hashes.",
+    )
+    previous_provenance: dict | None = Field(
+        None,
+        description="The provenance of the previous result whose scores are in previous_scores, or null if unknown. Scores are only comparable when method and question set versions match.",
+    )
 
 
 class LeadCaptureRequest(BaseModel):

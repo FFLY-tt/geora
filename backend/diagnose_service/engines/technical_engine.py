@@ -44,9 +44,14 @@ from urllib.robotparser import RobotFileParser
 from shared.config import settings
 from shared._fetch_utils import extract_text_from_html, fetch_page_html
 from engines._plain_finding_generator import make_plain_finding
+from engines._provenance import page_fingerprint
 from models import DimensionScore
 
 DIMENSION_NAME = "technical_readability"
+
+# Bump whenever this dimension's measurement method changes in a way
+# that makes results computed before and after not directly comparable.
+METHOD_VERSION = "v1"
 
 # The same 4 AI crawler user agents agent_service's own
 # technical_package_engine.py checks — duplicated here rather than
@@ -299,6 +304,12 @@ def check_technical_readability(domain: str) -> DimensionScore:
             "static_content": static_content,
             "structured_data": structured_data,
             "heading_structure": heading_structure,
+            "page_fingerprints": [
+                page_fingerprint(
+                    domain if domain.startswith("http") else f"https://{domain}",
+                    extract_text_from_html(html, method="main"),
+                )
+            ],
             "generation_log": generation_log,
             "plain_finding": plain_finding,
         },

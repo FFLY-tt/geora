@@ -11,6 +11,15 @@ protection, which this project does not do. Instead, this engine asks
 Perplexity (which already indexes and cites those sites) what it knows
 about the company from G2/Capterra, and treats Perplexity's cited answer
 as the third-party source to compare against the official homepage.
+
+Both LLM steps are cached in the shared judgment cache
+(engines._judgment_cache, committed under state/judgments/): the
+Perplexity lookup keyed on the exact query, and the DeepSeek comparison
+keyed on the exact texts compared. Real reports showed this dimension
+swinging between 95, 35, and 10 within days for the same company, from
+model non-determinism alone; with the cache, the same input gives the
+same result on every machine. The trade-off: the third-party snapshot
+for a company stays fixed until THIRD_PARTY_LOOKUP_VERSION is bumped.
 """
 
 import json
@@ -20,11 +29,24 @@ import requests
 
 from shared.config import settings
 from shared._fetch_utils import fetch_page_text
+from engines._judgment_cache import get_cached_judgment, make_judgment_cache_key, save_judgment
 from engines._plain_finding_generator import make_plain_finding
+from engines._provenance import page_fingerprint
 from shared._text_format import PLAIN_LANGUAGE_FORMAT_RULES, find_banned_formatting, sanitize_banned_formatting
 from models import DimensionScore
 
 DIMENSION_NAME = "fact_consistency"
+
+# Bump whenever this dimension's measurement method changes in a way
+# that makes results computed before and after not directly comparable.
+METHOD_VERSION = "v1"
+
+# Folded into the judgment cache keys of the two LLM steps. Bump the
+# lookup version to take a fresh third-party snapshot for every company,
+# and the comparison version whenever _FACT_COMPARISON_SYSTEM_PROMPT's
+# wording changes.
+THIRD_PARTY_LOOKUP_VERSION = "v1-g2-capterra-lookup"
+COMPARISON_PROMPT_VERSION = "v1-fact-comparison"
 
 MAX_FORMAT_ATTEMPTS = 2
 
@@ -88,29 +110,54 @@ def _call_perplexity(query: str) -> dict:
     return response.json()
 
 
+def _lookup_third_party(query: str) -> tuple[str, list, str]:
+    """
+    (answer_text, citations, cache_status) for the G2/Capterra lookup,
+    from the judgment cache when this exact query was answered before,
+    else from Perplexity. Only a response with real answer text is
+    cached. Raises requests.RequestException on a fresh-call failure.
+    """
+    cache_key = make_judgment_cache_key(DIMENSION_NAME, THIRD_PARTY_LOOKUP_VERSION, settings.perplexity_model, query)
+    cached = get_cached_judgment(DIMENSION_NAME, cache_key)
+    if cached is not None:
+        return cached["answer_text"], cached["citations"], "cache_hit"
+
+    raw_response = _call_perplexity(query)
+    choices = raw_response.get("choices", [])
+    answer_text = ""
+    if choices:
+        answer_text = choices[0].get("message", {}).get("content", "") or ""
+    citations = raw_response.get("citations", []) or []
+    if answer_text.strip():
+        save_judgment(DIMENSION_NAME, cache_key, {"answer_text": answer_text, "citations": citations})
+    return answer_text, citations, "fresh_judgment"
+
+
 def _find_g2_or_capterra_citations(citations: list) -> list:
     """Return the subset of `citations` whose URL contains g2.com or capterra.com."""
     return [c for c in citations if "g2.com" in c.lower() or "capterra.com" in c.lower()]
 
 
-def _fetch_official_text(domain: str) -> tuple[str, list[str]]:
+def _fetch_official_text(domain: str) -> tuple[str, list[str], list[dict]]:
     """
     Fetch the domain's homepage text, plus a best-effort guess at its
     pricing page. The homepage fetch failing is a hard failure (raised to
     the caller); the pricing-page guess failing is not, since it was only
     a guess, not a known real page.
 
-    Returns (combined_text, fetched_urls). Raises requests.RequestException
-    if the homepage itself could not be fetched.
+    Returns (combined_text, fetched_urls, page_fingerprints). Raises
+    requests.RequestException if the homepage itself could not be fetched.
     """
     homepage_url = domain if domain.startswith("http") else f"https://{domain}"
     homepage_text = fetch_page_text(domain)
     fetched_urls = [homepage_url]
+    fingerprints = [page_fingerprint(homepage_url, homepage_text)]
 
     pricing_url = f"{homepage_url.rstrip('/')}/pricing"
     try:
         pricing_text = fetch_page_text(pricing_url)
         fetched_urls.append(pricing_url)
+        fingerprints.append(page_fingerprint(pricing_url, pricing_text))
     except requests.RequestException:
         pricing_text = ""
 
@@ -118,7 +165,7 @@ def _fetch_official_text(domain: str) -> tuple[str, list[str]]:
     if pricing_text:
         combined_text = f"{homepage_text}\n\n--- Pricing page ---\n\n{pricing_text}"
 
-    return combined_text, fetched_urls
+    return combined_text, fetched_urls, fingerprints
 
 
 def _call_deepseek_for_fact_comparison(company_name: str, official_text: str, third_party_text: str) -> dict:
@@ -175,6 +222,27 @@ def _comparison_text_fields(comparison: dict) -> list[str]:
     for entry in comparison.get("conflicts", []):
         fields.extend([entry.get("field", ""), entry.get("official_says", ""), entry.get("third_party_says", "")])
     return fields
+
+
+def _get_cached_or_clean_fact_comparison(
+    company_name: str, official_text: str, third_party_text: str
+) -> tuple[dict, list, str]:
+    """
+    _get_clean_fact_comparison, cached in the judgment cache keyed on the
+    exact (truncated) texts actually sent. Returns (comparison,
+    format_check_log, cache_status).
+    """
+    cache_input = (
+        f"COMPANY: {company_name}\n\nTEXT_A:\n{official_text[:6000]}\n\nTEXT_B:\n{third_party_text[:6000]}"
+    )
+    cache_key = make_judgment_cache_key(DIMENSION_NAME, COMPARISON_PROMPT_VERSION, settings.deepseek_model, cache_input)
+    cached = get_cached_judgment(DIMENSION_NAME, cache_key)
+    if cached is not None:
+        return cached["comparison"], cached["format_check_log"], "cache_hit"
+
+    comparison, format_check_log = _get_clean_fact_comparison(company_name, official_text, third_party_text)
+    save_judgment(DIMENSION_NAME, cache_key, {"comparison": comparison, "format_check_log": format_check_log})
+    return comparison, format_check_log, "fresh_judgment"
 
 
 def _get_clean_fact_comparison(company_name: str, official_text: str, third_party_text: str) -> tuple[dict, list]:
@@ -263,7 +331,7 @@ def check_fact_consistency(company_name: str, domain: str) -> DimensionScore:
     query = _build_g2_capterra_query(company_name)
 
     try:
-        raw_response = _call_perplexity(query)
+        answer_text, citations, lookup_cache_status = _lookup_third_party(query)
     except requests.RequestException:
         fallback = (
             "We tried looking up what independent review sites say about this brand, but the "
@@ -287,12 +355,6 @@ def check_fact_consistency(company_name: str, domain: str) -> DimensionScore:
                 "plain_finding": plain_finding,
             },
         )
-
-    choices = raw_response.get("choices", [])
-    answer_text = ""
-    if choices:
-        answer_text = choices[0].get("message", {}).get("content", "") or ""
-    citations = raw_response.get("citations", []) or []
 
     g2_capterra_citations = _find_g2_or_capterra_citations(citations)
 
@@ -351,7 +413,7 @@ def check_fact_consistency(company_name: str, domain: str) -> DimensionScore:
         )
 
     try:
-        official_text, official_urls_fetched = _fetch_official_text(domain)
+        official_text, official_urls_fetched, page_fingerprints = _fetch_official_text(domain)
     except requests.RequestException:
         fallback = (
             "We had independent listing data ready to compare, but couldn't open the official "
@@ -423,7 +485,9 @@ def check_fact_consistency(company_name: str, domain: str) -> DimensionScore:
         )
 
     try:
-        comparison, format_check_log = _get_clean_fact_comparison(company_name, official_text, answer_text)
+        comparison, format_check_log, comparison_cache_status = _get_cached_or_clean_fact_comparison(
+            company_name, official_text, answer_text
+        )
     except (requests.RequestException, ValueError, KeyError, json.JSONDecodeError) as exc:
         fallback = (
             "We gathered both sources but hit a technical hiccup while comparing them, so there's "
@@ -505,6 +569,8 @@ def check_fact_consistency(company_name: str, domain: str) -> DimensionScore:
             "compared_fields": compared_fields,
             "conflicts": conflicts,
             "format_check": format_check_log,
+            "cache_status": {"third_party_lookup": lookup_cache_status, "comparison": comparison_cache_status},
+            "page_fingerprints": page_fingerprints,
             "generation_log": generation_log,
             "plain_finding": plain_finding,
         },

@@ -1,0 +1,140 @@
+{
+  "0d7e34f692f8613b5ddb26b6d07bc96721e207eb4e2cffdcce6e2d450a976924": {
+    "cached_at": "2026-10-11T21:04:42.045337+00:00",
+    "result": {
+      "comparison": {
+        "compared_fields": [
+          "pricing",
+          "supported regions",
+          "core feature claims"
+        ],
+        "conflicts": [
+          {
+            "field": "pricing",
+            "official_says": "Pricing is personalized and available by scheduling a free demo. No specific price is listed.",
+            "third_party_says": "G2 says pricing is by custom quote with a free trial. Capterra lists a 4200 dollar flat one-time price."
+          },
+          {
+            "field": "supported regions",
+            "official_says": "The platform covers global and U.S. state privacy laws and supports up to 5000 domains. No specific countries are named.",
+            "third_party_says": "Capterra identifies Canada as an available country. Feroot supports multi-jurisdiction and global deployments covering PCI DSS, HIPAA, GDPR, CCPA/CPRA, and more than 50 global laws."
+          },
+          {
+            "field": "core feature claims",
+            "official_says": "Features include consent audits, cookie tracking, policy enforcement, payment-page script monitoring, real-time blocking for skimming, formjacking, script injection, and data exfiltration, plus PCI DSS 4.0.1 requirements 6.4.3 and 11.6.1.",
+            "third_party_says": "Features include JavaScript behavior analysis, web-compliance scanning, third-party-script monitoring, consent auditing and policy enforcement, data-privacy posture management, behavioral analytics, risk analysis, vulnerability scanning, monitoring, audit trails, access controls, endpoint protection, secure login, and web-traffic reporting."
+          }
+        ]
+      },
+      "format_check_log": [
+        {
+          "attempt": 1,
+          "issues": []
+        }
+      ]
+    }
+  },
+  "3e1e4206480ed9145d6ecba8a6a64fc2698fb5a5e5e1a31b6485adeec86fc152": {
+    "cached_at": "2026-10-11T21:04:38.983648+00:00",
+    "result": {
+      "answer_text": "Feroot Security’s public listings indicate the following:\n\n- **Pricing:** G2 lists **four pricing editions**, but says pricing is available only by contacting Feroot for a custom quote. It also offers a **free trial**, but no permanent free plan.[1] Capterra lists a **$4,200 flat one-time price**, although this may represent a specific package or listing configuration rather than the full platform’s current enterprise pricing.[4]\n- **Supported regions:** Capterra identifies **Canada** as an available country and lists English as the supported language.[8] Functionally, Feroot supports **multi-jurisdiction and global deployments**, covering regulations such as PCI DSS, HIPAA, GDPR, CCPA/CPRA, and more than 50 global laws and standards.[2]\n- **Core features:** JavaScript behavior analysis, web-compliance scanning, third-party-script monitoring, consent auditing and policy enforcement, data-privacy posture management, behavioral analytics, risk analysis, vulnerability scanning, monitoring, audit trails, access controls, endpoint protection, secure login, and web-traffic reporting.[2][4]\n- **Main product areas:** PaymentGuard AI for payment-page and PCI protection, HealthData Shield AI for healthcare and PHI, AlphaPrivacy AI for privacy and consent compliance, and CodeGuard AI for client-side code integrity and behavior monitoring.[1][2]",
+      "citations": [
+        "https://www.g2.com/products/feroot-security/pricing",
+        "https://www.g2.com/products/feroot-security/reviews",
+        "https://www.g2.com/products/feroot-security/reviews?qs=pros-and-cons",
+        "https://www.capterra.com/p/192375/Web-Formjacking-Skimming-Attack-Detection/",
+        "https://www.feroot.com/blog/feroot-g2-best-software-products-in-data-privacy/",
+        "https://www.feroot.com/plans/",
+        "https://www.g2.com/categories/application-shielding/free",
+        "https://www.capterra.ca/software/192375/web-formjacking-skimming-attack-detection",
+        "https://www.capterra.ca/compare/192375/206253/web-formjacking-skimming-attack-detection/vs/cyber-security-suite",
+        "https://www.feroot.com/platform-overview/"
+      ]
+    }
+  },
+  "818c269d63cf8e699a503268d6b57cd2863c1e51a66af5942d7409e0a9f0451b": {
+    "cached_at": "2026-10-11T21:06:04.264640+00:00",
+    "result": {
+      "comparison": {
+        "compared_fields": [
+          "pricing",
+          "core feature claims"
+        ],
+        "conflicts": [
+          {
+            "field": "pricing",
+            "official_says": "Free plan at $0, Basic at $10 per user per month, Business at $16 per user per month, Enterprise custom pricing with annual billing only.",
+            "third_party_says": "G2 lists free to $16 per user per month. Capterra lists Basic at $12 per user per month and Business at $18 per user per month."
+          }
+        ]
+      },
+      "format_check_log": [
+        {
+          "attempt": 1,
+          "issues": []
+        }
+      ]
+    }
+  },
+  "83161234b99263570118b810ab23771b9c56f9db1197b5b57766c4385c1c3229": {
+    "cached_at": "2026-10-11T21:05:21.533033+00:00",
+    "result": {
+      "answer_text": "Close’s **pricing starts at $9 per user/month and goes up to $139 per user/month**, with four plans and a free trial. Pricing is billed per user, per month.[2][5][7]\n\n| Plan | Price | Main capabilities |\n|---|---:|---|\n| **Solo** | **$9/user/month** | One user, up to 10,000 leads, forms, pipeline, centralized inbox and tasks, built-in calling and SMS, email and calendar sync, activity reports.[5][7] |\n| **Essentials** | **$35/user/month** | Unlimited leads and contacts, multiple pipelines, advanced lead/activity filters, forms, built-in calling and SMS, email and calendar sync.[5][7] |\n| **Growth** | **$99/user/month** | Everything in Essentials plus Power Dialer, sales leaderboard, workflows, AI Email Assistant, custom activities, bulk email, and AI enrichment.[5][7] |\n| **Scale** | **$139/user/month** | Adds comparison reports, custom reporting graphs, voicemail drop, and advanced scaling/reporting capabilities.[5][7] |\n\n## Supported regions\n\nCapterra lists Close as available in these countries and territories: **Australia, Austria, Belgium, Canada, Denmark, Finland, France, Germany, Israel, the Netherlands, Poland, Puerto Rico, South Africa, Sweden, Switzerland, the United Kingdom, and the United States**.[4][6]\n\n## Core features\n\nG2 and Capterra describe Close as a sales CRM centered on:\n\n- **Lead, contact, account, and opportunity management**\n- **Pipeline management**, including multiple pipelines and activity filters\n- **Built-in calling, SMS, and email**, with communication history connected to customer records\n- **Centralized inbox, task management, and activity tracking**\n- **Sales automation**, including workflows, sequences, follow-up, lead routing, and automated responses\n- **Power Dialer, auto-dialing, call logging, call recording/transcription, and voicemail drop**\n- **Reporting and analytics**, including activity reports, sales leaderboards, forecasting, and custom reports\n- **Forms, calendar sync, email synchronization, and CRM integrations**\n- **AI capabilities**, including AI enrichment, AI email assistance, and an AI sales agent[3][4][5]",
+      "citations": [
+        "https://close.com/pricing",
+        "https://www.g2.com/products/close/pricing",
+        "https://www.g2.com/products/close/reviews",
+        "https://www.capterra.co.uk/software/132667/close-io",
+        "https://www.capterra.com/p/132667/Close-io/",
+        "https://www.capterra.com.de/software/132667/close-io",
+        "https://www.capterra.com/p/132667/Close-io/pricing/",
+        "https://www.g2.com/compare/close-vs-sap-sap-sales-cloud",
+        "https://www.g2.com/sellers/close",
+        "https://close.com/compare"
+      ]
+    }
+  },
+  "838254f9c8821579b8d0d2026df36f5cd427382839bf00147f1a33090bc87f96": {
+    "cached_at": "2026-10-11T21:06:01.863112+00:00",
+    "result": {
+      "answer_text": "According to G2 and Capterra, Linear is a product-development and project-management platform. Its pricing is **free to $16 per user/month on G2**, while Capterra lists paid plans beginning at **$12 per user/month**; the discrepancy likely reflects different pricing snapshots or billing terms.[1][2]\n\n## Pricing\n\n| Plan | G2-listed price | Main inclusions |\n|---|---:|---|\n| Free | $0 | Unlimited members, 2 teams, 250 active issues, and Slack, GitHub, and API access.[1] |\n| Basic | $10/user/month | Five teams, unlimited issues, file uploads, and administrator roles.[1] |\n| Business | $16/user/month | Unlimited teams, private teams, guest accounts, Linear Insights, triage responsibility, and Zendesk/Intercom integrations.[1] |\n| Enterprise | Custom | SAML, SCIM, issue SLAs, and advanced security controls.[1] |\n\nCapterra lists a free version, **Basic at $12 per user/month**, and **Business at $18 per user/month**.[2]\n\n## Supported regions\n\nCapterra’s regional listing identifies the **United States** as the available country and **English** as the supported language.[4] The sources do not provide a broader, definitive list of supported countries or regional availability.\n\n## Core features\n\n- Issue tracking and lifecycle management.[2][4]\n- Project management, planning, and project templates.[2]\n- Product roadmapping and requirements management.[2][4]\n- Ideation, prioritization, and collaboration tools.[2][4]\n- List, board, timeline, and swimlane views.[2]\n- Gantt/timeline planning and release visualization.[2][4]\n- Product pipelines and milestone planning.[2]\n- Linear Insights for progress, scope, and velocity analytics.[5]\n- Integrations with tools such as GitHub, Slack, Figma, Zendesk, and Intercom.[1][5]\n- Sprint/cycle management, customizable workflows, and cross-team initiatives.[5]",
+      "citations": [
+        "https://www.g2.com/products/linear/pricing",
+        "https://www.capterra.com/p/10026109/Linear/",
+        "https://www.g2.com/products/linear/reviews",
+        "https://www.capterra.co.uk/software/1072683/Linear",
+        "https://ai.g2.com/product/linear",
+        "https://www.g2.com/compare/linear-vs-smartsheet",
+        "https://www.g2.com/compare/linear-vs-monday-com",
+        "https://github.com/nhppyqys/product-research-skill/blob/main/docs/examples/full-report.md",
+        "https://www.g2.com/products/linear/features",
+        "https://linear.app/pricing"
+      ]
+    }
+  },
+  "cd9cffda58ae2462d28d7039c6ea006ffd93bc75946c3e7694195ab9f35f4417": {
+    "cached_at": "2026-10-11T21:05:23.183833+00:00",
+    "result": {
+      "comparison": {
+        "compared_fields": [
+          "pricing",
+          "supported regions",
+          "core feature claims"
+        ],
+        "conflicts": [
+          {
+            "field": "supported regions",
+            "official_says": "Close does not list any supported regions or countries on its homepage or pricing page.",
+            "third_party_says": "Capterra lists Close as available in Australia, Austria, Belgium, Canada, Denmark, Finland, France, Germany, Israel, the Netherlands, Poland, Puerto Rico, South Africa, Sweden, Switzerland, the United Kingdom, and the United States."
+          }
+        ]
+      },
+      "format_check_log": [
+        {
+          "attempt": 1,
+          "issues": []
+        }
+      ]
+    }
+  }
+}

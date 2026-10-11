@@ -7,6 +7,7 @@ import CitationResultCard from './components/CitationResultCard'
 import RadarChart from './components/RadarChart'
 import ScoreSummary from './components/ScoreSummary'
 import BreakdownAccordion from './components/BreakdownAccordion'
+import ProvenanceFooter from './components/ProvenanceFooter'
 import { runDiagnosis, captureLead } from './api'
 
 // How long the one-time post-unlock scan-sweep highlight plays for. Must
@@ -81,7 +82,12 @@ export default function App() {
         <>
           <section className="section">
             <CacheNotice />
-            <ScoreChangeNote previousScores={result.previous_scores} currentScores={result.dimensions} />
+            <ScoreChangeNote
+              previousScores={result.previous_scores}
+              currentScores={result.dimensions}
+              previousProvenance={result.previous_provenance}
+              currentProvenance={result.provenance}
+            />
             <div className={justUnlocked ? 'scan-sweep-once' : ''}>
               <CitationResultCard
                 citation={result.dimensions.find((dim) => dim.dimension === 'citation_visibility')}
@@ -99,6 +105,10 @@ export default function App() {
               onUnlock={handleUnlock}
             />
             {unlockError && <p className="form-error">{unlockError}</p>}
+          </section>
+
+          <section className="section">
+            <ProvenanceFooter provenance={result.provenance} />
           </section>
         </>
       )}

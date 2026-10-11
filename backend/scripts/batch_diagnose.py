@@ -12,10 +12,11 @@ it has to be a better-behaved visitor than the live product is.
 Unlike the live /api/diagnose route, this script bypasses
 result_cache.py's 24-hour result cache entirely (it is simply never
 imported), since the whole point of a batch run is a fresh diagnosis
-for every company. citation_engine's own 7-day buyer-question cache
-(engines/_query_cache.py) is untouched and still applies — that cache
-is what keeps citation_visibility's wording-sensitive score comparable
-across repeated runs, not something a batch run should defeat.
+for every company. citation_engine's frozen per-category question sets
+and the LLM judgment cache (both committed under
+diagnose_service/state/) still apply — they are what keep the scores
+reproducible, not something a batch run should defeat. Each record
+carries the same `provenance` the live API returns.
 
 Output (see OUTPUT_DIR):
   results.jsonl  — one JSON object per company, the full DimensionScore
@@ -77,6 +78,7 @@ import engines.recency_engine as recency_engine  # noqa: E402
 import engines.fact_engine as fact_engine  # noqa: E402
 import engines.relevance_engine as relevance_engine  # noqa: E402
 import engines.technical_engine as technical_engine  # noqa: E402
+from provenance import build_provenance  # noqa: E402
 
 OUTPUT_DIR = _THIS_DIR / "output"
 RESULTS_FILE = OUTPUT_DIR / "results.jsonl"
@@ -325,6 +327,7 @@ def _save_record(
         "status": status,
         "redirected_domain": redirected_domain,
         "dimensions": dimensions,
+        "provenance": build_provenance(dimensions) if dimensions else None,
         "error": error,
         "checked_at": datetime.now(timezone.utc).isoformat(),
     }

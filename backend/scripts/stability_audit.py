@@ -26,11 +26,10 @@ source file is edited by this script.
 
 Buyer questions for citation_visibility: this script does nothing
 special to force question reuse across runs — it relies on
-citation_engine's own existing 7-day question cache
-(engines/_query_cache.py), which already makes every run after the
-first reuse the exact same (category, queries) pair within that
-window. The report verifies this held and says so explicitly, rather
-than assuming it.
+citation_engine's frozen per-category question sets
+(engines/_question_sets.py, committed under state/), which make every
+run after the first reuse the exact same questions. The report
+verifies this held and says so explicitly, rather than assuming it.
 
 --no-judgment-cache: evidence_density and topic_relevance now cache
 their aggregated judgment per exact input (engines._judgment_cache,
@@ -563,7 +562,9 @@ def _citation_mention_section(records: list[dict]) -> str:
 def _buyer_questions_section(records: list[dict]) -> str:
     first_details = records[0]["dimensions"]["citation_visibility"]["details"]
     first_generation_log = first_details.get("generation_log") or []
-    first_run_was_cache_hit = any(entry.get("outcome") == "cache_hit" for entry in first_generation_log)
+    first_run_was_cache_hit = any(entry.get("outcome") == "cache_hit" for entry in first_generation_log) or (
+        (first_details.get("question_set") or {}).get("source") in ("existing_company_assignment", "matched_existing_category")
+    )
 
     per_run_questions = []
     for record in records:
@@ -584,13 +585,13 @@ def _buyer_questions_section(records: list[dict]) -> str:
         "",
     ]
     if all_same and per_run_questions[0]:
-        lines.append(f"Same question set was used in **all {len(records)} runs** (citation_engine's own 7-day question cache held):")
+        lines.append(f"Same question set was used in **all {len(records)} runs** (citation_engine's frozen question set held):")
         for q in per_run_questions[0]:
             lines.append(f"- {q}")
     elif not per_run_questions[0]:
         lines.append("No questions were available at all (question generation failed on run 1); this audit cannot say anything about citation_visibility's question-stability for this company.")
     else:
-        lines.append("**Question sets differed between runs** (the 7-day question cache did NOT hold as expected) — per run:")
+        lines.append("**Question sets differed between runs** (the frozen question set did NOT hold as expected) — per run:")
         for record, questions in zip(records, per_run_questions):
             lines.append(f"- run {record['run']}: {list(questions)}")
 
@@ -731,7 +732,7 @@ def _confirm(runs: int, skip_confirmation: bool) -> bool:
     print(f"Estimated Perplexity calls: up to {runs * perplexity_per_run}")
     print(
         f"Estimated DeepSeek calls: up to {runs * deepseek_per_run} "
-        "(citation_engine's 2 question-generation calls only happen once, not every run, if its 7-day cache holds)"
+        "(citation_engine's question-set calls only happen the first time a company is ever diagnosed)"
     )
     if skip_confirmation:
         return True

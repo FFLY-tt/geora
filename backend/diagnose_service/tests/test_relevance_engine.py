@@ -32,6 +32,7 @@ sys.path.insert(0, str(_SERVICE_DIR))
 
 import engines.relevance_engine as relevance_engine  # noqa: E402
 import engines._judgment_cache as judgment_cache  # noqa: E402
+import engines._state_store as state_store  # noqa: E402
 from models import DimensionScore  # noqa: E402
 from shared.config import Settings  # noqa: E402
 
@@ -295,8 +296,7 @@ class JudgmentCacheIntegrationTests(unittest.TestCase):
         self._tmp_dir = tempfile.TemporaryDirectory()
         tmp_path = Path(self._tmp_dir.name)
         self._cache_patches = [
-            patch.object(judgment_cache, "_DATA_DIR", tmp_path),
-            patch.object(judgment_cache, "_CACHE_FILE", tmp_path / "judgment_cache.json"),
+            patch.object(state_store, "STATE_DIR", tmp_path),
         ]
         for p in self._cache_patches:
             p.start()

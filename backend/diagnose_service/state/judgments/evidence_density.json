@@ -1,0 +1,851 @@
+{
+  "6ae6e4503bc1228f13c5deff5ba7bc927e78463c844dc947eece6bcbf0761092": {
+    "cached_at": "2026-10-11T21:06:00.956464+00:00",
+    "result": {
+      "counts": {
+        "attributed_quote": 4,
+        "named_customer_or_case_study": 4,
+        "number_or_statistic": 2,
+        "third_party_source_or_certification": 0
+      },
+      "items": [
+        {
+          "category": "number_or_statistic",
+          "quote": "Worked for 8 sec"
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "Worked for 1 min"
+        },
+        {
+          "category": "named_customer_or_case_study",
+          "quote": "Linear created the issue via Slack on behalf of Karri · 2min ago"
+        },
+        {
+          "category": "named_customer_or_case_study",
+          "quote": "Linear connected by Jori · 2 min ago"
+        },
+        {
+          "category": "named_customer_or_case_study",
+          "quote": "kinetic-ios/src/screens/Home/HomeScreen.tsx"
+        },
+        {
+          "category": "named_customer_or_case_study",
+          "quote": "kinetic-ios/src/HomeScreen.tsx"
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "didier Has anyone been looking into the iOS startup performance issues?"
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "lena Anyone else noticing the iOS app feels slow to open if you haven’t used it in a bit?"
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "didier Yea, we’re still blocking initial render on a full vehicle_state sync every time…"
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "andreas Feels like we could render sooner and load the rest in the background. Probably also worth tracking startup timing so we know how often this happens!"
+        }
+      ],
+      "points_by_category": {
+        "attributed_quote": 25,
+        "named_customer_or_case_study": 25,
+        "number_or_statistic": 20,
+        "third_party_source_or_certification": 0
+      },
+      "runs": [
+        {
+          "dropped_items": [],
+          "run": 1,
+          "status": "ok",
+          "verified_items": [
+            {
+              "category": "number_or_statistic",
+              "quote": "Worked for 8 sec"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "Worked for 1 min"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "Linear created the issue via Slack on behalf of Karri · 2min ago"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "Linear connected by Jori · 2 min ago"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "kinetic-ios/src/screens/Home/HomeScreen.tsx"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "kinetic-ios/src/HomeScreen.tsx"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "didier Has anyone been looking into the iOS startup performance issues?"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "lena Anyone else noticing the iOS app feels slow to open if you haven’t used it in a bit?"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "didier Yea, we’re still blocking initial render on a full vehicle_state sync every time…"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "andreas Feels like we could render sooner and load the rest in the background. Probably also worth tracking startup timing so we know how often this happens!"
+            }
+          ]
+        },
+        {
+          "dropped_items": [],
+          "run": 2,
+          "status": "ok",
+          "verified_items": [
+            {
+              "category": "number_or_statistic",
+              "quote": "Worked for 8 sec"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "Worked for 1 min"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "Linear created the issue via Slack on behalf of Karri · 2min ago"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "Linear connected by Jori · 2 min ago"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "kinetic-ios/src/screens/Home/HomeScreen.tsx"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "kinetic-ios/src/HomeScreen.tsx"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "didier Has anyone been looking into the iOS startup performance issues?"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "lena Anyone else noticing the iOS app feels slow to open if you haven’t used it in a bit?"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "didier Yea, we’re still blocking initial render on a full vehicle_state sync every time…"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "andreas Feels like we could render sooner and load the rest in the background. Probably also worth tracking startup timing so we know how often this happens!"
+            }
+          ]
+        },
+        {
+          "dropped_items": [],
+          "run": 3,
+          "status": "ok",
+          "verified_items": [
+            {
+              "category": "number_or_statistic",
+              "quote": "Worked for 8 sec"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "Worked for 1 min"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "Linear created the issue via Slack on behalf of Karri · 2min ago"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "Linear connected by Jori · 2 min ago"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "kinetic-ios/src/screens/Home/HomeScreen.tsx"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "kinetic-ios/src/HomeScreen.tsx"
+            }
+          ]
+        }
+      ],
+      "score": 70
+    }
+  },
+  "b79e6874302f8ff718fe01fa0cb42958940a4fa8b672b8a905da82df7bf66bb6": {
+    "cached_at": "2026-10-11T21:05:20.637611+00:00",
+    "result": {
+      "counts": {
+        "attributed_quote": 5,
+        "named_customer_or_case_study": 5,
+        "number_or_statistic": 5,
+        "third_party_source_or_certification": 1
+      },
+      "items": [
+        {
+          "category": "number_or_statistic",
+          "quote": "11,500 + Sales teams trust Close"
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "2 B+ Calls, emails, and texts"
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "4.7 ★ Rated on G2"
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "“ Our booked appointments per week have gone up ~50% since Chloe went live. ”"
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "“ We've saved over $100,000 in tech costs switching from Salesforce to Close. We're doing things we never dreamed of doing in a CRM. ”"
+        },
+        {
+          "category": "named_customer_or_case_study",
+          "quote": "— Dana Derricks, Founder @ FollowUp.com"
+        },
+        {
+          "category": "named_customer_or_case_study",
+          "quote": "— Zac Muir, VP of Revenue @ Sisu"
+        },
+        {
+          "category": "named_customer_or_case_study",
+          "quote": "— Ben Pace, President @ ClientMatchmaking.com"
+        },
+        {
+          "category": "named_customer_or_case_study",
+          "quote": "— Jem Millett, Director of Admissions @ Flatiron School"
+        },
+        {
+          "category": "named_customer_or_case_study",
+          "quote": "— Michael Fomkin, CEO & Founder @ VIP Ignite"
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "“ Our booked appointments per week have gone up ~50% since Chloe went live. ” — Dana Derricks, Founder @ FollowUp.com"
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "“ We've saved over $100,000 in tech costs switching from Salesforce to Close. We're doing things we never dreamed of doing in a CRM. ” — Zac Muir, VP of Revenue @ Sisu"
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "“ If you’re worried your clients will be turned off by AI, don’t be — it’s just noise. Close and Chloe have done nothing but impact my bottom line in a positive way. ” — Ben Pace, President @ ClientMatchmaking.com"
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "“ We're not using AI to replace people. We're doing it so that the people we have are unlocked to do more. Chloe is not just innovation. She is actually creating the work we need to do. ” — Jem Millett, Director of Admissions @ Flatiron School"
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "“ No matter what business model you’re in, your competition is about to be using this technology. ” — Michael Fomkin, CEO & Founder @ VIP Ignite"
+        },
+        {
+          "category": "third_party_source_or_certification",
+          "quote": "4.7 ★ Rated on G2"
+        }
+      ],
+      "points_by_category": {
+        "attributed_quote": 25,
+        "named_customer_or_case_study": 25,
+        "number_or_statistic": 25,
+        "third_party_source_or_certification": 15
+      },
+      "runs": [
+        {
+          "dropped_items": [],
+          "run": 1,
+          "status": "ok",
+          "verified_items": [
+            {
+              "category": "number_or_statistic",
+              "quote": "11,500 + Sales teams trust Close"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "2 B+ Calls, emails, and texts"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "4.7 ★ Rated on G2"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "“ Our booked appointments per week have gone up ~50% since Chloe went live. ”"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "“ We've saved over $100,000 in tech costs switching from Salesforce to Close. We're doing things we never dreamed of doing in a CRM. ”"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Dana Derricks, Founder @ FollowUp.com"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Zac Muir, VP of Revenue @ Sisu"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Ben Pace, President @ ClientMatchmaking.com"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Jem Millett, Director of Admissions @ Flatiron School"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Michael Fomkin, CEO & Founder @ VIP Ignite"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ Our booked appointments per week have gone up ~50% since Chloe went live. ” — Dana Derricks, Founder @ FollowUp.com"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ We've saved over $100,000 in tech costs switching from Salesforce to Close. We're doing things we never dreamed of doing in a CRM. ” — Zac Muir, VP of Revenue @ Sisu"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ If you’re worried your clients will be turned off by AI, don’t be — it’s just noise. Close and Chloe have done nothing but impact my bottom line in a positive way. ” — Ben Pace, President @ ClientMatchmaking.com"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ We're not using AI to replace people. We're doing it so that the people we have are unlocked to do more. Chloe is not just innovation. She is actually creating the work we need to do. ” — Jem Millett, Director of Admissions @ Flatiron School"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ No matter what business model you’re in, your competition is about to be using this technology. ” — Michael Fomkin, CEO & Founder @ VIP Ignite"
+            },
+            {
+              "category": "third_party_source_or_certification",
+              "quote": "4.7 ★ Rated on G2"
+            }
+          ]
+        },
+        {
+          "dropped_items": [],
+          "run": 2,
+          "status": "ok",
+          "verified_items": [
+            {
+              "category": "number_or_statistic",
+              "quote": "11,500 + Sales teams trust Close"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "2 B+ Calls, emails, and texts"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "4.7 ★ Rated on G2"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "“ Our booked appointments per week have gone up ~50% since Chloe went live. ”"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "“ We've saved over $100,000 in tech costs switching from Salesforce to Close. We're doing things we never dreamed of doing in a CRM. ”"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Dana Derricks, Founder @ FollowUp.com"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Zac Muir, VP of Revenue @ Sisu"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Ben Pace, President @ ClientMatchmaking.com"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Jem Millett, Director of Admissions @ Flatiron School"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Michael Fomkin, CEO & Founder @ VIP Ignite"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ Our booked appointments per week have gone up ~50% since Chloe went live. ” — Dana Derricks, Founder @ FollowUp.com"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ We've saved over $100,000 in tech costs switching from Salesforce to Close. We're doing things we never dreamed of doing in a CRM. ” — Zac Muir, VP of Revenue @ Sisu"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ If you’re worried your clients will be turned off by AI, don’t be — it’s just noise. Close and Chloe have done nothing but impact my bottom line in a positive way. ” — Ben Pace, President @ ClientMatchmaking.com"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ We're not using AI to replace people. We're doing it so that the people we have are unlocked to do more. Chloe is not just innovation. She is actually creating the work we need to do. ” — Jem Millett, Director of Admissions @ Flatiron School"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ No matter what business model you’re in, your competition is about to be using this technology. ” — Michael Fomkin, CEO & Founder @ VIP Ignite"
+            },
+            {
+              "category": "third_party_source_or_certification",
+              "quote": "4.7 ★ Rated on G2"
+            }
+          ]
+        },
+        {
+          "dropped_items": [],
+          "run": 3,
+          "status": "ok",
+          "verified_items": [
+            {
+              "category": "number_or_statistic",
+              "quote": "11,500 + Sales teams trust Close"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "2 B+ Calls, emails, and texts"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "4.7 ★ Rated on G2"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "“ Our booked appointments per week have gone up ~50% since Chloe went live. ”"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "“ We've saved over $100,000 in tech costs switching from Salesforce to Close. We're doing things we never dreamed of doing in a CRM. ”"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Dana Derricks, Founder @ FollowUp.com"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Zac Muir, VP of Revenue @ Sisu"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Ben Pace, President @ ClientMatchmaking.com"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Jem Millett, Director of Admissions @ Flatiron School"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "— Michael Fomkin, CEO & Founder @ VIP Ignite"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ Our booked appointments per week have gone up ~50% since Chloe went live. ” — Dana Derricks, Founder @ FollowUp.com"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ We've saved over $100,000 in tech costs switching from Salesforce to Close. We're doing things we never dreamed of doing in a CRM. ” — Zac Muir, VP of Revenue @ Sisu"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ If you’re worried your clients will be turned off by AI, don’t be — it’s just noise. Close and Chloe have done nothing but impact my bottom line in a positive way. ” — Ben Pace, President @ ClientMatchmaking.com"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ We're not using AI to replace people. We're doing it so that the people we have are unlocked to do more. Chloe is not just innovation. She is actually creating the work we need to do. ” — Jem Millett, Director of Admissions @ Flatiron School"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“ No matter what business model you’re in, your competition is about to be using this technology. ” — Michael Fomkin, CEO & Founder @ VIP Ignite"
+            },
+            {
+              "category": "third_party_source_or_certification",
+              "quote": "4.7 ★ Rated on G2"
+            }
+          ]
+        }
+      ],
+      "score": 90
+    }
+  },
+  "d6f2dc2da1bc37938107f66ee0707aaf39f9a5e85a9ea96b5ccf39d3e8a5206c": {
+    "cached_at": "2026-10-11T21:04:39.260357+00:00",
+    "result": {
+      "counts": {
+        "attributed_quote": 4,
+        "named_customer_or_case_study": 1,
+        "number_or_statistic": 9,
+        "third_party_source_or_certification": 3
+      },
+      "items": [
+        {
+          "category": "number_or_statistic",
+          "quote": "The Feroot AI Agent platform covers PCI DSS 4.0.1 (req 6.4.3 / 11.6.1), HIPAA, CIPA, CCPA/CPRA, GDPR, NIST, DORA, Law 25, and 70+ laws and standards."
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "12 misconfigured trackers detected"
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "2 unauthorized scripts detected"
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "4 unauthorized countries detected"
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "70+ Regulations"
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations."
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "12 Blocked today"
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "5 / 5"
+        },
+        {
+          "category": "named_customer_or_case_study",
+          "quote": "Security teams at Instacart, Reddit, and Gusto use Feroot to monitor every third-party script, block unauthorized data exfiltration, and satisfy PCI DSS 4.0 requirements 6.4.3 and 11.6.1 without manual audits."
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "“They solved my 6.4.3 and 11.6.1 nightmares.”"
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "“Quick and easy implementation, plus dedicated support.”"
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "“Feroot support is top notch.”"
+        },
+        {
+          "category": "attributed_quote",
+          "quote": "“Our payment pages stay compliant, and audits are painless.”"
+        },
+        {
+          "category": "third_party_source_or_certification",
+          "quote": "Verified G2 review"
+        },
+        {
+          "category": "third_party_source_or_certification",
+          "quote": "Event PCI SSC Europe Community Meeting October 20, 2026"
+        },
+        {
+          "category": "number_or_statistic",
+          "quote": "with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations."
+        },
+        {
+          "category": "third_party_source_or_certification",
+          "quote": "Verified G2 review 5 / 5"
+        }
+      ],
+      "points_by_category": {
+        "attributed_quote": 25,
+        "named_customer_or_case_study": 15,
+        "number_or_statistic": 25,
+        "third_party_source_or_certification": 25
+      },
+      "runs": [
+        {
+          "dropped_items": [],
+          "run": 1,
+          "status": "ok",
+          "verified_items": [
+            {
+              "category": "number_or_statistic",
+              "quote": "The Feroot AI Agent platform covers PCI DSS 4.0.1 (req 6.4.3 / 11.6.1), HIPAA, CIPA, CCPA/CPRA, GDPR, NIST, DORA, Law 25, and 70+ laws and standards."
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "12 misconfigured trackers detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "2 unauthorized scripts detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "4 unauthorized countries detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "12 misconfigured trackers detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "2 unauthorized scripts detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "4 unauthorized countries detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "70+ Regulations"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations."
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "12 Blocked today"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "5 / 5"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "5 / 5"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "5 / 5"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "5 / 5"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "Security teams at Instacart, Reddit, and Gusto use Feroot to monitor every third-party script, block unauthorized data exfiltration, and satisfy PCI DSS 4.0 requirements 6.4.3 and 11.6.1 without manual audits."
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“They solved my 6.4.3 and 11.6.1 nightmares.”"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“Quick and easy implementation, plus dedicated support.”"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“Feroot support is top notch.”"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“Our payment pages stay compliant, and audits are painless.”"
+            },
+            {
+              "category": "third_party_source_or_certification",
+              "quote": "Verified G2 review"
+            },
+            {
+              "category": "third_party_source_or_certification",
+              "quote": "Event PCI SSC Europe Community Meeting October 20, 2026"
+            }
+          ]
+        },
+        {
+          "dropped_items": [],
+          "run": 2,
+          "status": "ok",
+          "verified_items": [
+            {
+              "category": "number_or_statistic",
+              "quote": "The Feroot AI Agent platform covers PCI DSS 4.0.1 (req 6.4.3 / 11.6.1), HIPAA, CIPA, CCPA/CPRA, GDPR, NIST, DORA, Law 25, and 70+ laws and standards."
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "12 misconfigured trackers detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "2 unauthorized scripts detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "4 unauthorized countries detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "12 misconfigured trackers detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "2 unauthorized scripts detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "4 unauthorized countries detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "70+ Regulations"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations."
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "12 Blocked today"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "5 / 5"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "5 / 5"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "5 / 5"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "5 / 5"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "Security teams at Instacart, Reddit, and Gusto use Feroot to monitor every third-party script, block unauthorized data exfiltration, and satisfy PCI DSS 4.0 requirements 6.4.3 and 11.6.1 without manual audits."
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“They solved my 6.4.3 and 11.6.1 nightmares.”"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“Quick and easy implementation, plus dedicated support.”"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“Feroot support is top notch.”"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“Our payment pages stay compliant, and audits are painless.”"
+            },
+            {
+              "category": "third_party_source_or_certification",
+              "quote": "Verified G2 review 5 / 5"
+            },
+            {
+              "category": "third_party_source_or_certification",
+              "quote": "Event PCI SSC Europe Community Meeting October 20, 2026"
+            }
+          ]
+        },
+        {
+          "dropped_items": [],
+          "run": 3,
+          "status": "ok",
+          "verified_items": [
+            {
+              "category": "number_or_statistic",
+              "quote": "The Feroot AI Agent platform covers PCI DSS 4.0.1 (req 6.4.3 / 11.6.1), HIPAA, CIPA, CCPA/CPRA, GDPR, NIST, DORA, Law 25, and 70+ laws and standards."
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "12 misconfigured trackers detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "2 unauthorized scripts detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "4 unauthorized countries detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "12 misconfigured trackers detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "2 unauthorized scripts detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "4 unauthorized countries detected"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "70+ Regulations"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations."
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "12 Blocked today"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "5 / 5"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "5 / 5"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "5 / 5"
+            },
+            {
+              "category": "number_or_statistic",
+              "quote": "5 / 5"
+            },
+            {
+              "category": "named_customer_or_case_study",
+              "quote": "Security teams at Instacart, Reddit, and Gusto use Feroot to monitor every third-party script, block unauthorized data exfiltration, and satisfy PCI DSS 4.0 requirements 6.4.3 and 11.6.1 without manual audits."
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“They solved my 6.4.3 and 11.6.1 nightmares.”"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“Quick and easy implementation, plus dedicated support.”"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“Feroot support is top notch.”"
+            },
+            {
+              "category": "attributed_quote",
+              "quote": "“Our payment pages stay compliant, and audits are painless.”"
+            },
+            {
+              "category": "third_party_source_or_certification",
+              "quote": "Verified G2 review"
+            },
+            {
+              "category": "third_party_source_or_certification",
+              "quote": "Event PCI SSC Europe Community Meeting October 20, 2026"
+            }
+          ]
+        }
+      ],
+      "score": 90
+    }
+  }
+}

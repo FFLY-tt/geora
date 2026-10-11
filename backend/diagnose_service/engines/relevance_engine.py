@@ -34,7 +34,8 @@ backend/scripts/stability_audit.py proved that even with byte-identical
 page content, this judgment call is itself not perfectly consistent —
 the exact same (question, page text) input sent repeatedly came back
 with a different classification on some runs. Each question's final,
-already-majority-voted result is cached by engines._judgment_cache,
+already-majority-voted result is cached by engines._judgment_cache
+(shared, committed state under state/judgments/),
 keyed on the question plus the exact page text judged (never raw
 HTML), so a repeated diagnosis against unchanged pages returns the
 identical classification every time with no further DeepSeek calls —
@@ -54,9 +55,14 @@ from shared.config import settings
 from shared._fetch_utils import extract_text_from_html, fetch_page_text
 from engines._judgment_cache import get_cached_judgment, make_judgment_cache_key, save_judgment
 from engines._plain_finding_generator import make_plain_finding
+from engines._provenance import page_fingerprint
 from models import DimensionScore
 
 DIMENSION_NAME = "topic_relevance"
+
+# Bump whenever this dimension's measurement method changes in a way
+# that makes results computed before and after not directly comparable.
+METHOD_VERSION = "v1"
 
 # Bump this whenever _RELEVANCE_JUDGE_SYSTEM_PROMPT's wording changes
 # in a way that could make a previously-cached judgment unrepresentative
@@ -275,7 +281,7 @@ def _judge_question(question: str, pages_text: str, page_texts_by_url: dict[str,
     """
     cache_input = f"QUESTION: {question}\n\nPAGES:\n{pages_text}"
     cache_key = make_judgment_cache_key(DIMENSION_NAME, PROMPT_VERSION, settings.deepseek_model, cache_input)
-    cached = get_cached_judgment(cache_key)
+    cached = get_cached_judgment(DIMENSION_NAME, cache_key)
     if cached is not None:
         return {**cached, "cache_status": "cache_hit"}
 
@@ -345,7 +351,7 @@ def _judge_question(question: str, pages_text: str, page_texts_by_url: dict[str,
         "runs": runs,
         "generation_failed": False,
     }
-    save_judgment(cache_key, result)
+    save_judgment(DIMENSION_NAME, cache_key, result)
     return {**result, "cache_status": "fresh_judgment"}
 
 
@@ -470,6 +476,7 @@ def check_topic_relevance(domain: str, citation_result: DimensionScore) -> Dimen
             "status": "ok",
             "pages_read": pages_read,
             "pages_failed": pages_failed,
+            "page_fingerprints": [page_fingerprint(url, text) for url, text in pages],
             "per_question_results": per_question_results,
             "unanswered_questions": unanswered_questions,
             "generation_log": generation_log,

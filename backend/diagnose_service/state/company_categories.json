@@ -1,0 +1,44 @@
+{
+  "close.com": {
+    "assigned_on": "2026-10-11",
+    "category_id": "sales-crm-software",
+    "classified_as": {
+      "description": "A tool that helps sales teams track leads and customers, manage calls, emails, and texts, and automate follow-ups so deals move forward.",
+      "name": "Sales CRM Software"
+    },
+    "company_name": "Close",
+    "homepage_text_sha256": "880e16d3b6c29107fe882d7478f9f53aaece037721b71dbd8b915c91b1ef6aa9",
+    "match_decision": {
+      "matched_existing": false,
+      "reason": "Sales CRM Software helps sales teams manage leads and customer communication. Web Script and Tracker Compliance Monitoring scans websites for privacy and security compliance. These are different products for different needs, so a buyer would not compare them as alternatives."
+    }
+  },
+  "feroot.com": {
+    "assigned_on": "2026-10-11",
+    "category_id": "web-script-and-tracker-compliance-monitoring",
+    "classified_as": {
+      "description": "A tool that scans websites to find third party scripts, trackers, and cookies, then monitors and blocks unauthorized data transfers so companies can meet privacy and payment security rules.",
+      "name": "Web Script and Tracker Compliance Monitoring"
+    },
+    "company_name": "Feroot Security",
+    "homepage_text_sha256": "3e4d1487c9fe8014afaffddcc6f1a1719e0e4d16147a0e8868cc3aa80c7aedd5",
+    "match_decision": {
+      "matched_existing": false,
+      "reason": "No existing categories to compare against yet."
+    }
+  },
+  "linear.app": {
+    "assigned_on": "2026-10-11",
+    "category_id": "product-management-software",
+    "classified_as": {
+      "description": "A tool that helps software teams plan, track, and ship product work by organizing tasks, roadmaps, and feedback in one place.",
+      "name": "Product Management Software"
+    },
+    "company_name": "Linear",
+    "homepage_text_sha256": "02ad63a2ad42d15af8aca69cc1bc4af0c8af7243f5e5d81ad4414bc13ede1a3a",
+    "match_decision": {
+      "matched_existing": false,
+      "reason": "Product management software helps teams plan and ship product work. Sales CRM software helps sales teams track leads and close deals. These are different products for different teams and needs, so a buyer would not compare them as alternatives."
+    }
+  }
+}

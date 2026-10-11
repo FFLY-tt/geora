@@ -26,7 +26,8 @@ from engines.relevance_engine import check_topic_relevance
 from engines.technical_engine import check_technical_readability
 from leads_store import save_lead
 from models import DiagnosisRequest, DiagnosisResponse, LeadCaptureRequest
-from result_cache import get_cached_result, get_previous_scores, save_result
+from provenance import build_provenance
+from result_cache import get_cached_result, get_previous_provenance, get_previous_scores, save_result
 
 app = FastAPI(title="Geora Diagnostic API")
 
@@ -68,6 +69,7 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
     # expired one) BEFORE it gets overwritten below, so the response can
     # show the user how scores moved since last time.
     previous_scores = await asyncio.to_thread(get_previous_scores, request.domain)
+    previous_provenance = await asyncio.to_thread(get_previous_provenance, request.domain)
 
     citation_task = asyncio.to_thread(check_citation_visibility, request.company_name, request.domain)
     evidence_task = asyncio.to_thread(check_evidence_density, request.domain)
@@ -81,20 +83,24 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
 
     relevance_result = await asyncio.to_thread(check_topic_relevance, request.domain, citation_result)
 
+    dimensions = [
+        citation_result.model_dump(),
+        relevance_result.model_dump(),
+        evidence_result.model_dump(),
+        recency_result.model_dump(),
+        fact_result.model_dump(),
+        technical_result.model_dump(),
+    ]
     result = {
         "company_name": request.company_name,
         "domain": request.domain,
-        "dimensions": [
-            citation_result.model_dump(),
-            relevance_result.model_dump(),
-            evidence_result.model_dump(),
-            recency_result.model_dump(),
-            fact_result.model_dump(),
-            technical_result.model_dump(),
-        ],
+        "dimensions": dimensions,
+        "provenance": build_provenance(dimensions),
     }
     cached_entry = await asyncio.to_thread(save_result, request.domain, result)
-    return DiagnosisResponse(**cached_entry, previous_scores=previous_scores)
+    return DiagnosisResponse(
+        **cached_entry, previous_scores=previous_scores, previous_provenance=previous_provenance
+    )
 
 
 @app.post("/api/capture-lead")
