@@ -1,0 +1,542 @@
+{
+  "0ebbff7a52f4b4c101b8e91a423cf25bcb457342dd48022b83d6a25979d97b13": {
+    "cached_at": "2026-10-11T21:05:08.731254+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.Get a report you can share with your security, privacy, and compliance teams to clean it up.",
+      "generation_failed": false,
+      "question": "How do I check if my website is compliant with privacy laws?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.Get a report you can share with your security, privacy, and compliance teams to clean it up.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.Get a report you can share with your security, privacy, and compliance teams to clean it up.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.Get a report you can share with your security, privacy, and compliance teams to clean it up.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
+  "11ed9c54db224d68f9a124a396b48e6f4fc6f19ba14b4fd602f2ee622ac07ce1": {
+    "cached_at": "2026-10-11T21:05:54.151826+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Leads Contacts are defined as individuals within an organization and are attached to a Lead in Close.",
+      "generation_failed": false,
+      "question": "What software helps sales teams organize their leads and customer contacts",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Leads Contacts are defined as individuals within an organization and are attached to a Lead in Close.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/pricing"
+    }
+  },
+  "1e57480285a1aea6ef8db5ae8f455a0501ff6d569d35b1fd2ccd06a79b5b8f28": {
+    "cached_at": "2026-10-11T21:05:50.565197+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Automate follow-up sequences and reminders so no deal slips through the cracks.",
+      "generation_failed": false,
+      "question": "How do I automate follow ups so my sales deals keep moving forward",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Automate follow-up sequences and reminders so no deal slips through the cracks.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders. Set up templates, timing, and triggers to handle your follow-ups automatically—while keeping your outreach personal and timely.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Close Workflows let you build multi-channel sequences using email, SMS, and task reminders. Set up templates, timing, and triggers to handle your follow-ups automatically—while keeping your outreach personal and timely.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/automation"
+    }
+  },
+  "22cc20785d8c48775a24246a46126571966374d7e773198c2d78a339451b572f": {
+    "cached_at": "2026-10-11T21:06:33.488597+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Planning and monitoring Plan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+      "generation_failed": false,
+      "question": "How do I track my team's progress on shipping new features?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Planning and monitoring Plan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Planning and monitoring Plan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Planning and monitoring Plan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "50cf8f8eed92436c4dc161fdc4bc45886be1123b9b8d0a800dbf8925ea79a527": {
+    "cached_at": "2026-10-11T21:05:16.146268+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+      "generation_failed": false,
+      "question": "How can I block unwanted trackers to meet payment security rules?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
+  "5c317e3dff9ea951d13b21af9400923b0795626d5dcde1a095bfe19fbf82b329": {
+    "cached_at": "2026-10-11T21:06:30.352646+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+      "generation_failed": false,
+      "question": "What is the best way to organize product feedback and feature requests?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "68abfbaabb9c54f5ff8d1c2c205123d0ace660ee1bd5b266748a0f7de9184ea6": {
+    "cached_at": "2026-10-11T21:06:39.122594+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+      "generation_failed": false,
+      "question": "How can I connect customer feedback to my product roadmap?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "96d84a8263f95e199fc61247cb8b05c8580d2ffbdbb53502cb25580fad5034f2": {
+    "cached_at": "2026-10-11T21:05:11.866012+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+      "generation_failed": false,
+      "question": "What is the best way to monitor third party scripts on my site?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
+  "9d656b8b11fc95d08e5ccfb5dda36294b7048772aac3d96148fa7de31da87c6c": {
+    "cached_at": "2026-10-11T21:05:05.050667+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+      "generation_failed": false,
+      "question": "What tools can help me stop unauthorized data transfers from my website?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
+  "b1e8105aa267c3c8767428419f3979f879df208874f3d4e29c8cc11c061d58c4": {
+    "cached_at": "2026-10-11T21:05:01.593722+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.",
+      "generation_failed": false,
+      "question": "How can I find out what trackers and cookies are running on my website?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
+  "b887b76ba9aba2a06690495ee98bfa1f016150a5b703340dab777a5bde1fddcc": {
+    "cached_at": "2026-10-11T21:05:57.003371+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Close uses forms and automated email sequences, task reminders, and customizable workflows to keep follow-ups on track.",
+      "generation_failed": false,
+      "question": "How can I make sure my sales team follows up with every lead on time",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Close uses forms and automated email sequences, task reminders, and customizable workflows to keep follow-ups on track.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Close uses forms and automated email sequences, task reminders, and customizable workflows to keep follow-ups on track.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Close uses forms and automated email sequences, task reminders, and customizable workflows to keep follow-ups on track.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/automation"
+    }
+  },
+  "cae78d027a400c4797bfcbd1f1a98a6226fd66fce6e2e02731eb67b6bfdef062": {
+    "cached_at": "2026-10-11T21:05:47.521723+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "From calls and emails to texts and meetings, Close unifies all your communication channels into one sales workspace.",
+      "generation_failed": false,
+      "question": "What is the best way to manage calls emails and texts with my sales team",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "From calls and emails to texts and meetings, Close unifies all your communication channels into one sales workspace.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "From calls and emails to texts and meetings, Close unifies all your communication channels into one sales workspace.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "From calls and emails to texts and meetings, Close unifies all your communication channels into one sales workspace.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/communication"
+    }
+  },
+  "cd3ceae80ede0a220e0de52c22e28f09b877250bc4f079a511ecf279e245b9d4": {
+    "cached_at": "2026-10-11T21:06:27.236848+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+      "generation_failed": false,
+      "question": "How can I keep my software team's tasks and roadmap in one place?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "d94872fb12505fe3b4f4eb200efa6fb20ba591e5df1c26ba0816946f3255f08f": {
+    "cached_at": "2026-10-11T21:05:44.525063+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Centralize your to-do list to ensure no leads slip through the cracks.",
+      "generation_failed": false,
+      "question": "How can I keep track of all my sales leads and customers in one place",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Centralize your to-do list to ensure no leads slip through the cracks.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "All in one place: working your deals for you.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "All in one place: working your deals for you.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/pricing"
+    }
+  },
+  "f086d7693791c4e7a15ba3adab89db984dad5603cd5b797bcd958d690e80a0fd": {
+    "cached_at": "2026-10-11T21:06:36.029551+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "The product development system for teams and agents Purpose-built for planning and building products.",
+      "generation_failed": false,
+      "question": "What tool helps software teams plan and manage their work?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "The product development system for teams and agents Purpose-built for planning and building products.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "The product development system for teams and agents Purpose-built for planning and building products.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "The product development system for teams and agents Purpose-built for planning and building products.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  }
+}

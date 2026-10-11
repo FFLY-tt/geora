@@ -1,0 +1,248 @@
+{
+  "product-management-software": {
+    "category_description": "A tool that helps software teams plan, track, and ship product work by organizing tasks, roadmaps, and feedback in one place.",
+    "category_name": "Product Management Software",
+    "current_version": 1,
+    "versions": [
+      {
+        "auto_check": {
+          "attempts": [
+            {
+              "all_passed": true,
+              "attempt": 1,
+              "passed_count": 5,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A real buyer would ask how to keep tasks and roadmap together without naming any vendor.",
+                  "passed": true,
+                  "question": "How can I keep my software team's tasks and roadmap in one place?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "This is a common buyer need about organizing feedback and requests with no brand mentioned.",
+                  "passed": true,
+                  "question": "What is the best way to organize product feedback and feature requests?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A buyer would ask how to track shipping progress and no company is named.",
+                  "passed": true,
+                  "question": "How do I track my team's progress on shipping new features?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "This asks for a tool category in plain terms and does not hint at any specific product.",
+                  "passed": true,
+                  "question": "What tool helps software teams plan and manage their work?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A buyer would ask how to link feedback to a roadmap and no vendor is referenced.",
+                  "passed": true,
+                  "question": "How can I connect customer feedback to my product roadmap?",
+                  "substantive_pass": true
+                }
+              ],
+              "substantive_passed_count": 5,
+              "usable": true
+            }
+          ],
+          "chosen_attempt": 1,
+          "passed_count": 5,
+          "substantive_passed_count": 5
+        },
+        "generated_on": "2026-10-11",
+        "generation_method_version": "v1",
+        "model": "deepseek-chat",
+        "questions": [
+          "How can I keep my software team's tasks and roadmap in one place?",
+          "What is the best way to organize product feedback and feature requests?",
+          "How do I track my team's progress on shipping new features?",
+          "What tool helps software teams plan and manage their work?",
+          "How can I connect customer feedback to my product roadmap?"
+        ],
+        "status": "frozen",
+        "version": 1
+      }
+    ]
+  },
+  "sales-crm-software": {
+    "category_description": "A tool that helps sales teams track leads and customers, manage calls, emails, and texts, and automate follow-ups so deals move forward.",
+    "category_name": "Sales CRM Software",
+    "current_version": 1,
+    "versions": [
+      {
+        "auto_check": {
+          "attempts": [
+            {
+              "all_passed": true,
+              "attempt": 1,
+              "passed_count": 5,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A buyer with no vendor knowledge would ask how to track leads and customers in one place.",
+                  "passed": true,
+                  "question": "How can I keep track of all my sales leads and customers in one place",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A buyer would ask how to manage calls, emails, and texts with their sales team.",
+                  "passed": true,
+                  "question": "What is the best way to manage calls emails and texts with my sales team",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A buyer would ask how to automate follow ups to keep deals moving.",
+                  "passed": true,
+                  "question": "How do I automate follow ups so my sales deals keep moving forward",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A buyer would ask what software helps organize leads and contacts.",
+                  "passed": true,
+                  "question": "What software helps sales teams organize their leads and customer contacts",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A buyer would ask how to ensure their team follows up with every lead on time.",
+                  "passed": true,
+                  "question": "How can I make sure my sales team follows up with every lead on time",
+                  "substantive_pass": true
+                }
+              ],
+              "substantive_passed_count": 5,
+              "usable": true
+            }
+          ],
+          "chosen_attempt": 1,
+          "passed_count": 5,
+          "substantive_passed_count": 5
+        },
+        "generated_on": "2026-10-11",
+        "generation_method_version": "v1",
+        "model": "deepseek-chat",
+        "questions": [
+          "How can I keep track of all my sales leads and customers in one place",
+          "What is the best way to manage calls emails and texts with my sales team",
+          "How do I automate follow ups so my sales deals keep moving forward",
+          "What software helps sales teams organize their leads and customer contacts",
+          "How can I make sure my sales team follows up with every lead on time"
+        ],
+        "status": "frozen",
+        "version": 1
+      }
+    ]
+  },
+  "web-script-and-tracker-compliance-monitoring": {
+    "category_description": "A tool that scans websites to find third party scripts, trackers, and cookies, then monitors and blocks unauthorized data transfers so companies can meet privacy and payment security rules.",
+    "category_name": "Web Script and Tracker Compliance Monitoring",
+    "current_version": 1,
+    "versions": [
+      {
+        "auto_check": {
+          "attempts": [
+            {
+              "all_passed": true,
+              "attempt": 1,
+              "passed_count": 5,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A real buyer would ask how to discover trackers and cookies on their own site.",
+                  "passed": true,
+                  "question": "How can I find out what trackers and cookies are running on my website?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "This describes the need to stop unauthorized data transfers without naming any vendor.",
+                  "passed": true,
+                  "question": "What tools can help me stop unauthorized data transfers from my website?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A buyer would ask how to check privacy law compliance for their website.",
+                  "passed": true,
+                  "question": "How do I check if my website is compliant with privacy laws?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "This asks about monitoring third party scripts from the buyer's point of view.",
+                  "passed": true,
+                  "question": "What is the best way to monitor third party scripts on my site?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "This describes blocking trackers for payment security rules with no brand mention.",
+                  "passed": true,
+                  "question": "How can I block unwanted trackers to meet payment security rules?",
+                  "substantive_pass": true
+                }
+              ],
+              "substantive_passed_count": 5,
+              "usable": true
+            }
+          ],
+          "chosen_attempt": 1,
+          "passed_count": 5,
+          "substantive_passed_count": 5
+        },
+        "generated_on": "2026-10-11",
+        "generation_method_version": "v1",
+        "model": "deepseek-chat",
+        "questions": [
+          "How can I find out what trackers and cookies are running on my website?",
+          "What tools can help me stop unauthorized data transfers from my website?",
+          "How do I check if my website is compliant with privacy laws?",
+          "What is the best way to monitor third party scripts on my site?",
+          "How can I block unwanted trackers to meet payment security rules?"
+        ],
+        "status": "frozen",
+        "version": 1
+      }
+    ]
+  }
+}
