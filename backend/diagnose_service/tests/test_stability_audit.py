@@ -389,6 +389,107 @@ class MainEndToEndTests(unittest.TestCase):
         mock_citation.assert_not_called()
         self.assertFalse((self.output_dir / "acme.com_runs.jsonl").exists())
 
+    def test_no_judgment_cache_flag_is_noted_in_the_report(self):
+        engine_patches = [
+            patch.object(stability_audit.citation_engine, "check_citation_visibility",
+                          return_value=self._fake_dimension("citation_visibility", 40)),
+            patch.object(stability_audit.evidence_engine, "check_evidence_density",
+                          return_value=self._fake_dimension("evidence_density", 50)),
+            patch.object(stability_audit.recency_engine, "check_recency",
+                          return_value=self._fake_dimension("content_recency", 60)),
+            patch.object(stability_audit.fact_engine, "check_fact_consistency",
+                          return_value=self._fake_dimension("fact_consistency", 70)),
+            patch.object(stability_audit.technical_engine, "check_technical_readability",
+                          return_value=self._fake_dimension("technical_readability", 80)),
+            patch.object(stability_audit.relevance_engine, "check_topic_relevance",
+                          return_value=self._fake_dimension("topic_relevance", 90)),
+        ]
+        for p in engine_patches:
+            p.start()
+        sleep_patch = patch.object(stability_audit.time, "sleep")
+        sleep_patch.start()
+        argv_patch = patch.object(
+            sys, "argv", ["stability_audit.py", "Acme", "acme.com", "--runs", "2", "--yes", "--no-judgment-cache"]
+        )
+        argv_patch.start()
+        try:
+            stability_audit.main()
+        finally:
+            argv_patch.stop()
+            sleep_patch.stop()
+            for p in engine_patches:
+                p.stop()
+
+        # The bypass patchers must be cleaned up afterwards, not left installed.
+        import engines._judgment_cache as judgment_cache_module
+
+        self.assertIs(stability_audit.evidence_engine.get_cached_judgment, judgment_cache_module.get_cached_judgment)
+
+        report_text = (self.output_dir / "report_acme.com.md").read_text(encoding="utf-8")
+        self.assertIn("bypassed", report_text)
+
+
+class JudgmentCacheBypassTests(unittest.TestCase):
+    def test_install_forces_miss_and_noop_save_then_restores_originals(self):
+        original_evidence_get = stability_audit.evidence_engine.get_cached_judgment
+        original_evidence_save = stability_audit.evidence_engine.save_judgment
+        original_relevance_get = stability_audit.relevance_engine.get_cached_judgment
+        original_relevance_save = stability_audit.relevance_engine.save_judgment
+
+        patchers = stability_audit._install_judgment_cache_bypass()
+        try:
+            self.assertIsNone(stability_audit.evidence_engine.get_cached_judgment("any-key"))
+            self.assertIsNone(stability_audit.relevance_engine.get_cached_judgment("any-key"))
+            # Must not raise, and must not make the next get_cached_judgment call return a hit.
+            stability_audit.evidence_engine.save_judgment("any-key", {"score": 99})
+            self.assertIsNone(stability_audit.evidence_engine.get_cached_judgment("any-key"))
+        finally:
+            for p in patchers:
+                p.stop()
+
+        self.assertIs(stability_audit.evidence_engine.get_cached_judgment, original_evidence_get)
+        self.assertIs(stability_audit.evidence_engine.save_judgment, original_evidence_save)
+        self.assertIs(stability_audit.relevance_engine.get_cached_judgment, original_relevance_get)
+        self.assertIs(stability_audit.relevance_engine.save_judgment, original_relevance_save)
+
+
+class EvidenceDensityCategoryTableTests(unittest.TestCase):
+    def test_table_includes_category_counts_per_run(self):
+        records = [
+            {
+                "run": 1,
+                "dimensions": {
+                    "evidence_density": {
+                        "score": 40,
+                        "details": {"counts_by_category": {"number_or_statistic": 2, "attributed_quote": 0}},
+                    }
+                },
+            },
+            {
+                "run": 2,
+                "dimensions": {
+                    "evidence_density": {
+                        "score": 55,
+                        "details": {"counts_by_category": {"number_or_statistic": 3, "attributed_quote": 1}},
+                    }
+                },
+            },
+        ]
+
+        table = stability_audit._evidence_density_category_table(records)
+
+        self.assertIn("number_or_statistic", table)
+        self.assertIn("attributed_quote", table)
+        self.assertIn("| 1 | 2 | 0 | 40 |", table)
+        self.assertIn("| 2 | 3 | 1 | 55 |", table)
+
+    def test_empty_when_no_run_has_the_breakdown(self):
+        records = [{"run": 1, "dimensions": {"evidence_density": {"score": -1, "details": {}}}}]
+
+        table = stability_audit._evidence_density_category_table(records)
+
+        self.assertEqual(table, "")
+
 
 if __name__ == "__main__":
     unittest.main()
