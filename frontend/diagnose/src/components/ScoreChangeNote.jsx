@@ -1,3 +1,5 @@
+import { isComparable } from '../utils/provenance.js'
+
 // A dimension score moved by more than this many points to count as a
 // "real" change worth mentioning, versus normal day-to-day noise.
 const CHANGE_THRESHOLD = 5
@@ -12,10 +14,21 @@ function isRealChange(previousScore, currentScore) {
 
 // Props: previousScores ({ [dimension]: score } from the backend, or
 // null on a first-ever check), currentScores (the current `dimensions`
-// array, each with .dimension and .score).
-export default function ScoreChangeNote({ previousScores, currentScores }) {
+// array, each with .dimension and .score), previousProvenance and
+// currentProvenance (method and question set versions of each result).
+// Scores are only compared when both versions match; otherwise the
+// numbers measure different things and are not compared at all.
+export default function ScoreChangeNote({ previousScores, currentScores, previousProvenance, currentProvenance }) {
   if (!previousScores) {
     return null
+  }
+
+  if (!isComparable(previousProvenance, currentProvenance)) {
+    return (
+      <p className="score-change-note">
+        The measurement method has been updated, so this result can't be directly compared with your last one.
+      </p>
+    )
   }
 
   const hasRealChange = currentScores.some((dim) => isRealChange(previousScores[dim.dimension], dim.score))
