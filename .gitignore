@@ -32,6 +32,11 @@ __pycache__/
 # Local lead capture data (user PII, must not be committed)
 backend/diagnose_service/data/
 
+# backend/diagnose_service/state/ IS committed (shared state), but not
+# its write-lock sidecar files or interrupted temp writes
+backend/diagnose_service/state/**/*.lock
+backend/diagnose_service/state/**/*.tmp
+
 # agent_service's own runtime cache, kept separate from diagnose_service's
 backend/agent_service/data/
 
