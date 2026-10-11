@@ -34,10 +34,18 @@ substring of the actual page text (an unverifiable quote is dropped,
 never trusted), and the SCORE is computed by this code from the
 verified item counts via a fixed, documented rule (see
 _points_for_item_count) — not decided by the model. That listing call
-still runs JUDGMENT_RUNS times concurrently and the results are
-unioned together (deduplicated by category+quote), since more
-independent passes over the same page tend to catch more of the real
-evidence actually on it.
+still runs JUDGMENT_RUNS times concurrently, but the results are now
+VOTED on instead of unioned: an item only counts if it was found
+independently by at least MIN_VOTES of the runs. A single run's
+one-off find (often a borderline item the model flipped on) used to
+add straight to the score, which is what made the score swing between
+repeated runs; requiring agreement removes that. Items are matched
+across runs fuzzily (see _cluster_items): the same category plus quotes
+that contain one another or sit in the same sentence of the page.
+Items found by only one run are kept in details as "unconfirmed" and
+never scored. The prompt also tells the model that text from product
+UI screenshots or demos (timestamps, status labels, bare user names)
+is not evidence.
 
 The listing+scoring result for a given page's exact text is cached by
 engines._judgment_cache (shared, committed state under
@@ -65,17 +73,27 @@ DIMENSION_NAME = "evidence_density"
 
 # Bump whenever this dimension's measurement method changes in a way
 # that makes results computed before and after not directly comparable.
-METHOD_VERSION = "v1"
+METHOD_VERSION = "v2"
 
 # Bump this whenever _EVIDENCE_LISTING_SYSTEM_PROMPT's wording changes
 # in a way that could make a previously-cached listing unrepresentative
 # of the new prompt. Folded into the judgment cache key.
-PROMPT_VERSION = "v1-evidence-listing"
+PROMPT_VERSION = "v2-evidence-listing"
 
 # The page is listed for evidence this many times, concurrently, and
-# the verified items from every successful run are unioned together
-# (see _aggregate_items) before the code computes a score from them.
+# the verified items are voted on across runs (see _cluster_items)
+# before the code computes a score from the confirmed ones.
 JUDGMENT_RUNS = 3
+
+# An item only counts toward the score if at least this many of the
+# JUDGMENT_RUNS independent runs found it (see _cluster_items).
+MIN_VOTES = 2
+
+# A "sentence" longer than this is not trusted as a real sentence
+# (homepages are full of unpunctuated card/nav text that would
+# otherwise glue unrelated items into one giant "sentence"), so two
+# quotes inside it are NOT merged on the same-sentence rule alone.
+MAX_SENTENCE_CHARS = 300
 
 # The 4 kinds of concrete evidence this engine looks for. Fixed, not
 # something the LLM invents per call, so counts are always comparable
@@ -123,6 +141,8 @@ Find every piece of concrete evidence on the page that backs up a claim, sorted 
 - "named_customer_or_case_study": a specific named customer, company, or case study mentioned by name.
 - "attributed_quote": a quote attributed to a specific named person (a title or company alone does not count; an anonymous "customers say..." does not count).
 - "third_party_source_or_certification": a named third-party certification, award, rating, or source (e.g. "G2 rating of 4.7", "SOC 2 certified", "as featured in TechCrunch").
+
+NOT EVIDENCE, never list these even if they contain numbers or names: text that belongs to a product user interface screenshot or product demo shown on the page. That includes timestamps such as "2min ago" or "3 days ago", status labels (for example "Done", "In progress", "Active"), counters and dates inside a mocked-up app, and user names or people's names that appear with no surrounding context. Only count a number, named customer, attributed quote, or third-party source when the marketing copy of the page itself uses it to support a selling point.
 
 For each item you find, quote the EXACT sentence or phrase from the page that contains it, copied word for word exactly as it appears, with no changes. Never invent, paraphrase, or combine separate parts of the page into one quote. If a category genuinely has no evidence on the page, leave it with no items at all — never force something into a category it does not really belong in.
 
@@ -247,26 +267,101 @@ def _run_listings_concurrently(page_text: str) -> list:
     return results
 
 
-def _aggregate_items(runs: list) -> list:
+def _normalize_quote(quote: str) -> str:
+    return re.sub(r"\s+", " ", quote).strip().lower()
+
+
+def _sentence_spans(page_text: str) -> list[tuple[int, int]]:
+    """(start, end) character spans of the sentences in `page_text`, split after . ! ? or a line break."""
+    spans = []
+    start = 0
+    for match in re.finditer(r"[.!?]+(?=\s)|\n", page_text):
+        spans.append((start, match.end()))
+        start = match.end()
+    spans.append((start, len(page_text)))
+    return spans
+
+
+def _sentence_index(page_text: str, quote: str, spans: list[tuple[int, int]]) -> int | None:
+    """Index of the sentence containing `quote`'s first occurrence, or None if that sentence is too long to trust."""
+    position = page_text.find(quote)
+    if position < 0:
+        return None
+    for index, (start, end) in enumerate(spans):
+        if start <= position < end:
+            return index if end - start <= MAX_SENTENCE_CHARS else None
+    return None
+
+
+def _same_evidence(a: dict, b: dict) -> bool:
+    """True when two verified items (from different runs) are the same piece of evidence."""
+    if a["category"] != b["category"]:
+        return False
+    norm_a, norm_b = _normalize_quote(a["quote"]), _normalize_quote(b["quote"])
+    if norm_a in norm_b or norm_b in norm_a:
+        return True
+    return a["_sentence"] is not None and a["_sentence"] == b["_sentence"]
+
+
+def _cluster_items(runs: list, page_text: str) -> tuple[list, list]:
     """
-    Union the verified items from every successful run, deduplicated
-    by (category, quote) — the same real evidence item found again by
-    a second or third pass counts once, not multiple times, since that
-    would artificially inflate the score rather than reflect anything
-    new found on the page.
+    Vote across runs. Every verified item from every successful run is
+    grouped with items of the same category whose quotes contain one
+    another or sit in the same sentence of the page (grouping is
+    transitive). A group's votes are the number of DISTINCT runs that
+    contributed to it.
+
+    Returns (confirmed, unconfirmed): confirmed groups have >= MIN_VOTES
+    votes and are scored; the rest are kept for transparency only. Each
+    entry is {category, quote, votes, quotes}; `quote` is the longest
+    quote in the group (ties broken alphabetically) so the result does
+    not depend on which run finished first.
     """
-    seen = set()
-    aggregated = []
+    spans = _sentence_spans(page_text)
+    entries = []
     for run in runs:
         if run["status"] != "ok":
             continue
         for item in run["verified_items"]:
-            key = (item["category"], item["quote"])
-            if key in seen:
-                continue
-            seen.add(key)
-            aggregated.append(item)
-    return aggregated
+            entries.append(
+                {
+                    "category": item["category"],
+                    "quote": item["quote"],
+                    "run": run["run"],
+                    "_sentence": _sentence_index(page_text, item["quote"], spans),
+                }
+            )
+
+    parent = list(range(len(entries)))
+
+    def find(i: int) -> int:
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    for i in range(len(entries)):
+        for j in range(i + 1, len(entries)):
+            if _same_evidence(entries[i], entries[j]):
+                parent[find(i)] = find(j)
+
+    groups: dict[int, list] = {}
+    for index, entry in enumerate(entries):
+        groups.setdefault(find(index), []).append(entry)
+
+    confirmed, unconfirmed = [], []
+    for members in groups.values():
+        quotes = sorted({m["quote"] for m in members}, key=lambda q: (-len(q), q))
+        cluster = {
+            "category": members[0]["category"],
+            "quote": quotes[0],
+            "votes": len({m["run"] for m in members}),
+            "quotes": sorted(quotes),
+        }
+        (confirmed if cluster["votes"] >= MIN_VOTES else unconfirmed).append(cluster)
+
+    order = lambda c: (EVIDENCE_CATEGORIES.index(c["category"]), c["quote"])  # noqa: E731
+    return sorted(confirmed, key=order), sorted(unconfirmed, key=order)
 
 
 def _score_from_items(items: list) -> tuple[int, dict, dict]:
@@ -392,14 +487,17 @@ def check_evidence_density(domain: str) -> DimensionScore:
         items = cached["items"]
         counts = cached["counts"]
         points_by_category = cached["points_by_category"]
+        unconfirmed_items = cached["unconfirmed_items"]
         runs = cached["runs"]
         cache_status = "cache_hit"
     else:
         runs = _run_listings_concurrently(page_text)
         successful_runs = [run for run in runs if run["status"] == "ok"]
 
-        if not successful_runs:
-            errors = "; ".join(f"run {run['run']}: {run['error']}" for run in runs)
+        if len(successful_runs) < MIN_VOTES:
+            # Voting needs at least MIN_VOTES runs that actually answered;
+            # a lone surviving run has nothing to agree with.
+            errors = "; ".join(f"run {run['run']}: {run['error']}" for run in runs if run["status"] != "ok")
             fallback = (
                 "We fetched the homepage, but hit a technical hiccup while looking for real evidence "
                 "on it, so there's no real verdict this run. This is usually temporary. Today, just "
@@ -416,7 +514,10 @@ def check_evidence_density(domain: str) -> DimensionScore:
                 score=-1,
                 details={
                     "status": "insufficient_data",
-                    "reason": f"DeepSeek evidence listing failed on all {JUDGMENT_RUNS} runs: {errors}",
+                    "reason": (
+                        f"Only {len(successful_runs)} of {JUDGMENT_RUNS} DeepSeek evidence listing runs succeeded; "
+                        f"at least {MIN_VOTES} are needed to vote: {errors}"
+                    ),
                     "runs": runs,
                     "fetched_text_preview": page_text[:500],
                     "generation_log": generation_log,
@@ -424,13 +525,20 @@ def check_evidence_density(domain: str) -> DimensionScore:
                 },
             )
 
-        items = _aggregate_items(runs)
+        items, unconfirmed_items = _cluster_items(runs, page_text)
         score, counts, points_by_category = _score_from_items(items)
         cache_status = "fresh_judgment"
         save_judgment(
             DIMENSION_NAME,
             cache_key,
-            {"score": score, "items": items, "counts": counts, "points_by_category": points_by_category, "runs": runs},
+            {
+                "score": score,
+                "items": items,
+                "unconfirmed_items": unconfirmed_items,
+                "counts": counts,
+                "points_by_category": points_by_category,
+                "runs": runs,
+            },
         )
 
     evidence_summary = _build_evidence_summary_text(items, counts)
@@ -444,11 +552,14 @@ def check_evidence_density(domain: str) -> DimensionScore:
         details={
             "status": "ok",
             "items": items,
+            "unconfirmed_items": unconfirmed_items,
+            "min_votes": MIN_VOTES,
             "counts_by_category": counts,
             "points_by_category": points_by_category,
             "scoring_rule": (
                 "Our own fixed rule, not an LLM judgment: each of the 4 evidence categories is worth up "
-                f"to {MAX_POINTS_PER_CATEGORY} points based on verified item count "
+                f"to {MAX_POINTS_PER_CATEGORY} points based on the count of items confirmed by at least {MIN_VOTES} of "
+                f"{JUDGMENT_RUNS} runs "
                 f"({_POINTS_BY_ITEM_COUNT}, {MAX_POINTS_PER_CATEGORY} points for 3 or more)."
             ),
             "cache_status": cache_status,

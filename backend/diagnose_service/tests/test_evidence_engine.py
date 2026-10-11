@@ -115,9 +115,10 @@ class EvidenceEngineTests(unittest.TestCase):
     def test_three_or_more_items_in_a_category_earns_full_marks(self):
         outcome = [
             {"category": "number_or_statistic", "quote": "cut onboarding time by 42% for 1,200 customers"},
+            {"category": "number_or_statistic", "quote": "We saved $100,000 in the first year"},
             {"category": "number_or_statistic", "quote": "rated 4.7 on G2"},
-            {"category": "number_or_statistic", "quote": "SOC 2 certified"},
         ]
+        # Three items in three different sentences, so none merge.
         result, _stub = self._run_with([outcome, outcome, outcome])
 
         self.assertEqual(result.details["counts_by_category"]["number_or_statistic"], 3)
@@ -143,6 +144,92 @@ class EvidenceEngineTests(unittest.TestCase):
         result, _stub = self._run_with([outcome, outcome, outcome])
 
         self.assertEqual(result.details["counts_by_category"]["number_or_statistic"], 1)
+
+    def test_item_found_in_only_one_of_three_runs_is_unconfirmed_and_not_scored(self):
+        stat = {"category": "number_or_statistic", "quote": "cut onboarding time by 42% for 1,200 customers"}
+        lone = {"category": "attributed_quote", "quote": "We saved $100,000 in the first year"}
+        result, _stub = self._run_with([[stat, lone], [stat], [stat]])
+
+        self.assertEqual(result.details["counts_by_category"]["attributed_quote"], 0)
+        self.assertEqual(result.details["counts_by_category"]["number_or_statistic"], 1)
+        self.assertEqual(result.score, 15)
+        unconfirmed = result.details["unconfirmed_items"]
+        self.assertEqual([(u["category"], u["quote"], u["votes"]) for u in unconfirmed], [("attributed_quote", lone["quote"], 1)])
+        self.assertEqual(result.details["items"][0]["votes"], 3)
+
+    def test_item_found_in_two_of_three_runs_is_confirmed(self):
+        stat = {"category": "number_or_statistic", "quote": "cut onboarding time by 42% for 1,200 customers"}
+        result, _stub = self._run_with([[stat], [stat], []])
+
+        self.assertEqual(result.details["counts_by_category"]["number_or_statistic"], 1)
+        self.assertEqual(result.details["items"][0]["votes"], 2)
+        self.assertEqual(result.details["unconfirmed_items"], [])
+
+    def test_slightly_different_wording_is_merged_by_substring(self):
+        short = {"category": "number_or_statistic", "quote": "cut onboarding time by 42%"}
+        long = {"category": "number_or_statistic", "quote": "cut onboarding time by 42% for 1,200 customers"}
+        result, _stub = self._run_with([[short], [long], []])
+
+        self.assertEqual(result.details["counts_by_category"]["number_or_statistic"], 1)
+        self.assertEqual(result.score, 15)
+        self.assertEqual(result.details["items"][0]["votes"], 2)
+        self.assertEqual(result.details["items"][0]["quote"], long["quote"])
+
+    def test_different_quotes_in_the_same_sentence_are_merged(self):
+        a = {"category": "number_or_statistic", "quote": "cut onboarding time by 42%"}
+        b = {"category": "number_or_statistic", "quote": "1,200 customers"}
+        result, _stub = self._run_with([[a], [b], []])
+
+        self.assertEqual(result.details["counts_by_category"]["number_or_statistic"], 1)
+        self.assertEqual(result.details["items"][0]["votes"], 2)
+
+    def test_same_sentence_but_different_category_is_not_merged(self):
+        a = {"category": "number_or_statistic", "quote": "SOC 2 certified"}
+        b = {"category": "third_party_source_or_certification", "quote": "rated 4.7 on G2"}
+        result, _stub = self._run_with([[a, b], [], []])
+
+        self.assertEqual(sum(result.details["counts_by_category"].values()), 0)
+        self.assertEqual(len(result.details["unconfirmed_items"]), 2)
+
+    def test_same_category_in_different_sentences_is_not_merged(self):
+        a = {"category": "number_or_statistic", "quote": "cut onboarding time by 42%"}
+        b = {"category": "number_or_statistic", "quote": "rated 4.7 on G2"}
+        result, _stub = self._run_with([[a], [b], []])
+
+        self.assertEqual(sum(result.details["counts_by_category"].values()), 0)
+        self.assertEqual(len(result.details["unconfirmed_items"]), 2)
+
+    def test_unconfirmed_items_and_votes_are_cached(self):
+        stat = {"category": "number_or_statistic", "quote": "cut onboarding time by 42% for 1,200 customers"}
+        lone = {"category": "attributed_quote", "quote": "We saved $100,000 in the first year"}
+        first, _ = self._run_with([[stat, lone], [stat], [stat]])
+        second, stub2 = self._run_with([RuntimeError("never")] * 3)
+
+        self.assertEqual(stub2.call_count, 0)
+        self.assertEqual(second.details["items"], first.details["items"])
+        self.assertEqual(second.details["unconfirmed_items"], first.details["unconfirmed_items"])
+        self.assertEqual(second.score, first.score)
+
+    def test_fewer_than_two_successful_runs_cannot_vote(self):
+        stat = {"category": "number_or_statistic", "quote": "cut onboarding time by 42% for 1,200 customers"}
+        error = requests.ConnectionError("boom")
+        result, _stub = self._run_with([[stat], error, error])
+
+        self.assertEqual(result.score, -1)
+        self.assertEqual(result.details["status"], "insufficient_data")
+
+    def test_prompt_excludes_ui_screenshot_text(self):
+        prompt = evidence_engine._EVIDENCE_LISTING_SYSTEM_PROMPT
+        self.assertIn("NOT EVIDENCE", prompt)
+        self.assertIn("product user interface screenshot or product demo", prompt)
+        self.assertIn("timestamps", prompt)
+        self.assertIn("2min ago", prompt)
+        self.assertIn("status labels", prompt)
+        self.assertIn("user names or people's names that appear with no surrounding context", prompt)
+
+    def test_prompt_and_method_versions_were_bumped(self):
+        self.assertEqual(evidence_engine.METHOD_VERSION, "v2")
+        self.assertEqual(evidence_engine.PROMPT_VERSION, "v2-evidence-listing")
 
     def test_unrecognized_category_is_dropped(self):
         outcome = [
