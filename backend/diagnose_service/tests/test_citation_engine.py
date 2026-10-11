@@ -37,6 +37,19 @@ QUERIES = [
     "How do companies stay compliant with privacy laws for web tracking?",
 ]
 
+_FAKE_QUESTION_SET = (
+    {
+        "category_id": "browser-script-security",
+        "category_name": "Browser script security",
+        "category_description": CATEGORY,
+        "version": 1,
+        "status": "frozen",
+        "questions": QUERIES,
+        "source": "existing_company_assignment",
+    },
+    {},
+)
+
 _FAKE_PLAIN_FINDING = ({"what_we_found": "stub", "what_it_costs_you": "", "fix_it_today": ""}, [])
 
 
@@ -88,7 +101,7 @@ def _run_with_patterns(patterns: dict[str, list[str]]):
     stub = _PerplexityStub(patterns)
 
     with patch.object(citation_engine, "settings", fake_settings), \
-         patch.object(citation_engine, "get_cached_queries", return_value=(CATEGORY, QUERIES)), \
+         patch.object(citation_engine, "_resolve_question_set", return_value=_FAKE_QUESTION_SET), \
          patch.object(citation_engine, "_call_perplexity", side_effect=stub), \
          patch.object(citation_engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING):
         result = citation_engine.check_citation_visibility(COMPANY_NAME, DOMAIN)
@@ -382,7 +395,7 @@ class UncertainDenominatorTests(unittest.TestCase):
         stub = _ExecuteSingleRunStub(classifications)
 
         with patch.object(citation_engine, "settings", fake_settings), \
-             patch.object(citation_engine, "get_cached_queries", return_value=(CATEGORY, QUERIES)), \
+             patch.object(citation_engine, "_resolve_question_set", return_value=_FAKE_QUESTION_SET), \
              patch.object(citation_engine, "_execute_single_run", side_effect=stub), \
              patch.object(citation_engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING):
             result = citation_engine.check_citation_visibility(COMPANY_NAME, DOMAIN)
@@ -395,52 +408,44 @@ class UncertainDenominatorTests(unittest.TestCase):
 
 
 class QueryGenerationTests(unittest.TestCase):
-    """The 2-step category -> queries generation, and that homepage text never reaches the queries call."""
+    """generate_checked_question_set: brand-free retries, and that homepage text never reaches the queries call."""
+
+    _ALL_PASS = [{"passes": True, "reason": "A buyer would ask this."}] * 5
 
     def test_queries_call_never_receives_homepage_text(self):
-        homepage_text = "UNIQUE_HOMEPAGE_MARKER_TEXT_12345 describing the real product in detail."
-        category = "browser side security and privacy compliance monitoring"
         received_args = []
 
         def fake_call_for_queries(received_category):
             received_args.append(received_category)
             return list(QUERIES)
 
-        with patch.object(citation_engine, "_call_deepseek_for_category", return_value=category), \
-             patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries):
-            result_category, result_queries, _log = citation_engine._generate_category_and_brand_free_queries(
-                COMPANY_NAME, DOMAIN, homepage_text
+        with patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries),              patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=self._ALL_PASS):
+            record, _attempts = citation_engine.generate_checked_question_set(
+                CATEGORY, [{"company_name": COMPANY_NAME, "domain": DOMAIN}]
             )
 
-        self.assertEqual(result_category, category)
-        self.assertEqual(result_queries, QUERIES)
-        self.assertEqual(len(received_args), 1)
-        # The queries call received ONLY the category string -- nothing
-        # from the real homepage text leaked into it.
-        self.assertEqual(received_args[0], category)
-        self.assertNotIn("UNIQUE_HOMEPAGE_MARKER_TEXT_12345", received_args[0])
+        self.assertEqual(record["questions"], QUERIES)
+        self.assertEqual(record["status"], "frozen")
+        # The queries call received ONLY the category description.
+        self.assertEqual(received_args, [CATEGORY])
 
-    def test_contaminated_batch_is_retried_without_recalling_category(self):
-        homepage_text = "Some real homepage text."
-        category = "browser side security and privacy compliance monitoring"
+    def test_contaminated_batch_is_retried(self):
         call_count = {"n": 0}
 
         def fake_call_for_queries(received_category):
             call_count["n"] += 1
             if call_count["n"] == 1:
-                # First attempt is contaminated with the brand name.
                 return [f"{COMPANY_NAME} is great", "q2", "q3", "q4", "q5"]
             return list(QUERIES)
 
-        with patch.object(citation_engine, "_call_deepseek_for_category", return_value=category) as mock_category, \
-             patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries):
-            _result_category, result_queries, _log = citation_engine._generate_category_and_brand_free_queries(
-                COMPANY_NAME, DOMAIN, homepage_text
+        with patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries),              patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=self._ALL_PASS):
+            record, attempts = citation_engine.generate_checked_question_set(
+                CATEGORY, [{"company_name": COMPANY_NAME, "domain": DOMAIN}]
             )
 
-        mock_category.assert_called_once()  # category classification happens exactly once, never retried
-        self.assertEqual(call_count["n"], 2)  # queries regenerated once after contamination
-        self.assertEqual(result_queries, QUERIES)
+        self.assertEqual(call_count["n"], 2)
+        self.assertFalse(attempts[0]["usable"])
+        self.assertEqual(record["questions"], QUERIES)
 
 
 if __name__ == "__main__":

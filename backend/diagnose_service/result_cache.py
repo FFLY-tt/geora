@@ -2,8 +2,8 @@
 Local JSON-file cache for full diagnosis results, keyed by domain.
 
 Individual engine calls have residual run-to-run variance even after
-caching the generated buyer questions (see engines/_query_cache.py and
-the citation_visibility/topic_relevance investigation) — Perplexity's own
+freezing the buyer questions (see engines/_question_sets.py and the
+citation_visibility/topic_relevance investigation) — Perplexity's own
 answer generation is not deterministic even for an identical query.
 Rather than chasing that at the engine level, this cache makes the whole
 /api/diagnose response itself stable for a fixed 24-hour window per
@@ -12,8 +12,13 @@ always returns the exact same result, computed once. There is
 deliberately no way to force a recompute from the request — see
 server.py's diagnose route.
 
+This is a per-machine cache (backend/diagnose_service/data/, gitignored),
+not shared state: deleting it only forces a recompute, which must give
+the same five reason scores because the question sets and judgments it
+depends on live in the committed state/ directory.
+
 Uses the same read-modify-write-with-file-lock pattern as
-backend/leads_store.py and backend/engines/_query_cache.py.
+backend/leads_store.py.
 """
 
 import json
@@ -85,6 +90,39 @@ def get_cached_result(domain: str) -> dict | None:
         return None
 
     return entry
+
+
+def _read_entry(domain: str) -> dict | None:
+    """The raw stored entry for `domain` regardless of age, or None if missing/unreadable."""
+    try:
+        with open(_CACHE_FILE, "r", encoding="utf-8") as file_handle:
+            if _HAS_FCNTL:
+                fcntl.flock(file_handle.fileno(), fcntl.LOCK_SH)
+            try:
+                cache = _read_cache(file_handle)
+            finally:
+                if _HAS_FCNTL:
+                    fcntl.flock(file_handle.fileno(), fcntl.LOCK_UN)
+    except (FileNotFoundError, ValueError, json.JSONDecodeError, OSError):
+        return None
+
+    entry = cache.get(domain)
+    return entry if isinstance(entry, dict) else None
+
+
+def get_previous_provenance(domain: str) -> dict | None:
+    """
+    The `provenance` of whatever entry currently exists for `domain`
+    (expired or not), or None — including for entries stored before
+    provenance was recorded. The frontend only compares scores when the
+    previous and current method/question-set versions match. Call this
+    BEFORE save_result overwrites the entry.
+    """
+    entry = _read_entry(domain)
+    if entry is None:
+        return None
+    provenance = entry.get("provenance")
+    return provenance if isinstance(provenance, dict) else None
 
 
 def get_previous_scores(domain: str) -> dict | None:

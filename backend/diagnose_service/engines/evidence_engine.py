@@ -40,7 +40,8 @@ independent passes over the same page tend to catch more of the real
 evidence actually on it.
 
 The listing+scoring result for a given page's exact text is cached by
-engines._judgment_cache: re-diagnosing a domain whose homepage text
+engines._judgment_cache (shared, committed state under
+state/judgments/): re-diagnosing a domain whose homepage text
 hasn't changed at all returns the identical score every time, with no
 LLM call, instead of re-rolling the model's own non-determinism. See
 that module's docstring for why, and PROMPT_VERSION below for how a
@@ -57,9 +58,14 @@ from shared.config import settings
 from shared._fetch_utils import fetch_page_text
 from engines._judgment_cache import get_cached_judgment, make_judgment_cache_key, save_judgment
 from engines._plain_finding_generator import make_plain_finding
+from engines._provenance import page_fingerprint
 from models import DimensionScore
 
 DIMENSION_NAME = "evidence_density"
+
+# Bump whenever this dimension's measurement method changes in a way
+# that makes results computed before and after not directly comparable.
+METHOD_VERSION = "v1"
 
 # Bump this whenever _EVIDENCE_LISTING_SYSTEM_PROMPT's wording changes
 # in a way that could make a previously-cached listing unrepresentative
@@ -379,7 +385,7 @@ def check_evidence_density(domain: str) -> DimensionScore:
         )
 
     cache_key = make_judgment_cache_key(DIMENSION_NAME, PROMPT_VERSION, settings.deepseek_model, page_text)
-    cached = get_cached_judgment(cache_key)
+    cached = get_cached_judgment(DIMENSION_NAME, cache_key)
 
     if cached is not None:
         score = cached["score"]
@@ -422,6 +428,7 @@ def check_evidence_density(domain: str) -> DimensionScore:
         score, counts, points_by_category = _score_from_items(items)
         cache_status = "fresh_judgment"
         save_judgment(
+            DIMENSION_NAME,
             cache_key,
             {"score": score, "items": items, "counts": counts, "points_by_category": points_by_category, "runs": runs},
         )
@@ -448,6 +455,7 @@ def check_evidence_density(domain: str) -> DimensionScore:
             "runs": runs,
             "fetched_text_preview": page_text[:500],
             "fetched_text_length": len(page_text),
+            "page_fingerprints": [page_fingerprint(domain if domain.startswith("http") else f"https://{domain}", page_text)],
             "generation_log": generation_log,
             "plain_finding": plain_finding,
         },

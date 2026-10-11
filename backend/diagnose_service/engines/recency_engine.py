@@ -23,10 +23,16 @@ import requests
 from bs4 import BeautifulSoup
 
 from shared.config import settings
+from shared._fetch_utils import extract_text_from_html
 from engines._plain_finding_generator import make_plain_finding
+from engines._provenance import page_fingerprint
 from models import DimensionScore
 
 DIMENSION_NAME = "content_recency"
+
+# Bump whenever this dimension's measurement method changes in a way
+# that makes results computed before and after not directly comparable.
+METHOD_VERSION = "v1"
 
 
 def _fetch_homepage(domain: str) -> requests.Response:
@@ -220,6 +226,7 @@ def check_recency(domain: str) -> DimensionScore:
             "http_last_modified": last_modified_dt.isoformat() if last_modified_dt else None,
             "schema_date_modified": schema_date_modified_dt.isoformat() if schema_date_modified_dt else None,
             "age_days": round(age_days, 1),
+            "page_fingerprints": [page_fingerprint(response.url, extract_text_from_html(response.text, method="main"))],
             "generation_log": generation_log,
             "plain_finding": plain_finding,
         },
