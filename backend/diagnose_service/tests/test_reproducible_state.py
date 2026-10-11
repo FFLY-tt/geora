@@ -321,11 +321,13 @@ def _run_five_reasons(judges: _Judges) -> dict:
     """Run citation (for its questions) plus the five reason engines with every outside call mocked."""
     with ExitStack() as stack:
         _citation_patches(stack, homepage=PAGE_TEXT)
-        for engine in (evidence_engine, relevance_engine, fact_engine, recency_engine, technical_engine):
+        for engine in (relevance_engine, fact_engine, recency_engine, technical_engine):
             stack.enter_context(patch.object(engine, "settings", _FAKE_SETTINGS))
             stack.enter_context(patch.object(engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING))
-        stack.enter_context(patch.object(evidence_engine, "fetch_page_text", return_value=PAGE_TEXT))
-        stack.enter_context(patch.object(evidence_engine, "_call_deepseek_for_evidence_listing", side_effect=judges.evidence))
+        # evidence_engine is rule-based: only its page fetch is mocked.
+        stack.enter_context(
+            patch.object(evidence_engine, "_fetch_html", side_effect=lambda url: (f"https://{DOMAIN}/", HOMEPAGE_HTML))
+        )
         stack.enter_context(patch.object(relevance_engine, "_fetch_homepage_response", return_value=_fake_response()))
         stack.enter_context(patch.object(relevance_engine, "fetch_page_text", return_value=PAGE_TEXT))
         stack.enter_context(
