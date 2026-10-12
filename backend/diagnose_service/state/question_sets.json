@@ -163,6 +163,170 @@
       }
     ]
   },
+  "sales-video-engagement-platform": {
+    "category_description": "A tool that lets sales and marketing teams record, send, host, and track personalized videos, then measure how viewers engage with them and connect that activity to leads and revenue.",
+    "category_name": "Sales Video Engagement Platform",
+    "current_version": 1,
+    "versions": [
+      {
+        "auto_check": {
+          "attempts": [
+            {
+              "all_passed": true,
+              "attempt": 1,
+              "passed_count": 5,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A real buyer would ask this and it describes a clear need without naming any vendor.",
+                  "passed": true,
+                  "question": "How can I send personalized videos to sales leads and know when they watch them?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "This is a common buyer question about tracking video email opens with no brand mentioned.",
+                  "passed": true,
+                  "question": "What is the best way to track if a prospect opened my video email?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A buyer would ask how to tie video views to leads and revenue and no vendor is named.",
+                  "passed": true,
+                  "question": "How do I connect video views to leads and revenue in my marketing reports?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "This is a practical buyer question about recording screen and webcam with no brand reference.",
+                  "passed": true,
+                  "question": "Can I record my screen and webcam at the same time for sales outreach videos?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A buyer would ask about hosting videos to see viewer activity and no vendor is named.",
+                  "passed": true,
+                  "question": "How do I host sales videos so I can see who watched and for how long?",
+                  "substantive_pass": true
+                }
+              ],
+              "substantive_passed_count": 5,
+              "usable": true
+            }
+          ],
+          "chosen_attempt": 1,
+          "passed_count": 5,
+          "substantive_passed_count": 5
+        },
+        "generated_on": "2026-10-12",
+        "generation_method_version": "v1",
+        "model": "deepseek-chat",
+        "questions": [
+          "How can I send personalized videos to sales leads and know when they watch them?",
+          "What is the best way to track if a prospect opened my video email?",
+          "How do I connect video views to leads and revenue in my marketing reports?",
+          "Can I record my screen and webcam at the same time for sales outreach videos?",
+          "How do I host sales videos so I can see who watched and for how long?"
+        ],
+        "status": "frozen",
+        "version": 1
+      }
+    ]
+  },
+  "small-business-accounting-software": {
+    "category_description": "A cloud based tool that helps small business owners and freelancers track income and expenses, send invoices, accept payments, and manage their day to day finances.",
+    "category_name": "Small Business Accounting Software",
+    "current_version": 1,
+    "versions": [
+      {
+        "auto_check": {
+          "attempts": [
+            {
+              "all_passed": true,
+              "attempt": 1,
+              "passed_count": 5,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A real buyer would ask this to solve a common tracking problem without naming any brand.",
+                  "passed": true,
+                  "question": "How can I track my business income and expenses without using a spreadsheet?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "This is a natural buyer question about invoicing and getting paid online.",
+                  "passed": true,
+                  "question": "What is the easiest way to send an invoice to a client and get paid online?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "A freelancer would plausibly ask this payment question with no vendor mentioned.",
+                  "passed": true,
+                  "question": "How do I accept credit card payments as a freelancer without a merchant account?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "This describes a general need for finance and tax software from the buyer's view.",
+                  "passed": true,
+                  "question": "What software helps me manage my small business finances and taxes in one place?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "This is a realistic buyer question about automating invoices and reminders.",
+                  "passed": true,
+                  "question": "How can I automate my invoicing and payment reminders for late clients?",
+                  "substantive_pass": true
+                }
+              ],
+              "substantive_passed_count": 5,
+              "usable": true
+            }
+          ],
+          "chosen_attempt": 1,
+          "passed_count": 5,
+          "substantive_passed_count": 5
+        },
+        "generated_on": "2026-10-12",
+        "generation_method_version": "v1",
+        "model": "deepseek-chat",
+        "questions": [
+          "How can I track my business income and expenses without using a spreadsheet?",
+          "What is the easiest way to send an invoice to a client and get paid online?",
+          "How do I accept credit card payments as a freelancer without a merchant account?",
+          "What software helps me manage my small business finances and taxes in one place?",
+          "How can I automate my invoicing and payment reminders for late clients?"
+        ],
+        "status": "frozen",
+        "version": 1
+      }
+    ]
+  },
   "web-script-and-tracker-compliance-monitoring": {
     "category_description": "A tool that scans websites to find third party scripts, trackers, and cookies, then monitors and blocks unauthorized data transfers so companies can meet privacy and payment security rules.",
     "category_name": "Web Script and Tracker Compliance Monitoring",
