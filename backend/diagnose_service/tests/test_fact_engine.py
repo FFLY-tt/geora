@@ -179,7 +179,9 @@ class FactEngineTests(unittest.TestCase):
 
         self.assertEqual((perplexity.calls, deepseek.calls), (3, 3))
         self.assertEqual(self._field(result, "starting_price")["verdict"], "conflict")
-        self.assertEqual(self._field(result, "starting_price")["votes"], ["conflict", "conflict", "match"])
+        # Runs execute concurrently, so which run got which fake reply varies;
+        # only the multiset of votes is fixed.
+        self.assertEqual(sorted(self._field(result, "starting_price")["votes"]), ["conflict", "conflict", "match"])
         self.assertEqual(self._field(result, "deployment")["verdict"], "match")
         self.assertEqual(result.details["conflict_fields"], ["starting_price"])
         self.assertEqual(result.score, 60)  # 1 voted conflict
