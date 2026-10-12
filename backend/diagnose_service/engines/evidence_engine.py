@@ -9,6 +9,11 @@ any machine, at any time. Earlier versions asked an LLM to list and vote
 on evidence; that was unstable on identical input (see
 backend/scripts/stability_audit.py), so the judgment is now ours, as code.
 
+Precision over recall: a scoring tool that counts something wrong inflates
+the score and misleads the user, while a miss only makes the score
+conservative. When a rule can't tell, the item is not counted. Known
+misses are listed in docs/evidence_rules_known_limits.md.
+
 Pages read: the homepage, plus at most one page of each of four kinds
 found in the homepage's links (see _select_pages): customers/case
 studies, security/trust, pricing, about. URLs are normalized and
@@ -22,22 +27,34 @@ functions):
   number_or_statistic              a number WITH a unit or symbol: 40%,
                                    $100,000, 11,500+, 2B+, 10x, a "4.7
                                    rating". Years, phone numbers, dates,
-                                   version numbers, plan prices, and
-                                   anything next to "ago" are excluded.
-  attributed_quote                 a named customer testimonial: "Name,
-                                   Title @ Company", "Name, Title at
-                                   Company", "— Name, Company" after a
-                                   quote, or an HTML block marked as a
-                                   testimonial (blockquote, schema.org
-                                   Review or Testimonial).
+                                   version numbers, anything next to
+                                   "ago", anything on the pricing page,
+                                   and any sentence containing a word
+                                   from EXCLUDED_NUMBER_SENTENCE_WORDS
+                                   are excluded. Deduplicated by value +
+                                   unit, so "11,500+" and "11,500+ teams"
+                                   are one item.
+  attributed_quote                 a testimonial WITH an attribution (a
+                                   person's name, or a title + company):
+                                   "Name, Title @ Company", "Name, Title
+                                   at Company", "— Name, Company" after a
+                                   quote, or an HTML review block
+                                   (blockquote, schema.org Review or
+                                   Testimonial) that carries such an
+                                   attribution. One testimonial matched
+                                   by several rules counts once.
   named_customer_or_case_study     a company named in a customer logo
-                                   area, next to "trusted by" style
-                                   wording, or listed as a customer in
-                                   schema.org. What the rules can't
-                                   decide is not counted; nothing is
-                                   guessed.
-  third_party_source_or_           a name from THIRD_PARTY_TERMS (review
-  certification                    sites, analysts, certifications).
+                                   area or right after "trusted by" /
+                                   "customers" wording, on the homepage
+                                   or the customers page only, never the
+                                   site's own brand, never an entry that
+                                   holds several names.
+  third_party_source_or_           a name from THIRD_PARTY_TERMS. Review
+  certification                    sites and analysts count anywhere;
+                                   compliance standards only on the
+                                   security page or in a sentence that
+                                   says the company is certified,
+                                   audited, compliant, and so on.
 
 The same piece of evidence appearing on several pages counts once (the
 first page in reading order keeps it; the others are recorded as
@@ -47,7 +64,8 @@ Score (OUR judgment, a fixed formula, not a measurement of anything
 external): each category earns points from its evidence count with
 _points_for_item_count, up to MAX_POINTS_PER_CATEGORY, four categories,
 100 maximum. Finding no evidence is a correct, low score, not missing
-data. The score is -1 only when no page could be fetched at all.
+data. The score is -1 only when the homepage can't be fetched, and
+details.fetch_failure then says why (for example "blocked: HTTP 403").
 """
 
 import json
@@ -66,7 +84,7 @@ DIMENSION_NAME = "evidence_density"
 
 # Bump whenever this dimension's measurement method changes in a way
 # that makes results computed before and after not directly comparable.
-METHOD_VERSION = "v3-rules"
+METHOD_VERSION = "v3.1-rules"
 
 EVIDENCE_CATEGORIES = [
     "number_or_statistic",
@@ -102,7 +120,7 @@ def _points_for_item_count(count: int) -> int:
 # ---------------------------------------------------------------------------
 
 # Page kinds beyond the homepage, in reading order, each with the words
-# that identify it in a link's path or link text. At most one page per kind.
+# that identify it in a link's path. At most one page per kind.
 PAGE_KINDS = [
     ("customers", ["customers", "case-studies", "stories"]),
     ("security", ["security", "trust", "compliance"]),
@@ -110,24 +128,39 @@ PAGE_KINDS = [
     ("about", ["about"]),
 ]
 
+# Subdomains that are a security page in their own right (trust.example.com).
+_SECURITY_SUBDOMAINS = ("trust.", "security.")
+
+# Named customers are only looked for on these page kinds.
+_CUSTOMER_PAGE_KINDS = ("home", "customers")
+
+_INDEX_FILES = ("index.html", "index.htm", "index.php")
+
 _SKIPPED_EXTENSIONS = (".pdf", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".zip", ".mp4", ".xml")
 
 
+def _full_host(url: str) -> str:
+    return urlparse(url if "//" in url else f"//{url}").netloc.split("@")[-1].split(":")[0].lower()
+
+
 def _host_of(url: str) -> str:
-    host = urlparse(url if "//" in url else f"//{url}").netloc.split("@")[-1].split(":")[0].lower()
+    host = _full_host(url)
     return host[4:] if host.startswith("www.") else host
 
 
 def _normalize_url(url: str) -> str:
     """
     Canonical form used for deduplication and fetching: https, lowercase
-    host without "www.", no query string, no fragment, no trailing slash.
+    host without "www.", no query string, no fragment, no trailing slash,
+    and no trailing index file (/index.html is the same page as /).
     """
     if not url.startswith("http"):
         url = f"https://{url}"
-    parsed = urlparse(url)
-    path = parsed.path.rstrip("/")
-    return f"https://{_host_of(url)}{path}"
+    path = urlparse(url).path
+    segments = path.split("/")
+    if segments and segments[-1].lower() in _INDEX_FILES:
+        path = "/".join(segments[:-1])
+    return f"https://{_host_of(url)}{path.rstrip('/')}"
 
 
 def _is_same_site(url: str, base_host: str) -> bool:
@@ -138,10 +171,15 @@ def _is_same_site(url: str, base_host: str) -> bool:
 def _select_pages(homepage_url: str, soup: BeautifulSoup) -> list[tuple[str, str]]:
     """
     [(kind, url)] for the key pages found in the homepage's links, at
-    most one per kind in PAGE_KINDS order. Among a kind's candidates a
-    match in the URL path beats a match only in the link text, then the
-    shallower path wins, then the earlier link in the document. A URL is
-    only ever used for one kind.
+    most one per kind in PAGE_KINDS order. For each kind, in order:
+
+    1. a link whose FIRST path segment equals one of the kind's words
+       (/security, /customers, ...), or, for the security kind, a
+       trust. / security. subdomain;
+    2. only if there is none, a link whose path contains one of the words.
+
+    Within a tier the shortest path wins, then the earlier link in the
+    document. A URL is only ever used for one kind.
     """
     base_host = _host_of(homepage_url)
     home_key = _normalize_url(homepage_url)
@@ -156,11 +194,13 @@ def _select_pages(homepage_url: str, soup: BeautifulSoup) -> list[tuple[str, str
         key = _normalize_url(href)
         if key == home_key:
             continue
+        path = urlparse(key).path.lower()
         candidates.append(
             {
                 "url": key,
-                "path": urlparse(key).path.lower(),
-                "text": re.sub(r"\s+", " ", anchor.get_text(" ", strip=True)).lower(),
+                "path": path,
+                "first_segment": path.strip("/").split("/")[0],
+                "host": _full_host(key),
                 "order": order,
             }
         )
@@ -172,12 +212,13 @@ def _select_pages(homepage_url: str, soup: BeautifulSoup) -> list[tuple[str, str
         for candidate in candidates:
             if candidate["url"] in used:
                 continue
-            in_path = any(word in candidate["path"] for word in keywords)
-            in_text = any(word in candidate["text"] for word in keywords)
-            if not (in_path or in_text):
+            exact = candidate["first_segment"] in keywords or (
+                kind == "security" and candidate["host"].startswith(_SECURITY_SUBDOMAINS)
+            )
+            contains = any(word in candidate["path"] for word in keywords)
+            if not (exact or contains):
                 continue
-            depth = candidate["path"].count("/")
-            ranked.append(((0 if in_path else 1, depth, candidate["order"]), candidate["url"]))
+            ranked.append(((0 if exact else 1, len(candidate["path"]), candidate["order"]), candidate["url"]))
         if ranked:
             url = min(ranked)[1]
             chosen.append((kind, url))
@@ -186,7 +227,7 @@ def _select_pages(homepage_url: str, soup: BeautifulSoup) -> list[tuple[str, str
 
 
 # ---------------------------------------------------------------------------
-# Evidence rules
+# Shared text helpers
 # ---------------------------------------------------------------------------
 
 def _normalize_space(text: str) -> str:
@@ -202,6 +243,24 @@ def _context(text: str, start: int, end: int, radius: int = 60) -> str:
     if right < len(text) and " " in snippet:
         snippet = snippet.rsplit(" ", 1)[0]
     return snippet.strip()
+
+
+# Sentence boundaries in whitespace-collapsed page text: after . ! ? before
+# a space, and at quote marks, bullets, and separators, which on real pages
+# usually stand where a line break was.
+_SENTENCE_BREAK = re.compile(r"(?<=[.!?])\s+|[“”•|·]")
+
+
+def _sentence_at(text: str, start: int, end: int) -> str:
+    """The sentence of `text` that contains [start, end)."""
+    left, right = 0, len(text)
+    for match in _SENTENCE_BREAK.finditer(text):
+        if match.end() <= start:
+            left = match.end()
+        elif match.start() >= end:
+            right = match.start()
+            break
+    return text[left:right]
 
 
 def _item(category: str, key: str, text: str, context: str, rule: str) -> dict:
@@ -238,21 +297,22 @@ _COUNT_NOUNS = (
 
 _LEFT = r"(?<![\w.,])"
 
-# (rule name, pattern). Matches are collected from all rules, then
-# overlaps are resolved by keeping the earliest, then the longest.
+# (rule name, unit, pattern). Matches are collected from all rules, then
+# overlaps are resolved by keeping the earliest, then the longest. The
+# unit is what the dedup key is built from (see _number_key).
 _NUMBER_RULES = [
-    ("percent", re.compile(_LEFT + r"\d[\d,]*(?:\.\d+)?\s?%")),
-    ("currency", re.compile(r"[$€£]\s?\d[\d,]*(?:\.\d+)?(?:\s?(?:[KkMmBb]\b|million|billion|thousand))?\+?")),
-    ("multiplier", re.compile(_LEFT + r"\d+(?:\.\d+)?[xX](?!\w)")),
-    ("magnitude_plus", re.compile(_LEFT + r"\d+(?:\.\d+)?\s?[KMB]\+")),
-    ("magnitude", re.compile(_LEFT + r"\d+(?:\.\d+)?[KMB]\b")),
-    ("magnitude_word", re.compile(_LEFT + r"\d+(?:\.\d+)?\s(?:million|billion|thousand)\b", re.IGNORECASE)),
-    ("count_plus", re.compile(r"(?<![\w.,+])\d[\d,]*\s?\+(?![\w+])")),
-    ("counted_noun", re.compile(_LEFT + r"\d[\d,]*(?:\.\d+)?\+?\s(?:" + _COUNT_NOUNS + r")\b", re.IGNORECASE)),
-    ("rating_word", re.compile(r"\b[1-5](?:\.\d)?\s*(?:[^\w\s]\s*)?(?:stars?|rated|ratings?)\b", re.IGNORECASE)),
-    ("rating_out_of", re.compile(r"\b[1-5](?:\.\d)?\s*out of 5\b", re.IGNORECASE)),
-    ("rating_slash", re.compile(r"\b[1-5]\.\d\s*/\s*5\b")),
-    ("rated_number", re.compile(r"\brated\s+[1-5]\.\d\b", re.IGNORECASE)),
+    ("percent", "percent", re.compile(_LEFT + r"\d[\d,]*(?:\.\d+)?\s?%")),
+    ("currency", "currency", re.compile(r"[$€£]\s?\d[\d,]*(?:\.\d+)?(?:\s?(?:[KkMmBb]\b|million|billion|thousand))?\+?")),
+    ("multiplier", "multiplier", re.compile(_LEFT + r"\d+(?:\.\d+)?[xX](?!\w)")),
+    ("magnitude_plus", "count", re.compile(_LEFT + r"\d+(?:\.\d+)?\s?[KMB]\+")),
+    ("magnitude", "count", re.compile(_LEFT + r"\d+(?:\.\d+)?[KMB]\b")),
+    ("magnitude_word", "count", re.compile(_LEFT + r"\d+(?:\.\d+)?\s(?:million|billion|thousand)\b", re.IGNORECASE)),
+    ("count_plus", "count", re.compile(r"(?<![\w.,+])\d[\d,]*\s?\+(?![\w+])")),
+    ("counted_noun", "count", re.compile(_LEFT + r"\d[\d,]*(?:\.\d+)?\+?\s(?:" + _COUNT_NOUNS + r")\b", re.IGNORECASE)),
+    ("rating_word", "rating", re.compile(r"\b[1-5](?:\.\d)?\s*(?:[^\w\s]\s*)?(?:stars?|rated|ratings?)\b", re.IGNORECASE)),
+    ("rating_out_of", "rating", re.compile(r"\b[1-5](?:\.\d)?\s*out of 5\b", re.IGNORECASE)),
+    ("rating_slash", "rating", re.compile(r"\b[1-5]\.\d\s*/\s*5\b")),
+    ("rated_number", "rating", re.compile(r"\brated\s+[1-5]\.\d\b", re.IGNORECASE)),
 ]
 
 # A number within this window of any of these is product UI text (a mocked-up
@@ -266,6 +326,49 @@ _PLAN_PRICE_TAIL = re.compile(
     re.IGNORECASE,
 )
 
+# A number in a sentence containing any of these words is about employee
+# benefits, fines, fees, or offers, not proof of results. Add a word here
+# to exclude more. Plurals (s / es / y->ies) are matched automatically.
+EXCLUDED_NUMBER_SENTENCE_WORDS = [
+    "401(k)", "insurance", "premium", "PTO", "vacation", "salary", "benefits", "penalty", "fine",
+    "per violation", "fee", "discount", "off", "trial",
+]
+
+
+def _word_pattern(word: str) -> str:
+    if word == "401(k)":
+        return r"\b401\s?\(?k\)?"
+    stem = re.escape(word)
+    if word.endswith("y"):
+        stem = re.escape(word[:-1]) + r"(?:y|ies)"
+    else:
+        stem += r"(?:s|es)?"
+    return r"\b" + stem + r"\b"
+
+
+_EXCLUDED_SENTENCE_RE = re.compile("|".join(_word_pattern(w) for w in EXCLUDED_NUMBER_SENTENCE_WORDS), re.IGNORECASE)
+
+_MULTIPLIERS = {"k": 1e3, "m": 1e6, "b": 1e9, "thousand": 1e3, "million": 1e6, "billion": 1e9}
+_FIRST_NUMBER = re.compile(r"\d[\d,]*(?:\.\d+)?")
+_SUFFIX = re.compile(r"\d\s?(thousand|million|billion|[kmb])(?![a-z])", re.IGNORECASE)
+
+
+def _number_key(unit: str, token: str) -> str:
+    """
+    Dedup key from value + unit, so different wordings of one stat match:
+    "11,500+", "11,500 +", "11,500+ teams" -> count:11500; "4.7 rating",
+    "Rated 4.7", "4.7 / 5" -> rating:4.7; "$100K" and "$100,000" -> currency:$100000.
+    """
+    value = float(_FIRST_NUMBER.search(token).group(0).replace(",", ""))
+    if unit in ("count", "currency"):
+        suffix = _SUFFIX.search(token)
+        if suffix:
+            value *= _MULTIPLIERS[suffix.group(1).lower()]
+    number = format(value, ".6g")
+    if unit == "currency":
+        return f"currency:{token.strip()[0]}{number}"
+    return f"{unit}:{number}"
+
 
 def _mask(text: str) -> str:
     masked = text
@@ -276,27 +379,29 @@ def _mask(text: str) -> str:
 
 def find_numbers(text: str, page_kind: str = "home") -> list[dict]:
     """Specific numbers with a unit or symbol. See the module docstring for what is excluded."""
+    if page_kind == "pricing":
+        return []  # plan limits and prices are product features, not proof
     masked = _mask(text)
     found = []
-    for rule, pattern in _NUMBER_RULES:
+    for rule, unit, pattern in _NUMBER_RULES:
         for match in pattern.finditer(masked):
-            found.append((match.start(), -(match.end() - match.start()), match.end(), rule))
+            found.append((match.start(), -(match.end() - match.start()), match.end(), rule, unit))
     found.sort()
 
     items, last_end = [], -1
-    for start, _neg_length, end, rule in found:
+    for start, _neg_length, end, rule, unit in found:
         if start < last_end:
             continue  # overlaps a match we already kept
+        last_end = end
         window = text[max(0, start - _UI_NOISE_RADIUS) : end + _UI_NOISE_RADIUS]
         if _UI_NOISE.search(window):
             continue
-        if rule == "currency":
-            if page_kind == "pricing" or _PLAN_PRICE_TAIL.match(text[end : end + 24]):
-                continue
-        last_end = end
+        if rule == "currency" and _PLAN_PRICE_TAIL.match(text[end : end + 24]):
+            continue
+        if _EXCLUDED_SENTENCE_RE.search(_sentence_at(text, start, end)):
+            continue
         token = _normalize_space(text[start:end])
-        key = re.sub(r"[^\w%+$€£.]", "", token.lower())
-        items.append(_item("number_or_statistic", key, token, _context(text, start, end), f"number:{rule}"))
+        items.append(_item("number_or_statistic", _number_key(unit, token), token, _context(text, start, end), f"number:{rule}"))
     return items
 
 
@@ -310,14 +415,20 @@ _ROLE_WORDS = {
     "broker", "architect", "teacher", "professor", "dean", "superintendent", "controller", "advisor",
 }
 
-_NAME_TOKEN = re.compile(r"^(?:[A-Z][A-Za-z'’\-]+|[A-Z]\.)$")
+_NAME_TOKEN_RE = r"(?:[A-Z][A-Za-z'’\-]+|[A-Z]\.)"
+_NAME_TOKEN = re.compile(r"^" + _NAME_TOKEN_RE + r"$")
+_PERSON_NAME = re.compile(r"^\s*[—–―-]*\s*(" + _NAME_TOKEN_RE + r"(?:\s+" + _NAME_TOKEN_RE + r"){1,2})(?=$|[\s,])")
 _COMPANY = r"[A-Z0-9][\w&'’\-\.]*(?:\s+[A-Z0-9][\w&'’\-\.]*){0,3}"
 _TITLE_COMPANY = re.compile(r",\s*(?P<title>[^,@]{2,60}?)\s*(?:@|\bat\b)\s*(?P<company>" + _COMPANY + r")")
 _DASH_ATTRIBUTION = re.compile(
-    r"[\"”’»]\s*[—–―-]+\s*(?P<name>(?:[A-Z][A-Za-z'’\-]+|[A-Z]\.)(?:\s+(?:[A-Z][A-Za-z'’\-]+|[A-Z]\.)){1,2})\s*,\s*(?P<company>"
+    r"[\"”’»]\s*[—–―-]+\s*(?P<name>" + _NAME_TOKEN_RE + r"(?:\s+" + _NAME_TOKEN_RE + r"){1,2})\s*,\s*(?P<company>"
     + _COMPANY
     + r")"
 )
+
+
+def _person_key(name: str) -> str:
+    return re.sub(r"\W+", " ", name.lower()).strip()
 
 
 def _name_before(text: str, comma_pos: int) -> tuple[str, int] | None:
@@ -355,7 +466,7 @@ def find_attributions(text: str) -> list[dict]:
         company = _clean_company(match.group("company"))
         shown = f"{person}, {_normalize_space(match.group('title'))} @ {company}"
         items.append(
-            _item("attributed_quote", re.sub(r"\W+", " ", person.lower()).strip(), shown,
+            _item("attributed_quote", _person_key(person), shown,
                   _context(text, name_start, match.end(), radius=110), "attribution:name_title_company")
         )
         spans.append((name_start, match.end()))
@@ -365,10 +476,31 @@ def find_attributions(text: str) -> list[dict]:
         person = match.group("name")
         company = _clean_company(match.group("company"))
         items.append(
-            _item("attributed_quote", re.sub(r"\W+", " ", person.lower()).strip(), f"{person}, {company}",
+            _item("attributed_quote", _person_key(person), f"{person}, {company}",
                   _context(text, match.start(), match.end(), radius=110), "attribution:dash_name_company")
         )
     return items
+
+
+def _caption_attribution(caption: str) -> tuple[str, str] | None:
+    """
+    (key, shown) when a review block's caption (cite, footer, figcaption,
+    schema author) is a real attribution: a person's name, or a title plus
+    company. None otherwise; the block then does not count.
+    """
+    caption = _normalize_space(caption)
+    if not caption:
+        return None
+    written = find_attributions(f"” — {caption}") or find_attributions(caption)
+    if written:
+        return written[0]["key"], written[0]["text"]
+    name = _PERSON_NAME.match(caption)
+    if name and not ({t.lower() for t in name.group(1).split()} & _ROLE_WORDS):
+        return _person_key(name.group(1)), caption[:120]
+    words = {w.strip(".,&/").lower() for w in caption.split()}
+    if words & _ROLE_WORDS and re.search(r"(?:@|\bat\b|,)\s*[A-Z0-9]", caption):
+        return _person_key(caption), caption[:120]
+    return None
 
 
 def _json_ld_objects(soup: BeautifulSoup):
@@ -393,44 +525,59 @@ def _types_of(node: dict) -> list[str]:
     return [raw] if isinstance(raw, str) else [t for t in raw if isinstance(t, str)]
 
 
+def _block_caption(block) -> str:
+    """Attribution text attached to an HTML review block: <cite>/<footer> inside it, or the <figcaption> of its <figure>."""
+    parts = [tag.get_text(" ", strip=True) for tag in block.find_all(["cite", "footer"])]
+    figure = block.find_parent("figure")
+    if figure and figure.find("figcaption"):
+        parts.append(figure.find("figcaption").get_text(" ", strip=True))
+    author = block.find(attrs={"itemprop": "author"})
+    if author:
+        parts.append(author.get_text(" ", strip=True))
+    return " ".join(p for p in parts if p)
+
+
 def find_html_testimonials(soup: BeautifulSoup) -> list[dict]:
     """
-    Blocks the HTML itself marks as customer reviews: <blockquote>,
-    schema.org Review/Testimonial microdata, and JSON-LD Review/Testimonial
-    objects. A block whose text already contains a written attribution is
-    left to find_attributions, so one testimonial is not counted twice.
+    HTML review blocks (blockquote, schema.org Review/Testimonial microdata,
+    JSON-LD Review/Testimonial) that carry an attribution. A block without
+    one does not count. The item key is the person, so a testimonial also
+    matched by find_attributions is merged into one item.
     """
     items = []
 
-    def _add(text: str, rule: str):
-        text = _normalize_space(text)
-        if len(text) < 20 or find_attributions(text):
-            return
-        items.append(_item("attributed_quote", re.sub(r"\W+", " ", text.lower()).strip()[:200], text[:300], text[:300], rule))
+    def _add(quote: str, caption: str, rule: str):
+        quote = _normalize_space(quote)
+        attribution = find_attributions(quote)
+        if attribution:
+            key, shown = attribution[0]["key"], attribution[0]["text"]
+        else:
+            found = _caption_attribution(caption)
+            if not found:
+                return
+            key, shown = found
+        items.append(_item("attributed_quote", key, shown, quote[:300], rule))
 
     for block in soup.find_all("blockquote"):
-        _add(block.get_text(" ", strip=True), "attribution:blockquote")
+        _add(block.get_text(" ", strip=True), _block_caption(block), "attribution:blockquote")
     for block in soup.find_all(attrs={"itemtype": re.compile(r"schema\.org/(Review|Testimonial)", re.IGNORECASE)}):
-        _add(block.get_text(" ", strip=True), "attribution:schema_microdata")
+        _add(block.get_text(" ", strip=True), _block_caption(block), "attribution:schema_microdata")
     for node in _json_ld_objects(soup):
         if {"Review", "Testimonial"} & set(_types_of(node)):
             body = node.get("reviewBody") or node.get("text") or node.get("description") or ""
             author = node.get("author")
             author = author.get("name") if isinstance(author, dict) else author
-            if isinstance(body, str) and body.strip():
-                _add(f"{body} {author or ''}", "attribution:schema_jsonld")
+            if isinstance(body, str) and body.strip() and isinstance(author, str):
+                _add(body, author, "attribution:schema_jsonld")
     return items
 
 
 # --- c. named customers -------------------------------------------------------
 
-_TRUST_PHRASE = re.compile(
-    r"trusted by|used by|loved by|relied on by|chosen by|customers include|teams at|companies like|brands like|used at",
-    re.IGNORECASE,
-)
+_TRUST_PHRASE = re.compile(r"trusted by|customers", re.IGNORECASE)
 _CUSTOMER_NAME = r"[A-Z][\w&'’\-\.]*(?:\s[A-Z][\w&'’\-\.]*){0,2}"
 _TRUST_LIST = re.compile(
-    r"(?i:trusted by|used by|loved by|relied on by|chosen by|customers include|teams at|companies like|brands like|used at)\s+"
+    r"(?i:trusted by|customers include|customers like|customers such as)\s+"
     r"(?P<list>" + _CUSTOMER_NAME + r"(?:\s*(?:,\s*and|,|\band\b|&)\s*" + _CUSTOMER_NAME + r"){0,11})"
 )
 _LIST_SPLIT = re.compile(r"\s*(?:,\s*and|,|\band\b|&)\s*")
@@ -441,19 +588,41 @@ _LOGO_AREA = re.compile(
     re.IGNORECASE,
 )
 _GENERIC_ALT = {"logo", "image", "icon", "arrow", "customer logo", "company logo", "client logo", "photo", "avatar"}
+# An entry with any of these, or with 3+ capitalized words, holds several names.
+_SEVERAL_NAMES = re.compile(r",|/|\||&|\band\b|\+")
 
 
 def _company_key(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", name.lower())
 
 
-def find_named_customers_in_text(text: str, own_label: str = "") -> list[dict]:
-    """Companies listed right after 'trusted by' style wording, e.g. 'Security teams at Instacart, Reddit, and Gusto'."""
+def _as_brand_set(own_label) -> set:
+    if not own_label:
+        return set()
+    return {own_label} if isinstance(own_label, str) else set(own_label)
+
+
+def _is_own_brand(name: str, brands: set) -> bool:
+    key = _company_key(name)
+    first = _company_key(name.split()[0]) if name.split() else ""
+    return key in brands or first in brands
+
+
+def _holds_several_names(name: str) -> bool:
+    capitalized = [token for token in name.split() if token[:1].isupper()]
+    return bool(_SEVERAL_NAMES.search(name)) or len(capitalized) >= 3
+
+
+def find_named_customers_in_text(text: str, own_label="") -> list[dict]:
+    """Companies listed right after 'trusted by' / 'customers include' wording."""
+    brands = _as_brand_set(own_label)
     items = []
     for match in _TRUST_LIST.finditer(text):
         for name in _LIST_SPLIT.split(match.group("list")):
             name = name.strip(" .,;:")
-            if not name or name.split()[0].lower() in _NOT_COMPANIES or _company_key(name) in (own_label, ""):
+            if not name or name.split()[0].lower() in _NOT_COMPANIES or _company_key(name) == "":
+                continue
+            if _is_own_brand(name, brands) or _holds_several_names(name):
                 continue
             items.append(
                 _item("named_customer_or_case_study", _company_key(name), name,
@@ -462,20 +631,22 @@ def find_named_customers_in_text(text: str, own_label: str = "") -> list[dict]:
     return items
 
 
-def find_named_customers_in_html(soup: BeautifulSoup, own_label: str = "") -> list[dict]:
+def find_named_customers_in_html(soup: BeautifulSoup, own_label="") -> list[dict]:
     """
     Logo alt texts inside a customer logo area (an element whose class or id
     says customers/clients/trusted/logo-wall..., or whose own text opens with
-    'trusted by' style wording), plus customers listed in JSON-LD. Logos in the
-    page header or nav are ignored: those are the site's own brand.
+    "trusted by" or "customers"), plus customers listed in JSON-LD. Logos in
+    the page header or nav, the site's own brand, and alt texts holding
+    several names are not counted.
     """
+    brands = _as_brand_set(own_label)
     items = []
     for image in soup.find_all("img"):
         alt = _normalize_space(image.get("alt") or "")
         alt = _normalize_space(re.sub(r"\b(?:logo|logotype|icon)\b", "", alt, flags=re.IGNORECASE)).strip(" -–—|:")
         if not (2 <= len(alt) <= 40) or not re.search(r"[A-Za-z]", alt) or alt.lower() in _GENERIC_ALT:
             continue
-        if _company_key(alt) == own_label or image.find_parent(["header", "nav"]):
+        if _is_own_brand(alt, brands) or _holds_several_names(alt) or image.find_parent(["header", "nav"]):
             continue
         for depth, ancestor in enumerate(image.parents):
             if depth >= 4 or ancestor.name in ("body", "html", "[document]"):
@@ -490,43 +661,70 @@ def find_named_customers_in_html(soup: BeautifulSoup, own_label: str = "") -> li
             value = node.get(field)
             for entry in value if isinstance(value, list) else [value]:
                 name = entry.get("name") if isinstance(entry, dict) else entry if isinstance(entry, str) else None
-                if name and _company_key(name) not in (own_label, ""):
+                if name and _company_key(name) and not _is_own_brand(name, brands) and not _holds_several_names(name):
                     items.append(_item("named_customer_or_case_study", _company_key(name), name, f"schema.org {field}: {name}", "customer:schema_org"))
     return items
 
 
+def _brands_from_page(domain: str, soup: BeautifulSoup) -> set:
+    """The site's own brand keys: the domain label plus short segments of the homepage <title>."""
+    brands = {_company_key(_host_of(_normalize_url(domain)).split(".")[0])}
+    title = soup.title.get_text(" ", strip=True) if soup.title else ""
+    for segment in re.split(r"\s[|–—:·-]\s|\s?[|–—:·]\s?", title):
+        segment = segment.strip()
+        if segment and len(segment.split()) <= 3 and _company_key(segment):
+            brands.add(_company_key(segment))
+    brands.discard("")
+    return brands
+
+
 # --- d. third-party ratings and certifications ---------------------------------
 
-# Fixed vocabulary of third-party names. Add a (label, regex) pair here to
-# teach the engine a new one. Matching is case-insensitive except G2.
+# Fixed vocabulary of third-party names: (label, regex, kind). "review" names
+# (review sites, analysts) count on any page. "standard" names (security
+# and privacy standards) count only on the security page or in a sentence
+# that also contains a word from STANDARD_CONTEXT_WORDS, because they are
+# often just a list of regulations a product helps with, not something the
+# company itself holds. Add a tuple here to teach the engine a new name.
 THIRD_PARTY_TERMS = [
-    ("G2", re.compile(r"\bG2\b")),
-    ("Capterra", re.compile(r"\bCapterra\b", re.IGNORECASE)),
-    ("Gartner", re.compile(r"\bGartner\b", re.IGNORECASE)),
-    ("Forrester", re.compile(r"\bForrester\b", re.IGNORECASE)),
-    ("SOC 2", re.compile(r"\bSOC\s?2\b", re.IGNORECASE)),
-    ("ISO 27001", re.compile(r"\bISO\s?/?(?:IEC\s)?27001\b", re.IGNORECASE)),
-    ("HIPAA", re.compile(r"\bHIPAA\b", re.IGNORECASE)),
-    ("GDPR", re.compile(r"\bGDPR\b", re.IGNORECASE)),
-    ("PCI DSS", re.compile(r"\bPCI[\s-]?DSS\b", re.IGNORECASE)),
-    ("Trustpilot", re.compile(r"\bTrustpilot\b", re.IGNORECASE)),
-    ("TrustRadius", re.compile(r"\bTrustRadius\b", re.IGNORECASE)),
-    ("GetApp", re.compile(r"\bGetApp\b", re.IGNORECASE)),
-    ("Software Advice", re.compile(r"\bSoftware Advice\b", re.IGNORECASE)),
-    ("FedRAMP", re.compile(r"\bFedRAMP\b", re.IGNORECASE)),
+    ("G2", re.compile(r"\bG2\b"), "review"),
+    ("Capterra", re.compile(r"\bCapterra\b", re.IGNORECASE), "review"),
+    ("Trustpilot", re.compile(r"\bTrustpilot\b", re.IGNORECASE), "review"),
+    ("Gartner", re.compile(r"\bGartner\b", re.IGNORECASE), "review"),
+    ("Forrester", re.compile(r"\bForrester\b", re.IGNORECASE), "review"),
+    ("TrustRadius", re.compile(r"\bTrustRadius\b", re.IGNORECASE), "review"),
+    ("GetApp", re.compile(r"\bGetApp\b", re.IGNORECASE), "review"),
+    ("Software Advice", re.compile(r"\bSoftware Advice\b", re.IGNORECASE), "review"),
+    ("SOC 2", re.compile(r"\bSOC\s?2\b", re.IGNORECASE), "standard"),
+    ("ISO 27001", re.compile(r"\bISO\s?/?(?:IEC\s)?27001\b", re.IGNORECASE), "standard"),
+    ("HIPAA", re.compile(r"\bHIPAA\b", re.IGNORECASE), "standard"),
+    ("GDPR", re.compile(r"\bGDPR\b", re.IGNORECASE), "standard"),
+    ("PCI DSS", re.compile(r"\bPCI[\s-]?DSS\b", re.IGNORECASE), "standard"),
+    ("FedRAMP", re.compile(r"\bFedRAMP\b", re.IGNORECASE), "standard"),
 ]
 
+STANDARD_CONTEXT_WORDS = [
+    "certified", "certification", "compliant", "audit", "attestation", "Type II", "Type 2", "report",
+]
+_STANDARD_CONTEXT_RE = re.compile(
+    r"\b(?:certified|certifications?|compliant|audit(?:s|ed|or|ors)?|attestations?|type ii|type 2|reports?)\b",
+    re.IGNORECASE,
+)
 
-def find_third_party(text: str) -> list[dict]:
-    """One item per THIRD_PARTY_TERMS name found (its first occurrence on the page)."""
+
+def find_third_party(text: str, page_kind: str = "home") -> list[dict]:
+    """One item per THIRD_PARTY_TERMS name found, at its first qualifying occurrence on the page."""
     items = []
-    for label, pattern in THIRD_PARTY_TERMS:
-        match = pattern.search(text)
-        if match:
+    for label, pattern, kind in THIRD_PARTY_TERMS:
+        for match in pattern.finditer(text):
+            if kind == "standard" and page_kind != "security":
+                if not _STANDARD_CONTEXT_RE.search(_sentence_at(text, match.start(), match.end())):
+                    continue
             items.append(
                 _item("third_party_source_or_certification", label.lower(), label,
-                      _context(text, match.start(), match.end()), "third_party:term_list")
+                      _context(text, match.start(), match.end()), f"third_party:{kind}")
             )
+            break
     return items
 
 
@@ -534,21 +732,24 @@ def find_third_party(text: str) -> list[dict]:
 # Putting it together
 # ---------------------------------------------------------------------------
 
-def extract_page_evidence(url: str, kind: str, html: str, own_label: str = "") -> tuple[str, list[dict]]:
+def extract_page_evidence(url: str, kind: str, html: str, own_label="") -> tuple[str, list[dict]]:
     """
     (page text, evidence items) for one page. Items come in a fixed order:
     by category in EVIDENCE_CATEGORIES order, then by the order the rules
-    found them in the page. Each carries its source page.
+    found them in the page. Each carries its source page. `own_label` is
+    the site's brand key, or a set of them.
     """
     text = extract_text_from_html(html, method="full")
     soup = BeautifulSoup(html, "html.parser")
 
+    customers = []
+    if kind in _CUSTOMER_PAGE_KINDS:
+        customers = find_named_customers_in_text(text, own_label) + find_named_customers_in_html(soup, own_label)
     by_category = {
         "number_or_statistic": find_numbers(text, kind),
-        "named_customer_or_case_study": find_named_customers_in_text(text, own_label)
-        + find_named_customers_in_html(soup, own_label),
+        "named_customer_or_case_study": customers,
         "attributed_quote": find_attributions(text) + find_html_testimonials(soup),
-        "third_party_source_or_certification": find_third_party(text),
+        "third_party_source_or_certification": find_third_party(text, kind),
     }
     items = []
     for category in EVIDENCE_CATEGORIES:
@@ -560,8 +761,8 @@ def extract_page_evidence(url: str, kind: str, html: str, own_label: str = "") -
 def merge_evidence(per_page_items: list[list[dict]]) -> list[dict]:
     """
     Merge items from pages given in reading order. The same (category, key)
-    on several pages is one piece of evidence: the first page keeps it and
-    the others are listed in also_found_on.
+    on several pages, or twice on one page, is one piece of evidence: the
+    first occurrence keeps it and other pages are listed in also_found_on.
     """
     merged: dict[tuple[str, str], dict] = {}
     for items in per_page_items:
@@ -593,6 +794,18 @@ def _fetch_html(url: str) -> tuple[str, str]:
     return response.url, response.text
 
 
+_BLOCKING_STATUS_CODES = {401, 403, 429, 451}
+
+
+def _describe_fetch_failure(exc: requests.RequestException) -> str:
+    """A short, stable reason: 'blocked: HTTP 403', 'http error: HTTP 404', or 'unreachable: ConnectTimeout'."""
+    response = getattr(exc, "response", None)
+    if response is not None and getattr(response, "status_code", None):
+        code = response.status_code
+        return f"{'blocked' if code in _BLOCKING_STATUS_CODES else 'http error'}: HTTP {code}"
+    return f"unreachable: {type(exc).__name__}"
+
+
 def _build_plain_finding(counts: dict, pages_read: list[dict]) -> dict:
     """Deterministic founder-readable summary built only from this run's counts. No AI writing."""
     parts = [f"{counts[c]} {_CATEGORY_LABELS[c]}" for c in EVIDENCE_CATEGORIES]
@@ -622,43 +835,47 @@ def check_evidence_density(domain: str) -> DimensionScore:
     rules in this module's docstring. No LLM, no cache: same pages in,
     same score out.
 
-    Returns score == -1 only when not a single page could be fetched.
-    A site with no evidence found scores 0 with status "ok".
+    Returns score == -1 only when the homepage can't be fetched, with
+    details.fetch_failure saying why. A site with no evidence found
+    scores 0 with status "ok".
     """
-    own_label = _company_key(_host_of(_normalize_url(domain)).split(".")[0])
-
     try:
         homepage_url, homepage_html = _fetch_html(domain)
     except requests.RequestException as exc:
+        failure = _describe_fetch_failure(exc)
         return DimensionScore(
             dimension=DIMENSION_NAME,
             score=-1,
             details={
                 "status": "insufficient_data",
-                "reason": f"Failed to fetch homepage for '{domain}': {exc}",
-                "pages_failed": [{"url": domain, "kind": "home", "error": str(exc)}],
+                "fetch_failure": failure,
+                "reason": f"Could not read the homepage of '{domain}': {failure}",
+                "pages_failed": [{"url": domain, "kind": "home", "error": failure}],
                 "plain_finding": {
-                    "what_we_found": f"We couldn't open {domain}, so we have no evidence to count.",
+                    "what_we_found": f"We couldn't read this website. The homepage of {domain} returned: {failure}.",
                     "what_it_costs_you": "",
-                    "fix_it_today": "Check that the site loads for a visitor, then run the report again.",
+                    "fix_it_today": "",
                 },
             },
         )
 
     homepage_url = _normalize_url(homepage_url)
+    homepage_soup = BeautifulSoup(homepage_html, "html.parser")
+    own_brands = _brands_from_page(domain, homepage_soup)
+
     pages_to_read = [("home", homepage_url, homepage_html)]
     pages_failed = []
-    for kind, url in _select_pages(homepage_url, BeautifulSoup(homepage_html, "html.parser")):
+    for kind, url in _select_pages(homepage_url, homepage_soup):
         try:
             final_url, html = _fetch_html(url)
         except requests.RequestException as exc:
-            pages_failed.append({"url": url, "kind": kind, "error": str(exc)})
+            pages_failed.append({"url": url, "kind": kind, "error": _describe_fetch_failure(exc)})
             continue
         pages_to_read.append((kind, _normalize_url(final_url), html))
 
     pages_read, fingerprints, per_page_items = [], [], []
     for kind, url, html in pages_to_read:
-        text, items = extract_page_evidence(url, kind, html, own_label)
+        text, items = extract_page_evidence(url, kind, html, own_brands)
         per_page_items.append(items)
         pages_read.append({"kind": kind, "url": url, "text_length": len(text), "evidence_found": len(items)})
         fingerprints.append(page_fingerprint(url, text))
@@ -683,6 +900,7 @@ def check_evidence_density(domain: str) -> DimensionScore:
             "counts_by_category": counts,
             "points_by_category": points,
             "pages_by_category": pages_by_category,
+            "own_brands": sorted(own_brands),
             "scoring_rule": (
                 "Our own fixed formula, not an AI judgment and not an outside standard: each of the 4 evidence "
                 f"categories is worth up to {MAX_POINTS_PER_CATEGORY} points by how many distinct pieces of "
