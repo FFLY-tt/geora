@@ -291,7 +291,7 @@ class EngineTests(unittest.TestCase):
         expected = sum(evidence_engine._points_for_item_count(c) for c in counts.values())
         self.assertEqual(result.score, expected)
         self.assertIn("Our own fixed formula", result.details["scoring_rule"])
-        self.assertEqual(evidence_engine.METHOD_VERSION, "v3.1-rules")
+        self.assertEqual(evidence_engine.METHOD_VERSION, "v3.2-rules")
 
     def test_same_input_twice_gives_identical_results(self):
         first, _ = self._run()
@@ -365,7 +365,7 @@ class V31NumberTests(unittest.TestCase):
         self.assertEqual(sorted(i["key"] for i in items), ["count:11500", "rating:4.7"])
 
     def test_different_values_or_units_stay_separate(self):
-        keys = self._keys("11,500+ teams. 11,600+ teams. 40% faster. 40x faster. $40M raised.")
+        keys = self._keys("11,500+ teams. 11,600+ teams. 40% faster. 40x faster. $40M saved.")
         self.assertEqual(len(set(keys)), 5)
 
     def test_magnitudes_dedup_by_value(self):
@@ -443,7 +443,8 @@ class V31NamedCustomerTests(unittest.TestCase):
         html = html or self.LOGOS
         brands = evidence_engine._brands_from_page("acme.com", BeautifulSoup(html, "html.parser"))
         _text, items = evidence_engine.extract_page_evidence("https://acme.com/x", kind, html, brands)
-        return [i["text"] for i in items if i["category"] == "named_customer_or_case_study"]
+        # v3.2: logos are no longer scored, only listed for reference.
+        return [i["text"] for i in items if i["category"] == "customer_logo_reference"]
 
     def test_found_on_home_and_customers_pages(self):
         self.assertEqual(self._customers("home"), ["Instacart"])
@@ -523,6 +524,149 @@ class V31FetchFailureTests(unittest.TestCase):
             result = evidence_engine.check_evidence_density("acme.com")
         self.assertNotIn("fetch_failure", result.details)
         self.assertEqual(result.score, 0)
+
+
+# ---------------------------------------------------------------------------
+# v3.2 rule changes, positive and negative cases
+# ---------------------------------------------------------------------------
+
+def _stories(html, page_url="https://acme.com/customers"):
+    return evidence_engine.find_customer_stories(BeautifulSoup(html, "html.parser"), page_url)
+
+
+class V32CustomerStoryTests(unittest.TestCase):
+    def test_five_distinct_child_pages_are_five_stories(self):
+        html = "".join(f'<a href="/customers/{name}">{name.title()} story</a>' for name in ["a", "b", "c", "d", "e"])
+        items = _stories(html)
+        self.assertEqual(len(items), 5)
+        self.assertEqual(items[0]["key"], "https://acme.com/customers/a")
+        self.assertEqual(items[0]["text"], "A story")
+
+    def test_same_story_linked_twice_counts_once(self):
+        html = (
+            '<a href="/customers/acme">Read the story</a>'
+            '<a href="https://www.acme.com/customers/acme/">Acme</a>'
+            '<a href="/customers/acme#results">Results</a>'
+        )
+        self.assertEqual(len(_stories(html)), 1)
+
+    def test_pagination_filters_and_anchors_are_not_stories(self):
+        html = (
+            '<a href="/customers?page=2">Next</a><a href="/customers/?filter=fintech">Fintech</a>'
+            '<a href="/customers#top">Top</a><a href="#top">Top</a><a href="/customers">All</a>'
+            '<a href="/customers/acme?page=2">Acme listing</a>'
+        )
+        self.assertEqual(_stories(html), [])
+
+    def test_only_one_level_below_the_customers_page(self):
+        html = (
+            '<a href="/customers/industry/fintech">Deep</a><a href="/blog/acme">Blog</a>'
+            '<a href="/customer-stories/acme">Elsewhere</a><a href="https://other.com/customers/acme">Other site</a>'
+            '<a href="/customers/acme">Acme</a>'
+        )
+        self.assertEqual([i["key"] for i in _stories(html)], ["https://acme.com/customers/acme"])
+
+    def test_works_for_other_customers_page_paths(self):
+        for base in ("case-studies", "stories", "customer-stories"):
+            html = f'<a href="/{base}/acme">Acme</a><a href="/{base}/globex">Globex</a>'
+            self.assertEqual(len(_stories(html, f"https://acme.com/{base}")), 2, base)
+
+    def test_link_text_falls_back_to_image_alt(self):
+        items = _stories('<a href="/customers/acme"><img alt="Acme case study"></a>')
+        self.assertEqual(items[0]["text"], "Acme case study")
+
+    def test_only_counted_on_the_customers_page(self):
+        html = '<html><body><a href="/customers/acme">Acme</a></body></html>'
+        for kind in ("home", "security", "pricing", "about"):
+            _text, items = evidence_engine.extract_page_evidence("https://acme.com", kind, html)
+            self.assertFalse([i for i in items if i["category"] == "customer_stories"], kind)
+
+    def test_no_customers_page_means_zero_stories(self):
+        home = '<html><body><a href="/pricing">Pricing</a><a href="/customers/acme">Acme</a></body></html>'
+        with patch.object(evidence_engine, "_fetch_html", side_effect=_fake_fetch({"https://acme.com": home, "https://acme.com/pricing": "<p>x</p>"})):
+            result = evidence_engine.check_evidence_density("acme.com")
+        self.assertEqual(result.details["counts_by_category"]["customer_stories"], 0)
+
+    def test_logos_are_listed_for_reference_but_not_scored(self):
+        home = '<html><body><a href="/customers">Customers</a><div class="customer-logos"><img alt="Instacart"></div></body></html>'
+        stories = '<html><body><a href="/customers/instacart">Instacart</a></body></html>'
+        pages = {"https://acme.com": home, "https://acme.com/customers": stories}
+        with patch.object(evidence_engine, "_fetch_html", side_effect=_fake_fetch(pages)):
+            result = evidence_engine.check_evidence_density("acme.com")
+        self.assertEqual(result.details["counts_by_category"]["customer_stories"], 1)
+        self.assertEqual([i["text"] for i in result.details["customer_logos_reference"]], ["Instacart"])
+        self.assertNotIn("customer_logo_reference", {i["category"] for i in result.details["items"]})
+        self.assertIn("AI assistants cannot see logo images", result.details["customer_stories_reason"])
+
+
+class V32ThirdPartyQuestionTests(unittest.TestCase):
+    def _labels(self, text, kind="home"):
+        return [i["text"] for i in evidence_engine.find_third_party(text, kind)]
+
+    def test_terms_inside_a_question_do_not_count(self):
+        self.assertEqual(self._labels("Is Unbounce GDPR compliant? Read our FAQ."), [])
+        self.assertEqual(self._labels("Are you on G2? Tell us."), [])
+        self.assertEqual(self._labels("Is it HIPAA ready?", kind="security"), [])
+
+    def test_the_same_term_in_a_statement_still_counts(self):
+        self.assertEqual(self._labels("Is it secure? We are GDPR compliant."), ["GDPR"])
+        self.assertEqual(self._labels("Rated 4.7 on G2."), ["G2"])
+
+
+class V32NumberExclusionTests(unittest.TestCase):
+    def _keys(self, text):
+        return [i["key"] for i in evidence_engine.find_numbers(text)]
+
+    def test_company_fact_sentences_are_excluded(self):
+        for sentence in [
+            "Our $150,000 grant program recognizes excellence.",
+            "Over $81M raised from top investors.",
+            "We closed $40M in Series B funding.",
+            "A $2B valuation in 2026.",
+            "Founded by 15+ year industry veterans.",
+            "Brings 15+ years of experience in finance.",
+            "$250K available in 2026.",
+            "Led our Series C with 3x growth.",
+        ]:
+            self.assertEqual(self._keys(sentence), [], sentence)
+
+    def test_customer_results_next_to_those_sentences_still_count(self):
+        self.assertEqual(self._keys("We raised $40M. Customers saved $100,000."), ["currency:$100000"])
+
+    def test_zero_values_are_not_counted(self):
+        self.assertEqual(self._keys("0% say it is easy to use. 0+ users. $0 saved."), [])
+
+    def test_non_zero_values_still_count(self):
+        self.assertEqual(self._keys("90% say it is easy to use."), ["percent:90"])
+
+
+class V32OnePersonOnceTests(unittest.TestCase):
+    def test_same_person_with_differently_written_titles_counts_once(self):
+        home = '<p>“Great.” — Jem Millett, Director of Admissions @ Flatiron School</p>'
+        about = (
+            "<figure><blockquote>Close changed how we work.</blockquote>"
+            "<figcaption>Jem Millett Senior Director of Admissions, Flatiron School</figcaption></figure>"
+        )
+        _t1, items_home = evidence_engine.extract_page_evidence("https://acme.com", "home", f"<html><body>{home}</body></html>")
+        _t2, items_about = evidence_engine.extract_page_evidence("https://acme.com/about", "about", f"<html><body>{about}</body></html>")
+        quotes = [i for i in evidence_engine.merge_evidence([items_home, items_about]) if i["category"] == "attributed_quote"]
+        self.assertEqual([i["key"] for i in quotes], ["jem millett"])
+
+    def test_name_stops_at_a_title_word(self):
+        for caption, key in [
+            ("Bruce Ackerman Founder, Printavo", "bruce ackerman"),
+            ("Eric Keosky-Smith Former Chief Growth Officer, Hownd", "eric keosky smith"),
+            ("Kayne Stroup Sr. Director, Finance", "kayne stroup"),
+        ]:
+            self.assertEqual(evidence_engine._caption_attribution(caption)[0], key, caption)
+
+    def test_different_people_stay_separate(self):
+        html = (
+            "<html><body><p>“A.” — Dana Derricks, Founder @ FollowUp.com</p>"
+            "<p>“B.” — Dana Smith, Founder @ Other.com</p></body></html>"
+        )
+        _text, items = evidence_engine.extract_page_evidence("https://acme.com", "home", html)
+        self.assertEqual(sorted(i["key"] for i in items if i["category"] == "attributed_quote"), ["dana derricks", "dana smith"])
 
 
 if __name__ == "__main__":
