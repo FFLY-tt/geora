@@ -1,29 +1,45 @@
 """
 Fact consistency engine.
 
-Compares specific, checkable facts (pricing, supported regions, core
-feature claims) between the target company's own homepage and what G2 or
-Capterra are reported to say about it.
+Checks whether what third-party review sites (G2, Capterra and similar)
+say about a company agrees with the company's own website, on a FIXED
+set of fields (FACT_FIELDS): starting price, free plan or trial, product
+category, target customer, key integrations, deployment.
 
 Design note: G2 and Capterra both have strong anti-bot protection, so
 directly scraping them is unreliable and would require bypassing that
 protection, which this project does not do. Instead, this engine asks
-Perplexity (which already indexes and cites those sites) what it knows
-about the company from G2/Capterra, and treats Perplexity's cited answer
-as the third-party source to compare against the official homepage.
+Perplexity (which already indexes and cites those sites) for each field's
+third-party value and source URL, and treats that as the third-party side.
 
-Both LLM steps are cached in the shared judgment cache
-(engines._judgment_cache, committed under state/judgments/): the
-Perplexity lookup keyed on the exact query, and the DeepSeek comparison
-keyed on the exact texts compared. Real reports showed this dimension
-swinging between 95, 35, and 10 within days for the same company, from
-model non-determinism alone; with the cache, the same input gives the
-same result on every machine. The trade-off: the third-party snapshot
-for a company stays fixed until THIRD_PARTY_LOOKUP_VERSION is bumped.
+Why fixed fields and a 3-run majority vote: the previous version let the
+LLM list "whatever conflicts it found" in one pass. The same company then
+swung between 35 and 10 from run to run, because each run compared a
+different set of things. Now every run answers the same six questions,
+so runs can be lined up field by field, and a field only counts as a
+conflict (or a match) when at least 2 of 3 runs say so. A one-off wrong
+answer is outvoted instead of moving the score.
+
+Each run, per field:
+- third-party value + source URL from Perplexity. The value only counts if
+  the source URL is on a site other than the company's own and matches a
+  citation Perplexity actually returned;
+- official value + an exact quote from the official text we fetched. A
+  quote that can't be found word for word in that text makes the field
+  "unknown" for that run;
+- a verdict: match / conflict / unknown.
+
+The score keeps the original ladder on the number of voted conflicts
+(0/1/2/3+ -> 95/60/35/10). If every field votes "unknown", the score is
+-1 ("not enough third-party information"). Only the final voted result is
+cached (engines._judgment_cache), keyed on the company, the official
+text, and the version of the field list and prompts.
 """
 
 import json
 import re
+from concurrent.futures import ThreadPoolExecutor
+from urllib.parse import urlparse
 
 import requests
 
@@ -32,53 +48,84 @@ from shared._fetch_utils import fetch_page_text
 from engines._judgment_cache import get_cached_judgment, make_judgment_cache_key, save_judgment
 from engines._plain_finding_generator import make_plain_finding
 from engines._provenance import page_fingerprint
-from shared._text_format import PLAIN_LANGUAGE_FORMAT_RULES, find_banned_formatting, sanitize_banned_formatting
 from models import DimensionScore
 
 DIMENSION_NAME = "fact_consistency"
 
 # Bump whenever this dimension's measurement method changes in a way
 # that makes results computed before and after not directly comparable.
-METHOD_VERSION = "v1"
+METHOD_VERSION = "v2"
 
-# Folded into the judgment cache keys of the two LLM steps. Bump the
-# lookup version to take a fresh third-party snapshot for every company,
-# and the comparison version whenever _FACT_COMPARISON_SYSTEM_PROMPT's
-# wording changes.
-THIRD_PARTY_LOOKUP_VERSION = "v1-g2-capterra-lookup"
-COMPARISON_PROMPT_VERSION = "v1-fact-comparison"
+# All folded into the judgment cache key, so changing any of them never
+# reuses a result produced under the old wording or field list.
+THIRD_PARTY_LOOKUP_VERSION = "v2-fixed-fields-lookup"
+COMPARISON_PROMPT_VERSION = "v2-fixed-fields-comparison"
+FIELDS_VERSION = "v1"
 
-MAX_FORMAT_ATTEMPTS = 2
+# The fixed fields compared on every run, with the description given to
+# both models. Add or change one here and bump FIELDS_VERSION.
+FACT_FIELDS = {
+    "starting_price": "the price of the cheapest paid plan, as listed",
+    "free_plan_or_trial": "whether a free plan or a free trial is offered",
+    "product_category": "what kind of product it is",
+    "target_customer": "who it is mainly for, for example small businesses, mid-market, or enterprise",
+    "key_integrations": "the main integrations it names",
+    "deployment": "cloud, on-premise, or both",
+}
 
-_FACT_COMPARISON_SYSTEM_PROMPT = f"""
-You are a strict fact-checking auditor. You will be given two pieces of
-text: TEXT_A, the company's own homepage and possibly its pricing page,
-and TEXT_B, an AI search answer summarizing what G2 and Capterra say
-about the company, with citations. Extract and compare these categories
-of checkable facts, where present: pricing, supported regions or
-countries, and core feature claims.
+FACT_FIELD_LABELS = {
+    "starting_price": "Starting price",
+    "free_plan_or_trial": "Free plan or trial",
+    "product_category": "Product category",
+    "target_customer": "Target customer",
+    "key_integrations": "Key integrations",
+    "deployment": "Deployment",
+}
 
-For each category, decide whether TEXT_A and TEXT_B agree, disagree, or
-whether the category is not mentioned in one or both texts. If it is not
-mentioned in both, it cannot be compared and must be excluded from both
-lists below.
+RUNS = 3
+VERDICTS = ("match", "conflict", "unknown")
 
-Respond with ONLY a JSON object, no other text, in this exact shape:
-{{"compared_fields": ["<category names that were present and comparable in both texts>"], "conflicts": [{{"field": "<category name>", "official_says": "<what TEXT_A says>", "third_party_says": "<what TEXT_B says>"}}]}}
+# Truncation of the official text sent to the comparison call.
+MAX_OFFICIAL_CHARS = 12000
 
-Only include a field in "conflicts" if both texts actually mention it AND
-the values genuinely disagree. Never invent a value that is not present in
-the text you were given.
+VOTING_RULE = (
+    f"Each field is judged on {RUNS} independent runs. It is a conflict only if at least 2 runs say conflict, "
+    "a match only if at least 2 runs say match, and unknown otherwise. The score counts voted conflicts: "
+    "0, 1, 2, 3 or more give 95, 60, 35, 10."
+)
 
-{PLAIN_LANGUAGE_FORMAT_RULES}
+_FIELD_LINES = "\n".join(f"- {name}: {description}" for name, description in FACT_FIELDS.items())
+_JSON_SHAPE = ", ".join(f'"{name}": {{"value": <string or null>, "source_url": <string or null>}}' for name in FACT_FIELDS)
+
+_COMPARISON_SYSTEM_PROMPT = f"""
+You are a strict fact-checking auditor. You will be given OFFICIAL_TEXT, copied from a company's own
+website, and THIRD_PARTY, a JSON object with what third-party review sites say about the company for
+a fixed list of fields:
+{_FIELD_LINES}
+
+For EACH field in that list:
+1. official_value: what OFFICIAL_TEXT says for this field, or null if it does not say.
+2. official_quote: the exact sentence or phrase from OFFICIAL_TEXT that supports official_value,
+   copied word for word, or an empty string if official_value is null. Never paraphrase.
+3. verdict:
+   "match" if both sides give a value and they mean the same thing;
+   "conflict" if both sides give a value and they genuinely disagree;
+   "unknown" if either side has no value, or you cannot tell.
+
+Respond with ONLY a JSON object, no other text, with exactly these keys:
+{{{", ".join(f'"{name}": {{"official_value": <string or null>, "official_quote": <string>, "verdict": "match" | "conflict" | "unknown"}}' for name in FACT_FIELDS)}}}
 """.strip()
 
 
-def _build_g2_capterra_query(company_name: str) -> str:
-    """Build the Perplexity query used to look up G2/Capterra data."""
+def _build_third_party_query(company_name: str, domain: str) -> str:
+    """The Perplexity question: one structured answer per fixed field, from third-party review sites only."""
     return (
-        f"According to G2.com or Capterra.com, what is {company_name}'s "
-        f"pricing, supported regions, and core features?"
+        f"Using only what third-party software review sites such as G2, Capterra, TrustRadius, GetApp or "
+        f"Software Advice say about {company_name} ({domain}), give a value for each of these fields. "
+        "Use null when those sites do not state it. Do not use the company's own website.\n"
+        f"{_FIELD_LINES}\n"
+        "Respond with ONLY a JSON object, no other text, in this exact shape: "
+        f"{{{_JSON_SHAPE}}}"
     )
 
 
@@ -99,6 +146,7 @@ def _call_perplexity(query: str) -> dict:
         "messages": [
             {"role": "user", "content": query},
         ],
+        "temperature": 0,
     }
     response = requests.post(
         url,
@@ -110,32 +158,190 @@ def _call_perplexity(query: str) -> dict:
     return response.json()
 
 
-def _lookup_third_party(query: str) -> tuple[str, list, str]:
+def _call_deepseek_for_fact_comparison(company_name: str, official_text: str, third_party_values: dict) -> dict:
     """
-    (answer_text, citations, cache_status) for the G2/Capterra lookup,
-    from the judgment cache when this exact query was answered before,
-    else from Perplexity. Only a response with real answer text is
-    cached. Raises requests.RequestException on a fresh-call failure.
+    One comparison run: official value, exact quote, and verdict per field.
+    Raises requests.RequestException on network/HTTP failure, ValueError
+    if the reply isn't a JSON object.
     """
-    cache_key = make_judgment_cache_key(DIMENSION_NAME, THIRD_PARTY_LOOKUP_VERSION, settings.perplexity_model, query)
-    cached = get_cached_judgment(DIMENSION_NAME, cache_key)
-    if cached is not None:
-        return cached["answer_text"], cached["citations"], "cache_hit"
+    url = f"{settings.deepseek_api_base_url}/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {settings.deepseek_api_key}",
+        "Content-Type": "application/json",
+        "User-Agent": settings.http_user_agent,
+    }
+    third_party = {name: (third_party_values.get(name) or {}).get("value") for name in FACT_FIELDS}
+    user_content = (
+        f"Company: {company_name}\n\n"
+        f"OFFICIAL_TEXT:\n{official_text[:MAX_OFFICIAL_CHARS]}\n\n"
+        f"THIRD_PARTY:\n{json.dumps(third_party, ensure_ascii=False)}"
+    )
+    payload = {
+        "model": settings.deepseek_model,
+        "messages": [
+            {"role": "system", "content": _COMPARISON_SYSTEM_PROMPT},
+            {"role": "user", "content": user_content},
+        ],
+        "temperature": 0,
+    }
+    response = requests.post(url, headers=headers, json=payload, timeout=settings.request_timeout_seconds)
+    response.raise_for_status()
+    return _parse_json_object(response.json()["choices"][0]["message"]["content"])
 
-    raw_response = _call_perplexity(query)
+
+def _parse_json_object(content: str) -> dict:
+    """Parse a model reply that should be a JSON object, tolerating code fences and text around it."""
+    cleaned = re.sub(r"^```(?:json)?|```$", "", (content or "").strip(), flags=re.MULTILINE).strip()
+    start, end = cleaned.find("{"), cleaned.rfind("}")
+    if start < 0 or end < start:
+        raise ValueError(f"No JSON object in reply: {content[:200]!r}")
+    parsed = json.loads(cleaned[start : end + 1])
+    if not isinstance(parsed, dict):
+        raise ValueError(f"Reply is not a JSON object: {parsed!r}")
+    return parsed
+
+
+def _host(url: str) -> str:
+    host = urlparse(url if "//" in url else f"//{url}").netloc.split("@")[-1].split(":")[0].lower()
+    return host[4:] if host.startswith("www.") else host
+
+
+def _is_own_site(url: str, domain: str) -> bool:
+    own = _host(domain)
+    host = _host(url)
+    return host == own or host.endswith("." + own)
+
+
+def _normalize_space(text: str) -> str:
+    return re.sub(r"\s+", " ", text or "").strip()
+
+
+def _third_party_values(raw_response: dict, domain: str) -> dict:
+    """
+    {field: {"value", "source_url", "issue"}} from one Perplexity reply. A
+    value is kept only if it has a source URL on another site that matches
+    one of the citations Perplexity returned; otherwise value is None and
+    "issue" says why.
+    """
     choices = raw_response.get("choices", [])
-    answer_text = ""
-    if choices:
-        answer_text = choices[0].get("message", {}).get("content", "") or ""
-    citations = raw_response.get("citations", []) or []
-    if answer_text.strip():
-        save_judgment(DIMENSION_NAME, cache_key, {"answer_text": answer_text, "citations": citations})
-    return answer_text, citations, "fresh_judgment"
+    content = choices[0].get("message", {}).get("content", "") if choices else ""
+    parsed = _parse_json_object(content)
+    citation_hosts = {_host(c) for c in (raw_response.get("citations") or []) if isinstance(c, str)}
+
+    values = {}
+    for name in FACT_FIELDS:
+        entry = parsed.get(name) if isinstance(parsed.get(name), dict) else {}
+        value = entry.get("value")
+        value = _normalize_space(str(value)) if value not in (None, "", "null") else None
+        source = entry.get("source_url") or None
+        issue = None
+        if value is None:
+            issue = "no third-party value"
+        elif not source:
+            issue = "no source URL"
+        elif _is_own_site(source, domain):
+            issue = "source is the company's own site"
+        elif _host(source) not in citation_hosts:
+            issue = "source URL not among the returned citations"
+        values[name] = {
+            "value": value if issue is None else None,
+            "claimed_value": value,
+            "source_url": source if issue is None else None,
+            "issue": issue,
+        }
+    return values
 
 
-def _find_g2_or_capterra_citations(citations: list) -> list:
-    """Return the subset of `citations` whose URL contains g2.com or capterra.com."""
-    return [c for c in citations if "g2.com" in c.lower() or "capterra.com" in c.lower()]
+def _judge_run(run_index: int, company_name: str, domain: str, query: str, official_text: str) -> dict:
+    """
+    One full run: Perplexity lookup, then the comparison call, then our own
+    checks (third-party source, verbatim official quote). Never raises: a
+    failed run is recorded with status "error" and all its fields unknown.
+    """
+    try:
+        third_party = _third_party_values(_call_perplexity(query), domain)
+        comparison = _call_deepseek_for_fact_comparison(company_name, official_text, third_party)
+    except (requests.RequestException, KeyError, IndexError, ValueError, json.JSONDecodeError) as exc:
+        return {
+            "run": run_index,
+            "status": "error",
+            "error": str(exc),
+            "fields": {name: {"verdict": "unknown", "reason": "run failed"} for name in FACT_FIELDS},
+        }
+
+    normalized_official = _normalize_space(official_text)
+    fields = {}
+    for name in FACT_FIELDS:
+        tp = third_party[name]
+        entry = comparison.get(name) if isinstance(comparison.get(name), dict) else {}
+        verdict = entry.get("verdict") if entry.get("verdict") in VERDICTS else "unknown"
+        official_value = entry.get("official_value") or None
+        quote = _normalize_space(entry.get("official_quote") or "")
+        # Never trust the model's claim that a quote is real: it must be
+        # found word for word in the text we actually fetched.
+        quote_ok = official_value is not None and bool(quote) and quote in normalized_official
+        reason = None
+        if tp["value"] is None:
+            verdict, reason = "unknown", tp["issue"]
+        elif official_value is None:
+            verdict, reason = "unknown", "no official value"
+        elif not quote_ok:
+            verdict, reason = "unknown", "official quote not found word for word in the official text"
+        fields[name] = {
+            "verdict": verdict,
+            "reason": reason,
+            "third_party_value": tp["value"],
+            "third_party_source": tp["source_url"],
+            "third_party_claimed_value": tp["claimed_value"],
+            "official_value": official_value if quote_ok else None,
+            "official_quote": quote if quote_ok else None,
+        }
+    return {"run": run_index, "status": "ok", "fields": fields}
+
+
+def vote(verdicts: list[str]) -> str:
+    """Majority vote over run verdicts: 2+ conflict -> conflict, 2+ match -> match, otherwise unknown."""
+    if verdicts.count("conflict") >= 2:
+        return "conflict"
+    if verdicts.count("match") >= 2:
+        return "match"
+    return "unknown"
+
+
+def _aggregate(runs: list[dict]) -> list[dict]:
+    """Per-field voted result, with the third-party and official values from a run that agrees with the vote."""
+    fields = []
+    for name in FACT_FIELDS:
+        votes = [run["fields"][name]["verdict"] for run in runs]
+        verdict = vote(votes)
+        agreeing = next((run["fields"][name] for run in runs if run["fields"][name]["verdict"] == verdict), {})
+        fields.append(
+            {
+                "field": name,
+                "label": FACT_FIELD_LABELS[name],
+                "verdict": verdict,
+                "votes": votes,
+                "third_party_value": agreeing.get("third_party_value"),
+                "third_party_source": agreeing.get("third_party_source"),
+                "official_value": agreeing.get("official_value"),
+                "official_quote": agreeing.get("official_quote"),
+            }
+        )
+    return fields
+
+
+def _score_from_conflict_count(conflict_count: int) -> int:
+    """
+    Map the number of conflicting fields to a 0-100 score. No conflicts
+    scores high; each additional conflict lowers the score further.
+    """
+    if conflict_count == 0:
+        return 95
+    if conflict_count == 1:
+        return 60
+    if conflict_count == 2:
+        return 35
+    return 10
 
 
 def _fetch_official_text(domain: str) -> tuple[str, list[str], list[dict]]:
@@ -168,394 +374,129 @@ def _fetch_official_text(domain: str) -> tuple[str, list[str], list[dict]]:
     return combined_text, fetched_urls, fingerprints
 
 
-def _call_deepseek_for_fact_comparison(company_name: str, official_text: str, third_party_text: str) -> dict:
-    """
-    Send both texts to DeepSeek and return the parsed JSON comparison.
-    Raises requests.RequestException on network/HTTP failure, and
-    ValueError if the model response isn't valid JSON in the expected shape.
-    """
-    url = f"{settings.deepseek_api_base_url}/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {settings.deepseek_api_key}",
-        "Content-Type": "application/json",
-        "User-Agent": settings.http_user_agent,
-    }
-    # Truncate each side to keep the request reasonably sized.
-    user_content = (
-        f"The company being checked is: {company_name}\n\n"
-        f"TEXT_A (official homepage / pricing page):\n{official_text[:6000]}\n\n"
-        f"TEXT_B (AI search answer citing G2/Capterra):\n{third_party_text[:6000]}"
+_DIMENSION_NOTE = (
+    "Dimension: whether facts on the company's own website match what independent listings such as "
+    "review sites say about it.\n"
+)
+
+
+def _insufficient(reason: str, fallback: str, status_note: str, **extra) -> DimensionScore:
+    plain_finding, generation_log = make_plain_finding(_DIMENSION_NOTE + f"Status: {status_note}", fallback)
+    return DimensionScore(
+        dimension=DIMENSION_NAME,
+        score=-1,
+        details={
+            "status": "insufficient_data",
+            "reason": reason,
+            **extra,
+            "generation_log": generation_log,
+            "plain_finding": plain_finding,
+        },
     )
-    # Low temperature for consistent, repeatable diagnostic results across runs.
-    payload = {
-        "model": settings.deepseek_model,
-        "messages": [
-            {"role": "system", "content": _FACT_COMPARISON_SYSTEM_PROMPT},
-            {"role": "user", "content": user_content},
-        ],
-        "temperature": 0.2,
-    }
-    response = requests.post(
-        url,
-        headers=headers,
-        json=payload,
-        timeout=settings.request_timeout_seconds,
-    )
-    response.raise_for_status()
-    raw_response = response.json()
-
-    content = raw_response["choices"][0]["message"]["content"]
-    # Models occasionally wrap JSON in a code fence despite instructions;
-    # strip that defensively before parsing.
-    cleaned = re.sub(r"^```(?:json)?|```$", "", content.strip(), flags=re.MULTILINE).strip()
-    parsed = json.loads(cleaned)
-
-    if "compared_fields" not in parsed or "conflicts" not in parsed:
-        raise ValueError(f"DeepSeek response missing expected fields: {parsed!r}")
-
-    return parsed
 
 
-def _comparison_text_fields(comparison: dict) -> list[str]:
-    """All the free-text strings in a comparison result that could end up quoted in plain_finding."""
-    fields = list(comparison.get("compared_fields", []))
-    for entry in comparison.get("conflicts", []):
-        fields.extend([entry.get("field", ""), entry.get("official_says", ""), entry.get("third_party_says", "")])
-    return fields
-
-
-def _get_cached_or_clean_fact_comparison(
-    company_name: str, official_text: str, third_party_text: str
-) -> tuple[dict, list, str]:
-    """
-    _get_clean_fact_comparison, cached in the judgment cache keyed on the
-    exact (truncated) texts actually sent. Returns (comparison,
-    format_check_log, cache_status).
-    """
+def _cache_key(company_name: str, domain: str, official_text: str) -> str:
     cache_input = (
-        f"COMPANY: {company_name}\n\nTEXT_A:\n{official_text[:6000]}\n\nTEXT_B:\n{third_party_text[:6000]}"
+        f"COMPANY: {company_name}\nDOMAIN: {domain}\nFIELDS: {','.join(FACT_FIELDS)}\n\n"
+        f"OFFICIAL:\n{official_text[:MAX_OFFICIAL_CHARS]}"
     )
-    cache_key = make_judgment_cache_key(DIMENSION_NAME, COMPARISON_PROMPT_VERSION, settings.deepseek_model, cache_input)
-    cached = get_cached_judgment(DIMENSION_NAME, cache_key)
-    if cached is not None:
-        return cached["comparison"], cached["format_check_log"], "cache_hit"
-
-    comparison, format_check_log = _get_clean_fact_comparison(company_name, official_text, third_party_text)
-    save_judgment(DIMENSION_NAME, cache_key, {"comparison": comparison, "format_check_log": format_check_log})
-    return comparison, format_check_log, "fresh_judgment"
-
-
-def _get_clean_fact_comparison(company_name: str, official_text: str, third_party_text: str) -> tuple[dict, list]:
-    """
-    Call DeepSeek for the fact comparison, retrying once if any of the
-    free-text fields (category names, official_says, third_party_says)
-    come back with banned formatting instead of the plain, direct
-    language the prompt asks for. If still not clean after
-    MAX_FORMAT_ATTEMPTS, every affected field is deterministically
-    sanitized rather than shown to a user as-is.
-
-    Returns (comparison, format_check_log): the log records what was
-    found on each attempt, kept for debugging.
-    """
-    format_check_log = []
-    comparison = None
-
-    for attempt_number in range(1, MAX_FORMAT_ATTEMPTS + 1):
-        comparison = _call_deepseek_for_fact_comparison(company_name, official_text, third_party_text)
-        issues = set()
-        for field_text in _comparison_text_fields(comparison):
-            issues.update(find_banned_formatting(field_text))
-        if not issues:
-            format_check_log.append({"attempt": attempt_number, "issues": []})
-            return comparison, format_check_log
-        format_check_log.append({"attempt": attempt_number, "issues": sorted(issues)})
-
-    comparison["compared_fields"] = [sanitize_banned_formatting(f) for f in comparison["compared_fields"]]
-    for entry in comparison["conflicts"]:
-        entry["field"] = sanitize_banned_formatting(entry.get("field", ""))
-        entry["official_says"] = sanitize_banned_formatting(entry.get("official_says", ""))
-        entry["third_party_says"] = sanitize_banned_formatting(entry.get("third_party_says", ""))
-    format_check_log.append({"attempt": "sanitized", "issues": []})
-    return comparison, format_check_log
-
-
-def _score_from_conflict_count(conflict_count: int) -> int:
-    """
-    Map the number of conflicting fields to a 0-100 score. No conflicts
-    scores high; each additional conflict lowers the score further.
-    """
-    if conflict_count == 0:
-        return 95
-    if conflict_count == 1:
-        return 60
-    if conflict_count == 2:
-        return 35
-    return 10
+    version = f"{THIRD_PARTY_LOOKUP_VERSION}|{COMPARISON_PROMPT_VERSION}|fields-{FIELDS_VERSION}"
+    model = f"{settings.perplexity_model}|{settings.deepseek_model}"
+    return make_judgment_cache_key(DIMENSION_NAME, version, model, cache_input)
 
 
 def check_fact_consistency(company_name: str, domain: str) -> DimensionScore:
     """
-    Compare checkable facts between `domain`'s official homepage and what
-    Perplexity reports G2/Capterra say about `company_name`.
+    Compare FACT_FIELDS between `domain`'s official site and third-party
+    review sites, by a 3-run majority vote per field (see module docstring).
 
-    Returns score == -1 ("insufficient data") when Perplexity is not
-    configured or its request fails, when it finds no G2/Capterra
-    citations for this company, when the official homepage can't be
-    fetched, when nothing comparable was found, or when DeepSeek is not
-    configured / fails to produce a valid comparison. Never fabricates a
-    conflict, or a "no conflicts found" result, without real data backing it.
+    Returns score == -1 ("insufficient data") when the official site can't
+    be fetched, when the needed API keys are missing, when every run
+    fails, or when every field votes unknown (not enough third-party
+    information). Never fabricates a conflict or a match.
     """
-    if not settings.has_perplexity_key():
-        fallback = (
-            "We couldn't check whether independent listings agree with the official site, because "
-            "the connection to the search tool that looks up third-party sources isn't turned on "
-            "yet. Today, turn on that connection so this check can run for real."
-        )
-        facts_summary = (
-            "Dimension: whether facts on the company's own website match what independent listings "
-            "such as review sites say about it.\n"
-            "Status: We could not run this check because a required connection is not turned on."
-        )
-        plain_finding, generation_log = make_plain_finding(facts_summary, fallback)
-        return DimensionScore(
-            dimension=DIMENSION_NAME,
-            score=-1,
-            details={
-                "status": "insufficient_data",
-                "reason": "PERPLEXITY_API_KEY is not configured; no G2/Capterra search was performed.",
-                "generation_log": generation_log,
-                "plain_finding": plain_finding,
-            },
-        )
-
-    query = _build_g2_capterra_query(company_name)
-
-    try:
-        answer_text, citations, lookup_cache_status = _lookup_third_party(query)
-    except requests.RequestException:
-        fallback = (
-            "We tried looking up what independent review sites say about this brand, but the "
-            "request failed this time, so we don't have a real comparison to report. This is "
-            "usually temporary. Today, just try running the report again."
-        )
-        facts_summary = (
-            "Dimension: whether facts on the company's own website match what independent listings "
-            "such as review sites say about it.\n"
-            "Status: A request to an outside search tool failed this time."
-        )
-        plain_finding, generation_log = make_plain_finding(facts_summary, fallback)
-        return DimensionScore(
-            dimension=DIMENSION_NAME,
-            score=-1,
-            details={
-                "status": "insufficient_data",
-                "reason": "Perplexity request failed",
-                "query": query,
-                "generation_log": generation_log,
-                "plain_finding": plain_finding,
-            },
-        )
-
-    g2_capterra_citations = _find_g2_or_capterra_citations(citations)
-
-    if not g2_capterra_citations:
-        fallback = (
-            f'We looked for what G2 or Capterra say about "{company_name}" specifically, and found '
-            "no listing for it on either site. There's nothing independent to compare the official "
-            "site against yet. That's worth knowing on its own. Customers who check review sites "
-            "before buying won't find this brand there at all. Today, claim or create a listing on "
-            "G2 or Capterra. It's usually free and only takes a few minutes."
-        )
-        facts_summary = (
-            "Dimension: whether facts on the company's own website match what independent listings "
-            "such as review sites say about it.\n"
-            f'Status: No listing for "{company_name}" was found on either of the two review sites we '
-            "checked."
-        )
-        plain_finding, generation_log = make_plain_finding(facts_summary, fallback)
-        return DimensionScore(
-            dimension=DIMENSION_NAME,
-            score=-1,
-            details={
-                "status": "insufficient_data",
-                "reason": "No G2 or Capterra data found for this company via Perplexity search",
-                "query": query,
-                "citations": citations,
-                "generation_log": generation_log,
-                "plain_finding": plain_finding,
-            },
-        )
-
-    if not answer_text.strip():
-        fallback = (
-            "We found references to G2/Capterra listings for this brand, but didn't get any real "
-            "summary of what they say, so there's nothing to compare yet. Today, just try running "
-            "the report again."
-        )
-        facts_summary = (
-            "Dimension: whether facts on the company's own website match what independent listings "
-            "such as review sites say about it.\n"
-            "Status: We found review site listings for this company but got no usable summary of "
-            "what they say."
-        )
-        plain_finding, generation_log = make_plain_finding(facts_summary, fallback)
-        return DimensionScore(
-            dimension=DIMENSION_NAME,
-            score=-1,
-            details={
-                "status": "insufficient_data",
-                "reason": "Perplexity cited G2/Capterra sources but returned no answer text to compare.",
-                "query": query,
-                "citations": citations,
-                "generation_log": generation_log,
-                "plain_finding": plain_finding,
-            },
-        )
-
     try:
         official_text, official_urls_fetched, page_fingerprints = _fetch_official_text(domain)
     except requests.RequestException:
-        fallback = (
-            "We had independent listing data ready to compare, but couldn't open the official "
-            "homepage to compare it against, so this check can't finish. Today, try loading the "
-            "homepage yourself to confirm it's reachable."
+        return _insufficient(
+            f"Failed to fetch domain homepage '{domain}'",
+            "We couldn't open the official homepage to compare against what independent listings say, "
+            "so this check can't finish. Today, try loading the homepage yourself to confirm it's reachable.",
+            f"We could not open the official homepage at {domain}.",
         )
-        facts_summary = (
-            "Dimension: whether facts on the company's own website match what independent listings "
-            "such as review sites say about it.\n"
-            f"Status: We had independent listing data ready, but could not open the official homepage "
-            f"at {domain} to compare it against."
-        )
-        plain_finding, generation_log = make_plain_finding(facts_summary, fallback)
-        return DimensionScore(
-            dimension=DIMENSION_NAME,
-            score=-1,
-            details={
-                "status": "insufficient_data",
-                "reason": f"Failed to fetch domain homepage '{domain}'",
-                "query": query,
-                "citations": citations,
-                "generation_log": generation_log,
-                "plain_finding": plain_finding,
-            },
-        )
-
     if not official_text:
-        fallback = (
-            "We had independent listing data ready to compare, but found no real readable text on "
-            "the official homepage to compare it against. Today, check that your homepage's core "
-            "copy shows up right away for a visitor."
-        )
-        facts_summary = (
-            "Dimension: whether facts on the company's own website match what independent listings "
-            "such as review sites say about it.\n"
-            "Status: We had independent listing data ready, but the official homepage had no "
-            "readable text to compare it against."
-        )
-        plain_finding, generation_log = make_plain_finding(facts_summary, fallback)
-        return DimensionScore(
-            dimension=DIMENSION_NAME,
-            score=-1,
-            details={
-                "status": "insufficient_data",
-                "reason": f"Homepage for '{domain}' returned no extractable body text (possibly JS-rendered).",
-                "query": query,
-                "citations": citations,
-                "generation_log": generation_log,
-                "plain_finding": plain_finding,
-            },
+        return _insufficient(
+            f"Homepage for '{domain}' returned no extractable body text (possibly JS-rendered).",
+            "We found no readable text on the official homepage to compare against independent listings. "
+            "Today, check that your homepage's core copy shows up right away for a visitor.",
+            "The official homepage had no readable text.",
+            official_urls_fetched=official_urls_fetched,
         )
 
-    if not settings.has_deepseek_key():
-        return DimensionScore(
-            dimension=DIMENSION_NAME,
-            score=-1,
-            details={
-                "status": "insufficient_data",
-                "reason": "DEEPSEEK_API_KEY is not configured; sources were gathered but not compared.",
-                "query": query,
-                "citations": citations,
-                "official_urls_fetched": official_urls_fetched,
-                "plain_finding": (
-                    "We gathered both the official homepage and what independent listings say, but the "
-                    "tool that compares the two for mismatches isn't turned on yet, so we don't have a "
-                    "real verdict. Today, turn on that connection so this comparison can run for real."
-                ),
-            },
-        )
+    query = _build_third_party_query(company_name, domain)
+    cache_key = _cache_key(company_name, domain, official_text)
+    cached = get_cached_judgment(DIMENSION_NAME, cache_key)
+    if cached is not None:
+        fields, runs, cache_status = cached["fields"], cached["runs"], "cache_hit"
+    else:
+        if not settings.has_perplexity_key() or not settings.has_deepseek_key():
+            return _insufficient(
+                "PERPLEXITY_API_KEY or DEEPSEEK_API_KEY is not configured; no comparison was performed.",
+                "We couldn't check whether independent listings agree with the official site, because a "
+                "required connection isn't turned on yet. Today, turn on that connection so this check can run.",
+                "A required connection is not turned on.",
+                official_urls_fetched=official_urls_fetched,
+            )
+        with ThreadPoolExecutor(max_workers=RUNS) as executor:
+            runs = list(
+                executor.map(
+                    lambda index: _judge_run(index, company_name, domain, query, official_text),
+                    range(1, RUNS + 1),
+                )
+            )
+        if all(run["status"] == "error" for run in runs):
+            return _insufficient(
+                "Every third-party lookup or comparison run failed: "
+                + "; ".join(f"run {run['run']}: {run['error']}" for run in runs),
+                "We tried looking up what independent review sites say about this brand, but the request "
+                "failed this time, so we don't have a real comparison. Today, just try running the report again.",
+                "Requests to outside tools failed this time.",
+                query=query,
+                runs=runs,
+                official_urls_fetched=official_urls_fetched,
+            )
+        fields = _aggregate(runs)
+        cache_status = "fresh_judgment"
+        if any(field["verdict"] != "unknown" for field in fields):
+            save_judgment(DIMENSION_NAME, cache_key, {"fields": fields, "runs": runs})
 
-    try:
-        comparison, format_check_log, comparison_cache_status = _get_cached_or_clean_fact_comparison(
-            company_name, official_text, answer_text
-        )
-    except (requests.RequestException, ValueError, KeyError, json.JSONDecodeError) as exc:
-        fallback = (
-            "We gathered both sources but hit a technical hiccup while comparing them, so there's "
-            "no real verdict this run. Today, just try running the report again."
-        )
-        facts_summary = (
-            "Dimension: whether facts on the company's own website match what independent listings "
-            "such as review sites say about it.\n"
-            "Status: We gathered both sources but a temporary technical problem stopped the "
-            "comparison from finishing."
-        )
-        plain_finding, generation_log = make_plain_finding(facts_summary, fallback)
-        return DimensionScore(
-            dimension=DIMENSION_NAME,
-            score=-1,
-            details={
-                "status": "insufficient_data",
-                "reason": f"DeepSeek comparison failed: {exc}",
-                "query": query,
-                "citations": citations,
-                "official_urls_fetched": official_urls_fetched,
-                "generation_log": generation_log,
-                "plain_finding": plain_finding,
-            },
-        )
+    conflicts = [f for f in fields if f["verdict"] == "conflict"]
+    matches = [f for f in fields if f["verdict"] == "match"]
+    common = {
+        "query": query,
+        "fields": fields,
+        "runs": runs,
+        "voting_rule": VOTING_RULE,
+        "fields_version": FIELDS_VERSION,
+        "cache_status": cache_status,
+        "official_urls_fetched": official_urls_fetched,
+        "page_fingerprints": page_fingerprints,
+    }
 
-    compared_fields = comparison["compared_fields"]
-    conflicts = comparison["conflicts"]
-
-    if not compared_fields:
-        # Nothing was actually comparable between the two sources (e.g.
-        # neither mentions pricing, regions, or features) — there is no
-        # real basis to claim "no conflicts found".
-        fallback = (
-            "We compared the official site against what independent listings say about "
-            f'"{company_name}", but neither side actually mentioned enough specifics, like '
-            "pricing, coverage, or concrete features, to compare anything meaningfully. That's "
-            "its own finding. If independent listings don't say much concrete about this brand, "
-            "customers researching it there won't learn much either. Today, make sure the "
-            "G2 or Capterra listing and the homepage both spell out specifics like pricing and "
-            "key features, not just a general description."
-        )
-        facts_summary = (
-            "Dimension: whether facts on the company's own website match what independent listings "
-            "such as review sites say about it.\n"
-            f'Status: We compared the official site against independent listings for "{company_name}", '
-            "but neither side mentioned enough specifics such as pricing, coverage, or features to "
-            "compare anything meaningfully."
-        )
-        plain_finding, generation_log = make_plain_finding(facts_summary, fallback)
-        return DimensionScore(
-            dimension=DIMENSION_NAME,
-            score=-1,
-            details={
-                "status": "insufficient_data",
-                "reason": "No comparable fields (pricing, supported regions, core features) were found in both sources.",
-                "query": query,
-                "citations": citations,
-                "official_urls_fetched": official_urls_fetched,
-                "generation_log": generation_log,
-                "plain_finding": plain_finding,
-            },
+    if not conflicts and not matches:
+        return _insufficient(
+            "Not enough third-party information: every field voted unknown.",
+            f'We looked up what independent review sites say about "{company_name}" for six basic facts, '
+            "like starting price and who the product is for, and could not confirm any of them against "
+            "the official site. Today, make sure your G2 or Capterra listing spells out pricing, plans, and "
+            "integrations, the same way your site does.",
+            "Independent review sites gave too little information to compare.",
+            **common,
         )
 
     score = _score_from_conflict_count(len(conflicts))
-
-    fallback = _build_fallback_plain_finding(company_name, compared_fields, conflicts)
-    facts_summary = _build_facts_summary(company_name, compared_fields, conflicts)
+    fallback = _build_fallback_plain_finding(company_name, matches, conflicts)
+    facts_summary = _build_facts_summary(company_name, matches, conflicts)
     plain_finding, generation_log = make_plain_finding(facts_summary, fallback)
 
     return DimensionScore(
@@ -563,70 +504,50 @@ def check_fact_consistency(company_name: str, domain: str) -> DimensionScore:
         score=score,
         details={
             "status": "ok",
-            "query": query,
-            "citations": citations,
-            "official_urls_fetched": official_urls_fetched,
-            "compared_fields": compared_fields,
-            "conflicts": conflicts,
-            "format_check": format_check_log,
-            "cache_status": {"third_party_lookup": lookup_cache_status, "comparison": comparison_cache_status},
-            "page_fingerprints": page_fingerprints,
+            **common,
+            "conflict_fields": [f["field"] for f in conflicts],
+            "match_fields": [f["field"] for f in matches],
+            "unknown_fields": [f["field"] for f in fields if f["verdict"] == "unknown"],
             "generation_log": generation_log,
             "plain_finding": plain_finding,
         },
     )
 
 
-def _build_facts_summary(company_name: str, compared_fields: list, conflicts: list) -> str:
+def _build_facts_summary(company_name: str, matches: list, conflicts: list) -> str:
     """Plain-text real facts handed to the AI writer — see engines._plain_finding_generator."""
-    fields_note = ", ".join(compared_fields)
-
+    checked = ", ".join(f["label"].lower() for f in matches + conflicts)
     if not conflicts:
         return (
-            "Dimension: whether facts on the company's own website match what independent listings "
-            "such as review sites say about it.\n"
-            f'We compared what the official site says about {fields_note} against what independent '
-            f'listings say about "{company_name}". They agree on all of it. No disagreement was found.'
+            _DIMENSION_NOTE
+            + f'We compared {checked} on the official site against independent listings for "{company_name}". '
+            "They agree on all of it."
         )
-
-    conflict_lines = [
-        f'On {entry["field"]}, the official site says: {entry["official_says"]} Independent listings '
-        f'say: {entry["third_party_says"]}'
-        for entry in conflicts
-    ]
-    conflict_summary = " ".join(conflict_lines)
-    return (
-        "Dimension: whether facts on the company's own website match what independent listings such "
-        "as review sites say about it.\n"
-        f"We compared the official site against independent listings for {fields_note} and found a "
-        f"real mismatch. {conflict_summary}"
+    lines = " ".join(
+        f'On {f["label"].lower()}, the official site says: {f["official_value"]} Independent listings say: '
+        f'{f["third_party_value"]}'
+        for f in conflicts
     )
+    return _DIMENSION_NOTE + f"We compared {checked} and found a real mismatch. {lines}"
 
 
-def _build_fallback_plain_finding(company_name: str, compared_fields: list, conflicts: list) -> str:
-    """Founder-readable finding built only from this run's real compared fields and conflicts, used if AI writing fails."""
-    fields_note = ", ".join(compared_fields)
-
+def _build_fallback_plain_finding(company_name: str, matches: list, conflicts: list) -> str:
+    """Founder-readable finding built only from the voted fields, used if AI writing fails."""
+    checked = ", ".join(f["label"].lower() for f in matches + conflicts)
     if not conflicts:
         return (
-            f"We compared what the official site says about {fields_note} against what independent "
-            f'listings say about "{company_name}". We found no disagreement. Both sides tell the same '
-            "story. That's good. Customers who cross-check independent sources before buying won't find "
-            "anything that makes them second-guess the official claims. Today, no action needed here. "
-            "Just make sure future pricing or feature changes get updated on both the official site and "
-            "any listings at the same time, so they stay in sync."
+            f'We compared {checked} on the official site against what independent listings say about '
+            f'"{company_name}", and found no disagreement. Customers who cross-check review sites before '
+            "buying won't find anything that makes them doubt the official claims. Today, keep both sides "
+            "updated together when pricing or plans change."
         )
-
-    conflict_lines = [
-        f'on {entry["field"]}, the official site says "{entry["official_says"]}" while independent '
-        f'listings say "{entry["third_party_says"]}"'
-        for entry in conflicts
-    ]
-    conflict_summary = "; ".join(conflict_lines)
+    lines = "; ".join(
+        f'on {f["label"].lower()}, the official site says "{f["official_value"]}" while independent listings '
+        f'say "{f["third_party_value"]}"'
+        for f in conflicts
+    )
     return (
-        f"We compared the official site against independent listings for {fields_note}, and found a real "
-        f"mismatch: {conflict_summary}. That's a problem. A customer who checks both places before buying "
-        "will hit conflicting information right when they're deciding whether to trust this brand. That "
-        "hesitation often costs the deal. Today, pick the first mismatch above and update whichever side "
-        "is out of date."
+        f"We compared the official site against independent listings and found a real mismatch: {lines}. "
+        "A customer who checks both places before buying will hit conflicting information right when they "
+        "decide whether to trust this brand. Today, update whichever side is out of date."
     )

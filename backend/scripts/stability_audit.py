@@ -31,19 +31,19 @@ citation_engine's frozen per-category question sets
 run after the first reuse the exact same questions. The report
 verifies this held and says so explicitly, rather than assuming it.
 
---no-judgment-cache: topic_relevance caches its aggregated judgment
-per exact input (engines._judgment_cache, added after this script
+--no-judgment-cache: topic_relevance and fact_consistency cache their
+aggregated judgment per exact input (engines._judgment_cache, added after this script
 first proved that was needed). That cache makes a 5-run stability
 check of range 0 trivially true from run 2 onward regardless of
 whether the underlying judgment method is itself stable — it would
 only prove the cache works, not that the method does. Passing
---no-judgment-cache monkeypatches relevance_engine's
-get_cached_judgment (always a miss) and save_judgment (a no-op) for
-the life of this process, so every single run performs a genuinely
+--no-judgment-cache monkeypatches relevance_engine's and
+fact_engine's get_cached_judgment (always a miss) and save_judgment (a
+no-op) for the life of this process, so every single run performs a genuinely
 fresh LLM call with no cache involved at all — see
 _install_judgment_cache_bypass. This never touches any engine's
 scoring logic, only which function object those two names resolve to
-within that module. evidence_density is rule-based now (no LLM, no
+within those modules. evidence_density is rule-based now (no LLM, no
 cache), so the flag has nothing to bypass there.
 
 Usage:
@@ -110,11 +110,13 @@ def _install_judgment_cache_bypass() -> list:
     of started patchers so the caller can .stop() them; does not
     modify any engine source file or scoring logic, only which
     function object get_cached_judgment/save_judgment resolve to
-    within relevance_engine for the life of this process.
+    within relevance_engine and fact_engine for the life of this process.
     """
     patchers = [
         patch.object(relevance_engine, "get_cached_judgment", return_value=None),
         patch.object(relevance_engine, "save_judgment", lambda *args, **kwargs: None),
+        patch.object(fact_engine, "get_cached_judgment", return_value=None),
+        patch.object(fact_engine, "save_judgment", lambda *args, **kwargs: None),
     ]
     for patcher in patchers:
         patcher.start()
@@ -714,12 +716,12 @@ def build_report(company_name: str, domain: str, records: list[dict], judgment_c
 
 def _estimated_calls_per_run() -> tuple[int, int]:
     """(perplexity_calls, deepseek_calls) upper-bound estimate for ONE run, from the engines' own constants."""
-    perplexity_calls = citation_engine.REQUIRED_QUERY_COUNT * citation_engine.RUNS_PER_QUERY + 1  # + fact_engine
+    perplexity_calls = citation_engine.REQUIRED_QUERY_COUNT * citation_engine.RUNS_PER_QUERY + fact_engine.RUNS
     deepseek_calls = (
         2  # citation_engine: category + query generation (0 on a cache hit, which is most runs here)
         # evidence_engine is rule-based now: no LLM calls
         + (citation_engine.REQUIRED_QUERY_COUNT * relevance_engine.JUDGMENT_RUNS_PER_QUESTION)
-        + 1  # fact_engine's comparison call
+        + fact_engine.RUNS  # fact_engine's comparison calls
     )
     return perplexity_calls, deepseek_calls
 
@@ -753,7 +755,7 @@ def main() -> None:
         "--no-judgment-cache",
         action="store_true",
         help=(
-            "Bypass relevance_engine's judgment cache entirely for this run (neither read "
+            "Bypass relevance_engine's and fact_engine's judgment cache entirely for this run (neither read "
             "nor write), so every run performs a fresh LLM judgment instead of a cache hit from run 2 onward"
         ),
     )
