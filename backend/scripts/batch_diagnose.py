@@ -382,7 +382,7 @@ def _estimated_calls_per_company() -> tuple[int, int]:
     perplexity_calls = citation_engine.REQUIRED_QUERY_COUNT * citation_engine.RUNS_PER_QUERY + 1  # + fact_engine
     deepseek_calls = (
         2  # citation_engine: category classification + query generation (0 on a cache hit)
-        + evidence_engine.JUDGMENT_RUNS
+        # evidence_engine is rule-based now: no LLM calls
         + (citation_engine.REQUIRED_QUERY_COUNT * relevance_engine.JUDGMENT_RUNS_PER_QUESTION)
         + 1  # fact_engine's comparison call
     )

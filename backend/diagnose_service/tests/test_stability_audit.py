@@ -423,7 +423,7 @@ class MainEndToEndTests(unittest.TestCase):
         # The bypass patchers must be cleaned up afterwards, not left installed.
         import engines._judgment_cache as judgment_cache_module
 
-        self.assertIs(stability_audit.evidence_engine.get_cached_judgment, judgment_cache_module.get_cached_judgment)
+        self.assertIs(stability_audit.relevance_engine.get_cached_judgment, judgment_cache_module.get_cached_judgment)
 
         report_text = (self.output_dir / "report_acme.com.md").read_text(encoding="utf-8")
         self.assertIn("bypassed", report_text)
@@ -431,24 +431,19 @@ class MainEndToEndTests(unittest.TestCase):
 
 class JudgmentCacheBypassTests(unittest.TestCase):
     def test_install_forces_miss_and_noop_save_then_restores_originals(self):
-        original_evidence_get = stability_audit.evidence_engine.get_cached_judgment
-        original_evidence_save = stability_audit.evidence_engine.save_judgment
         original_relevance_get = stability_audit.relevance_engine.get_cached_judgment
         original_relevance_save = stability_audit.relevance_engine.save_judgment
 
         patchers = stability_audit._install_judgment_cache_bypass()
         try:
-            self.assertIsNone(stability_audit.evidence_engine.get_cached_judgment("any-key"))
             self.assertIsNone(stability_audit.relevance_engine.get_cached_judgment("any-key"))
             # Must not raise, and must not make the next get_cached_judgment call return a hit.
-            stability_audit.evidence_engine.save_judgment("any-key", {"score": 99})
-            self.assertIsNone(stability_audit.evidence_engine.get_cached_judgment("any-key"))
+            stability_audit.relevance_engine.save_judgment("any-key", {"score": 99})
+            self.assertIsNone(stability_audit.relevance_engine.get_cached_judgment("any-key"))
         finally:
             for p in patchers:
                 p.stop()
 
-        self.assertIs(stability_audit.evidence_engine.get_cached_judgment, original_evidence_get)
-        self.assertIs(stability_audit.evidence_engine.save_judgment, original_evidence_save)
         self.assertIs(stability_audit.relevance_engine.get_cached_judgment, original_relevance_get)
         self.assertIs(stability_audit.relevance_engine.save_judgment, original_relevance_save)
 

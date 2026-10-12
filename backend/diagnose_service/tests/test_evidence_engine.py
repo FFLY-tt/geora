@@ -1,22 +1,17 @@
 """
-Tests for evidence_engine's evidence-listing + code-scoring + judgment
-cache design.
+Tests for the rule-based evidence_engine.
 
-Every DeepSeek call and page fetch is mocked: no API key is required,
-and none of this ever touches the network, so it runs the same
-locally and in CI. The judgment cache is redirected to a temp file per
-test so tests never read or write the real on-disk cache and never
-leak state between tests.
+Fully offline: pages are mocked HTML strings, nothing touches the
+network, and there is no LLM or cache involved to mock.
 """
 
 import sys
-import tempfile
-import threading
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
 import requests
+from bs4 import BeautifulSoup
 
 _THIS_DIR = Path(__file__).resolve().parent
 _SERVICE_DIR = _THIS_DIR.parent  # backend/diagnose_service
@@ -26,180 +21,653 @@ sys.path.insert(0, str(_BACKEND_DIR))
 sys.path.insert(0, str(_SERVICE_DIR))
 
 import engines.evidence_engine as evidence_engine  # noqa: E402
-import engines._judgment_cache as judgment_cache  # noqa: E402
-import engines._state_store as state_store  # noqa: E402
-from shared.config import Settings  # noqa: E402
 
-DOMAIN = "example.com"
-PAGE_TEXT = (
-    "ExampleCo cut onboarding time by 42% for 1,200 customers, per our Q3 case study. "
-    '"We saved $100,000 in the first year," said Dana Example, Founder at Acme Corp. '
-    "ExampleCo is SOC 2 certified and rated 4.7 on G2."
+# Close-style homepage text: a data-card strip with no punctuation between
+# the stats, then testimonials attributed "Name, Title @ Company".
+CLOSE_STYLE = (
+    "11,500 + Sales teams trust Close 2 B+ Calls, emails, and texts 4.7 · Rated on G2 "
+    "“Our booked appointments per week have gone up ~50% since Chloe went live.” "
+    "— Dana Derricks, Founder @ FollowUp.com "
+    "“We've saved over $100,000 in tech costs switching from Salesforce to Close.” "
+    "— Zac Muir, VP of Revenue @ Sisu "
+    "“Close changed how we sell.” — Jem Millett, Director of Admissions at Flatiron School"
 )
 
-_FAKE_PLAIN_FINDING = ({"what_we_found": "stub", "what_it_costs_you": "", "fix_it_today": ""}, [])
-_FAKE_SETTINGS = Settings(perplexity_api_key=None, deepseek_api_key="test-key")
+# Linear-style text from a mocked-up app screenshot embedded in the page.
+LINEAR_UI = (
+    "Linear created the issue via Slack on behalf of Karri · 2min ago "
+    "Linear connected by Jori · 2 min ago Worked for 8 sec Worked for 1 min "
+    "didier Has anyone been looking into the iOS startup performance issues? "
+    "kinetic-ios/src/screens/Home/HomeScreen.tsx"
+)
 
 
-class _ListingStub:
-    """
-    Thread-safe stand-in for evidence_engine._call_deepseek_for_evidence_listing.
-    Consumes outcomes from a fixed list in whatever order the thread
-    pool happens to call them in (same pattern as citation_engine's
-    test _PerplexityStub) — only the multiset of outcomes matters for
-    the aggregated union, never which specific run got which outcome.
-    """
-
-    def __init__(self, outcomes: list):
-        self._outcomes = outcomes
-        self._lock = threading.Lock()
-        self._next_index = 0
-        self.call_count = 0
-
-    def __call__(self, page_text):
-        with self._lock:
-            index = self._next_index
-            self._next_index += 1
-            self.call_count += 1
-
-        outcome = self._outcomes[index]
-        if isinstance(outcome, Exception):
-            raise outcome
-        return outcome
+def _types(items):
+    return {(i["category"], i["text"]) for i in items}
 
 
-class EvidenceEngineTests(unittest.TestCase):
-    def setUp(self):
-        self._tmp_dir = tempfile.TemporaryDirectory()
-        tmp_path = Path(self._tmp_dir.name)
-        self._cache_patches = [
-            patch.object(state_store, "STATE_DIR", tmp_path),
-        ]
-        for p in self._cache_patches:
-            p.start()
+class NumberRuleTests(unittest.TestCase):
+    def test_data_cards_without_punctuation_are_independent_evidence(self):
+        texts = [i["text"] for i in evidence_engine.find_numbers(CLOSE_STYLE)]
+        self.assertIn("11,500 +", texts)
+        self.assertIn("2 B+", texts)
+        self.assertTrue(any(t.startswith("4.7") for t in texts))
+        self.assertIn("50%", texts)
+        self.assertIn("$100,000", texts)
+        self.assertEqual(len({i["key"] for i in evidence_engine.find_numbers(CLOSE_STYLE)}), 5)
 
-    def tearDown(self):
-        for p in self._cache_patches:
-            p.stop()
-        self._tmp_dir.cleanup()
+    def test_units_and_symbols(self):
+        text = "We deliver 10x faster results with 99.9% uptime for 40% less, 2000+ customers, 1.5 million users, 5M calls."
+        texts = [i["text"] for i in evidence_engine.find_numbers(text)]
+        for expected in ["10x", "99.9%", "40%", "2000+ customers", "1.5 million", "5M"]:
+            self.assertIn(expected, texts)
 
-    def _run_with(self, listing_outcomes):
-        stub = _ListingStub(listing_outcomes)
-        with patch.object(evidence_engine, "settings", _FAKE_SETTINGS), \
-             patch.object(evidence_engine, "fetch_page_text", return_value=PAGE_TEXT), \
-             patch.object(evidence_engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING), \
-             patch.object(evidence_engine, "_call_deepseek_for_evidence_listing", side_effect=stub):
-            result = evidence_engine.check_evidence_density(DOMAIN)
-        return result, stub
+    def test_ui_screenshot_text_is_not_evidence(self):
+        self.assertEqual(evidence_engine.find_numbers(LINEAR_UI), [])
+        self.assertEqual(evidence_engine.find_attributions(LINEAR_UI), [])
+        self.assertEqual(evidence_engine.find_named_customers_in_text(LINEAR_UI), [])
+        self.assertEqual(evidence_engine.find_third_party(LINEAR_UI), [])
 
-    def test_verified_items_are_scored_by_code_not_llm(self):
-        # 1 number, 1 named customer, 1 attributed quote, 0 certifications
-        # found identically on all 3 runs -> union has 1 of each ->
-        # 15+15+15+0 = 45 by the fixed scoring rule.
-        outcome = [
-            {"category": "number_or_statistic", "quote": "cut onboarding time by 42% for 1,200 customers"},
-            {"category": "named_customer_or_case_study", "quote": "Dana Example, Founder at Acme Corp"},
-            {"category": "attributed_quote", "quote": "We saved $100,000 in the first year"},
-        ]
-        result, stub = self._run_with([outcome, outcome, outcome])
+    def test_number_next_to_ago_is_ui_noise(self):
+        self.assertEqual(evidence_engine.find_numbers("Created 12+ issues 2min ago"), [])
 
-        self.assertEqual(result.details["status"], "ok")
-        self.assertEqual(stub.call_count, 3)
-        self.assertEqual(result.details["counts_by_category"]["number_or_statistic"], 1)
-        self.assertEqual(result.details["counts_by_category"]["named_customer_or_case_study"], 1)
-        self.assertEqual(result.details["counts_by_category"]["attributed_quote"], 1)
-        self.assertEqual(result.details["counts_by_category"]["third_party_source_or_certification"], 0)
-        self.assertEqual(result.score, 15 + 15 + 15 + 0)
-        self.assertEqual(result.details["cache_status"], "fresh_judgment")
+    def test_years_phone_numbers_dates_and_versions_are_not_numbers(self):
+        text = (
+            "Founded in 2012. Call 1-800-555-0199 or (415) 555-1234 or +1 415 555 1234. "
+            "Updated October 20, 2026 and 03/04/2025. Version 4.0.1 covers req 6.4.3 and 11.6.1."
+        )
+        self.assertEqual(evidence_engine.find_numbers(text), [])
 
-    def test_three_or_more_items_in_a_category_earns_full_marks(self):
-        outcome = [
-            {"category": "number_or_statistic", "quote": "cut onboarding time by 42% for 1,200 customers"},
-            {"category": "number_or_statistic", "quote": "rated 4.7 on G2"},
-            {"category": "number_or_statistic", "quote": "SOC 2 certified"},
-        ]
-        result, _stub = self._run_with([outcome, outcome, outcome])
+    def test_plan_prices_are_not_numbers_but_customer_results_are(self):
+        text = "Pro is $49 per user/month. Team $15/user/mo. Billed $120 annually. Customers saved $100,000 last year."
+        texts = [i["text"] for i in evidence_engine.find_numbers(text)]
+        self.assertEqual(texts, ["$100,000"])
 
-        self.assertEqual(result.details["counts_by_category"]["number_or_statistic"], 3)
-        self.assertEqual(result.details["points_by_category"]["number_or_statistic"], evidence_engine.MAX_POINTS_PER_CATEGORY)
+    def test_no_currency_at_all_is_counted_on_a_pricing_page(self):
+        text = "Starter $29 Business $99 Enterprise $499"
+        self.assertEqual(evidence_engine.find_numbers(text, page_kind="pricing"), [])
+        self.assertTrue(evidence_engine.find_numbers(text, page_kind="home"))
 
-    def test_fabricated_quote_not_found_in_page_is_dropped(self):
-        outcome = [
-            {"category": "number_or_statistic", "quote": "This sentence does not appear on the page at all."},
-        ]
-        result, _stub = self._run_with([outcome, outcome, outcome])
+    def test_rating_needs_a_rating_word(self):
+        self.assertTrue(evidence_engine.find_numbers("Rated 4.7 on G2"))
+        self.assertTrue(evidence_engine.find_numbers("4.7 out of 5"))
+        self.assertEqual(evidence_engine.find_numbers("Step 4.7 of the guide"), [])
 
-        self.assertEqual(result.details["counts_by_category"]["number_or_statistic"], 0)
+
+class AttributionRuleTests(unittest.TestCase):
+    def test_close_style_name_title_company(self):
+        items = evidence_engine.find_attributions(CLOSE_STYLE)
+        texts = [i["text"] for i in items]
+        self.assertIn("Dana Derricks, Founder @ FollowUp.com", texts)
+        self.assertTrue(any(t.startswith("Zac Muir, VP of Revenue @ Sisu") for t in texts))
+        self.assertIn("Jem Millett, Director of Admissions @ Flatiron School", texts)
+        self.assertEqual(len(items), 3)
+
+    def test_dash_name_company_after_a_quote(self):
+        items = evidence_engine.find_attributions("“It just works.” — Priya Nair, Acme Robotics")
+        self.assertEqual([i["text"] for i in items], ["Priya Nair, Acme Robotics"])
+
+    def test_dash_without_a_quote_is_not_an_attribution(self):
+        self.assertEqual(evidence_engine.find_attributions("Contact Sales — Pricing Plans, Acme Robotics"), [])
+
+    def test_a_title_without_a_role_word_is_not_an_attribution(self):
+        self.assertEqual(evidence_engine.find_attributions("Dana Derricks, loves pizza @ FollowUp.com"), [])
+
+    def test_blockquote_and_schema_review_blocks(self):
+        html = (
+            "<blockquote>The onboarding was painless and support answered within minutes every time.</blockquote>"
+            '<script type="application/ld+json">{"@type": "Review", "reviewBody": "Great product, saved us hours every week.", '
+            '"author": {"name": "A. Customer"}}</script>'
+        )
+        items = evidence_engine.find_html_testimonials(BeautifulSoup(html, "html.parser"))
+        # v3.1: the blockquote has no attribution, so only the named Review counts.
+        self.assertEqual([i["key"] for i in items], ["a customer"])
+
+    def test_blockquote_that_already_has_a_written_attribution_is_not_counted_twice(self):
+        html = "<html><body><blockquote>“Great.” — Dana Derricks, Founder @ FollowUp.com</blockquote></body></html>"
+        # v3.1: both rules match, under the same person key, and merge into one item.
+        _text, items = evidence_engine.extract_page_evidence("https://acme.com", "home", html)
+        quotes = [i for i in evidence_engine.merge_evidence([items]) if i["category"] == "attributed_quote"]
+        self.assertEqual([i["key"] for i in quotes], ["dana derricks"])
+
+
+class NamedCustomerRuleTests(unittest.TestCase):
+    def test_trusted_by_text_list(self):
+        items = evidence_engine.find_named_customers_in_text("Trusted by Instacart, Reddit, and Gusto to monitor scripts.")
+        self.assertEqual([i["text"] for i in items], ["Instacart", "Reddit", "Gusto"])
+
+    def test_teams_at_wording_is_not_a_customer_phrase(self):
+        # v3.1 only accepts "trusted by" / "customers" wording.
+        items = evidence_engine.find_named_customers_in_text("Security teams at Instacart, Reddit, and Gusto use it.")
+        self.assertEqual(items, [])
+
+    def test_taglines_and_numbers_are_not_customers(self):
+        for text in ["Powering the companies building the future", "Trusted by 11,500+ sales teams", "Used by the best"]:
+            self.assertEqual(evidence_engine.find_named_customers_in_text(text), [], text)
+
+    def test_logo_area_alt_texts(self):
+        html = (
+            '<header><img alt="Acme logo" src="a.png"></header>'
+            '<div class="trusted-by"><img alt="Instacart logo"><img alt="Reddit"><img alt="logo"></div>'
+            '<div class="hero"><img alt="Unrelated screenshot"></div>'
+        )
+        items = evidence_engine.find_named_customers_in_html(BeautifulSoup(html, "html.parser"), own_label="acme")
+        self.assertEqual([i["text"] for i in items], ["Instacart", "Reddit"])
+
+    def test_logos_after_a_trusted_by_heading(self):
+        html = '<section><h4>Trusted by teams at</h4><div><img alt="Gusto"><img alt="Notion"></div></section>'
+        items = evidence_engine.find_named_customers_in_html(BeautifulSoup(html, "html.parser"))
+        self.assertEqual([i["text"] for i in items], ["Gusto", "Notion"])
+
+    def test_schema_org_customers(self):
+        html = '<script type="application/ld+json">{"@type": "Organization", "customer": [{"name": "Instacart"}, {"name": "Gusto"}]}</script>'
+        items = evidence_engine.find_named_customers_in_html(BeautifulSoup(html, "html.parser"))
+        self.assertEqual([i["text"] for i in items], ["Instacart", "Gusto"])
+
+
+class ThirdPartyRuleTests(unittest.TestCase):
+    def test_vocabulary_matches_once_per_term(self):
+        text = "Rated on G2 and Capterra. G2 leader. SOC 2 Type II, ISO 27001, HIPAA, GDPR, PCI DSS, Gartner, Forrester, Trustpilot."
+        labels = [i["text"] for i in evidence_engine.find_third_party(text)]
+        for expected in ["G2", "Capterra", "Gartner", "Forrester", "SOC 2", "ISO 27001", "HIPAA", "GDPR", "PCI DSS", "Trustpilot"]:
+            self.assertIn(expected, labels)
+        self.assertEqual(labels.count("G2"), 1)
+
+    def test_g2_inside_another_token_does_not_match(self):
+        self.assertEqual(evidence_engine.find_third_party("model XG2000 and ABG2"), [])
+
+
+# ---------------------------------------------------------------------------
+# Page selection and the full engine
+# ---------------------------------------------------------------------------
+
+HOME_HTML = """
+<html><body>
+<nav><a href="/customers">Customers</a> <a href="/security">Security</a> <a href="/pricing">Pricing</a>
+<a href="/about">About</a> <a href="https://other.com/customers">Elsewhere</a> <a href="/docs.pdf">PDF</a></nav>
+<p>11,500 + Sales teams trust Acme. 4.7 · Rated on G2.</p>
+<a href="/customers/">Customers again</a> <a href="/customers#top">Customers anchor</a>
+<a href="/blog/about-us-post">Our story</a>
+</body></html>
+"""
+CUSTOMERS_HTML = "<html><body><p>11,500 + Sales teams trust Acme. “Great.” — Dana Derricks, Founder @ FollowUp.com</p></body></html>"
+SECURITY_HTML = "<html><body><p>Acme is SOC 2 and ISO 27001 certified. Rated on G2.</p></body></html>"
+PRICING_HTML = "<html><body><p>Pro $49 per user/month. Team $99 billed annually.</p></body></html>"
+ABOUT_HTML = "<html><body><p>Founded in 2012. Call 1-800-555-0199.</p></body></html>"
+
+
+def _fake_fetch(pages):
+    calls = []
+
+    def fetch(url):
+        calls.append(url)
+        key = (url if url.startswith("http") else f"https://{url}").rstrip("/")
+        if key not in pages:
+            raise requests.ConnectionError(f"no such page {url}")
+        value = pages[key]
+        if isinstance(value, Exception):
+            raise value
+        return key, value
+
+    fetch.calls = calls
+    return fetch
+
+
+PAGES = {
+    "https://acme.com": HOME_HTML,
+    "https://acme.com/customers": CUSTOMERS_HTML,
+    "https://acme.com/security": SECURITY_HTML,
+    "https://acme.com/pricing": PRICING_HTML,
+    "https://acme.com/about": ABOUT_HTML,
+}
+
+
+class PageSelectionTests(unittest.TestCase):
+    def test_one_page_per_kind_normalized_deduplicated_same_site_only(self):
+        pages = evidence_engine._select_pages("https://acme.com", BeautifulSoup(HOME_HTML, "html.parser"))
+        self.assertEqual(
+            pages,
+            [
+                ("customers", "https://acme.com/customers"),
+                ("security", "https://acme.com/security"),
+                ("pricing", "https://acme.com/pricing"),
+                ("about", "https://acme.com/about"),
+            ],
+        )
+
+    def test_missing_kinds_are_simply_not_read(self):
+        html = '<a href="/pricing">Pricing</a><a href="/blog">Blog</a>'
+        pages = evidence_engine._select_pages("https://acme.com", BeautifulSoup(html, "html.parser"))
+        self.assertEqual(pages, [("pricing", "https://acme.com/pricing")])
+
+    def test_link_text_can_identify_a_page_and_path_wins_over_text(self):
+        html = '<a href="/p/42">Case studies customers</a><a href="/customers">Nope</a>'
+        pages = evidence_engine._select_pages("https://acme.com", BeautifulSoup(html, "html.parser"))
+        self.assertEqual(pages, [("customers", "https://acme.com/customers")])
+
+    def test_subdomain_trust_center_is_same_site(self):
+        html = '<a href="https://trust.acme.com/">Trust center</a>'
+        pages = evidence_engine._select_pages("https://www.acme.com/", BeautifulSoup(html, "html.parser"))
+        self.assertEqual(pages, [("security", "https://trust.acme.com")])
+
+
+class EngineTests(unittest.TestCase):
+    def _run(self, pages=PAGES):
+        fetch = _fake_fetch(pages)
+        with patch.object(evidence_engine, "_fetch_html", side_effect=fetch):
+            return evidence_engine.check_evidence_density("acme.com"), fetch
+
+    def test_reads_homepage_plus_found_key_pages_and_records_sources(self):
+        result, fetch = self._run()
+        kinds = [p["kind"] for p in result.details["pages_read"]]
+        self.assertEqual(kinds, ["home", "customers", "security", "pricing", "about"])
+        for item in result.details["items"]:
+            self.assertTrue(item["source_url"].startswith("https://acme.com"))
+            self.assertIn(item["source_page"], kinds)
+            self.assertTrue(item["text"] and item["context"])
+
+    def test_same_evidence_on_two_pages_is_counted_once(self):
+        result, _ = self._run()
+        numbers = [i for i in result.details["items"] if i["category"] == "number_or_statistic" and i["key"] == "count:11500"]
+        self.assertEqual(len(numbers), 1)
+        self.assertEqual(numbers[0]["source_page"], "home")
+        self.assertEqual(numbers[0]["also_found_on"], ["https://acme.com/customers"])
+        g2 = [i for i in result.details["items"] if i["category"] == "third_party_source_or_certification" and i["key"] == "g2"]
+        self.assertEqual(len(g2), 1)
+
+    def test_each_category_found_and_pricing_and_about_noise_excluded(self):
+        result, _ = self._run()
+        counts = result.details["counts_by_category"]
+        self.assertEqual(counts["attributed_quote"], 1)
+        self.assertEqual(counts["third_party_source_or_certification"], 3)  # G2, SOC 2, ISO 27001
+        number_texts = [i["text"] for i in result.details["items"] if i["category"] == "number_or_statistic"]
+        self.assertFalse(any("$" in t for t in number_texts))
+        self.assertFalse(any("2012" in t or "800" in t for t in number_texts))
+        self.assertEqual(result.details["pages_by_category"]["attributed_quote"], {"customers": 1})
+
+    def test_score_is_the_documented_formula(self):
+        result, _ = self._run()
+        counts = result.details["counts_by_category"]
+        expected = sum(evidence_engine._points_for_item_count(c) for c in counts.values())
+        self.assertEqual(result.score, expected)
+        self.assertIn("Our own fixed formula", result.details["scoring_rule"])
+        self.assertEqual(evidence_engine.METHOD_VERSION, "v3.2-rules")
+
+    def test_same_input_twice_gives_identical_results(self):
+        first, _ = self._run()
+        second, _ = self._run()
+        self.assertEqual(first.score, second.score)
+        self.assertEqual(first.details, second.details)
+
+    def test_no_evidence_is_a_zero_score_not_insufficient_data(self):
+        result, _ = self._run({"https://acme.com": "<html><body><p>We build great software for everyone.</p></body></html>"})
         self.assertEqual(result.score, 0)
-        dropped = [d for run in result.details["runs"] for d in run["dropped_items"]]
-        self.assertEqual(len(dropped), 3)
+        self.assertEqual(result.details["status"], "ok")
+        self.assertEqual(result.details["items"], [])
 
-    def test_duplicate_item_across_runs_counted_once(self):
-        outcome = [
-            {"category": "number_or_statistic", "quote": "cut onboarding time by 42% for 1,200 customers"},
-        ]
-        # Same real item found independently by all 3 runs -> union
-        # dedupes it to 1, not 3.
-        result, _stub = self._run_with([outcome, outcome, outcome])
+    def test_a_failed_key_page_is_recorded_and_the_rest_still_scored(self):
+        pages = {**PAGES, "https://acme.com/security": requests.ConnectionError("boom")}
+        result, _ = self._run(pages)
+        self.assertEqual(result.details["status"], "ok")
+        self.assertEqual([f["kind"] for f in result.details["pages_failed"]], ["security"])
+        self.assertNotIn("security", [p["kind"] for p in result.details["pages_read"]])
 
-        self.assertEqual(result.details["counts_by_category"]["number_or_statistic"], 1)
-
-    def test_unrecognized_category_is_dropped(self):
-        outcome = [
-            {"category": "not_a_real_category", "quote": "cut onboarding time by 42% for 1,200 customers"},
-        ]
-        result, _stub = self._run_with([outcome, outcome, outcome])
-
-        self.assertEqual(sum(result.details["counts_by_category"].values()), 0)
-
-    def test_second_call_with_identical_page_text_hits_cache_no_llm_call(self):
-        outcome = [
-            {"category": "number_or_statistic", "quote": "cut onboarding time by 42% for 1,200 customers"},
-        ]
-        first, stub1 = self._run_with([outcome, outcome, outcome])
-        self.assertEqual(stub1.call_count, 3)
-        self.assertEqual(first.details["cache_status"], "fresh_judgment")
-
-        second, stub2 = self._run_with([RuntimeError("should never be called")] * 3)
-
-        self.assertEqual(stub2.call_count, 0)
-        self.assertEqual(second.details["cache_status"], "cache_hit")
-        self.assertEqual(second.score, first.score)
-        self.assertEqual(second.details["items"], first.details["items"])
-
-    def test_different_page_text_does_not_hit_cache(self):
-        outcome = [
-            {"category": "number_or_statistic", "quote": "cut onboarding time by 42% for 1,200 customers"},
-        ]
-        self._run_with([outcome, outcome, outcome])
-
-        stub = _ListingStub([outcome, outcome, outcome])
-        with patch.object(evidence_engine, "settings", _FAKE_SETTINGS), \
-             patch.object(evidence_engine, "fetch_page_text", return_value=PAGE_TEXT + " One more sentence."), \
-             patch.object(evidence_engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING), \
-             patch.object(evidence_engine, "_call_deepseek_for_evidence_listing", side_effect=stub):
-            result = evidence_engine.check_evidence_density(DOMAIN)
-
-        self.assertEqual(stub.call_count, 3)
-        self.assertEqual(result.details["cache_status"], "fresh_judgment")
-
-    def test_all_runs_failed_returns_insufficient_data_and_is_not_cached(self):
-        error = requests.ConnectionError("boom")
-        result, stub = self._run_with([error, error, error])
-
+    def test_homepage_fetch_failure_is_insufficient_data(self):
+        result, _ = self._run({})
         self.assertEqual(result.score, -1)
         self.assertEqual(result.details["status"], "insufficient_data")
-        self.assertEqual(stub.call_count, 3)
 
-        # A second attempt (even with the exact same page text) must
-        # try again rather than serving a cached failure.
-        stub2 = _ListingStub([error, error, error])
-        with patch.object(evidence_engine, "settings", _FAKE_SETTINGS), \
-             patch.object(evidence_engine, "fetch_page_text", return_value=PAGE_TEXT), \
-             patch.object(evidence_engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING), \
-             patch.object(evidence_engine, "_call_deepseek_for_evidence_listing", side_effect=stub2):
-            evidence_engine.check_evidence_density(DOMAIN)
-        self.assertEqual(stub2.call_count, 3)
+    def test_engine_makes_no_llm_or_cache_calls(self):
+        for name in ("make_plain_finding", "get_cached_judgment", "save_judgment", "_call_deepseek_for_evidence_listing"):
+            self.assertFalse(hasattr(evidence_engine, name), name)
+
+
+# ---------------------------------------------------------------------------
+# v3.1 rule changes, one class per rule, positive and negative cases
+# ---------------------------------------------------------------------------
+
+class V31PageSelectionTests(unittest.TestCase):
+    def _pages(self, html, home="https://acme.com"):
+        return evidence_engine._select_pages(home, BeautifulSoup(html, "html.parser"))
+
+    def test_index_html_is_the_homepage(self):
+        self.assertEqual(evidence_engine._normalize_url("https://www.acme.com/index.html"), "https://acme.com")
+        self.assertEqual(evidence_engine._normalize_url("https://acme.com/docs/index.htm"), "https://acme.com/docs")
+        self.assertEqual(evidence_engine._normalize_url("https://acme.com/index-of-things"), "https://acme.com/index-of-things")
+
+    def test_link_back_to_index_html_is_not_a_key_page(self):
+        pages = self._pages('<a href="/index.html">About home</a><a href="/about">About</a>', home="https://acme.com/index.html")
+        self.assertEqual(pages, [("about", "https://acme.com/about")])
+
+    def test_exact_first_segment_beats_a_shorter_path_containing_the_word(self):
+        html = '<a href="/us-privacy-compliance">x</a><a href="/security">y</a>'
+        self.assertEqual(self._pages(html), [("security", "https://acme.com/security")])
+
+    def test_trust_subdomain_counts_as_exact(self):
+        html = '<a href="/blog/security-tips">x</a><a href="https://trust.acme.com/">y</a>'
+        self.assertEqual(self._pages(html), [("security", "https://trust.acme.com")])
+
+    def test_without_an_exact_match_the_shortest_containing_path_wins(self):
+        html = '<a href="/state-privacy-laws-compliance-ccpa">x</a><a href="/hipaa-compliance">y</a>'
+        self.assertEqual(self._pages(html), [("security", "https://acme.com/hipaa-compliance")])
+
+    def test_link_text_alone_no_longer_selects_a_page(self):
+        self.assertEqual(self._pages('<a href="/p/42">Customers</a>'), [])
+
+
+class V31NumberTests(unittest.TestCase):
+    def _keys(self, text, kind="home"):
+        return [i["key"] for i in evidence_engine.find_numbers(text, kind)]
+
+    def test_value_plus_unit_dedup(self):
+        text = "11,500+ teams. Over 11,500 + users. 11,500+ customers. 4.7 rating. Rated 4.7 on G2. 4.7 / 5."
+        items = evidence_engine.merge_evidence([[{**i, "source_url": "u"} for i in evidence_engine.find_numbers(text)]])
+        self.assertEqual(sorted(i["key"] for i in items), ["count:11500", "rating:4.7"])
+
+    def test_different_values_or_units_stay_separate(self):
+        keys = self._keys("11,500+ teams. 11,600+ teams. 40% faster. 40x faster. $40M saved.")
+        self.assertEqual(len(set(keys)), 5)
+
+    def test_magnitudes_dedup_by_value(self):
+        keys = set(self._keys("500K small businesses. 500K+ users. 2B+ calls. 2 billion calls."))
+        self.assertEqual(keys, {"count:500000", "count:2e+09"})
+
+    def test_pricing_page_numbers_never_count(self):
+        text = "Up to 100 users. 2,000+ integrations. 99.9% uptime SLA."
+        self.assertEqual(self._keys(text, kind="pricing"), [])
+        self.assertTrue(self._keys(text, kind="home"))
+
+    def test_excluded_sentence_words(self):
+        for sentence in [
+            "401k with 6% match.",
+            "Close pays 95% of all monthly premiums for employees.",
+            "Penalties up to $7,500 per violation.",
+            "Get 80% off Plus for 3 months.",
+            "Credit: 2.9% fee per transaction.",
+            "Save 30% with an annual discount.",
+            "Start a 14-day trial with 5+ seats.",
+            "Unlimited PTO and 20+ vacation days.",
+            "Health insurance covers 100% of costs.",
+            "Fines of up to 4% of revenue.",
+            "Competitive salary and 10% bonus.",
+            "Great benefits, 401(k) and 3x more.",
+        ]:
+            self.assertEqual(self._keys(sentence), [], sentence)
+
+    def test_exclusion_only_applies_to_its_own_sentence(self):
+        self.assertEqual(self._keys("Get 80% off today. Customers grew revenue by 35%."), ["percent:35"])
+
+    def test_exclusion_words_inside_other_words_do_not_exclude(self):
+        self.assertEqual(self._keys("Offices in 12 countries. Finest tools and 99.9% uptime."), ["count:12", "percent:99.9"])
+
+
+class V31AttributionTests(unittest.TestCase):
+    def _items(self, html):
+        return evidence_engine.find_html_testimonials(BeautifulSoup(html, "html.parser"))
+
+    def test_blockquote_without_attribution_does_not_count(self):
+        self.assertEqual(self._items("<blockquote>Our speed is intense and this helps us move fast.</blockquote>"), [])
+
+    def test_blockquote_with_cite_name_counts(self):
+        items = self._items("<blockquote>Our speed is intense and this helps us move fast.<cite>Karri Saarinen</cite></blockquote>")
+        self.assertEqual([i["key"] for i in items], ["karri saarinen"])
+
+    def test_figcaption_with_title_and_company_counts(self):
+        html = "<figure><blockquote>It changed how we sell.</blockquote><figcaption>Head of Sales, Acme Robotics</figcaption></figure>"
+        self.assertEqual(len(self._items(html)), 1)
+
+    def test_cite_that_is_neither_a_name_nor_title_and_company_does_not_count(self):
+        self.assertEqual(self._items("<blockquote>It changed how we sell.<cite>verified review</cite></blockquote>"), [])
+
+    def test_schema_review_without_author_does_not_count(self):
+        html = '<script type="application/ld+json">{"@type": "Review", "reviewBody": "Great product, saved us hours."}</script>'
+        self.assertEqual(self._items(html), [])
+
+    def test_blockquote_and_written_attribution_of_one_testimonial_count_once(self):
+        html = (
+            "<html><body><blockquote>“We doubled our pipeline.”<cite>Dana Derricks</cite></blockquote>"
+            "<p>“We doubled our pipeline.” — Dana Derricks, Founder @ FollowUp.com</p></body></html>"
+        )
+        _text, items = evidence_engine.extract_page_evidence("https://acme.com", "home", html)
+        quotes = [i for i in evidence_engine.merge_evidence([items]) if i["category"] == "attributed_quote"]
+        self.assertEqual(len(quotes), 1)
+
+
+class V31NamedCustomerTests(unittest.TestCase):
+    LOGOS = (
+        "<html><head><title>Acme | The CRM for teams</title></head><body><div class=\"customer-logos\">"
+        "<img alt=\"Instacart\"><img alt=\"Acme\"><img alt=\"Google Slack Zoom\"><img alt=\"Bain & Company\"></div></body></html>"
+    )
+
+    def _customers(self, kind, html=None):
+        html = html or self.LOGOS
+        brands = evidence_engine._brands_from_page("acme.com", BeautifulSoup(html, "html.parser"))
+        _text, items = evidence_engine.extract_page_evidence("https://acme.com/x", kind, html, brands)
+        # v3.2: logos are no longer scored, only listed for reference.
+        return [i["text"] for i in items if i["category"] == "customer_logo_reference"]
+
+    def test_found_on_home_and_customers_pages(self):
+        self.assertEqual(self._customers("home"), ["Instacart"])
+        self.assertEqual(self._customers("customers"), ["Instacart"])
+
+    def test_not_found_on_other_pages(self):
+        for kind in ("security", "pricing", "about"):
+            self.assertEqual(self._customers(kind), [], kind)
+
+    def test_own_brand_from_title_is_excluded(self):
+        html = (
+            "<html><head><title>Northwind: Inventory software</title></head><body><div class=\"customer-logos\">"
+            "<img alt=\"Northwind\"><img alt=\"Gusto\"></div></body></html>"
+        )
+        self.assertEqual(self._customers("home", html), ["Gusto"])
+
+    def test_alt_with_several_names_is_dropped_not_split(self):
+        found = self._customers("home")
+        for name in ("Google Slack Zoom", "Google", "Slack", "Zoom"):
+            self.assertNotIn(name, found)
+
+    def test_logo_outside_any_customer_area_does_not_count(self):
+        self.assertEqual(self._customers("home", '<html><body><div class="hero"><img alt="Gusto"></div></body></html>'), [])
+
+    def test_customers_heading_marks_a_logo_area(self):
+        html = '<html><body><section><h3>Customers</h3><div><img alt="Gusto"></div></section></body></html>'
+        self.assertEqual(self._customers("home", html), ["Gusto"])
+
+
+class V31ThirdPartyTests(unittest.TestCase):
+    def _labels(self, text, kind="home"):
+        return [i["text"] for i in evidence_engine.find_third_party(text, kind)]
+
+    def test_review_sites_count_on_any_page(self):
+        for kind in ("home", "pricing", "about", "customers", "security"):
+            self.assertEqual(self._labels("Loved on G2 and Capterra.", kind), ["G2", "Capterra"], kind)
+
+    def test_standards_in_a_product_feature_list_do_not_count(self):
+        self.assertEqual(self._labels("Covers PCI DSS, HIPAA, GDPR, SOC 2 and ISO 27001 requirements for your website."), [])
+
+    def test_standards_count_with_a_certification_word_in_the_same_sentence(self):
+        self.assertEqual(self._labels("Acme is SOC 2 Type II certified."), ["SOC 2"])
+        self.assertEqual(self._labels("We are GDPR compliant."), ["GDPR"])
+        self.assertEqual(self._labels("Request our ISO 27001 report."), ["ISO 27001"])
+
+    def test_certification_word_in_another_sentence_does_not_help(self):
+        self.assertEqual(self._labels("We help with HIPAA. Our team is certified in first aid."), [])
+
+    def test_standards_count_anywhere_on_the_security_page(self):
+        self.assertEqual(self._labels("HIPAA and GDPR.", kind="security"), ["HIPAA", "GDPR"])
+
+
+class V31FetchFailureTests(unittest.TestCase):
+    def _run(self, exc):
+        with patch.object(evidence_engine, "_fetch_html", side_effect=exc):
+            return evidence_engine.check_evidence_density("acme.com")
+
+    def _http_error(self, code):
+        response = requests.Response()
+        response.status_code = code
+        return requests.HTTPError(str(code), response=response)
+
+    def test_403_is_recorded_as_blocked(self):
+        result = self._run(self._http_error(403))
+        self.assertEqual(result.score, -1)
+        self.assertEqual(result.details["fetch_failure"], "blocked: HTTP 403")
+        self.assertIn("couldn't read this website", result.details["plain_finding"]["what_we_found"])
+
+    def test_404_is_an_http_error_not_blocked(self):
+        self.assertEqual(self._run(self._http_error(404)).details["fetch_failure"], "http error: HTTP 404")
+
+    def test_timeout_is_unreachable(self):
+        self.assertEqual(self._run(requests.ConnectTimeout("t")).details["fetch_failure"], "unreachable: ConnectTimeout")
+
+    def test_a_readable_site_has_no_fetch_failure(self):
+        with patch.object(evidence_engine, "_fetch_html", return_value=("https://acme.com", "<p>Hello there.</p>")):
+            result = evidence_engine.check_evidence_density("acme.com")
+        self.assertNotIn("fetch_failure", result.details)
+        self.assertEqual(result.score, 0)
+
+
+# ---------------------------------------------------------------------------
+# v3.2 rule changes, positive and negative cases
+# ---------------------------------------------------------------------------
+
+def _stories(html, page_url="https://acme.com/customers"):
+    return evidence_engine.find_customer_stories(BeautifulSoup(html, "html.parser"), page_url)
+
+
+class V32CustomerStoryTests(unittest.TestCase):
+    def test_five_distinct_child_pages_are_five_stories(self):
+        html = "".join(f'<a href="/customers/{name}">{name.title()} story</a>' for name in ["a", "b", "c", "d", "e"])
+        items = _stories(html)
+        self.assertEqual(len(items), 5)
+        self.assertEqual(items[0]["key"], "https://acme.com/customers/a")
+        self.assertEqual(items[0]["text"], "A story")
+
+    def test_same_story_linked_twice_counts_once(self):
+        html = (
+            '<a href="/customers/acme">Read the story</a>'
+            '<a href="https://www.acme.com/customers/acme/">Acme</a>'
+            '<a href="/customers/acme#results">Results</a>'
+        )
+        self.assertEqual(len(_stories(html)), 1)
+
+    def test_pagination_filters_and_anchors_are_not_stories(self):
+        html = (
+            '<a href="/customers?page=2">Next</a><a href="/customers/?filter=fintech">Fintech</a>'
+            '<a href="/customers#top">Top</a><a href="#top">Top</a><a href="/customers">All</a>'
+            '<a href="/customers/acme?page=2">Acme listing</a>'
+        )
+        self.assertEqual(_stories(html), [])
+
+    def test_only_one_level_below_the_customers_page(self):
+        html = (
+            '<a href="/customers/industry/fintech">Deep</a><a href="/blog/acme">Blog</a>'
+            '<a href="/customer-stories/acme">Elsewhere</a><a href="https://other.com/customers/acme">Other site</a>'
+            '<a href="/customers/acme">Acme</a>'
+        )
+        self.assertEqual([i["key"] for i in _stories(html)], ["https://acme.com/customers/acme"])
+
+    def test_works_for_other_customers_page_paths(self):
+        for base in ("case-studies", "stories", "customer-stories"):
+            html = f'<a href="/{base}/acme">Acme</a><a href="/{base}/globex">Globex</a>'
+            self.assertEqual(len(_stories(html, f"https://acme.com/{base}")), 2, base)
+
+    def test_link_text_falls_back_to_image_alt(self):
+        items = _stories('<a href="/customers/acme"><img alt="Acme case study"></a>')
+        self.assertEqual(items[0]["text"], "Acme case study")
+
+    def test_only_counted_on_the_customers_page(self):
+        html = '<html><body><a href="/customers/acme">Acme</a></body></html>'
+        for kind in ("home", "security", "pricing", "about"):
+            _text, items = evidence_engine.extract_page_evidence("https://acme.com", kind, html)
+            self.assertFalse([i for i in items if i["category"] == "customer_stories"], kind)
+
+    def test_no_customers_page_means_zero_stories(self):
+        home = '<html><body><a href="/pricing">Pricing</a><a href="/customers/acme">Acme</a></body></html>'
+        with patch.object(evidence_engine, "_fetch_html", side_effect=_fake_fetch({"https://acme.com": home, "https://acme.com/pricing": "<p>x</p>"})):
+            result = evidence_engine.check_evidence_density("acme.com")
+        self.assertEqual(result.details["counts_by_category"]["customer_stories"], 0)
+
+    def test_logos_are_listed_for_reference_but_not_scored(self):
+        home = '<html><body><a href="/customers">Customers</a><div class="customer-logos"><img alt="Instacart"></div></body></html>'
+        stories = '<html><body><a href="/customers/instacart">Instacart</a></body></html>'
+        pages = {"https://acme.com": home, "https://acme.com/customers": stories}
+        with patch.object(evidence_engine, "_fetch_html", side_effect=_fake_fetch(pages)):
+            result = evidence_engine.check_evidence_density("acme.com")
+        self.assertEqual(result.details["counts_by_category"]["customer_stories"], 1)
+        self.assertEqual([i["text"] for i in result.details["customer_logos_reference"]], ["Instacart"])
+        self.assertNotIn("customer_logo_reference", {i["category"] for i in result.details["items"]})
+        self.assertIn("AI assistants cannot see logo images", result.details["customer_stories_reason"])
+
+
+class V32ThirdPartyQuestionTests(unittest.TestCase):
+    def _labels(self, text, kind="home"):
+        return [i["text"] for i in evidence_engine.find_third_party(text, kind)]
+
+    def test_terms_inside_a_question_do_not_count(self):
+        self.assertEqual(self._labels("Is Unbounce GDPR compliant? Read our FAQ."), [])
+        self.assertEqual(self._labels("Are you on G2? Tell us."), [])
+        self.assertEqual(self._labels("Is it HIPAA ready?", kind="security"), [])
+
+    def test_the_same_term_in_a_statement_still_counts(self):
+        self.assertEqual(self._labels("Is it secure? We are GDPR compliant."), ["GDPR"])
+        self.assertEqual(self._labels("Rated 4.7 on G2."), ["G2"])
+
+
+class V32NumberExclusionTests(unittest.TestCase):
+    def _keys(self, text):
+        return [i["key"] for i in evidence_engine.find_numbers(text)]
+
+    def test_company_fact_sentences_are_excluded(self):
+        for sentence in [
+            "Our $150,000 grant program recognizes excellence.",
+            "Over $81M raised from top investors.",
+            "We closed $40M in Series B funding.",
+            "A $2B valuation in 2026.",
+            "Founded by 15+ year industry veterans.",
+            "Brings 15+ years of experience in finance.",
+            "$250K available in 2026.",
+            "Led our Series C with 3x growth.",
+        ]:
+            self.assertEqual(self._keys(sentence), [], sentence)
+
+    def test_customer_results_next_to_those_sentences_still_count(self):
+        self.assertEqual(self._keys("We raised $40M. Customers saved $100,000."), ["currency:$100000"])
+
+    def test_zero_values_are_not_counted(self):
+        self.assertEqual(self._keys("0% say it is easy to use. 0+ users. $0 saved."), [])
+
+    def test_non_zero_values_still_count(self):
+        self.assertEqual(self._keys("90% say it is easy to use."), ["percent:90"])
+
+
+class V32OnePersonOnceTests(unittest.TestCase):
+    def test_same_person_with_differently_written_titles_counts_once(self):
+        home = '<p>“Great.” — Jem Millett, Director of Admissions @ Flatiron School</p>'
+        about = (
+            "<figure><blockquote>Close changed how we work.</blockquote>"
+            "<figcaption>Jem Millett Senior Director of Admissions, Flatiron School</figcaption></figure>"
+        )
+        _t1, items_home = evidence_engine.extract_page_evidence("https://acme.com", "home", f"<html><body>{home}</body></html>")
+        _t2, items_about = evidence_engine.extract_page_evidence("https://acme.com/about", "about", f"<html><body>{about}</body></html>")
+        quotes = [i for i in evidence_engine.merge_evidence([items_home, items_about]) if i["category"] == "attributed_quote"]
+        self.assertEqual([i["key"] for i in quotes], ["jem millett"])
+
+    def test_name_stops_at_a_title_word(self):
+        for caption, key in [
+            ("Bruce Ackerman Founder, Printavo", "bruce ackerman"),
+            ("Eric Keosky-Smith Former Chief Growth Officer, Hownd", "eric keosky smith"),
+            ("Kayne Stroup Sr. Director, Finance", "kayne stroup"),
+        ]:
+            self.assertEqual(evidence_engine._caption_attribution(caption)[0], key, caption)
+
+    def test_different_people_stay_separate(self):
+        html = (
+            "<html><body><p>“A.” — Dana Derricks, Founder @ FollowUp.com</p>"
+            "<p>“B.” — Dana Smith, Founder @ Other.com</p></body></html>"
+        )
+        _text, items = evidence_engine.extract_page_evidence("https://acme.com", "home", html)
+        self.assertEqual(sorted(i["key"] for i in items if i["category"] == "attributed_quote"), ["dana derricks", "dana smith"])
+
 
 if __name__ == "__main__":
     unittest.main()
