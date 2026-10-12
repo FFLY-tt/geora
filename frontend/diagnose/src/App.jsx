@@ -87,6 +87,8 @@ export default function App() {
               currentScores={result.dimensions}
               previousProvenance={result.previous_provenance}
               currentProvenance={result.provenance}
+              previousCitationInterval={result.previous_citation_interval}
+              currentCitationInterval={result.dimensions.find((dim) => dim.dimension === 'citation_visibility')?.details}
             />
             <div className={justUnlocked ? 'scan-sweep-once' : ''}>
               <CitationResultCard

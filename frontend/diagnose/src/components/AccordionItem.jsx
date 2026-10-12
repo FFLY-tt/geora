@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { getDimensionLabel } from '../utils/dimensionLabels'
 import { getScoreBand } from '../utils/scoreColor'
 import EvidenceList from './EvidenceList'
+import FactFieldsTable from './FactFieldsTable'
 
 // The backend's plain_finding is a { what_we_found, what_it_costs_you,
 // fix_it_today } object — see backend/engines/_plain_finding_generator.py.
@@ -66,6 +67,7 @@ export default function AccordionItem({ dimension }) {
             </p>
           ))}
           {dimension.dimension === 'evidence_density' && <EvidenceList details={dimension.details} />}
+          {dimension.dimension === 'fact_consistency' && <FactFieldsTable details={dimension.details} />}
         </div>
       )}
     </div>

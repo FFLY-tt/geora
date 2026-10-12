@@ -5,6 +5,8 @@
 // citation_engine.py's DimensionScore.details — see each inline
 // comment for exactly which ones, and never fabricates a number when
 // the backend reports insufficient data.
+import { mentionSummary } from '../utils/mentionInterval.js'
+
 export default function CitationResultCard({ citation }) {
   const hasData = citation && citation.score !== -1
 
@@ -44,11 +46,15 @@ export default function CitationResultCard({ citation }) {
   }
 
   const percentage = totalCount > 0 ? Math.round((hitCount / totalCount) * 100) : 0
+  // details.mentions / total / ci_low / ci_high: the pooled mention count
+  // and its Wilson 95% interval. Older cached results lack them, and
+  // fall back to the count computed above without a range.
+  const summary = mentionSummary(citation.details)
 
   return (
     <div>
       <p className="citation-result-headline">
-        AI mentioned you in {hitCount} of {totalCount} answers ({percentage}%)
+        {summary || `Mentioned in ${hitCount} of ${totalCount} answers (${percentage}%).`}
       </p>
       <p className="citation-result-subtext">
         {queriesTotal} questions, each asked {runsPerQuery} times. AI answers change between asks, so we
