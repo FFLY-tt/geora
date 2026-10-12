@@ -4,7 +4,7 @@ import { useState } from 'react'
 const CATEGORY_LABELS = {
   number_or_statistic: 'Specific numbers',
   attributed_quote: 'Named customer testimonials',
-  named_customer_or_case_study: 'Named customers',
+  customer_stories: 'Customer story pages',
   third_party_source_or_certification: 'Third-party ratings and certifications',
 }
 
@@ -61,6 +61,20 @@ export default function EvidenceList({ details }) {
             </div>
           )
         })}
+      {open && Array.isArray(details.customer_logos_reference) && details.customer_logos_reference.length > 0 && (
+        <div className="evidence-group">
+          <p className="evidence-group-title">Customer logos we found (not scored, for reference only)</p>
+          <p className="evidence-none">{details.customer_stories_reason}</p>
+          <ul>
+            {details.customer_logos_reference.map((item) => (
+              <li key={`logo-${item.key}`}>
+                <span className="evidence-text">{item.text}</span>
+                <span className="evidence-context">{PAGE_LABELS[item.source_page] || item.source_page}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
