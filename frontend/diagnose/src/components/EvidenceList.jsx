@@ -21,6 +21,15 @@ const PAGE_LABELS = {
 // it came from, so a user can check each one themselves.
 export default function EvidenceList({ details }) {
   const [open, setOpen] = useState(false)
+  // The homepage could not be fetched at all (e.g. "blocked: HTTP 403"):
+  // say so plainly instead of showing an empty evidence list or a score.
+  if (details?.fetch_failure) {
+    return (
+      <p className="evidence-none">
+        We couldn't read this website. Reason: {details.fetch_failure}.
+      </p>
+    )
+  }
   const items = details?.items
   if (!Array.isArray(items)) return null
 
