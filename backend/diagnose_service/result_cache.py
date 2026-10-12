@@ -125,6 +125,25 @@ def get_previous_provenance(domain: str) -> dict | None:
     return provenance if isinstance(provenance, dict) else None
 
 
+def get_previous_citation_interval(domain: str) -> dict | None:
+    """
+    {mentions, total, ci_low, ci_high} from the previous result's
+    citation_visibility details, or None if there is no previous result
+    or it predates the interval fields. Lets the frontend tell a real
+    change from noise (overlapping intervals). Call this BEFORE save_result.
+    """
+    entry = _read_entry(domain)
+    if entry is None:
+        return None
+    for dim in entry.get("dimensions") or []:
+        if isinstance(dim, dict) and dim.get("dimension") == "citation_visibility":
+            details = dim.get("details") or {}
+            if details.get("ci_low") is None or details.get("ci_high") is None:
+                return None
+            return {key: details.get(key) for key in ("mentions", "total", "ci_low", "ci_high")}
+    return None
+
+
 def get_previous_scores(domain: str) -> dict | None:
     """
     Return {dimension: score} from whatever entry currently exists for
