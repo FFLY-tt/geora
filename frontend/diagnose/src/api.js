@@ -18,12 +18,14 @@ export async function runDiagnosis(companyName, domain) {
       }),
     })
   } catch (error) {
-    throw new Error(`Could not reach the diagnosis service: ${error.message}`)
+    console.error('Diagnosis request could not be sent:', error)
+    throw new Error("We couldn't reach our servers. Check your internet connection and try again.")
   }
 
   if (!response.ok) {
     const errorBody = await response.text()
-    throw new Error(`Diagnosis request failed (${response.status}): ${errorBody}`)
+    console.error(`Diagnosis request failed (${response.status}):`, errorBody)
+    throw new Error('Something went wrong while running the check. Please try again in a few minutes.')
   }
 
   return response.json()
@@ -48,12 +50,14 @@ export async function captureLead(email, companyName, domain, dimensions) {
       }),
     })
   } catch (error) {
-    throw new Error(`Could not reach the lead capture service: ${error.message}`)
+    console.error('Lead capture request could not be sent:', error)
+    throw new Error("We couldn't save your email. Check your internet connection and try again.")
   }
 
   if (!response.ok) {
     const errorBody = await response.text()
-    throw new Error(`Lead capture request failed (${response.status}): ${errorBody}`)
+    console.error(`Lead capture request failed (${response.status}):`, errorBody)
+    throw new Error("We couldn't save your email. Please try again in a few minutes.")
   }
 
   return response.json()

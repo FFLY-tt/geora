@@ -32,6 +32,11 @@
 - Do not refactor existing code unless asked. List anything you noticed in your final report instead.
 - Code, comments and commit messages in English.
 
+## Customer-facing UI
+- frontend/diagnose and frontend/dashboard are customer-facing.
+  Never show internal details (method versions, cache, engine names,
+  debug notes) in UI text. Keep them in the API response or logs.
+
 ## Language
 - Always reply to the repo owner in Simplified Chinese: explanations, questions, progress updates,
   and final reports.
