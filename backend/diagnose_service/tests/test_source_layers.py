@@ -170,6 +170,14 @@ class RelianceAndPresenceTests(unittest.TestCase):
         self.assertIsNone(layer["gap"])
         self.assertEqual(layer["status"], "unknown")
 
+    def test_checked_citations_say_how_much_of_the_layer_presence_is_based_on(self):
+        urls = [f"https://competitor.io/p{i}" for i in range(8)]
+        layer = by_layer(run(_details(urls, urls[:2]), {"competitor.io/p0": ConnectionError()}))["other_companies"]
+        self.assertEqual(layer["citations"], 10)
+        self.assertEqual(layer["pages_not_checked"], 3)
+        # five pages listed (p0 and p1 cited twice); p0 could not be read, so 2 + 1 + 1 + 1 citations were checked
+        self.assertEqual(layer["checked_citations"], 5)
+
     def test_own_site_presence_is_just_whether_it_was_cited(self):
         cited = by_layer(run(_details(["https://acme.com/pricing"], ["https://g2.com/a"])))["own_site"]
         self.assertEqual(cited["presence"], 1.0)

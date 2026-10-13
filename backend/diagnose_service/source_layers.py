@@ -222,6 +222,9 @@ def build_source_layers(company_name: str, domain: str, citation_details: dict, 
                 page = checks[(layer, url)]
             pages.append({"url": url, "citations": count, **page})
 
+        # How many of this layer's citations the presence figure is based on:
+        # only the most-cited pages are checked, so for a big layer it is a sample.
+        checked_citations = sum(p["citations"] for p in pages if p["status"] in ("checked", "cited"))
         if citations == 0:
             presence = None
         elif layer == "own_site":
@@ -243,6 +246,7 @@ def build_source_layers(company_name: str, domain: str, citation_details: dict, 
             "presence_fraction": presence,
             "gap_fraction": gap,
             "pages": pages,
+            "checked_citations": checked_citations,
             "unknown_pages": [{"url": p["url"], "citations": p["citations"], "error": p["error"]} for p in pages if p["status"] == "unknown"],
             "pages_not_checked": max(0, len(page_counts[layer]) - len(pages)),
             "domains": [
@@ -266,6 +270,7 @@ def build_source_layers(company_name: str, domain: str, citation_details: dict, 
                 "gap": None if layer["gap_fraction"] is None else round(float(layer["gap_fraction"]), 4),
                 "status": _status(layer, biggest, name),
                 "pages": layer["pages"],
+                "checked_citations": layer["checked_citations"],
                 "unknown_pages": layer["unknown_pages"],
                 "pages_not_checked": layer["pages_not_checked"],
                 "domains": layer["domains"],
