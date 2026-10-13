@@ -13,6 +13,9 @@ must be identical.
 
 from datetime import datetime, timezone
 
+import source_layers
+from engines._source_layers import LAYER_LIST_VERSION
+
 from engines import (
     citation_engine,
     evidence_engine,
@@ -33,6 +36,9 @@ METHOD_VERSIONS = {
         technical_engine,
     )
 }
+# The layered diagnosis is part of the method too: results from before it
+# existed are not directly comparable with results that have it.
+METHOD_VERSIONS["source_layers"] = source_layers.METHOD_VERSION
 
 
 def build_provenance(dimensions: list[dict]) -> dict:
@@ -57,6 +63,7 @@ def build_provenance(dimensions: list[dict]) -> dict:
         "run_date": now.date().isoformat(),
         "run_at": now.isoformat(),
         "method_versions": dict(METHOD_VERSIONS),
+        "source_layer_list_version": LAYER_LIST_VERSION,
         "question_set": question_set,
         "pages": pages,
     }
