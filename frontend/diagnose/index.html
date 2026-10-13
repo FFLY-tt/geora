@@ -174,28 +174,6 @@
         margin: 0;
       }
 
-      /* RadarChart */
-      .radar-chart-canvas {
-        position: relative;
-        width: 100%;
-        max-width: 500px;
-        height: 420px;
-        margin: 0 auto;
-      }
-
-      @media (max-width: 480px) {
-        .radar-chart-canvas {
-          height: 320px;
-        }
-      }
-
-      .radar-chart-note {
-        text-align: center;
-        color: var(--color-ink-muted);
-        font-size: 0.8rem;
-        margin: 12px 0 0;
-      }
-
       /* CacheNotice */
       .cache-notice {
         text-align: center;
@@ -315,35 +293,157 @@
         margin: 0;
       }
 
-      /* ScoreSummary: a simple label + score list under the radar
-         chart, not a progress-bar row — the bars lived here before the
-         radar chart took over showing relative magnitude. */
-      .score-list {
-        list-style: none;
-        margin: 24px 0 -28px; /* -28px = 12px (this list's own row gap) minus .section's 40px
-                                  padding-block, so the gap from the last row down to the
-                                  section's border-bottom matches the gap between rows instead
-                                  of being section padding plus a row gap. */
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
+      /* LayerConclusion */
+      .layer-conclusion {
+        margin: 18px 0 0;
+        padding: 16px 18px;
+        border-left: 3px solid var(--color-accent);
+        background: rgba(52, 82, 255, 0.05);
       }
 
-      .score-list-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        gap: 12px;
-        padding-top: 12px;
+      .layer-conclusion p {
+        margin: 0 0 6px;
+        font-size: 1.02rem;
+        line-height: 1.5;
+        color: var(--color-ink);
+      }
+
+      .layer-conclusion p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* SourceLayerTable */
+      .layer-table-head,
+      .layer-row-header {
+        display: grid;
+        grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr) 20px;
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+        text-align: left;
+      }
+
+      .layer-table-head {
+        padding: 0 0 8px;
+        font-size: 0.72rem;
+        line-height: 1.3;
+        color: var(--color-ink-muted);
+      }
+
+      .layer-row {
         border-top: 1px solid var(--color-border);
       }
 
-      .score-list-label {
+      .layer-row-header {
+        background: none;
+        border: none;
+        padding: 14px 0;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        color: var(--color-ink);
+        cursor: pointer;
+      }
+
+      .layer-cell-name {
         font-weight: 600;
       }
 
-      .score-list-value,
+      .layer-cell-number {
+        font-family: var(--font-mono);
+      }
+
+      .layer-cell-status {
+        font-size: 0.85rem;
+      }
+
+      .layer-cell-toggle {
+        color: var(--color-ink-muted);
+        text-align: right;
+      }
+
+      .layer-status-biggest_gap .layer-cell-status {
+        color: var(--color-danger);
+        font-weight: 600;
+      }
+
+      .layer-status-gap .layer-cell-status {
+        color: var(--color-warning);
+        font-weight: 600;
+      }
+
+      .layer-status-covered .layer-cell-status {
+        color: var(--color-success);
+        font-weight: 600;
+      }
+
+      .layer-status-not_used .layer-cell-status,
+      .layer-status-unknown .layer-cell-status {
+        color: var(--color-ink-muted);
+      }
+
+      .layer-body {
+        padding: 0 0 18px;
+        font-size: 0.88rem;
+        line-height: 1.5;
+        color: var(--color-ink-muted);
+      }
+
+      .layer-hint,
+      .layer-empty {
+        margin: 0 0 10px;
+      }
+
+      .layer-pages {
+        list-style: none;
+        margin: 0 0 8px;
+        padding: 0;
+      }
+
+      .layer-pages li {
+        margin: 0 0 12px;
+      }
+
+      .layer-page-url,
+      .layer-page-meta,
+      .layer-page-snippet {
+        display: block;
+        overflow-wrap: anywhere;
+      }
+
+      .layer-page-url {
+        color: var(--color-accent);
+        font-weight: 500;
+      }
+
+      .layer-page-snippet {
+        font-style: italic;
+      }
+
+      .layer-details {
+        margin-top: 14px;
+      }
+
+      .layer-details-title {
+        font-family: var(--font-headline);
+        font-size: 1.05rem;
+        color: var(--color-ink);
+        margin: 0 0 4px;
+      }
+
+      @media (max-width: 480px) {
+        .layer-table-head,
+        .layer-row-header {
+          grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.9fr) minmax(0, 0.9fr) minmax(0, 1.1fr) 14px;
+          gap: 6px;
+        }
+        .layer-row-header {
+          font-size: 0.85rem;
+        }
+        .layer-table-head {
+          font-size: 0.66rem;
+        }
+      }
+
       .accordion-score {
         font-family: var(--font-mono);
         font-variant-numeric: tabular-nums;

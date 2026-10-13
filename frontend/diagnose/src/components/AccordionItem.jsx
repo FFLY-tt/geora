@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { getDimensionLabel } from '../utils/dimensionLabels'
 import { getScoreBand } from '../utils/scoreColor'
 import EvidenceList from './EvidenceList'
+import { scoreText } from '../utils/scoreDisplay.js'
 
 // The backend's plain_finding is a { what_we_found, what_it_costs_you,
 // fix_it_today } object — see backend/engines/_plain_finding_generator.py.
@@ -38,7 +39,6 @@ export default function AccordionItem({ dimension }) {
 
   const label = getDimensionLabel(dimension.dimension)
   const band = getScoreBand(dimension.score)
-  const hasScore = dimension.score !== -1
 
   return (
     <div className="accordion-item">
@@ -51,7 +51,7 @@ export default function AccordionItem({ dimension }) {
         <span className="accordion-header-label">
           <span>{label}</span>
           <span className="accordion-score" style={{ color: band.color }}>
-            {hasScore ? dimension.score : '—'}
+            {scoreText(dimension)}
           </span>
         </span>
         <span className="accordion-toggle">{expanded ? '−' : '+'}</span>

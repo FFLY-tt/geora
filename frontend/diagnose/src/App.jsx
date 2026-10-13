@@ -4,8 +4,7 @@ import SearchForm from './components/SearchForm'
 import CacheNotice from './components/CacheNotice'
 import ScoreChangeNote from './components/ScoreChangeNote'
 import CitationResultCard from './components/CitationResultCard'
-import RadarChart from './components/RadarChart'
-import ScoreSummary from './components/ScoreSummary'
+import LayerConclusion from './components/LayerConclusion'
 import BreakdownAccordion from './components/BreakdownAccordion'
 import ProvenanceFooter from './components/ProvenanceFooter'
 import { runDiagnosis, captureLead } from './api'
@@ -92,15 +91,15 @@ export default function App() {
               <CitationResultCard
                 citation={result.dimensions.find((dim) => dim.dimension === 'citation_visibility')}
               />
-              {/* citation_visibility is the outcome card above, not one of the 5 reasons below it. */}
-              <RadarChart dimensions={result.dimensions.filter((dim) => dim.dimension !== 'citation_visibility')} />
-              <ScoreSummary dimensions={result.dimensions.filter((dim) => dim.dimension !== 'citation_visibility')} />
+              {/* The conclusion names the kind of website where the biggest gap is. */}
+              <LayerConclusion sourceLayers={result.source_layers} />
             </div>
           </section>
 
           <section className="section">
             <BreakdownAccordion
               dimensions={result.dimensions}
+              sourceLayers={result.source_layers}
               unlocked={unlocked}
               onUnlock={handleUnlock}
             />
