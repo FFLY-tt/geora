@@ -6,7 +6,6 @@ import ScoreChangeNote from './components/ScoreChangeNote'
 import CitationResultCard from './components/CitationResultCard'
 import LayerConclusion from './components/LayerConclusion'
 import BreakdownAccordion from './components/BreakdownAccordion'
-import ProvenanceFooter from './components/ProvenanceFooter'
 import { runDiagnosis, captureLead } from './api'
 
 // How long the one-time post-unlock scan-sweep highlight plays for. Must
@@ -106,9 +105,6 @@ export default function App() {
             {unlockError && <p className="form-error">{unlockError}</p>}
           </section>
 
-          <section className="section">
-            <ProvenanceFooter provenance={result.provenance} />
-          </section>
         </>
       )}
     </div>
