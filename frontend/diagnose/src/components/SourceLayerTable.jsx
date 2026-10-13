@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import AccordionItem from './AccordionItem'
-import { citedText, dimensionsForLayer, layerRows, pageHref, pageStatusText, shortUrl, unplacedDimensions } from '../utils/sourceLayers.js'
+import { citedText, dimensionsForLayer, layerRows, pageHref, pageStatusText, pageTitle, shortUrl, unplacedDimensions } from '../utils/sourceLayers.js'
 
 // One row per kind of website AI read: how much AI leaned on it, how much
 // of it mentions the company, and the status. Opening a row lists the
@@ -9,18 +9,24 @@ import { citedText, dimensionsForLayer, layerRows, pageHref, pageStatusText, sho
 // diagnostic details that belong to that layer.
 //
 // Props: sourceLayers (result.source_layers), dimensions (result.dimensions).
-function PageList({ layer, pages, pagesNotChecked }) {
+// The most-cited pages are shown first; the rest are one click away.
+const PAGES_SHOWN = 8
+
+function PageList({ layer, pages }) {
+  const [showAll, setShowAll] = useState(false)
   if (pages.length === 0) {
     return <p className="layer-empty">AI didn't cite any page from this group.</p>
   }
+  const visible = showAll ? pages : pages.slice(0, PAGES_SHOWN)
   return (
     <>
       <ul className="layer-pages">
-        {pages.map((page) => (
+        {visible.map((page) => (
           <li key={page.url}>
             <a className="layer-page-url" href={pageHref(page.url)} target="_blank" rel="noreferrer">
-              {shortUrl(page.url)}
+              {pageTitle(page)}
             </a>
+            <span className="layer-page-meta">{shortUrl(page.url)}</span>
             <span className="layer-page-meta">
               {citedText(page.citations)} · {pageStatusText(layer, page)}
             </span>
@@ -28,10 +34,10 @@ function PageList({ layer, pages, pagesNotChecked }) {
           </li>
         ))}
       </ul>
-      {pagesNotChecked > 0 && (
-        <p className="layer-empty">
-          Plus {pagesNotChecked} other page{pagesNotChecked === 1 ? '' : 's'} cited less often, not listed.
-        </p>
+      {pages.length > PAGES_SHOWN && (
+        <button type="button" className="layer-show-all" onClick={() => setShowAll((prev) => !prev)}>
+          {showAll ? 'Show fewer pages' : `Show all ${pages.length} pages`}
+        </button>
       )}
     </>
   )
@@ -54,7 +60,7 @@ function LayerRow({ row, dimensions }) {
       {open && (
         <div className="layer-body">
           <p className="layer-hint">{row.hint}</p>
-          <PageList layer={row.layer} pages={row.pages} pagesNotChecked={row.pages_not_checked || 0} />
+          <PageList layer={row.layer} pages={row.pages} />
           {details.length > 0 && (
             <div className="layer-details">
               {row.layer === 'own_site' && <h4 className="layer-details-title">Your website details</h4>}

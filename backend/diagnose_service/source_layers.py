@@ -3,24 +3,29 @@ Layered diagnosis: where AI reads, and whether the company shows up there.
 
 Takes the citations citation_visibility already collected (every URL AI
 cited across the answers to the buyer questions) and, with no further
-Perplexity calls and no LLM, works out for each source layer (see
-engines._source_layers):
+Perplexity calls and no LLM, works out for each source group (see
+engines._source_layers) :
 
-- reliance: this layer's citations / all citations. How much AI leans on
+- reliance: this group's citations / all citations. How much AI leans on
   this kind of site for these questions. The data sets the weight, not us.
-- presence: for the layer's most-cited pages (at most MAX_PAGES_PER_LAYER),
-  the share of citations that point at a page which mentions the company,
-  fetched with method="full". A page that can't be fetched is "unknown"
-  and left out of the denominator. For the company's own site, presence
-  is simply whether AI cited it at all.
-- gap: reliance x (1 - presence). The layer with the biggest gap is where
+- presence: the citation-weighted share of the group's cited pages that
+  mention the company. Every cited page is fetched (up to
+  MAX_PAGES_PER_COMPANY, most-cited first) with method="full". A page that
+  can't be fetched is "unknown" and left out of the denominator. For the
+  company's own site, presence is simply whether AI cited it at all.
+- gap: reliance x (1 - presence). The group with the biggest gap is where
   the company is missing from what AI actually reads.
+
+Other companies' pages make up most of what AI cites, and they are not all
+the same: "best tools" lists, guides and help articles, and product pages
+call for different responses. They are split by page type (rules over the
+URL and the page title) into the groups lists, guides and product_pages.
 
 Fractions are used for the arithmetic so that "equal" really is equal and
 ties are broken by LAYER_ORDER, never by floating point noise.
 
 The five older diagnostic dimensions are untouched; the frontend files them
-under the layer they belong to (fact_consistency under review_media, the
+under the group they belong to (fact_consistency under review_media, the
 other four under own_site).
 """
 
@@ -29,36 +34,49 @@ from concurrent.futures import ThreadPoolExecutor
 from fractions import Fraction
 from urllib.parse import urlparse
 
+import requests
+from bs4 import BeautifulSoup
+
 from engines._source_layers import (
     LAYER_LIST_VERSION,
     LAYER_ORDER,
+    OTHER_COMPANY_GROUPS,
+    PAGE_TYPE_RULES_VERSION,
     classify_host,
+    classify_page_type,
     normalize_host,
 )
 from engines.citation_engine import _company_name_mentioned, _is_common_word_company_name
-from shared._fetch_utils import fetch_page_text
+from shared._fetch_utils import extract_text_from_html
+from shared.config import settings
 
 # Bump whenever this analysis changes in a way that makes results computed
 # before and after not directly comparable.
-METHOD_VERSION = "v1"
+# v2: other companies split by page type; every cited page is checked.
+METHOD_VERSION = "v2"
 
-# At most this many pages per layer are fetched (the most-cited ones).
-MAX_PAGES_PER_LAYER = 5
+# At most this many cited pages are fetched per company, most-cited first.
+MAX_PAGES_PER_COMPANY = 60
 
 _SNIPPET_RADIUS = 90
+_FETCH_WORKERS = 12
+_TOP_PAGES_IN_CONCLUSION = 3
 
-# Which dimensions belong under which layer, for the frontend.
+# Which dimensions belong under which group, for the frontend.
 DIMENSIONS_BY_LAYER = {
     "review_media": ["fact_consistency"],
     "own_site": ["topic_relevance", "evidence_density", "content_recency", "technical_readability"],
 }
 
-# Customer-facing wording for the conclusion. Fixed templates.
-_LAYER_DESCRIPTIONS = {
+# Customer-facing wording for the conclusion. Fixed templates, one per group
+# that can be the biggest gap.
+_GROUP_DESCRIPTIONS = {
     "reference": "reference sources such as Wikipedia, standards bodies and government or university sites",
     "review_media": "review sites and tech media",
     "community": "community sites such as Reddit, LinkedIn and YouTube",
-    "other_companies": "other companies' websites",
+    "lists": "'best tools' lists and comparisons written by other companies",
+    "guides": "other companies' guides and help articles",
+    "product_pages": "other companies' product pages",
 }
 _NO_SOURCES = "AI didn't show any sources for these questions, so we can't tell where it gets its information."
 _OWN_SITE_NOT_CITED = "AI didn't cite your own website in any answer."
@@ -97,43 +115,117 @@ def _citations_per_answer(citation_details: dict) -> list[list[str]]:
     return answers
 
 
-def page_mentions_company(company_name: str, domain: str, text: str) -> str | None:
-    """
-    The snippet of `text` that mentions the company, or None. Uses the
-    same whole-word name rule as citation_visibility. A company whose name
-    is also an ordinary English word (Close, Linear) only counts when its
-    domain appears in the text: that rule is stricter than citation_visibility's
-    (which asks an LLM), because this analysis must stay deterministic.
-    """
-    candidates = []
-    if not _is_common_word_company_name(company_name) and _company_name_mentioned(company_name, text):
-        candidates.append(re.compile(r"\b" + re.escape(company_name.strip()) + r"\b", re.IGNORECASE))
+# ---------------------------------------------------------------------------
+# Does a page mention the company?
+# ---------------------------------------------------------------------------
+
+def _domain_pattern(domain: str):
+    """Matches the company's domain (or a subdomain of it) in text or in a link, but not inside another word such as enclose.com."""
     own = normalize_host(domain)
-    if own:
-        candidates.append(re.compile(r"(?<![\w.-])" + re.escape(own) + r"(?![\w-])", re.IGNORECASE))
-    for pattern in candidates:
-        match = pattern.search(text)
+    if not own:
+        return None
+    return re.compile(r"(?<![\w-])" + re.escape(own) + r"(?![\w-])(?!\.[a-z])", re.IGNORECASE)
+
+
+def _snippet(text: str, start: int, end: int) -> str:
+    left, right = max(0, start - _SNIPPET_RADIUS), min(len(text), end + _SNIPPET_RADIUS)
+    return re.sub(r"\s+", " ", text[left:right]).strip()
+
+
+def _heading_or_list_start_pattern(company_name: str):
+    """Case-sensitive: the company name opening a heading or list item, with an optional number or bullet before it."""
+    return re.compile(
+        r"^\s*(?:#?\d+\s*[.):\-]?\s*|[-•*]\s*)?" + re.escape(company_name.strip()) + r"(?![A-Za-z0-9])"
+    )
+
+
+def analyze_page(html: str, company_name: str, domain: str) -> dict:
+    """
+    What one fetched page says about the company. Returns {title, mentions_you,
+    rule, snippet, near_miss}.
+
+    Companies whose name is not an ordinary English word: the company name as
+    a whole word in the page text (the rule citation_visibility uses), or the
+    company's domain in the text.
+
+    Companies whose name is also an ordinary English word (Close, Linear)
+    can't be matched by the word alone ("close the deal", "a linear
+    process"), so a page counts only if ANY of these holds, in this order:
+    a link to the company's domain; the domain in the text; the exact,
+    capitalized name opening a heading (h1 to h4) or list item. No LLM.
+
+    `near_miss` is a snippet where the name appears as a plain word on a page
+    that was judged NOT to mention the company. It never affects the result;
+    it is kept so the matching rules can be audited.
+    """
+    text = extract_text_from_html(html, method="full") or ""
+    soup = BeautifulSoup(html, "html.parser")
+    title = re.sub(r"\s+", " ", soup.title.get_text(" ", strip=True)).strip() if soup.title else None
+    domain_re = _domain_pattern(domain)
+    result = {"title": title or None, "mentions_you": False, "rule": None, "snippet": None, "near_miss": None}
+
+    def hit(rule, snippet):
+        result.update(mentions_you=True, rule=rule, snippet=snippet)
+        return result
+
+    if _is_common_word_company_name(company_name):
+        if domain_re:
+            for anchor in soup.find_all("a", href=True):
+                match = domain_re.search(anchor["href"])
+                if match:
+                    return hit("domain_in_link", f"link to {anchor['href'][:160]}")
+            match = domain_re.search(text)
+            if match:
+                return hit("domain_in_text", _snippet(text, match.start(), match.end()))
+        opening = _heading_or_list_start_pattern(company_name)
+        for element in soup.find_all(["h1", "h2", "h3", "h4", "li"]):
+            element_text = re.sub(r"\s+", " ", element.get_text(" ", strip=True))
+            if opening.match(element_text):
+                return hit("heading_or_list_start", element_text[:200])
+    else:
+        if _company_name_mentioned(company_name, text):
+            match = re.search(r"\b" + re.escape(company_name.strip()) + r"\b", text, re.IGNORECASE)
+            return hit("name_in_text", _snippet(text, match.start(), match.end()))
+        match = domain_re.search(text) if domain_re else None
         if match:
-            start, end = max(0, match.start() - _SNIPPET_RADIUS), min(len(text), match.end() + _SNIPPET_RADIUS)
-            return re.sub(r"\s+", " ", text[start:end]).strip()
-    return None
+            return hit("domain_in_text", _snippet(text, match.start(), match.end()))
+
+    word = re.search(r"\b" + re.escape(company_name.strip()) + r"\b", text, re.IGNORECASE)
+    if word:
+        result["near_miss"] = _snippet(text, word.start(), word.end())
+    return result
 
 
-def _check_page(url: str, company_name: str, domain: str, fetch_text) -> dict:
-    """Fetch one cited page and decide whether it mentions the company. Never raises."""
+def fetch_html(url: str) -> str:
+    """The raw HTML of `url`. Raises requests.RequestException on any network or HTTP failure."""
+    response = requests.get(
+        url if url.startswith("http") else f"https://{url}",
+        headers={"User-Agent": settings.http_user_agent},
+        timeout=settings.request_timeout_seconds,
+    )
+    response.raise_for_status()
+    return response.text
+
+
+def _check_page(url: str, company_name: str, domain: str, fetch) -> dict:
+    """Fetch one cited page and analyze it. Never raises: a page that can't be fetched is "unknown"."""
     try:
-        text = fetch_text(url if url.startswith("http") else f"https://{url}", method="full")
+        html = fetch(url)
     except Exception as exc:  # any fetch problem makes the page "unknown", never a failure of the diagnosis
-        return {"status": "unknown", "mentions_you": None, "snippet": None, "error": type(exc).__name__}
-    snippet = page_mentions_company(company_name, domain, text or "")
-    return {"status": "checked", "mentions_you": snippet is not None, "snippet": snippet, "error": None}
+        return {"status": "unknown", "mentions_you": None, "rule": None, "snippet": None, "near_miss": None,
+                "title": None, "error": type(exc).__name__}
+    return {"status": "checked", "error": None, **analyze_page(html, company_name, domain)}
 
+
+# ---------------------------------------------------------------------------
+# Gaps and the conclusion
+# ---------------------------------------------------------------------------
 
 def largest_gap_layer(gaps: dict) -> str | None:
     """
-    The layer with the biggest positive gap. `gaps` maps layer -> Fraction
-    (or None when the layer couldn't be checked). Ties go to the layer that
-    comes first in LAYER_ORDER. None when no layer has a positive gap.
+    The group with the biggest positive gap. `gaps` maps group -> Fraction
+    (or None when the group couldn't be checked). Ties go to the group that
+    comes first in LAYER_ORDER. None when no group has a positive gap.
     """
     best, best_gap = None, Fraction(0)
     for layer in LAYER_ORDER:
@@ -143,8 +235,26 @@ def largest_gap_layer(gaps: dict) -> str | None:
     return best
 
 
+def _site_name(url: str) -> str:
+    return normalize_host(url) or url
+
+
+def _page_label(page: dict) -> str:
+    """'“Title” (site.com)' for the conclusion; the URL stands in for a missing title."""
+    title = re.sub(r"\s+", " ", page.get("title") or "").strip()
+    if len(title) > 90:
+        title = title[:87].rstrip() + "..."
+    return f"“{title or page['url']}” ({_site_name(page['url'])})"
+
+
+def top_pages_without_you(pages: list[dict], count: int = _TOP_PAGES_IN_CONCLUSION) -> list[dict]:
+    """The most-cited pages that were checked and don't mention the company (ties: URL order)."""
+    candidates = [p for p in pages if p["status"] == "checked" and not p["mentions_you"]]
+    return sorted(candidates, key=lambda p: (-p["citations"], p["url"]))[:count]
+
+
 def build_conclusion(layers: dict, biggest: str | None, total_citations: int) -> list[str]:
-    """The fixed-template conclusion sentences, built only from the computed numbers."""
+    """The fixed-template conclusion sentences, built only from the computed numbers and pages."""
     if total_citations == 0:
         return [_NO_SOURCES]
 
@@ -152,11 +262,14 @@ def build_conclusion(layers: dict, biggest: str | None, total_citations: int) ->
     if biggest:
         layer = layers[biggest]
         verb = "mostly reads" if layer["reliance_fraction"] > Fraction(1, 2) else "often reads"
+        top = top_pages_without_you(layer["pages"])
+        listing = ", ".join(_page_label(p) for p in top)
         if layer["presence_fraction"] == 0:
-            tail = "they don't mention you."
+            tail = f"the top ones don't mention you: {listing}." if listing else "they don't mention you."
         else:
-            tail = f"only {round(layer['presence_fraction'] * 100)}% of what it reads there mentions you."
-        sentences.append(f"For these questions, AI {verb} {_LAYER_DESCRIPTIONS[biggest]}, and {tail}")
+            share = round(layer["presence_fraction"] * 100)
+            tail = f"only {share}% of them mention you." + (f" The most cited ones that don't: {listing}." if listing else "")
+        sentences.append(f"For these questions, AI {verb} {_GROUP_DESCRIPTIONS[biggest]}, and {tail}")
     elif any(l["citations"] and l["presence_fraction"] is None for l in layers.values()):
         sentences.append(_COULD_NOT_CHECK)
     else:
@@ -177,61 +290,70 @@ def _status(layer: dict, biggest: str | None, name: str) -> str:
     return "gap" if layer["gap_fraction"] > 0 else "covered"
 
 
-def build_source_layers(company_name: str, domain: str, citation_details: dict, fetch_text=fetch_page_text) -> dict | None:
+def _ratio(numerator: int, denominator: int) -> float | None:
+    return round(numerator / denominator, 4) if denominator else None
+
+
+def build_source_layers(company_name: str, domain: str, citation_details: dict, fetch=fetch_html) -> dict | None:
     """
     The layered diagnosis for one company, from citation_visibility's
-    details. Returns None when there are no successful answers at all (nothing
-    to analyze). `fetch_text(url, method="full")` is injectable for tests.
+    details. Returns None when there are no successful answers at all
+    (nothing to analyze). `fetch(url) -> html` is injectable for tests.
     """
     own_domain = normalize_host(domain) or ""
     answers = _citations_per_answer(citation_details)
     if not answers:
         return None
 
-    # citation counts per layer and per page, and per domain for the audit list
-    page_counts: dict[str, dict[str, int]] = {layer: {} for layer in LAYER_ORDER}
-    domain_counts: dict[str, dict[str, int]] = {layer: {} for layer in LAYER_ORDER}
+    # citation counts per page and per domain, by the page's site layer
+    page_counts: dict[str, int] = {}
     for urls in answers:
         for url in urls:
-            host = normalize_host(url)
-            layer = classify_host(host, own_domain)
-            page_counts[layer][url] = page_counts[layer].get(url, 0) + 1
-            domain_counts[layer][host] = domain_counts[layer].get(host, 0) + 1
+            page_counts[url] = page_counts.get(url, 0) + 1
+    total_citations = sum(page_counts.values())
+    site_layer = {url: classify_host(normalize_host(url), own_domain) for url in page_counts}
 
-    layer_citations = {layer: sum(page_counts[layer].values()) for layer in LAYER_ORDER}
-    total_citations = sum(layer_citations.values())
+    # check the most-cited pages (own site excluded: a citation of it is presence by itself)
+    candidates = sorted((u for u in page_counts if site_layer[u] != "own_site"), key=lambda u: (-page_counts[u], u))
+    to_fetch = candidates[:MAX_PAGES_PER_COMPANY]
+    with ThreadPoolExecutor(max_workers=_FETCH_WORKERS) as executor:
+        checks = dict(zip(to_fetch, executor.map(lambda u: _check_page(u, company_name, domain, fetch), to_fetch)))
 
-    # pick and check the most-cited pages of every layer except own_site
-    top_pages = {
-        layer: sorted(page_counts[layer].items(), key=lambda item: (-item[1], item[0]))[:MAX_PAGES_PER_LAYER]
-        for layer in LAYER_ORDER
-    }
-    to_fetch = [(layer, url) for layer in LAYER_ORDER if layer != "own_site" for url, _ in top_pages[layer]]
-    with ThreadPoolExecutor(max_workers=8) as executor:
-        checks = dict(zip(to_fetch, executor.map(lambda item: _check_page(item[1], company_name, domain, fetch_text), to_fetch)))
+    # assign every page to a group; other companies' pages by page type
+    pages_by_group: dict[str, list[dict]] = {layer: [] for layer in LAYER_ORDER}
+    domains_by_group: dict[str, dict[str, int]] = {layer: {} for layer in LAYER_ORDER}
+    for url, count in page_counts.items():
+        if site_layer[url] == "own_site":
+            record = {"status": "cited", "mentions_you": True, "rule": "own_site", "snippet": None, "near_miss": None,
+                      "title": None, "error": None}
+        elif url in checks:
+            record = checks[url]
+        else:
+            record = {"status": "not_checked", "mentions_you": None, "rule": None, "snippet": None, "near_miss": None,
+                      "title": None, "error": None}
+
+        group = site_layer[url]
+        page_type = None
+        if group == "other_companies":
+            group = page_type = classify_page_type(url, record.get("title"))
+        pages_by_group[group].append({"url": url, "citations": count, "page_type": page_type, **record})
+        host = normalize_host(url)
+        domains_by_group[group][host] = domains_by_group[group].get(host, 0) + count
 
     layers: dict[str, dict] = {}
-    for layer in LAYER_ORDER:
-        citations = layer_citations[layer]
+    for name in LAYER_ORDER:
+        pages = sorted(pages_by_group[name], key=lambda p: (-p["citations"], p["url"]))
+        citations = sum(p["citations"] for p in pages)
         reliance = Fraction(citations, total_citations) if total_citations else Fraction(0)
-        pages = []
-        for url, count in top_pages[layer]:
-            if layer == "own_site":
-                page = {"status": "cited", "mentions_you": True, "snippet": None, "error": None}
-            else:
-                page = checks[(layer, url)]
-            pages.append({"url": url, "citations": count, **page})
+        known = [p for p in pages if p["status"] == "checked"]
+        checked_citations = sum(p["citations"] for p in known) if name != "own_site" else citations
+        denominator = sum(p["citations"] for p in known)
 
-        # How many of this layer's citations the presence figure is based on:
-        # only the most-cited pages are checked, so for a big layer it is a sample.
-        checked_citations = sum(p["citations"] for p in pages if p["status"] in ("checked", "cited"))
         if citations == 0:
             presence = None
-        elif layer == "own_site":
+        elif name == "own_site":
             presence = Fraction(1)
         else:
-            known = [p for p in pages if p["status"] == "checked"]
-            denominator = sum(p["citations"] for p in known)
             presence = Fraction(sum(p["citations"] for p in known if p["mentions_you"]), denominator) if denominator else None
 
         if citations == 0:
@@ -239,19 +361,16 @@ def build_source_layers(company_name: str, domain: str, citation_details: dict, 
         else:
             gap = reliance * (1 - presence) if presence is not None else None
 
-        layers[layer] = {
-            "layer": layer,
+        layers[name] = {
             "citations": citations,
             "reliance_fraction": reliance,
             "presence_fraction": presence,
             "gap_fraction": gap,
             "pages": pages,
             "checked_citations": checked_citations,
-            "unknown_pages": [{"url": p["url"], "citations": p["citations"], "error": p["error"]} for p in pages if p["status"] == "unknown"],
-            "pages_not_checked": max(0, len(page_counts[layer]) - len(pages)),
             "domains": [
                 {"domain": host, "citations": count}
-                for host, count in sorted(domain_counts[layer].items(), key=lambda item: (-item[1], item[0]))
+                for host, count in sorted(domains_by_group[name].items(), key=lambda item: (-item[1], item[0]))
             ],
         }
 
@@ -261,27 +380,49 @@ def build_source_layers(company_name: str, domain: str, citation_details: dict, 
     output_layers = []
     for name in LAYER_ORDER:
         layer = layers[name]
+        pages = layer["pages"]
         output_layers.append(
             {
                 "layer": name,
+                "parent": "other_companies" if name in OTHER_COMPANY_GROUPS else name,
                 "citations": layer["citations"],
                 "reliance": round(float(layer["reliance_fraction"]), 4),
                 "presence": None if layer["presence_fraction"] is None else round(float(layer["presence_fraction"]), 4),
                 "gap": None if layer["gap_fraction"] is None else round(float(layer["gap_fraction"]), 4),
                 "status": _status(layer, biggest, name),
-                "pages": layer["pages"],
-                "checked_citations": layer["checked_citations"],
-                "unknown_pages": layer["unknown_pages"],
-                "pages_not_checked": layer["pages_not_checked"],
+                "coverage": {
+                    "checked_citations": layer["checked_citations"],
+                    "citations": layer["citations"],
+                    "ratio": _ratio(layer["checked_citations"], layer["citations"]),
+                },
+                "pages": pages,
+                "pages_not_checked": sum(1 for p in pages if p["status"] == "not_checked"),
+                "unknown_pages": [
+                    {"url": p["url"], "citations": p["citations"], "error": p["error"]} for p in pages if p["status"] == "unknown"
+                ],
                 "domains": layer["domains"],
             }
         )
 
+    scored = [l for l in layers.values()]
+    checked_total = sum(
+        p["citations"] for l in scored for p in l["pages"] if p["status"] == "checked"
+    )
+    fetchable_total = sum(p["citations"] for l in scored for p in l["pages"] if p["status"] != "cited")
     return {
         "list_version": LAYER_LIST_VERSION,
+        "page_type_rules_version": PAGE_TYPE_RULES_VERSION,
         "method_version": METHOD_VERSION,
         "total_answers": len(answers),
         "total_citations": total_citations,
+        "pages_cited": len(page_counts),
+        "pages_checked": sum(1 for u in checks if checks[u]["status"] == "checked"),
+        "pages_cap": MAX_PAGES_PER_COMPANY,
+        "coverage": {
+            "checked_citations": checked_total,
+            "citations_outside_own_site": fetchable_total,
+            "ratio": _ratio(checked_total, fetchable_total),
+        },
         "biggest_gap_layer": biggest,
         "conclusion": conclusion,
         "layers": output_layers,

@@ -6,6 +6,7 @@ import {
   formatPercent,
   layerRows,
   pageStatusText,
+  pageTitle,
   shortUrl,
   unplacedDimensions,
 } from './sourceLayers.js'
@@ -42,18 +43,37 @@ test('page status wording', () => {
   assert.equal(pageStatusText('community', { status: 'checked', mentions_you: true }), 'Mentions you')
   assert.equal(pageStatusText('community', { status: 'checked', mentions_you: false }), "Doesn't mention you")
   assert.equal(pageStatusText('community', { status: 'unknown', mentions_you: null }), "Couldn't read this page")
+  assert.equal(pageStatusText('guides', { status: 'not_checked', mentions_you: null }), 'Not checked')
+})
+
+test('a page is shown by its title, or by its address when there is none', () => {
+  assert.equal(pageTitle({ url: 'g2.com/a', title: '  Best CRMs  ' }), 'Best CRMs')
+  assert.equal(pageTitle({ url: 'g2.com/a', title: null }), 'g2.com/a')
+  assert.equal(pageTitle({ url: 'g2.com/a', title: '   ' }), 'g2.com/a')
+})
+
+test('the three page types of other companies have their own customer wording', () => {
+  const rows = layerRows({
+    layers: ['lists', 'guides', 'product_pages'].map((layer) => ({ layer, citations: 1, reliance: 0.3, presence: 0, gap: 0.3, status: 'gap' })),
+  })
+  assert.deepEqual(rows.map((r) => r.label), [
+    "Other companies' 'best tools' lists",
+    "Other companies' guides and help pages",
+    "Other companies' product pages",
+  ])
+  for (const row of rows) assert.ok(row.hint.length > 10, row.layer)
 })
 
 test('layer rows carry customer wording and no internal terms', () => {
   const rows = layerRows({
     layers: [
-      { layer: 'other_companies', citations: 9, reliance: 0.6, presence: 0, gap: 0.6, status: 'biggest_gap' },
+      { layer: 'lists', citations: 9, reliance: 0.6, presence: 0, gap: 0.6, status: 'biggest_gap' },
       { layer: 'reference', citations: 0, reliance: 0, presence: null, gap: 0, status: 'not_used' },
       { layer: 'community', citations: 2, reliance: 0.1, presence: null, gap: null, status: 'unknown' },
     ],
   })
   assert.deepEqual(rows.map((r) => [r.label, r.relianceText, r.presenceText, r.statusText]), [
-    ["Other companies' websites", '60%', '0%', 'Biggest gap'],
+    ["Other companies' 'best tools' lists", '60%', '0%', 'Biggest gap'],
     ['Reference sources', '0%', '—', "AI didn't use this"],
     ['Community sites', '10%', '—', "Couldn't check"],
   ])

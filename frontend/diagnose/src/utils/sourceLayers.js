@@ -9,6 +9,9 @@ export const LAYER_LABELS = {
   review_media: 'Review sites and media',
   community: 'Community sites',
   own_site: 'Your website',
+  lists: "Other companies' 'best tools' lists",
+  guides: "Other companies' guides and help pages",
+  product_pages: "Other companies' product pages",
   other_companies: "Other companies' websites",
 }
 
@@ -17,7 +20,10 @@ export const LAYER_HINTS = {
   review_media: 'G2, Capterra, Gartner and tech or industry media',
   community: 'Reddit, LinkedIn, YouTube, Quora and similar',
   own_site: 'Your own domain and its subdomains',
-  other_companies: 'Competitors and other companies, including their blogs and comparison pages',
+  lists: 'Best-of lists, comparisons and alternatives pages written by other companies',
+  guides: 'Blog posts, how-to guides, documentation and help articles from other companies',
+  product_pages: "Other companies' own product, pricing and landing pages",
+  other_companies: 'Competitors and other companies',
 }
 
 export const STATUS_LABELS = {
@@ -56,7 +62,14 @@ export function unplacedDimensions(dimensions) {
 export function pageStatusText(layer, page) {
   if (layer === 'own_site') return 'Your site'
   if (page.status === 'unknown') return "Couldn't read this page"
+  if (page.status === 'not_checked') return 'Not checked'
   return page.mentions_you ? 'Mentions you' : "Doesn't mention you"
+}
+
+/** The text to show for a cited page: its title when we have one, otherwise its address. */
+export function pageTitle(page) {
+  const title = (page.title || '').trim()
+  return title || shortUrl(page.url)
 }
 
 /** A short readable form of a citation URL (the backend sends host + path). */

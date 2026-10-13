@@ -14,7 +14,7 @@ must be identical.
 from datetime import datetime, timezone
 
 import source_layers
-from engines._source_layers import LAYER_LIST_VERSION
+from engines._source_layers import LAYER_LIST_VERSION, PAGE_TYPE_RULES_VERSION
 
 from engines import (
     citation_engine,
@@ -64,6 +64,7 @@ def build_provenance(dimensions: list[dict]) -> dict:
         "run_at": now.isoformat(),
         "method_versions": dict(METHOD_VERSIONS),
         "source_layer_list_version": LAYER_LIST_VERSION,
+        "page_type_rules_version": PAGE_TYPE_RULES_VERSION,
         "question_set": question_set,
         "pages": pages,
     }
