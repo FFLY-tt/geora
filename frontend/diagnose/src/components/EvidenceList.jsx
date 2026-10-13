@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { fetchFailureText } from '../utils/scoreDisplay.js'
 
 // Display names for the four evidence categories evidence_density returns.
 const CATEGORY_LABELS = {
@@ -21,14 +22,10 @@ const PAGE_LABELS = {
 // it came from, so a user can check each one themselves.
 export default function EvidenceList({ details }) {
   const [open, setOpen] = useState(false)
-  // The homepage could not be fetched at all (e.g. "blocked: HTTP 403"):
-  // say so plainly instead of showing an empty evidence list or a score.
+  // The homepage could not be fetched at all: say so plainly instead of
+  // showing an empty evidence list or a score, without the status code.
   if (details?.fetch_failure) {
-    return (
-      <p className="evidence-none">
-        We couldn't read this website. Reason: {details.fetch_failure}.
-      </p>
-    )
+    return <p className="evidence-none">{fetchFailureText(details.fetch_failure)}</p>
   }
   const items = details?.items
   if (!Array.isArray(items)) return null
@@ -63,8 +60,11 @@ export default function EvidenceList({ details }) {
         })}
       {open && Array.isArray(details.customer_logos_reference) && details.customer_logos_reference.length > 0 && (
         <div className="evidence-group">
-          <p className="evidence-group-title">Customer logos we found (not scored, for reference only)</p>
-          <p className="evidence-none">{details.customer_stories_reason}</p>
+          <p className="evidence-group-title">Customer logos we found (shown for reference, not counted)</p>
+          <p className="evidence-none">
+            AI assistants can't see logo images, so logos don't count as proof. Pages that tell a customer's
+            story do, because AI can read and quote them.
+          </p>
           <ul>
             {details.customer_logos_reference.map((item) => (
               <li key={`logo-${item.key}`}>

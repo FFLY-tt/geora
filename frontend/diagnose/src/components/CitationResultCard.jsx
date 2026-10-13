@@ -5,13 +5,16 @@
 // citation_engine.py's DimensionScore.details — see each inline
 // comment for exactly which ones, and never fabricates a number when
 // the backend reports insufficient data.
+import { unavailableText } from '../utils/scoreDisplay.js'
+
 export default function CitationResultCard({ citation }) {
   const hasData = citation && citation.score !== -1
 
   if (!hasData) {
-    // score === -1 (or citation missing entirely): details.reason is
-    // the backend's own explanation of why — never show 0 or a bar.
-    const reason = citation?.details?.reason || 'We could not run this check.'
+    // score === -1 (or citation missing entirely): never show 0 or a bar.
+    // details.reason is a technical note for us (API names, errors), so
+    // the customer sees the plain explanation instead.
+    const reason = unavailableText(citation)
     return (
       <div>
         <p className="citation-result-headline citation-result-headline-empty">Not enough data</p>
