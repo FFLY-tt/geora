@@ -1,5 +1,4 @@
-import { isComparable } from '../utils/provenance.js'
-import { describeChange } from '../utils/mentionInterval.js'
+import { scoreChangeNotes } from '../utils/provenance.js'
 
 // Props: previousScores ({ [dimension]: score } from the backend, or
 // null on a first-ever check), currentScores (the current `dimensions`
@@ -7,10 +6,10 @@ import { describeChange } from '../utils/mentionInterval.js'
 // currentProvenance (method and question set versions of each result),
 // previousCitationInterval and currentCitationInterval ({ci_low, ci_high}
 // Wilson intervals of the citation mention rate).
-// Scores are only compared when both versions match; otherwise the
-// numbers measure different things and are not compared at all. A
-// citation change whose intervals overlap is within the margin of error
-// and is never described as a rise or a drop.
+// When the versions differ the scores measure different things, so
+// nothing is shown at all: versions are internal details, never page text.
+// A citation change whose intervals overlap is never described as a rise
+// or a drop; the customer is told it is ordinary day-to-day variation.
 export default function ScoreChangeNote({
   previousScores,
   currentScores,
@@ -19,21 +18,11 @@ export default function ScoreChangeNote({
   previousCitationInterval,
   currentCitationInterval,
 }) {
-  if (!previousScores) {
-    return null
-  }
-
-  if (!isComparable(previousProvenance, currentProvenance)) {
-    return (
-      <p className="score-change-note">
-        The measurement method has been updated, so this result can't be directly compared with your last one.
-      </p>
-    )
-  }
-
-  const { realChange, withinMargin } = describeChange(
+  const { realChange, withinMargin } = scoreChangeNotes(
     previousScores,
     currentScores,
+    previousProvenance,
+    currentProvenance,
     previousCitationInterval,
     currentCitationInterval,
   )
@@ -46,12 +35,7 @@ export default function ScoreChangeNote({
           results update constantly. Focus on the trend over several weeks, not any single check.
         </p>
       )}
-      {withinMargin && (
-        <p className="score-change-note">
-          Your AI mention rate changed since last time, but the change is within the margin of error, so it
-          isn't a real rise or drop.
-        </p>
-      )}
+      {withinMargin && <p className="score-change-note">This change is within normal day-to-day variation.</p>}
     </>
   )
 }
