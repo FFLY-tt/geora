@@ -1,4 +1,4 @@
-# Source layers: known limits (list v2, page type rules v1, method v2)
+# Source layers: known limits (list v2, page type rules v1, method v3)
 
 The layered diagnosis (`backend/diagnose_service/source_layers.py`, with the
 domain lists and page type keywords in `engines/_source_layers.py`) groups
@@ -28,32 +28,58 @@ freshbooks.com and vidyard.com.
 
 ## Does a page mention the company? (presence)
 
-- **The "capitalized name opens a heading or list item" rule is the weak
-  point for names that are ordinary words.** On close.com, 10 of the 12 pages
-  judged to mention the company were judged so by this rule, and all 10 were
-  wrong: the heading or list item was the verb "Close" ("Close deals faster",
-  "Close this out", "Close Search" on hubspot.com product pages, "Close more
-  deals, faster with the right CRM" on monday.com). Only the 2 ringy.com pages
-  (a real link to close.com) were correct. This inflates presence for
-  close.com in every group. On linear.app the same rule found 2 real
-  mentions ("15. Linear" on monday.com; "Linear streamlines issue management"
-  on notion.com), and "Linear regression" or "Linear algebra" headings would
-  be false positives in the same way.
+For companies whose name is an ordinary English word (Close, Linear) a page
+counts as mentioning the company if it has a link to the company's domain, or
+the domain in its text, or a heading (h1 to h4) or list item that **is** the
+capitalized name or has it directly followed by a separator (`:`, `|`, `(`, or
+a dash with a space on at least one side), for example "15. Linear" or
+"Close – best for small teams". A heading that goes on with more words
+("Close more deals", "Close Search") does not count.
+
+History: the first version counted any heading or list item that merely
+*started* with the name. On close.com 10 of the 12 pages judged to mention
+the company came from that rule, and 9 of those 10 were the verb "Close" ("Close this out",
+"Close Search" on three hubspot.com product pages, "Close deals faster",
+"Close More Deals With Sales Texting in TextUs", and so on). The stricter rule
+removed all 9. The tenth, fitsmallbusiness.com "10 Best Sales Automation
+Software", has a table of contents item and a review box whose whole text is
+"Close", and the page does review the Close CRM, so it is a correct mention.
+
 - **Real mentions in running text are missed for names that are ordinary
   words.** linear.app: contentsquare.com ("push it straight to Jira, Asana, or
-  Linear") and uservoice.com ("Aha!, Productboard, and Linear all have
-  feedback intake capabilities") both mention the company but only in a
-  sentence, so they count as "doesn't mention you".
-- **Some fetched pages are not the real page.** support.mozilla.org returned
-  a bot challenge titled "Client Challenge" for three feroot.com pages (9
-  citations). They count as checked, and as not mentioning the company.
+  Linear"), uservoice.com ("Aha!, Productboard, and Linear all have feedback
+  intake capabilities") and notion.com ("Linear streamlines issue management,
+  project planning, and product roadmapping", a list item that goes on with
+  more words, and so was counted by the first version but not by the current
+  one) all mention the company, but only inside a sentence, so they count as
+  "doesn't mention you". With the current rules linear.app has 1 counted page
+  (monday.com, "15. Linear") and close.com has 3 (ringy.com twice, by a link
+  to close.com, and fitsmallbusiness.com).
+- **A heading that is only the word still counts, wherever it is.** A table of
+  contents or menu item reading just "Close" or "Linear" on an unrelated page
+  (a "Close" button in a list, for example) would be counted. It has not been
+  seen on the five test companies beyond the correct fitsmallbusiness.com case.
+- **Bot and access challenge pages are unknown, not "doesn't mention you".**
+  A page is a challenge when its title (before any " | site" suffix) is one of
+  `BOT_CHALLENGE_TITLES` ("Client Challenge", "Just a moment", "Attention
+  Required", "Access denied", "Verify you are human", and a few more), or its
+  body is short (1000 characters or less) and contains one of
+  `BOT_CHALLENGE_PHRASES`. The three support.mozilla.org pages cited for
+  feroot.com (9 citations, title "Client Challenge") are now unknown and left
+  out of presence, which lowered feroot.com's coverage from 0.94 to 0.84
+  (the rest of that drop is other pages that errored on the second fetch; see
+  the next point). A block page with a lot of text or an unfamiliar title is
+  not recognised.
 - **A page that can't be fetched is "unknown", and a group made only of
   unknown pages has no gap.** freshbooks.com: britannica.com answered with an
   HTTP error, so the reference group shows "Couldn't check". Sites that block
   automated visits (common for community sites such as LinkedIn and Reddit,
-  and for large publishers) are affected the same way.
+  and for large publishers) are affected the same way. Which pages fail
+  varies from run to run (a timeout one time, an HTTP error the next, for
+  example smashingmagazine.com and support.cookiebot.com for feroot.com), so
+  coverage can differ by a few points between two runs on the same citations.
 - Only the 60 most-cited pages per company are fetched. In the five test runs
-  that covered 92% to 100% of the citations outside the company's own site
+  that covered 84% to 100% of the citations outside the company's own site
   (`coverage` in the data), but a company with a longer tail would be
   checked less completely.
 - The text is read from the raw HTML (`method="full"`), so a mention that is
