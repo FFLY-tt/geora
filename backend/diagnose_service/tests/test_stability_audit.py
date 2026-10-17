@@ -432,11 +432,13 @@ class MainEndToEndTests(unittest.TestCase):
 class JudgmentCacheBypassTests(unittest.TestCase):
     def test_install_forces_miss_and_noop_save_then_restores_originals(self):
         original_relevance_get = stability_audit.relevance_engine.get_cached_judgment
+        original_fact_get = stability_audit.fact_engine.get_cached_judgment
         original_relevance_save = stability_audit.relevance_engine.save_judgment
 
         patchers = stability_audit._install_judgment_cache_bypass()
         try:
             self.assertIsNone(stability_audit.relevance_engine.get_cached_judgment("any-key"))
+            self.assertIsNone(stability_audit.fact_engine.get_cached_judgment("fact_consistency", "any-key"))
             # Must not raise, and must not make the next get_cached_judgment call return a hit.
             stability_audit.relevance_engine.save_judgment("any-key", {"score": 99})
             self.assertIsNone(stability_audit.relevance_engine.get_cached_judgment("any-key"))
@@ -446,6 +448,7 @@ class JudgmentCacheBypassTests(unittest.TestCase):
 
         self.assertIs(stability_audit.relevance_engine.get_cached_judgment, original_relevance_get)
         self.assertIs(stability_audit.relevance_engine.save_judgment, original_relevance_save)
+        self.assertIs(stability_audit.fact_engine.get_cached_judgment, original_fact_get)
 
 
 class EvidenceDensityCategoryTableTests(unittest.TestCase):

@@ -8,6 +8,8 @@
 // moved" note may appear at all. The full provenance stays in the API
 // response for our own analysis.
 
+import { describeChange } from './mentionInterval.js'
+
 function sameMethodVersions(a, b) {
   const keysA = Object.keys(a || {})
   const keysB = Object.keys(b || {})
@@ -34,25 +36,28 @@ export function isComparable(previousProvenance, currentProvenance) {
   )
 }
 
-// A dimension score moved by more than this many points to count as a
-// "real" change worth mentioning, versus normal day-to-day noise.
-const CHANGE_THRESHOLD = 5
-
-// -1 means "insufficient data" on either side, not a real score — never
-// treat a swing into or out of -1 as a "score change".
-function isRealChange(previousScore, currentScore) {
-  if (previousScore === undefined || previousScore === null) return false
-  if (previousScore === -1 || currentScore === -1) return false
-  return Math.abs(currentScore - previousScore) > CHANGE_THRESHOLD
+/**
+ * What the "your scores moved" notes should say. Nothing at all on a
+ * first-ever check, and nothing (no other message either) when the two
+ * results were measured with different method or question-set versions.
+ * Otherwise see describeChange: { realChange, withinMargin }.
+ */
+export function scoreChangeNotes(
+  previousScores,
+  currentScores,
+  previousProvenance,
+  currentProvenance,
+  previousInterval = null,
+  currentInterval = null,
+) {
+  if (!previousScores || !isComparable(previousProvenance, currentProvenance)) {
+    return { realChange: false, withinMargin: false }
+  }
+  return describeChange(previousScores, currentScores, previousInterval, currentInterval)
 }
 
-/**
- * Whether the "your scores moved" note should appear. False on a
- * first-ever check, and false (with no other message) when the two
- * results were measured with different method or question-set versions.
- */
+/** Whether any "your scores moved" note should appear. */
 export function shouldShowScoreChange(previousScores, currentScores, previousProvenance, currentProvenance) {
-  if (!previousScores) return false
-  if (!isComparable(previousProvenance, currentProvenance)) return false
-  return currentScores.some((dim) => isRealChange(previousScores[dim.dimension], dim.score))
+  const { realChange, withinMargin } = scoreChangeNotes(previousScores, currentScores, previousProvenance, currentProvenance)
+  return realChange || withinMargin
 }

@@ -27,7 +27,13 @@ from engines.technical_engine import check_technical_readability
 from leads_store import save_lead
 from models import DiagnosisRequest, DiagnosisResponse, LeadCaptureRequest
 from provenance import build_provenance
-from result_cache import get_cached_result, get_previous_provenance, get_previous_scores, save_result
+from result_cache import (
+    get_cached_result,
+    get_previous_citation_interval,
+    get_previous_provenance,
+    get_previous_scores,
+    save_result,
+)
 
 app = FastAPI(title="Geora Diagnostic API")
 
@@ -70,6 +76,7 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
     # show the user how scores moved since last time.
     previous_scores = await asyncio.to_thread(get_previous_scores, request.domain)
     previous_provenance = await asyncio.to_thread(get_previous_provenance, request.domain)
+    previous_citation_interval = await asyncio.to_thread(get_previous_citation_interval, request.domain)
 
     citation_task = asyncio.to_thread(check_citation_visibility, request.company_name, request.domain)
     evidence_task = asyncio.to_thread(check_evidence_density, request.domain)
@@ -99,7 +106,10 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
     }
     cached_entry = await asyncio.to_thread(save_result, request.domain, result)
     return DiagnosisResponse(
-        **cached_entry, previous_scores=previous_scores, previous_provenance=previous_provenance
+        **cached_entry,
+        previous_scores=previous_scores,
+        previous_provenance=previous_provenance,
+        previous_citation_interval=previous_citation_interval,
     )
 
 
