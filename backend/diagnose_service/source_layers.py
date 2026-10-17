@@ -53,7 +53,8 @@ from shared.config import settings
 # Bump whenever this analysis changes in a way that makes results computed
 # before and after not directly comparable.
 # v2: other companies split by page type; every cited page is checked.
-METHOD_VERSION = "v2"
+# v3: stricter heading rule for ordinary-word names; bot challenge pages are unknown.
+METHOD_VERSION = "v3"
 
 # At most this many cited pages are fetched per company, most-cited first.
 MAX_PAGES_PER_COMPANY = 60
@@ -132,11 +133,84 @@ def _snippet(text: str, start: int, end: int) -> str:
     return re.sub(r"\s+", " ", text[left:right]).strip()
 
 
-def _heading_or_list_start_pattern(company_name: str):
-    """Case-sensitive: the company name opening a heading or list item, with an optional number or bullet before it."""
-    return re.compile(
-        r"^\s*(?:#?\d+\s*[.):\-]?\s*|[-•*]\s*)?" + re.escape(company_name.strip()) + r"(?![A-Za-z0-9])"
-    )
+# A number or bullet in front of a heading or list item ("15. ", "3) ", "#2 ", "- ").
+_LEADING_MARKER = re.compile(r"^\s*(?:#?\d+\s*[.):\-]?\s+|#?\d+[.):]\s*|[-•*]\s+)")
+# Punctuation that may surround a heading that is just the name.
+_EDGE_PUNCTUATION = " \t.,;:!?\"'“”‘’()[]{}|–—-"
+
+
+def _heading_or_list_item_is_the_name(element_text: str, company_name: str) -> bool:
+    """
+    True when a heading or list item IS the company's name, case-sensitive:
+    after the leading number or bullet and the edge punctuation are removed
+    the whole text equals the name ("15. Linear", "Linear"), or the name is
+    followed directly by a separator: a colon, a pipe, an opening
+    parenthesis, or a dash with a space on at least one side ("Close – best
+    for small teams", "Linear: issue tracking"). A name that is followed by
+    more words ("Close more deals", "Close Search", "Close this out") does
+    not count: for a name that is an ordinary word, that is the ordinary
+    word.
+    """
+    name = company_name.strip()
+    text = _LEADING_MARKER.sub("", element_text, count=1).strip()
+    if text.strip(_EDGE_PUNCTUATION) == name:
+        return True
+    if not text.startswith(name):
+        return False
+    rest = text[len(name):]
+    if not rest or not (rest[0].isspace() or rest[0] in ":|(–—-"):
+        return False
+    separated = rest.lstrip()
+    if separated[:1] in (":", "|", "("):
+        return True
+    if separated[:1] in ("–", "—", "-"):
+        # a dash counts only when a space sits on at least one side, so "Close-up" is not "Close - ..."
+        return rest[0].isspace() or separated[1:2].isspace()
+    return False
+
+
+# A page whose title is one of these (compared after dropping punctuation and
+# any " | site" suffix), or whose short body contains one of the phrases, is a
+# bot or access challenge, not the page AI read. Add entries here to teach the
+# check another one.
+BOT_CHALLENGE_TITLES = (
+    "client challenge",
+    "just a moment",
+    "attention required",
+    "access denied",
+    "verify you are human",
+    "are you a robot",
+    "security check",
+    "pardon our interruption",
+)
+BOT_CHALLENGE_PHRASES = (
+    "verify you are human",
+    "checking your browser before accessing",
+    "enable javascript and cookies to continue",
+    "just a moment",
+    "attention required",
+    "access denied",
+    "client challenge",
+    "are you a robot",
+    "unusual traffic from your computer network",
+)
+# A challenge page has almost no text; a long article that merely contains one
+# of the phrases is a real page.
+BOT_CHALLENGE_MAX_TEXT_CHARS = 1000
+
+
+def is_bot_challenge(title: str | None, text: str) -> bool:
+    """True when a fetched page is a bot verification or access denied page rather than real content."""
+    if title:
+        first_segment = re.split(r"\s[|–—-]\s", title.strip(), maxsplit=1)[0]
+        normalized = re.sub(r"[^a-z0-9 ]+", "", first_segment.lower()).strip()
+        if normalized in BOT_CHALLENGE_TITLES:
+            return True
+    if len(text) <= BOT_CHALLENGE_MAX_TEXT_CHARS:
+        lowered = text.lower()
+        if any(phrase in lowered for phrase in BOT_CHALLENGE_PHRASES):
+            return True
+    return False
 
 
 def analyze_page(html: str, company_name: str, domain: str) -> dict:
@@ -151,8 +225,9 @@ def analyze_page(html: str, company_name: str, domain: str) -> dict:
     Companies whose name is also an ordinary English word (Close, Linear)
     can't be matched by the word alone ("close the deal", "a linear
     process"), so a page counts only if ANY of these holds, in this order:
-    a link to the company's domain; the domain in the text; the exact,
-    capitalized name opening a heading (h1 to h4) or list item. No LLM.
+    a link to the company's domain; the domain in the text; a heading (h1
+    to h4) or list item that IS the capitalized name, or has it directly
+    followed by a separator (see _heading_or_list_item_is_the_name). No LLM.
 
     `near_miss` is a snippet where the name appears as a plain word on a page
     that was judged NOT to mention the company. It never affects the result;
@@ -162,7 +237,10 @@ def analyze_page(html: str, company_name: str, domain: str) -> dict:
     soup = BeautifulSoup(html, "html.parser")
     title = re.sub(r"\s+", " ", soup.title.get_text(" ", strip=True)).strip() if soup.title else None
     domain_re = _domain_pattern(domain)
-    result = {"title": title or None, "mentions_you": False, "rule": None, "snippet": None, "near_miss": None}
+    result = {"title": title or None, "mentions_you": False, "rule": None, "snippet": None, "near_miss": None,
+              "bot_challenge": is_bot_challenge(title, text)}
+    if result["bot_challenge"]:
+        return result  # not the real page: nothing can be said about it
 
     def hit(rule, snippet):
         result.update(mentions_you=True, rule=rule, snippet=snippet)
@@ -177,11 +255,10 @@ def analyze_page(html: str, company_name: str, domain: str) -> dict:
             match = domain_re.search(text)
             if match:
                 return hit("domain_in_text", _snippet(text, match.start(), match.end()))
-        opening = _heading_or_list_start_pattern(company_name)
         for element in soup.find_all(["h1", "h2", "h3", "h4", "li"]):
             element_text = re.sub(r"\s+", " ", element.get_text(" ", strip=True))
-            if opening.match(element_text):
-                return hit("heading_or_list_start", element_text[:200])
+            if _heading_or_list_item_is_the_name(element_text, company_name):
+                return hit("heading_or_list_is_name", element_text[:200])
     else:
         if _company_name_mentioned(company_name, text):
             match = re.search(r"\b" + re.escape(company_name.strip()) + r"\b", text, re.IGNORECASE)
@@ -214,7 +291,12 @@ def _check_page(url: str, company_name: str, domain: str, fetch) -> dict:
     except Exception as exc:  # any fetch problem makes the page "unknown", never a failure of the diagnosis
         return {"status": "unknown", "mentions_you": None, "rule": None, "snippet": None, "near_miss": None,
                 "title": None, "error": type(exc).__name__}
-    return {"status": "checked", "error": None, **analyze_page(html, company_name, domain)}
+    analysis = analyze_page(html, company_name, domain)
+    if analysis.pop("bot_challenge"):
+        # a verification or access denied page is not what AI read: unknown, not "doesn't mention you"
+        return {"status": "unknown", "mentions_you": None, "rule": None, "snippet": None, "near_miss": None,
+                "title": None, "error": "bot_challenge"}
+    return {"status": "checked", "error": None, **analysis}
 
 
 # ---------------------------------------------------------------------------

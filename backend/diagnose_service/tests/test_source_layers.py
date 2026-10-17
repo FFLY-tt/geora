@@ -258,18 +258,56 @@ class MentionRuleTests(unittest.TestCase):
         hit = self.check("Close", "close.com", "<p>Visit enclose.com or disclose.com.</p>")
         self.assertFalse(hit["mentions_you"])
 
-    # ---- rule 3: the capitalized name opening a heading or list item
-    def test_common_word_rule_heading_or_list_start(self):
+    # ---- rule 3: a heading or list item that IS the capitalized name, or has it followed by a separator
+    def test_common_word_rule_heading_or_list_item_is_the_name(self):
         for body in [
             "<ol><li>1. Linear</li></ol>",
-            "<h3>3. Linear</h3>",
+            "<h3>15. Linear</h3>",
             "<h2>Linear – best for engineering teams</h2>",
             "<ul><li>Linear: fast issue tracking</li></ul>",
             "<h4>#2 Linear</h4>",
             "<h1>Linear</h1>",
+            "<li>Linear | issue tracking</li>",
+            "<li>Linear (issue tracker)</li>",
+            "<h3>Linear - best for engineering teams</h3>",
+            "<h3>Linear — best for engineering teams</h3>",
         ]:
             hit = self.check("Linear", "linear.app", body)
-            self.assertEqual((hit["mentions_you"], hit["rule"]), (True, "heading_or_list_start"), body)
+            self.assertEqual((hit["mentions_you"], hit["rule"]), (True, "heading_or_list_is_name"), body)
+
+    def test_common_word_close_with_a_dash_counts(self):
+        hit = self.check("Close", "close.com", "<h3>Close – best for small teams</h3>")
+        self.assertEqual((hit["mentions_you"], hit["rule"]), (True, "heading_or_list_is_name"))
+
+    def test_common_word_heading_that_goes_on_with_more_words_does_not_count(self):
+        # the real headings and list items that made 9 of the 10 wrong "Close" matches on close.com's test run
+        for text in [
+            "Close this out",
+            "Close Search",
+            "Close deals faster with efficient follow-up.",
+            "Close more deals, faster with the right CRM",
+            "Close Deals Faster",
+            "Close More Deals With Sales Texting in TextUs",
+        ]:
+            for tag in ("h1", "h2", "h3", "h4", "li"):
+                hit = self.check("Close", "close.com", f"<{tag}>{text}</{tag}>")
+                self.assertFalse(hit["mentions_you"], (tag, text))
+
+    def test_common_word_a_dash_glued_to_the_name_is_not_a_separator(self):
+        for text in ["Close-up photography", "Linear-regression basics", "Closed deals", "Linearity of time"]:
+            name = "Close" if text.startswith("Clos") else "Linear"
+            self.assertFalse(self.check(name, "x.example", f"<h3>{text}</h3>")["mentions_you"], text)
+
+    def test_a_list_article_that_has_the_company_as_an_entry_counts(self):
+        # fitsmallbusiness.com: a table of contents item and a review box title that are just "Close"
+        body = '<ul class="toc-list"><li class="unstyled">Close</li></ul><div class="rwb-header-text"><h3 class="rwb-title">Close</h3></div>'
+        hit = self.check("Close", "close.com", body, title="10 Best Sales Automation Software")
+        self.assertEqual((hit["mentions_you"], hit["rule"]), (True, "heading_or_list_is_name"))
+
+    def test_the_ringy_page_with_a_link_to_the_domain_counts_by_the_link_rule(self):
+        body = '<h2>13 Best Contact Management Software</h2><ol><li><a href="https://www.close.com/">Visit website</a></li></ol>'
+        hit = self.check("Close", "close.com", body, title="13 Best Contact Management Software (2026)")
+        self.assertEqual((hit["mentions_you"], hit["rule"]), (True, "domain_in_link"))
 
     def test_common_word_a_plain_sentence_does_not_count(self):
         for body in [
@@ -296,6 +334,64 @@ class MentionRuleTests(unittest.TestCase):
     def test_title_is_read_from_the_html(self):
         self.assertEqual(self.check("Acme", "acme.com", "", title="  The   Best CRMs ")["title"], "The Best CRMs")
         self.assertIsNone(source_layers.analyze_page("<p>no title</p>", "Acme", "acme.com")["title"])
+
+
+class BotChallengeTests(unittest.TestCase):
+    def test_titles_of_common_challenge_pages(self):
+        for title in [
+            "Client Challenge",
+            "Just a moment...",
+            "Attention Required! | Cloudflare",
+            "Access denied",
+            "Verify you are human",
+            "Access Denied | www.example.com used Cloudflare to restrict access",
+        ]:
+            self.assertTrue(source_layers.is_bot_challenge(title, "x"), title)
+
+    def test_a_short_body_with_a_challenge_phrase(self):
+        for body in ["Please verify you are human to continue.", "Checking your browser before accessing example.com", "Access denied"]:
+            self.assertTrue(source_layers.is_bot_challenge("Example", body), body)
+
+    def test_a_real_page_that_merely_mentions_the_phrase_is_not_a_challenge(self):
+        long_article = "How to fix an access denied error in your app. " + "Useful text about permissions. " * 100
+        self.assertFalse(source_layers.is_bot_challenge("Fixing access denied errors in your app", long_article))
+        self.assertFalse(source_layers.is_bot_challenge("Just a moment of calm: a guide", long_article))
+        self.assertFalse(source_layers.is_bot_challenge("Best CRMs", "Acme is a CRM. " * 20))
+
+    def test_analyze_page_flags_a_challenge_and_says_nothing_about_the_company(self):
+        result = source_layers.analyze_page(html("<p>Acme</p>", title="Client Challenge"), "Acme", "acme.com")
+        self.assertTrue(result["bot_challenge"])
+        self.assertFalse(result["mentions_you"])
+
+    def test_a_challenge_page_is_unknown_and_left_out_of_presence_and_coverage(self):
+        # mozilla-style: three product pages served as a bot challenge, one real page that mentions Acme
+        details = _details(["https://support.example.org/kb/a", "https://support.example.org/kb/b", "https://real.io/blog/post"],
+                           ["https://support.example.org/kb/a"])
+        pages = {
+            "support.example.org": html("<p>Please verify you are human.</p>", title="Client Challenge"),
+            "real.io": html("<p>We recommend Acme.</p>", title="A real post"),
+        }
+        layer = by_layer(run(details, pages))["guides"]
+        self.assertEqual(layer["presence"], 1.0)  # only the real page counts
+        self.assertEqual(sorted(p["url"] for p in layer["unknown_pages"]), ["support.example.org/kb/a", "support.example.org/kb/b"])
+        self.assertTrue(all(p["error"] == "bot_challenge" for p in layer["unknown_pages"]))
+        self.assertEqual(layer["coverage"], {"checked_citations": 1, "citations": 4, "ratio": 0.25})
+        unknown = [p for p in layer["pages"] if p["status"] == "unknown"]
+        self.assertTrue(all(p["title"] is None for p in unknown))  # "Client Challenge" is not the page's title
+
+    def test_a_group_of_only_challenge_pages_has_no_presence_or_gap(self):
+        pages = {"c.io": html("<p>Just a moment...</p>", title="Just a moment...")}
+        layer = by_layer(run(_details(["https://c.io/p"]), pages))["product_pages"]
+        self.assertIsNone(layer["presence"])
+        self.assertIsNone(layer["gap"])
+        self.assertEqual(layer["status"], "unknown")
+
+    def test_challenge_pages_are_not_used_in_the_conclusion(self):
+        details = _details(["https://c.io/blog/a", "https://d.io/blog/b"])
+        pages = {"c.io": html("<p>Verify you are human</p>", title="Client Challenge"), "d.io": html("<p>n</p>", title="Real")}
+        sentence = run(details, pages)["conclusion"][0]
+        self.assertIn("“Real” (d.io)", sentence)
+        self.assertNotIn("Client Challenge", sentence)
 
 
 class FakeFetch:
