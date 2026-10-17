@@ -9,7 +9,7 @@ export const DIMENSION_LABELS = {
     description: 'How often AI answers mention or cite this brand',
   },
   topic_relevance: {
-    label: 'Matches what buyers ask',
+    label: 'Matches what customers ask',
     description: 'How directly content answers real customer questions',
   },
   evidence_density: {

@@ -9,6 +9,7 @@ Every DeepSeek, Perplexity, and page fetch call is mocked; the state
 directory and the local data directory are redirected to temp dirs.
 """
 
+import json
 import shutil
 import sys
 import tempfile
@@ -306,15 +307,20 @@ class _Judges:
 
     def perplexity_fact(self, query):
         self._count()
+        values = {name: {"value": None, "source_url": None} for name in fact_engine.FACT_FIELDS}
+        values["product_category"] = {"value": f"Security tool {self.seed}", "source_url": "https://www.g2.com/products/acme"}
         return {
-            "choices": [{"message": {"content": f"G2 says pricing starts at ${self.seed}."}}],
+            "choices": [{"message": {"content": json.dumps(values)}}],
             "citations": ["https://www.g2.com/products/acme"],
         }
 
-    def fact_comparison(self, company_name, official_text, third_party_text):
+    def fact_comparison(self, company_name, official_text, third_party_values):
         self._count()
-        conflicts = [{"field": "pricing", "official_says": "a", "third_party_says": "b"}] * (self.seed % 3)
-        return {"compared_fields": ["pricing"], "conflicts": conflicts}
+        verdict = ["match", "conflict", "match"][self.seed % 3]
+        return {
+            name: {"official_value": "fraud checks", "official_quote": "We cut checkout fraud", "verdict": verdict}
+            for name in fact_engine.FACT_FIELDS
+        }
 
 
 def _run_five_reasons(judges: _Judges) -> dict:

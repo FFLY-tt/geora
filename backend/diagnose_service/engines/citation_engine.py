@@ -88,6 +88,7 @@ from engines._question_sets import (
     save_company_assignment,
 )
 from engines._source_map import _extract_domain, _is_own_domain, build_source_map
+from engines._stats import wilson_interval
 from shared._text_format import PLAIN_LANGUAGE_FORMAT_RULES, find_banned_formatting, sanitize_banned_formatting
 from models import DimensionScore
 
@@ -1125,6 +1126,9 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
     raw_answers: dict[str, str] = {}
     fully_failed_queries = []
     total_uncertain_runs = 0
+    # Pooled over every countable answer, for the mention-rate interval.
+    total_mentions = 0
+    total_countable = 0
 
     for query in queries:
         runs = runs_by_query[query]
@@ -1137,6 +1141,8 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
         countable_runs = [run for run in successful_runs if run["mention_classification"] != "uncertain"]
         total_uncertain_runs += len(uncertain_runs)
         hits = sum(1 for run in countable_runs if run["is_hit"])
+        total_mentions += hits
+        total_countable += len(countable_runs)
         # A question's mention rate is only ever computed from its own
         # countable runs; a failed or uncertain call simply isn't
         # counted either way, it never counts as a miss.
@@ -1164,6 +1170,17 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
             fully_failed_queries.append(query)
 
     valid_queries = [entry for entry in per_query_results if entry["mention_rate"] is not None]
+
+    # Wilson 95% interval on the pooled mention rate: with only ~15
+    # answers, "20%" really means "somewhere around 7% to 45%".
+    interval = wilson_interval(total_mentions, total_countable)
+    mention_interval = {
+        "mentions": total_mentions,
+        "total": total_countable,
+        "ci_low": round(interval[0], 3) if interval else None,
+        "ci_high": round(interval[1], 3) if interval else None,
+        "ci_method": "Wilson score interval, z = 1.96",
+    }
 
     # One entry per successful answer, for build_source_map — computed
     # here regardless of outcome so it's available whether or not any
@@ -1208,6 +1225,7 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
                 "runs_per_query": RUNS_PER_QUERY,
                 "name_is_common_word": name_is_common_word,
                 "total_uncertain_runs": total_uncertain_runs,
+                **mention_interval,
                 "per_query_results": per_query_results,
                 "fully_failed_queries": fully_failed_queries,
                 "source_map": source_map,
@@ -1239,6 +1257,7 @@ def check_citation_visibility(company_name: str, domain: str) -> DimensionScore:
             "average_mention_rate": round(average_mention_rate, 3),
             "name_is_common_word": name_is_common_word,
             "total_uncertain_runs": total_uncertain_runs,
+            **mention_interval,
             "per_query_results": per_query_results,
             "fully_failed_queries": fully_failed_queries,
             "source_map": source_map,

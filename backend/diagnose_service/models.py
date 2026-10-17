@@ -52,6 +52,10 @@ class DiagnosisResponse(BaseModel):
         None,
         description="What this result was computed from: run_date, method_versions per dimension, question_set (category_id, version, status), and pages read per dimension with text hashes.",
     )
+    previous_citation_interval: dict | None = Field(
+        None,
+        description="The previous result's citation mention count and Wilson 95% interval {mentions, total, ci_low, ci_high}, or null. Overlapping intervals mean a change is within the margin of error.",
+    )
     previous_provenance: dict | None = Field(
         None,
         description="The provenance of the previous result whose scores are in previous_scores, or null if unknown. Scores are only comparable when method and question set versions match.",

@@ -27,6 +27,20 @@
       "reason": "No existing categories to compare against yet."
     }
   },
+  "freshbooks.com": {
+    "assigned_on": "2026-10-12",
+    "category_id": "small-business-accounting-software",
+    "classified_as": {
+      "description": "A cloud based tool that helps small business owners and freelancers track income and expenses, send invoices, accept payments, and manage their day to day finances.",
+      "name": "Small Business Accounting Software"
+    },
+    "company_name": "FreshBooks",
+    "homepage_text_sha256": "efb9c99dd8a8f5ec49ea7824d1d11fa5f74a687658bc08b017e89916e84521ca",
+    "match_decision": {
+      "matched_existing": false,
+      "reason": "None of the existing categories cover accounting or finance tools. Product management, sales CRM, and web compliance monitoring are all different types of software. A small business owner shopping for accounting software would not compare it against any of these."
+    }
+  },
   "linear.app": {
     "assigned_on": "2026-10-11",
     "category_id": "product-management-software",
@@ -39,6 +53,20 @@
     "match_decision": {
       "matched_existing": false,
       "reason": "Product management software helps teams plan and ship product work. Sales CRM software helps sales teams track leads and close deals. These are different products for different teams and needs, so a buyer would not compare them as alternatives."
+    }
+  },
+  "vidyard.com": {
+    "assigned_on": "2026-10-12",
+    "category_id": "sales-video-engagement-platform",
+    "classified_as": {
+      "description": "A tool that lets sales and marketing teams record, send, host, and track personalized videos, then measure how viewers engage with them and connect that activity to leads and revenue.",
+      "name": "Sales Video Engagement Platform"
+    },
+    "company_name": "Vidyard",
+    "homepage_text_sha256": "e8abd73caab7d4f2d247b9eab07358a328b6e37211c94133b9d910ad0307c7a9",
+    "match_decision": {
+      "matched_existing": false,
+      "reason": "This tool makes and tracks sales videos. None of the existing categories do that. Sales CRM Software is related because it also helps sales teams, but it manages leads and messages rather than video creation and viewing."
     }
   }
 }

@@ -26,7 +26,7 @@ export default function App() {
   // unlock attempt without pretending it succeeded (see handleUnlock).
   const [unlockError, setUnlockError] = useState('')
   // Briefly true right after a successful unlock, to trigger the
-  // one-time scan-sweep highlight over the radar chart / score list.
+  // one-time scan-sweep highlight over the conclusion / citation card.
   // Never reused for any other transition in the app.
   const [justUnlocked, setJustUnlocked] = useState(false)
 
@@ -85,6 +85,8 @@ export default function App() {
               currentScores={result.dimensions}
               previousProvenance={result.previous_provenance}
               currentProvenance={result.provenance}
+              previousCitationInterval={result.previous_citation_interval}
+              currentCitationInterval={result.dimensions.find((dim) => dim.dimension === 'citation_visibility')?.details}
             />
             <div className={justUnlocked ? 'scan-sweep-once' : ''}>
               <CitationResultCard

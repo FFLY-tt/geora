@@ -2,6 +2,13 @@
 // backend/diagnose_service/provenance.py): which measurement method
 // version each dimension used, and which buyer question set version.
 // Two results' scores are only comparable when both match exactly.
+//
+// Method and question-set versions are internal details. They are never
+// shown on the page; they only decide, silently, whether a "your scores
+// moved" note may appear at all. The full provenance stays in the API
+// response for our own analysis.
+
+import { describeChange } from './mentionInterval.js'
 
 function sameMethodVersions(a, b) {
   const keysA = Object.keys(a || {})
@@ -29,15 +36,28 @@ export function isComparable(previousProvenance, currentProvenance) {
   )
 }
 
-/** One short line describing the method and question set versions, for the result page footer. */
-export function describeVersions(provenance) {
-  if (!provenance) return ''
-  const methods = Object.entries(provenance.method_versions || {})
-    .map(([dimension, version]) => `${dimension} ${version}`)
-    .join(', ')
-  const questionSet = provenance.question_set
-  const questionSetText = questionSet
-    ? `${questionSet.category_id} v${questionSet.version}${questionSet.status === 'needs_attention' ? ' (quality pending review)' : ''}`
-    : 'none'
-  return `Method versions: ${methods}. Question set: ${questionSetText}. Run date: ${provenance.run_date}.`
+/**
+ * What the "your scores moved" notes should say. Nothing at all on a
+ * first-ever check, and nothing (no other message either) when the two
+ * results were measured with different method or question-set versions.
+ * Otherwise see describeChange: { realChange, withinMargin }.
+ */
+export function scoreChangeNotes(
+  previousScores,
+  currentScores,
+  previousProvenance,
+  currentProvenance,
+  previousInterval = null,
+  currentInterval = null,
+) {
+  if (!previousScores || !isComparable(previousProvenance, currentProvenance)) {
+    return { realChange: false, withinMargin: false }
+  }
+  return describeChange(previousScores, currentScores, previousInterval, currentInterval)
+}
+
+/** Whether any "your scores moved" note should appear. */
+export function shouldShowScoreChange(previousScores, currentScores, previousProvenance, currentProvenance) {
+  const { realChange, withinMargin } = scoreChangeNotes(previousScores, currentScores, previousProvenance, currentProvenance)
+  return realChange || withinMargin
 }
