@@ -239,12 +239,32 @@ class FactEngineTests(unittest.TestCase):
     def test_cache_key_includes_the_field_list_version(self):
         with patch.object(fact_engine, "settings", _FAKE_SETTINGS):
             key_v1 = fact_engine._cache_key("Acme", DOMAIN, OFFICIAL_TEXT)
-            with patch.object(fact_engine, "FIELDS_VERSION", "v2"):
+            with patch.object(fact_engine, "FIELDS_VERSION", "v3"):
                 key_v2 = fact_engine._cache_key("Acme", DOMAIN, OFFICIAL_TEXT)
         self.assertNotEqual(key_v1, key_v2)
 
+    def test_key_integrations_is_not_a_compared_field(self):
+        self.assertNotIn("key_integrations", fact_engine.FACT_FIELDS)
+        self.assertNotIn("key_integrations", fact_engine.FACT_FIELD_LABELS)
+        self.assertEqual(
+            list(fact_engine.FACT_FIELDS),
+            ["starting_price", "free_plan_or_trial", "product_category", "target_customer", "deployment"],
+        )
+        # the Perplexity question and the comparison prompt are built from the field list
+        self.assertNotIn("integrations", fact_engine._build_third_party_query("Acme", DOMAIN))
+        self.assertNotIn("key_integrations", fact_engine._COMPARISON_SYSTEM_PROMPT)
+
+    def test_an_old_cached_result_with_the_old_field_list_is_not_reused(self):
+        with patch.object(fact_engine, "settings", _FAKE_SETTINGS):
+            current = fact_engine._cache_key("Acme", DOMAIN, OFFICIAL_TEXT)
+            with patch.object(fact_engine, "FIELDS_VERSION", "v1"), \
+                 patch.object(fact_engine, "FACT_FIELDS", {**fact_engine.FACT_FIELDS, "key_integrations": "the main integrations it names"}):
+                old = fact_engine._cache_key("Acme", DOMAIN, OFFICIAL_TEXT)
+        self.assertNotEqual(current, old)
+
     def test_versions_were_bumped(self):
-        self.assertEqual(fact_engine.METHOD_VERSION, "v2")
+        self.assertEqual(fact_engine.METHOD_VERSION, "v3")
+        self.assertEqual(fact_engine.FIELDS_VERSION, "v2")
         self.assertTrue(fact_engine.THIRD_PARTY_LOOKUP_VERSION.startswith("v2"))
         self.assertTrue(fact_engine.COMPARISON_PROMPT_VERSION.startswith("v2"))
 

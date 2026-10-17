@@ -4,7 +4,7 @@ Fact consistency engine.
 Checks whether what third-party review sites (G2, Capterra and similar)
 say about a company agrees with the company's own website, on a FIXED
 set of fields (FACT_FIELDS): starting price, free plan or trial, product
-category, target customer, key integrations, deployment.
+category, target customer, deployment.
 
 Design note: G2 and Capterra both have strong anti-bot protection, so
 directly scraping them is unreliable and would require bypassing that
@@ -54,22 +54,28 @@ DIMENSION_NAME = "fact_consistency"
 
 # Bump whenever this dimension's measurement method changes in a way
 # that makes results computed before and after not directly comparable.
-METHOD_VERSION = "v2"
+# v3: key_integrations removed from the fixed fields.
+METHOD_VERSION = "v3"
 
 # All folded into the judgment cache key, so changing any of them never
 # reuses a result produced under the old wording or field list.
 THIRD_PARTY_LOOKUP_VERSION = "v2-fixed-fields-lookup"
 COMPARISON_PROMPT_VERSION = "v2-fixed-fields-comparison"
-FIELDS_VERSION = "v1"
+FIELDS_VERSION = "v2"
 
 # The fixed fields compared on every run, with the description given to
-# both models. Add or change one here and bump FIELDS_VERSION.
+# both models. Add, remove or change one here and bump FIELDS_VERSION.
+#
+# key_integrations was removed (FIELDS_VERSION v2): review sites and a
+# company's own site each list only some of the integrations, and two partial
+# lists that don't contain one another are not a contradiction, so the votes
+# swung between match, conflict and unknown (linear.app scored 95, 60, 60).
+# Only fields with one clear value to agree or disagree on belong here.
 FACT_FIELDS = {
     "starting_price": "the price of the cheapest paid plan, as listed",
     "free_plan_or_trial": "whether a free plan or a free trial is offered",
     "product_category": "what kind of product it is",
     "target_customer": "who it is mainly for, for example small businesses, mid-market, or enterprise",
-    "key_integrations": "the main integrations it names",
     "deployment": "cloud, on-premise, or both",
 }
 
@@ -78,7 +84,6 @@ FACT_FIELD_LABELS = {
     "free_plan_or_trial": "Free plan or trial",
     "product_category": "Product category",
     "target_customer": "Target customer",
-    "key_integrations": "Key integrations",
     "deployment": "Deployment",
 }
 
@@ -489,7 +494,7 @@ def check_fact_consistency(company_name: str, domain: str) -> DimensionScore:
             f'We looked up what independent review sites say about "{company_name}" for six basic facts, '
             "like starting price and who the product is for, and could not confirm any of them against "
             "the official site. Today, make sure your G2 or Capterra listing spells out pricing, plans, and "
-            "integrations, the same way your site does.",
+            "key plans, the same way your site does.",
             "Independent review sites gave too little information to compare.",
             **common,
         )
