@@ -5,6 +5,7 @@ import CacheNotice from './components/CacheNotice'
 import ScoreChangeNote from './components/ScoreChangeNote'
 import CitationResultCard from './components/CitationResultCard'
 import LayerConclusion from './components/LayerConclusion'
+import CompetitorList from './components/CompetitorList'
 import BreakdownAccordion from './components/BreakdownAccordion'
 import { runDiagnosis, captureLead } from './api'
 
@@ -30,7 +31,7 @@ export default function App() {
   // Never reused for any other transition in the app.
   const [justUnlocked, setJustUnlocked] = useState(false)
 
-  async function handleRunDiagnosis(submittedCompanyName, submittedDomain) {
+  async function handleRunDiagnosis(submittedCompanyName, submittedDomain, submittedCompetitors) {
     setCompanyName(submittedCompanyName)
     setDomain(submittedDomain)
     setLoading(true)
@@ -39,7 +40,7 @@ export default function App() {
     setUnlockError('')
 
     try {
-      const diagnosisResult = await runDiagnosis(submittedCompanyName, submittedDomain)
+      const diagnosisResult = await runDiagnosis(submittedCompanyName, submittedDomain, submittedCompetitors)
       setResult(diagnosisResult)
     } catch (error) {
       setRunError(error.message)
@@ -92,6 +93,7 @@ export default function App() {
               <CitationResultCard
                 citation={result.dimensions.find((dim) => dim.dimension === 'citation_visibility')}
               />
+              <CompetitorList comparison={result.competitor_comparison} />
               {/* The conclusion names the kind of website where the biggest gap is. */}
               <LayerConclusion sourceLayers={result.source_layers} />
             </div>

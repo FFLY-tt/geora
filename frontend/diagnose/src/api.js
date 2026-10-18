@@ -6,7 +6,7 @@ const API_BASE_URL = 'http://localhost:8000'
  * Run the diagnosis for a company/domain against the backend.
  * Throws an Error with a clear message on network failure or non-200 response.
  */
-export async function runDiagnosis(companyName, domain) {
+export async function runDiagnosis(companyName, domain, competitors = '') {
   let response
   try {
     response = await fetch(`${API_BASE_URL}/api/diagnose`, {
@@ -15,6 +15,7 @@ export async function runDiagnosis(companyName, domain) {
       body: JSON.stringify({
         company_name: companyName,
         domain,
+        ...(competitors ? { competitors } : {}),
       }),
     })
   } catch (error) {
@@ -25,6 +26,16 @@ export async function runDiagnosis(companyName, domain) {
   if (!response.ok) {
     const errorBody = await response.text()
     console.error(`Diagnosis request failed (${response.status}):`, errorBody)
+    // The one input problem the backend explains in plain words (e.g. too many competitors).
+    if (response.status === 422) {
+      let detail
+      try {
+        detail = JSON.parse(errorBody).detail
+      } catch {
+        detail = undefined
+      }
+      if (typeof detail === 'string') throw new Error(detail)
+    }
     throw new Error('Something went wrong while running the check. Please try again in a few minutes.')
   }
 

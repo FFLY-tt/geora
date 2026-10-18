@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { countCompetitors, MAX_COMPETITORS } from '../utils/competitors.js'
 
 // Controlled form for entering the company name and domain to diagnose.
 export default function SearchForm({ onSubmit, loading }) {
   const [companyName, setCompanyName] = useState('')
   const [domain, setDomain] = useState('')
+  const [competitors, setCompetitors] = useState('')
   const [error, setError] = useState('')
 
   function handleSubmit(event) {
@@ -14,8 +16,13 @@ export default function SearchForm({ onSubmit, loading }) {
       return
     }
 
+    if (countCompetitors(competitors) > MAX_COMPETITORS) {
+      setError(`Add at most ${MAX_COMPETITORS} competitors`)
+      return
+    }
+
     setError('')
-    onSubmit(companyName.trim(), domain.trim())
+    onSubmit(companyName.trim(), domain.trim(), competitors.trim())
   }
 
   return (
@@ -43,6 +50,19 @@ export default function SearchForm({ onSubmit, loading }) {
           placeholder="e.g. acme.com"
         />
         <p className="form-hint">e.g. yourcompany.com — no need for https://</p>
+      </div>
+
+      <div className="form-field">
+        <label htmlFor="competitors">Competitors (optional)</label>
+        <input
+          id="competitors"
+          type="text"
+          value={competitors}
+          onChange={(event) => setCompetitors(event.target.value)}
+          disabled={loading}
+          placeholder="e.g. HubSpot, Pipedrive (pipedrive.com)"
+        />
+        <p className="form-hint">Up to 5, separated by commas. We'll show how often each one is mentioned too.</p>
       </div>
 
       {error && <p className="form-error">{error}</p>}

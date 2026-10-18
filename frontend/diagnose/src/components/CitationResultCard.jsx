@@ -24,17 +24,15 @@ export default function CitationResultCard({ citation }) {
     )
   }
 
-  // details.queries_total: how many brand-free customer questions were
-  // tested (normally 5). details.runs_per_query: how many separate
-  // times each question was asked (3). details.per_query_results: one
+  // details.queries_total: how many different brand-free customer
+  // questions were tested (15, each asked once). details.per_query_results: one
   // entry per question, each with a "runs" list — every run carries
   // its own status ("ok"/"error") and is_hit. The answer-level mention
   // rate shown here (hitCount of totalCount) is computed directly from
   // those real per-run results, not from the question-level average
   // that produces the rounded citation_visibility score itself — the
   // two are different views of the same data and can differ slightly.
-  const { queries_total: queriesTotal, runs_per_query: runsPerQuery, per_query_results: perQueryResults = [] } =
-    citation.details
+  const { queries_total: queriesTotal, per_query_results: perQueryResults = [] } = citation.details
 
   let hitCount = 0
   let totalCount = 0
@@ -59,8 +57,8 @@ export default function CitationResultCard({ citation }) {
         {summary || `Mentioned in ${hitCount} of ${totalCount} answers (${percentage}%).`}
       </p>
       <p className="citation-result-subtext">
-        {queriesTotal} questions, each asked {runsPerQuery} times. AI answers change between asks, so we
-        report how often, not yes or no.
+        {queriesTotal} different customer questions, each asked once. AI answers vary, so we report how often
+        your company comes up, not yes or no.
       </p>
     </div>
   )
