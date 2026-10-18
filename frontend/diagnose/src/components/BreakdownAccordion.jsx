@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react'
 import AccordionItem from './AccordionItem'
 import EmailGate from './EmailGate'
 import SourceMap from './SourceMap'
+import SourceLayerTable from './SourceLayerTable'
 
 // Must match the CSS transition durations on .breakdown-content (filter)
 // and .breakdown-overlay-unlocking (opacity/transform) in index.html.
 const UNLOCK_TRANSITION_MS = 400
 
-// Props: dimensions, unlocked, onUnlock(email).
+// Props: dimensions, sourceLayers, unlocked, onUnlock(email).
 // onUnlock is required in addition to the two props from the original
 // spec because this component is the one that renders EmailGate, so it
 // must be the one to forward the unlock callback down to it.
-export default function BreakdownAccordion({ dimensions, unlocked, onUnlock }) {
+export default function BreakdownAccordion({ dimensions, sourceLayers, unlocked, onUnlock }) {
   // The lock overlay stays mounted for one extra transition after
   // `unlocked` flips true, so it can animate out (shrink + fade) instead
   // of vanishing the instant the prop changes.
@@ -34,10 +35,18 @@ export default function BreakdownAccordion({ dimensions, unlocked, onUnlock }) {
   return (
     <div className="breakdown-wrapper">
       <div className={`breakdown-content ${unlocked ? '' : 'breakdown-locked'}`}>
-        {dimensions.map((dim) => (
-          <AccordionItem key={dim.dimension} dimension={dim} />
-        ))}
-        <SourceMap citation={citation} />
+        {sourceLayers ? (
+          // Layered view: where AI reads, with the older checks filed under their layer.
+          <SourceLayerTable sourceLayers={sourceLayers} dimensions={dimensions} />
+        ) : (
+          // No layers (AI cited no sources): the plain list of checks.
+          <>
+            {dimensions.map((dim) => (
+              <AccordionItem key={dim.dimension} dimension={dim} />
+            ))}
+            <SourceMap citation={citation} />
+          </>
+        )}
       </div>
 
       {showOverlay && (

@@ -395,7 +395,7 @@ class DeletingLocalCachesTests(_StateDirTestCase):
         prov = result["provenance"]
         self.assertEqual(set(prov["method_versions"]), {
             "citation_visibility", "topic_relevance", "evidence_density",
-            "content_recency", "fact_consistency", "technical_readability",
+            "content_recency", "fact_consistency", "technical_readability", "source_layers",
         })
         self.assertEqual(prov["question_set"]["version"], 1)
         self.assertRegex(prov["run_date"], r"^\d{4}-\d{2}-\d{2}$")

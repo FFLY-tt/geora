@@ -44,6 +44,10 @@ class DiagnosisResponse(BaseModel):
         None,
         description="Map of dimension name to score from the last time this domain was checked, before this run. Only populated when this response is a fresh recompute (not a cache hit) and a prior result exists; null otherwise.",
     )
+    source_layers: dict | None = Field(
+        None,
+        description="Layered diagnosis: for each kind of website AI cited (reference, review_media, community, own_site, other_companies), how much AI relied on it, how often the company showed up there, and the gap. Null when AI cited no sources at all.",
+    )
     provenance: dict | None = Field(
         None,
         description="What this result was computed from: run_date, method_versions per dimension, question_set (category_id, version, status), and pages read per dimension with text hashes.",

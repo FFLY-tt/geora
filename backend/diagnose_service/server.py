@@ -7,6 +7,7 @@ contain any scoring or business logic of its own — that belongs in
 """
 
 import asyncio
+import logging
 import sys
 from pathlib import Path
 
@@ -27,6 +28,7 @@ from engines.technical_engine import check_technical_readability
 from leads_store import save_lead
 from models import DiagnosisRequest, DiagnosisResponse, LeadCaptureRequest
 from provenance import build_provenance
+from source_layers import build_source_layers
 from result_cache import (
     get_cached_result,
     get_previous_citation_interval,
@@ -34,6 +36,8 @@ from result_cache import (
     get_previous_scores,
     save_result,
 )
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Geora Diagnostic API")
 
@@ -98,10 +102,21 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
         fact_result.model_dump(),
         technical_result.model_dump(),
     ]
+    # The layered view is built from citations already collected; it must
+    # never take the diagnosis down, so a failure just leaves it out.
+    try:
+        layers = await asyncio.to_thread(
+            build_source_layers, request.company_name, request.domain, citation_result.details
+        )
+    except Exception:
+        logger.exception("Source layer analysis failed for %s", request.domain)
+        layers = None
+
     result = {
         "company_name": request.company_name,
         "domain": request.domain,
         "dimensions": dimensions,
+        "source_layers": layers,
         "provenance": build_provenance(dimensions),
     }
     cached_entry = await asyncio.to_thread(save_result, request.domain, result)
