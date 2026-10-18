@@ -34,6 +34,238 @@
       ]
     }
   },
+  "311bc8906510e3a6902d0a4917d154645f50ad0029c503e946e9f471ff36ba7a": {
+    "cached_at": "2026-10-18T00:28:21.709139+00:00",
+    "result": {
+      "fields": [
+        {
+          "field": "starting_price",
+          "label": "Starting price",
+          "official_quote": null,
+          "official_value": null,
+          "third_party_source": "https://www.capterra.com/p/125653/Vidyard/pricing/",
+          "third_party_value": "$59 per user per month",
+          "verdict": "unknown",
+          "votes": [
+            "unknown",
+            "unknown",
+            "unknown"
+          ]
+        },
+        {
+          "field": "free_plan_or_trial",
+          "label": "Free plan or trial",
+          "official_quote": null,
+          "official_value": null,
+          "third_party_source": "https://www.capterra.com/p/125653/Vidyard/pricing/",
+          "third_party_value": "Free plan and free trial available",
+          "verdict": "unknown",
+          "votes": [
+            "unknown",
+            "unknown",
+            "unknown"
+          ]
+        },
+        {
+          "field": "product_category",
+          "label": "Product category",
+          "official_quote": "Vidyard helps revenue teams scale trust at every stage of the customer journey with AI-powered video that's personal, trackable, and embedded in your tools.",
+          "official_value": "AI-powered video platform for revenue teams",
+          "third_party_source": "https://www.capterra.co.uk/software/125653/vidyard",
+          "third_party_value": "Video Management Software",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "match",
+            "match"
+          ]
+        },
+        {
+          "field": "target_customer",
+          "label": "Target customer",
+          "official_quote": "Vidyard helps revenue teams scale trust at every stage of the customer journey",
+          "official_value": "revenue teams",
+          "third_party_source": null,
+          "third_party_value": null,
+          "verdict": "unknown",
+          "votes": [
+            "unknown",
+            "unknown",
+            "unknown"
+          ]
+        },
+        {
+          "field": "deployment",
+          "label": "Deployment",
+          "official_quote": null,
+          "official_value": null,
+          "third_party_source": "https://www.capterra.co.uk/software/125653/vidyard",
+          "third_party_value": "Cloud, SaaS, web-based, Mac, Windows, Linux, Android, iPhone, and iPad",
+          "verdict": "unknown",
+          "votes": [
+            "unknown",
+            "unknown",
+            "unknown"
+          ]
+        }
+      ],
+      "runs": [
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "Cloud, SaaS, web-based, Mac, Windows, Linux, Android, iPhone, and iPad",
+              "third_party_source": "https://www.capterra.co.uk/software/125653/vidyard",
+              "third_party_value": "Cloud, SaaS, web-based, Mac, Windows, Linux, Android, iPhone, and iPad",
+              "verdict": "unknown"
+            },
+            "free_plan_or_trial": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "Free plan and free trial available",
+              "third_party_source": "https://www.capterra.com/p/125653/Vidyard/pricing/",
+              "third_party_value": "Free plan and free trial available",
+              "verdict": "unknown"
+            },
+            "product_category": {
+              "official_quote": "Vidyard helps revenue teams scale trust at every stage of the customer journey with AI-powered video that's personal, trackable, and embedded in your tools.",
+              "official_value": "AI-powered video platform for revenue teams",
+              "reason": null,
+              "third_party_claimed_value": "Video Management Software",
+              "third_party_source": "https://www.capterra.co.uk/software/125653/vidyard",
+              "third_party_value": "Video Management Software",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "$59 per user per month",
+              "third_party_source": "https://www.capterra.com/p/125653/Vidyard/pricing/",
+              "third_party_value": "$59 per user per month",
+              "verdict": "unknown"
+            },
+            "target_customer": {
+              "official_quote": "Vidyard helps revenue teams scale trust at every stage of the customer journey",
+              "official_value": "revenue teams",
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            }
+          },
+          "run": 1,
+          "status": "ok"
+        },
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "Cloud, SaaS, web-based, Mac, Windows, Linux, Android, iPhone, and iPad",
+              "third_party_source": "https://www.capterra.co.uk/software/125653/vidyard",
+              "third_party_value": "Cloud, SaaS, web-based, Mac, Windows, Linux, Android, iPhone, and iPad",
+              "verdict": "unknown"
+            },
+            "free_plan_or_trial": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "Free plan and free trial available",
+              "third_party_source": "https://www.capterra.com/p/125653/Vidyard/pricing/",
+              "third_party_value": "Free plan and free trial available",
+              "verdict": "unknown"
+            },
+            "product_category": {
+              "official_quote": "Vidyard helps revenue teams scale trust at every stage of the customer journey with AI-powered video that's personal, trackable, and embedded in your tools.",
+              "official_value": "AI-powered video platform for revenue teams",
+              "reason": null,
+              "third_party_claimed_value": "Video Management Software",
+              "third_party_source": "https://www.capterra.co.uk/software/125653/vidyard",
+              "third_party_value": "Video Management Software",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "$59 per user per month",
+              "third_party_source": "https://www.capterra.com/p/125653/Vidyard/pricing/",
+              "third_party_value": "$59 per user per month",
+              "verdict": "unknown"
+            },
+            "target_customer": {
+              "official_quote": "Vidyard helps revenue teams scale trust at every stage of the customer journey",
+              "official_value": "revenue teams",
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            }
+          },
+          "run": 2,
+          "status": "ok"
+        },
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "Cloud, SaaS, web-based",
+              "third_party_source": "https://www.capterra.co.uk/software/125653/vidyard",
+              "third_party_value": "Cloud, SaaS, web-based",
+              "verdict": "unknown"
+            },
+            "free_plan_or_trial": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "Free plan and free trial available",
+              "third_party_source": "https://www.capterra.com/p/125653/Vidyard/",
+              "third_party_value": "Free plan and free trial available",
+              "verdict": "unknown"
+            },
+            "product_category": {
+              "official_quote": "Vidyard helps revenue teams scale trust at every stage of the customer journey with AI-powered video that's personal, trackable, and embedded in your tools.",
+              "official_value": "AI-powered video platform for revenue teams",
+              "reason": null,
+              "third_party_claimed_value": "Video Management Software",
+              "third_party_source": "https://www.capterra.co.uk/software/125653/vidyard",
+              "third_party_value": "Video Management Software",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "$59 per user per month",
+              "third_party_source": "https://www.capterra.com/p/125653/Vidyard/",
+              "third_party_value": "$59 per user per month",
+              "verdict": "unknown"
+            },
+            "target_customer": {
+              "official_quote": "Vidyard helps revenue teams scale trust at every stage of the customer journey",
+              "official_value": "revenue teams",
+              "reason": null,
+              "third_party_claimed_value": "Teams of 5+ and large organizations",
+              "third_party_source": "https://www.g2.com/products/vidyard/pricing",
+              "third_party_value": "Teams of 5+ and large organizations",
+              "verdict": "unknown"
+            }
+          },
+          "run": 3,
+          "status": "ok"
+        }
+      ]
+    }
+  },
   "3e1e4206480ed9145d6ecba8a6a64fc2698fb5a5e5e1a31b6485adeec86fc152": {
     "cached_at": "2026-10-11T21:04:38.983648+00:00",
     "result": {
@@ -112,6 +344,470 @@
       ]
     }
   },
+  "867bde31dcb1c1241f509a2b40e0011dac0620d292f3cefa8814c074cfc08770": {
+    "cached_at": "2026-10-18T00:28:22.245462+00:00",
+    "result": {
+      "fields": [
+        {
+          "field": "starting_price",
+          "label": "Starting price",
+          "official_quote": "Solo$19 per user / month$9 per user / monthTry for free",
+          "official_value": "$9 per user / month",
+          "third_party_source": "https://www.g2.com/products/close/pricing",
+          "third_party_value": "$9 per user per month",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "match",
+            "match"
+          ]
+        },
+        {
+          "field": "free_plan_or_trial",
+          "label": "Free plan or trial",
+          "official_quote": "See an unfiltered review of Close before you come back and start your free trial.",
+          "official_value": "Free trial offered; no free plan",
+          "third_party_source": "https://www.capterra.com/p/132667/Close-io/pricing/",
+          "third_party_value": "Free trial offered; no free plan",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "unknown",
+            "match"
+          ]
+        },
+        {
+          "field": "product_category",
+          "label": "Product category",
+          "official_quote": "The sales CRM built for calling, emailing, texting, automation and action",
+          "official_value": "Sales CRM",
+          "third_party_source": "https://www.g2.com/products/close/reviews?page=8",
+          "third_party_value": "Sales CRM",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "match",
+            "match"
+          ]
+        },
+        {
+          "field": "target_customer",
+          "label": "Target customer",
+          "official_quote": "For founders and solo reps who need a real CRM, not a spreadsheet. For small teams that want one place for every call, email, and deal. For teams ready to let Chloe work leads while reps focus on closing. For high-volume orgs that need advanced controls and the fastest dialing.",
+          "official_value": "Founders and solo reps, small teams, teams ready to let Chloe work leads, and high-volume orgs",
+          "third_party_source": "https://www.g2.com/products/close/pricing",
+          "third_party_value": "Small businesses",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "unknown",
+            "match"
+          ]
+        },
+        {
+          "field": "deployment",
+          "label": "Deployment",
+          "official_quote": null,
+          "official_value": null,
+          "third_party_source": null,
+          "third_party_value": null,
+          "verdict": "unknown",
+          "votes": [
+            "match",
+            "unknown",
+            "unknown"
+          ]
+        }
+      ],
+      "runs": [
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": "Mobile app (iOS / Android) Manage the CRM, make & receive calls and texts, and review reports on the go. Available for iOS & Android.",
+              "official_value": "Cloud/SaaS with mobile app (iOS / Android)",
+              "reason": null,
+              "third_party_claimed_value": "Cloud/SaaS, web-based, desktop, and mobile",
+              "third_party_source": "https://www.capterra.ca/software/132667/close-io",
+              "third_party_value": "Cloud/SaaS, web-based, desktop, and mobile",
+              "verdict": "match"
+            },
+            "free_plan_or_trial": {
+              "official_quote": "See an unfiltered review of Close before you come back and start your free trial.",
+              "official_value": "Free trial offered; no free plan",
+              "reason": null,
+              "third_party_claimed_value": "Free trial offered; no free plan",
+              "third_party_source": "https://www.capterra.com/p/132667/Close-io/pricing/",
+              "third_party_value": "Free trial offered; no free plan",
+              "verdict": "match"
+            },
+            "product_category": {
+              "official_quote": "The sales CRM built for calling, emailing, texting, automation and action",
+              "official_value": "Sales CRM",
+              "reason": null,
+              "third_party_claimed_value": "Sales CRM",
+              "third_party_source": "https://www.g2.com/products/close/reviews?page=8",
+              "third_party_value": "Sales CRM",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": "Solo$19 per user / month$9 per user / monthTry for free",
+              "official_value": "$9 per user / month",
+              "reason": null,
+              "third_party_claimed_value": "$9 per user per month",
+              "third_party_source": "https://www.g2.com/products/close/pricing",
+              "third_party_value": "$9 per user per month",
+              "verdict": "match"
+            },
+            "target_customer": {
+              "official_quote": "For founders and solo reps who need a real CRM, not a spreadsheet. For small teams that want one place for every call, email, and deal. For teams ready to let Chloe work leads while reps focus on closing. For high-volume orgs that need advanced controls and the fastest dialing.",
+              "official_value": "Founders and solo reps, small teams, teams ready to let Chloe work leads, and high-volume orgs",
+              "reason": null,
+              "third_party_claimed_value": "Small businesses",
+              "third_party_source": "https://www.g2.com/products/close/pricing",
+              "third_party_value": "Small businesses",
+              "verdict": "match"
+            }
+          },
+          "run": 1,
+          "status": "ok"
+        },
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            },
+            "free_plan_or_trial": {
+              "official_quote": "See an unfiltered review of Close before you come back and start your free trial.",
+              "official_value": "free trial",
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            },
+            "product_category": {
+              "official_quote": "The sales CRM built for calling, emailing, texting, automation and action",
+              "official_value": "sales CRM",
+              "reason": null,
+              "third_party_claimed_value": "Customer relationship management (CRM) software with call management and sales workflow automation",
+              "third_party_source": "https://www.trustradius.com/products/close-crm",
+              "third_party_value": "Customer relationship management (CRM) software with call management and sales workflow automation",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": "Solo$19 per user / month$9 per user / monthTry for free",
+              "official_value": "$9 per user / month",
+              "reason": null,
+              "third_party_claimed_value": "$9 per user per month, paid annually",
+              "third_party_source": "https://www.trustradius.com/products/close-crm",
+              "third_party_value": "$9 per user per month, paid annually",
+              "verdict": "match"
+            },
+            "target_customer": {
+              "official_quote": "For founders and solo reps who need a real CRM, not a spreadsheet. For small teams that want one place for every call, email, and deal. For teams ready to let Chloe work leads while reps focus on closing. For high-volume orgs that need advanced controls and the fastest dialing.",
+              "official_value": "founders and solo reps, small teams, teams, high-volume orgs",
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            }
+          },
+          "run": 2,
+          "status": "ok"
+        },
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "Cloud/SaaS/web-based",
+              "third_party_source": "https://www.capterra.ca/software/132667/close-io",
+              "third_party_value": "Cloud/SaaS/web-based",
+              "verdict": "unknown"
+            },
+            "free_plan_or_trial": {
+              "official_quote": "See an unfiltered review of Close before you come back and start your free trial. Like what you heard? Try for free",
+              "official_value": "Free trial available; no free plan",
+              "reason": null,
+              "third_party_claimed_value": "Free trial available; no free plan",
+              "third_party_source": "https://www.capterra.com/p/132667/Close-io/pricing/",
+              "third_party_value": "Free trial available; no free plan",
+              "verdict": "match"
+            },
+            "product_category": {
+              "official_quote": "The sales CRM built for calling, emailing, texting, automation and action",
+              "official_value": "Sales CRM with calling, emailing, texting, automation",
+              "reason": null,
+              "third_party_claimed_value": "Customer relationship management (CRM) software with call management and sales workflow automation",
+              "third_party_source": "https://www.trustradius.com/products/close-crm",
+              "third_party_value": "Customer relationship management (CRM) software with call management and sales workflow automation",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": "Solo$19 per user / month$9 per user / monthTry for free",
+              "official_value": "$9 per user / month",
+              "reason": null,
+              "third_party_claimed_value": "$9 per user per month",
+              "third_party_source": "https://www.capterra.com/p/132667/Close-io/pricing/",
+              "third_party_value": "$9 per user per month",
+              "verdict": "match"
+            },
+            "target_customer": {
+              "official_quote": "For founders and solo reps who need a real CRM, not a spreadsheet. For small teams that want one place for every call, email, and deal.",
+              "official_value": "Sales teams, founders and solo reps, small teams, high-volume orgs",
+              "reason": null,
+              "third_party_claimed_value": "Small to midsize B2B sales teams, including solo reps, founders, and growth-stage organizations",
+              "third_party_source": "https://www.capterra.ca/software/132667/close-io",
+              "third_party_value": "Small to midsize B2B sales teams, including solo reps, founders, and growth-stage organizations",
+              "verdict": "match"
+            }
+          },
+          "run": 3,
+          "status": "ok"
+        }
+      ]
+    }
+  },
+  "8fda51d8efd05835d38b2715f462cf7eed3159efa5b0850269022a863e4c9a29": {
+    "cached_at": "2026-10-18T00:28:23.437457+00:00",
+    "result": {
+      "fields": [
+        {
+          "field": "starting_price",
+          "label": "Starting price",
+          "official_quote": "Basic $10 per user/month",
+          "official_value": "$10 per user/month",
+          "third_party_source": "https://www.trustradius.com/products/linear-app/pricing",
+          "third_party_value": "$12 per user per month",
+          "verdict": "conflict",
+          "votes": [
+            "conflict",
+            "conflict",
+            "conflict"
+          ]
+        },
+        {
+          "field": "free_plan_or_trial",
+          "label": "Free plan or trial",
+          "official_quote": "Pricing Free $0 Free for everyone",
+          "official_value": "Free plan offered",
+          "third_party_source": "https://www.capterra.com/p/10026109/Linear/",
+          "third_party_value": "Free plan offered",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "match",
+            "match"
+          ]
+        },
+        {
+          "field": "product_category",
+          "label": "Product category",
+          "official_quote": "The product development system for teams and agents Purpose-built for planning and building products.",
+          "official_value": "Product development system for planning and building products",
+          "third_party_source": "https://www.trustradius.com/compare-products/clickup-vs-linear-app",
+          "third_party_value": "Issue tracking and project management software for software engineering teams",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "match",
+            "match"
+          ]
+        },
+        {
+          "field": "target_customer",
+          "label": "Target customer",
+          "official_quote": "Purpose-built for modern teams with AI workflows at its core",
+          "official_value": "teams",
+          "third_party_source": null,
+          "third_party_value": null,
+          "verdict": "unknown",
+          "votes": [
+            "unknown",
+            "unknown",
+            "unknown"
+          ]
+        },
+        {
+          "field": "deployment",
+          "label": "Deployment",
+          "official_quote": null,
+          "official_value": null,
+          "third_party_source": "https://www.trustradius.com/products/linear-app/pricing",
+          "third_party_value": "Cloud",
+          "verdict": "unknown",
+          "votes": [
+            "unknown",
+            "unknown",
+            "unknown"
+          ]
+        }
+      ],
+      "runs": [
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "Cloud",
+              "third_party_source": "https://www.trustradius.com/products/linear-app/pricing",
+              "third_party_value": "Cloud",
+              "verdict": "unknown"
+            },
+            "free_plan_or_trial": {
+              "official_quote": "Pricing Free $0 Free for everyone",
+              "official_value": "Free plan offered",
+              "reason": null,
+              "third_party_claimed_value": "Free plan offered",
+              "third_party_source": "https://www.capterra.com/p/10026109/Linear/",
+              "third_party_value": "Free plan offered",
+              "verdict": "match"
+            },
+            "product_category": {
+              "official_quote": "The product development system for teams and agents Purpose-built for planning and building products.",
+              "official_value": "Product development system for planning and building products",
+              "reason": null,
+              "third_party_claimed_value": "Issue tracking and project management software for software engineering teams",
+              "third_party_source": "https://www.trustradius.com/compare-products/clickup-vs-linear-app",
+              "third_party_value": "Issue tracking and project management software for software engineering teams",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": "Basic $10 per user/month",
+              "official_value": "$10 per user/month",
+              "reason": null,
+              "third_party_claimed_value": "$12 per user per month",
+              "third_party_source": "https://www.trustradius.com/products/linear-app/pricing",
+              "third_party_value": "$12 per user per month",
+              "verdict": "conflict"
+            },
+            "target_customer": {
+              "official_quote": "Purpose-built for modern teams with AI workflows at its core",
+              "official_value": "teams",
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            }
+          },
+          "run": 1,
+          "status": "ok"
+        },
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            },
+            "free_plan_or_trial": {
+              "official_quote": "Pricing Free $0 Free for everyone",
+              "official_value": "Free plan offered",
+              "reason": null,
+              "third_party_claimed_value": "Free plan offered; free trial not available",
+              "third_party_source": "https://www.capterra.com/p/10026109/Linear/",
+              "third_party_value": "Free plan offered; free trial not available",
+              "verdict": "match"
+            },
+            "product_category": {
+              "official_quote": "The product development system for teams and agents Purpose-built for planning and building products.",
+              "official_value": "Product development system for planning and building products",
+              "reason": null,
+              "third_party_claimed_value": "Issue tracking and project management software",
+              "third_party_source": "https://www.trustradius.com/compare-products/birdeye-vs-linear-app",
+              "third_party_value": "Issue tracking and project management software",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": "Basic $10 per user/month",
+              "official_value": "$10 per user/month",
+              "reason": null,
+              "third_party_claimed_value": "$12 per user per month",
+              "third_party_source": "https://www.capterra.com/p/10026109/Linear/",
+              "third_party_value": "$12 per user per month",
+              "verdict": "conflict"
+            },
+            "target_customer": {
+              "official_quote": "The product development system for teams and agents",
+              "official_value": "teams",
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            }
+          },
+          "run": 2,
+          "status": "ok"
+        },
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            },
+            "free_plan_or_trial": {
+              "official_quote": "Pricing Free $0 Free for everyone",
+              "official_value": "Free plan available",
+              "reason": null,
+              "third_party_claimed_value": "Free version offered; free trial not available",
+              "third_party_source": "https://www.capterra.com/p/10026109/Linear/",
+              "third_party_value": "Free version offered; free trial not available",
+              "verdict": "match"
+            },
+            "product_category": {
+              "official_quote": "The product development system for teams and agents",
+              "official_value": "product development system",
+              "reason": null,
+              "third_party_claimed_value": "Product Management Software",
+              "third_party_source": "https://www.g2.com/products/linear/reviews?page=10",
+              "third_party_value": "Product Management Software",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": "Basic $10 per user/month",
+              "official_value": "$10 per user/month",
+              "reason": null,
+              "third_party_claimed_value": "$12 per user per month",
+              "third_party_source": "https://www.capterra.com/p/10026109/Linear/",
+              "third_party_value": "$12 per user per month",
+              "verdict": "conflict"
+            },
+            "target_customer": {
+              "official_quote": "The product development system for teams and agents",
+              "official_value": "teams",
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            }
+          },
+          "run": 3,
+          "status": "ok"
+        }
+      ]
+    }
+  },
   "cd9cffda58ae2462d28d7039c6ea006ffd93bc75946c3e7694195ab9f35f4417": {
     "cached_at": "2026-10-11T21:05:23.183833+00:00",
     "result": {
@@ -133,6 +829,470 @@
         {
           "attempt": 1,
           "issues": []
+        }
+      ]
+    }
+  },
+  "da2cad426031d93a921cd8dae1481beba02504c50e4b9a949e7a8fe65745dbe6": {
+    "cached_at": "2026-10-18T00:28:22.221944+00:00",
+    "result": {
+      "fields": [
+        {
+          "field": "starting_price",
+          "label": "Starting price",
+          "official_quote": null,
+          "official_value": null,
+          "third_party_source": null,
+          "third_party_value": null,
+          "verdict": "unknown",
+          "votes": [
+            "unknown",
+            "unknown",
+            "unknown"
+          ]
+        },
+        {
+          "field": "free_plan_or_trial",
+          "label": "Free plan or trial",
+          "official_quote": "Schedule a free demo today to discuss your needs and get personalized pricing.",
+          "official_value": "Free demo; free website scan",
+          "third_party_source": "https://www.g2.com/products/feroot-security/pricing",
+          "third_party_value": "Free trial offered; no permanent free plan",
+          "verdict": "unknown",
+          "votes": [
+            "unknown",
+            "unknown",
+            "unknown"
+          ]
+        },
+        {
+          "field": "product_category",
+          "label": "Product category",
+          "official_quote": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+          "official_value": "Client-side security, privacy compliance, and PCI DSS compliance platform",
+          "third_party_source": "https://www.g2.com/sellers/feroot-security",
+          "third_party_value": "Application shielding, client-side protection, data privacy management, security compliance, vulnerability scanner, and website security software",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "match",
+            "match"
+          ]
+        },
+        {
+          "field": "target_customer",
+          "label": "Target customer",
+          "official_quote": "Enterprise privacy coverage for up to 5,000 domains, with mobile application coverage, combining DXComply with DXSecure and PaymentGuard for organizations that require enterprise-wide privacy governance, security, and PCI compliance in a single deployment.",
+          "official_value": "Enterprise",
+          "third_party_source": "https://www.g2.com/compare/feroot-security-vs-jscrambler",
+          "third_party_value": "Enterprise",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "match",
+            "match"
+          ]
+        },
+        {
+          "field": "deployment",
+          "label": "Deployment",
+          "official_quote": "Deployment Method | AI Agents + Web Crawler + Script Tag",
+          "official_value": "AI Agents + Web Crawler + Script Tag",
+          "third_party_source": null,
+          "third_party_value": null,
+          "verdict": "unknown",
+          "votes": [
+            "match",
+            "unknown",
+            "unknown"
+          ]
+        }
+      ],
+      "runs": [
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": "Deployment Method | AI Agents + Web Crawler + Script Tag",
+              "official_value": "Cloud (AI Agents + Web Crawler + Script Tag)",
+              "reason": null,
+              "third_party_claimed_value": "Cloud",
+              "third_party_source": "https://www.g2.com/products/feroot-security/reviews?qs=pros-and-cons",
+              "third_party_value": "Cloud",
+              "verdict": "match"
+            },
+            "free_plan_or_trial": {
+              "official_quote": "Schedule a free demo today to discuss your needs and get personalized pricing.",
+              "official_value": "Free demo; free website scan",
+              "reason": null,
+              "third_party_claimed_value": "Free trial offered; no permanent free plan",
+              "third_party_source": "https://www.g2.com/products/feroot-security/pricing",
+              "third_party_value": "Free trial offered; no permanent free plan",
+              "verdict": "unknown"
+            },
+            "product_category": {
+              "official_quote": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+              "official_value": "Client-side security, privacy compliance, and PCI DSS compliance platform",
+              "reason": null,
+              "third_party_claimed_value": "Application shielding, client-side protection, data privacy management, security compliance, vulnerability scanner, and website security software",
+              "third_party_source": "https://www.g2.com/sellers/feroot-security",
+              "third_party_value": "Application shielding, client-side protection, data privacy management, security compliance, vulnerability scanner, and website security software",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            },
+            "target_customer": {
+              "official_quote": "Enterprise privacy coverage for up to 5,000 domains, with mobile application coverage, combining DXComply with DXSecure and PaymentGuard for organizations that require enterprise-wide privacy governance, security, and PCI compliance in a single deployment.",
+              "official_value": "Enterprise",
+              "reason": null,
+              "third_party_claimed_value": "Enterprise",
+              "third_party_source": "https://www.g2.com/compare/feroot-security-vs-jscrambler",
+              "third_party_value": "Enterprise",
+              "verdict": "match"
+            }
+          },
+          "run": 1,
+          "status": "ok"
+        },
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": "Deployment Method | AI Agents + Web Crawler + Script Tag",
+              "official_value": "AI Agents + Web Crawler + Script Tag",
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            },
+            "free_plan_or_trial": {
+              "official_quote": "Schedule a free demo today to discuss your needs and get personalized pricing.",
+              "official_value": "Free demo; free website scan",
+              "reason": null,
+              "third_party_claimed_value": "Free trial offered; no permanent free plan",
+              "third_party_source": "https://www.g2.com/products/feroot-security/pricing",
+              "third_party_value": "Free trial offered; no permanent free plan",
+              "verdict": "unknown"
+            },
+            "product_category": {
+              "official_quote": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+              "official_value": "Client-side security, privacy compliance, and PCI DSS compliance platform",
+              "reason": null,
+              "third_party_claimed_value": "Client-side protection, application shielding, security compliance, website security, data privacy management, and vulnerability scanner software",
+              "third_party_source": "https://www.g2.com/compare/feroot-security-vs-cside",
+              "third_party_value": "Client-side protection, application shielding, security compliance, website security, data privacy management, and vulnerability scanner software",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            },
+            "target_customer": {
+              "official_quote": "Security teams at Instacart, Reddit, and Gusto use Feroot to monitor every third-party script, block unauthorized data exfiltration, and satisfy PCI DSS 4.0 requirements 6.4.3 and 11.6.1 without manual audits.",
+              "official_value": "Mid-market and enterprise organizations",
+              "reason": null,
+              "third_party_claimed_value": "Mid-market and enterprise organizations",
+              "third_party_source": "https://www.g2.com/products/feroot-security/pricing",
+              "third_party_value": "Mid-market and enterprise organizations",
+              "verdict": "match"
+            }
+          },
+          "run": 2,
+          "status": "ok"
+        },
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": "Deployment Method | AI Agents + Web Crawler + Script Tag",
+              "official_value": "AI Agents + Web Crawler + Script Tag",
+              "reason": null,
+              "third_party_claimed_value": "Cloud-based SaaS",
+              "third_party_source": "https://www.g2.com/products/feroot-security/reviews?qs=pros-and-cons",
+              "third_party_value": "Cloud-based SaaS",
+              "verdict": "unknown"
+            },
+            "free_plan_or_trial": {
+              "official_quote": "Schedule a free demo today to discuss your needs and get personalized pricing.",
+              "official_value": "Free demo and free website scan",
+              "reason": null,
+              "third_party_claimed_value": "Free trial available; no permanent free plan",
+              "third_party_source": "https://www.g2.com/products/feroot-security/pricing",
+              "third_party_value": "Free trial available; no permanent free plan",
+              "verdict": "unknown"
+            },
+            "product_category": {
+              "official_quote": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+              "official_value": "Client-side security, privacy and consent compliance, and PCI DSS payment-page protection platform",
+              "reason": null,
+              "third_party_claimed_value": "Client-side protection, application shielding, security compliance, website security, data privacy management, and vulnerability scanner software",
+              "third_party_source": "https://www.g2.com/compare/feroot-security-vs-cside",
+              "third_party_value": "Client-side protection, application shielding, security compliance, website security, data privacy management, and vulnerability scanner software",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "Contact vendor",
+              "third_party_source": "https://www.capterra.com/p/192375/Web-Formjacking-Skimming-Attack-Detection/",
+              "third_party_value": "Contact vendor",
+              "verdict": "unknown"
+            },
+            "target_customer": {
+              "official_quote": "Great for companies with several websites or mobile applications that must comply with privacy laws and standards.",
+              "official_value": "Companies with multiple websites or mobile applications, including mid-market and enterprise organizations",
+              "reason": null,
+              "third_party_claimed_value": "Mid-market and enterprise organizations, especially in regulated industries",
+              "third_party_source": "https://www.g2.com/products/feroot-security/pricing",
+              "third_party_value": "Mid-market and enterprise organizations, especially in regulated industries",
+              "verdict": "match"
+            }
+          },
+          "run": 3,
+          "status": "ok"
+        }
+      ]
+    }
+  },
+  "e107d01dd7e877f53fa9079bc258814fe6dd1aa49996633d2fdb70fbf1c86f73": {
+    "cached_at": "2026-10-18T00:28:21.385828+00:00",
+    "result": {
+      "fields": [
+        {
+          "field": "starting_price",
+          "label": "Starting price",
+          "official_quote": null,
+          "official_value": null,
+          "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/pricing/",
+          "third_party_value": "$21.00 per month",
+          "verdict": "unknown",
+          "votes": [
+            "unknown",
+            "unknown",
+            "unknown"
+          ]
+        },
+        {
+          "field": "free_plan_or_trial",
+          "label": "Free plan or trial",
+          "official_quote": "As a small business owner, you get unlimited access to FreshBooks accounting software through our 30-day free trial, with no contracts and no credit card required.",
+          "official_value": "30-day free trial, no credit card required",
+          "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/pricing/",
+          "third_party_value": "Free trial available; free version not available",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "match",
+            "match"
+          ]
+        },
+        {
+          "field": "product_category",
+          "label": "Product category",
+          "official_quote": "Plus, as a cloud accounting software – your data is stored and ready to be accessed wherever you are in the world.",
+          "official_value": "Cloud accounting software",
+          "third_party_source": "https://www.capterra.ca/compare/73970/142390/ap-forensics-enterprise-suite/vs/freshbooks",
+          "third_party_value": "Cloud-based accounting software",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "unknown",
+            "match"
+          ]
+        },
+        {
+          "field": "target_customer",
+          "label": "Target customer",
+          "official_quote": "It’s perfect for everyone from self-employed professionals to growing business owners.",
+          "official_value": "Small businesses, freelancers, solopreneurs, self-employed professionals",
+          "third_party_source": "https://www.capterra.ca/compare/73970/142390/ap-forensics-enterprise-suite/vs/freshbooks",
+          "third_party_value": "Small businesses and self-employed users",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "match",
+            "match"
+          ]
+        },
+        {
+          "field": "deployment",
+          "label": "Deployment",
+          "official_quote": "FreshBooks and all FreshBooks features are 100% web-based, meaning you can access them anywhere.",
+          "official_value": "Web-based/cloud",
+          "third_party_source": "https://www.capterra.ca/software/142390/freshbooks",
+          "third_party_value": "Cloud, SaaS, and web-based",
+          "verdict": "match",
+          "votes": [
+            "match",
+            "match",
+            "match"
+          ]
+        }
+      ],
+      "runs": [
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": "FreshBooks and all FreshBooks features are 100% web-based, meaning you can access them anywhere.",
+              "official_value": "Web-based/cloud",
+              "reason": null,
+              "third_party_claimed_value": "Cloud, SaaS, and web-based",
+              "third_party_source": "https://www.capterra.ca/software/142390/freshbooks",
+              "third_party_value": "Cloud, SaaS, and web-based",
+              "verdict": "match"
+            },
+            "free_plan_or_trial": {
+              "official_quote": "As a small business owner, you get unlimited access to FreshBooks accounting software through our 30-day free trial, with no contracts and no credit card required.",
+              "official_value": "30-day free trial, no credit card required",
+              "reason": null,
+              "third_party_claimed_value": "Free trial available; free version not available",
+              "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/pricing/",
+              "third_party_value": "Free trial available; free version not available",
+              "verdict": "match"
+            },
+            "product_category": {
+              "official_quote": "Plus, as a cloud accounting software – your data is stored and ready to be accessed wherever you are in the world.",
+              "official_value": "Cloud accounting software",
+              "reason": null,
+              "third_party_claimed_value": "Cloud-based accounting software",
+              "third_party_source": "https://www.capterra.ca/compare/73970/142390/ap-forensics-enterprise-suite/vs/freshbooks",
+              "third_party_value": "Cloud-based accounting software",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "$21.00 per month",
+              "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/pricing/",
+              "third_party_value": "$21.00 per month",
+              "verdict": "unknown"
+            },
+            "target_customer": {
+              "official_quote": "It’s perfect for everyone from self-employed professionals to growing business owners.",
+              "official_value": "Small businesses, freelancers, solopreneurs, self-employed professionals",
+              "reason": null,
+              "third_party_claimed_value": "Small businesses and self-employed users",
+              "third_party_source": "https://www.capterra.ca/compare/73970/142390/ap-forensics-enterprise-suite/vs/freshbooks",
+              "third_party_value": "Small businesses and self-employed users",
+              "verdict": "match"
+            }
+          },
+          "run": 1,
+          "status": "ok"
+        },
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": "Plus, as a cloud accounting software – your data is stored and ready to be accessed wherever you are in the world.",
+              "official_value": "Cloud, web-based",
+              "reason": null,
+              "third_party_claimed_value": "Cloud, SaaS, web-based",
+              "third_party_source": "https://www.capterra.ca/software/142390/freshbooks",
+              "third_party_value": "Cloud, SaaS, web-based",
+              "verdict": "match"
+            },
+            "free_plan_or_trial": {
+              "official_quote": "As a small business owner, you get unlimited access to FreshBooks accounting software through our 30-day free trial, with no contracts and no credit card required.",
+              "official_value": "30-day free trial, no credit card required",
+              "reason": null,
+              "third_party_claimed_value": "Free trial available; free version not available",
+              "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/pricing/",
+              "third_party_value": "Free trial available; free version not available",
+              "verdict": "match"
+            },
+            "product_category": {
+              "official_quote": "Accounting software is a tool that allows you to track and manage the day-to-day finances of your businesses.",
+              "official_value": "Accounting software",
+              "reason": "no third-party value",
+              "third_party_claimed_value": null,
+              "third_party_source": null,
+              "third_party_value": null,
+              "verdict": "unknown"
+            },
+            "starting_price": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "$21.00 per month",
+              "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/pricing/",
+              "third_party_value": "$21.00 per month",
+              "verdict": "unknown"
+            },
+            "target_customer": {
+              "official_quote": "Your everyday small business software",
+              "official_value": "Small businesses, freelancers, solopreneurs",
+              "reason": null,
+              "third_party_claimed_value": "Freelancers, solopreneurs, and small service-based businesses",
+              "third_party_source": "https://www.g2.com/products/freshbooks/pricing",
+              "third_party_value": "Freelancers, solopreneurs, and small service-based businesses",
+              "verdict": "match"
+            }
+          },
+          "run": 2,
+          "status": "ok"
+        },
+        {
+          "fields": {
+            "deployment": {
+              "official_quote": "FreshBooks and all FreshBooks features are 100% web-based, meaning you can access them anywhere.",
+              "official_value": "Cloud, web-based",
+              "reason": null,
+              "third_party_claimed_value": "Cloud, SaaS, web-based",
+              "third_party_source": "https://www.capterra.com/compare/142390-222215/FreshBooks-vs-Invoiced",
+              "third_party_value": "Cloud, SaaS, web-based",
+              "verdict": "match"
+            },
+            "free_plan_or_trial": {
+              "official_quote": "As a small business owner, you get unlimited access to FreshBooks accounting software through our 30-day free trial, with no contracts and no credit card required.",
+              "official_value": "Free 30-day trial, no credit card required",
+              "reason": null,
+              "third_party_claimed_value": "Free 30-day trial; no free plan",
+              "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/",
+              "third_party_value": "Free 30-day trial; no free plan",
+              "verdict": "match"
+            },
+            "product_category": {
+              "official_quote": "Plus, as a cloud accounting software – your data is stored and ready to be accessed wherever you are in the world.",
+              "official_value": "Cloud accounting software",
+              "reason": null,
+              "third_party_claimed_value": "Cloud-based accounting software",
+              "third_party_source": "https://www.capterra.com/compare/142390-184768/FreshBooks-vs-Link-My-Books",
+              "third_party_value": "Cloud-based accounting software",
+              "verdict": "match"
+            },
+            "starting_price": {
+              "official_quote": null,
+              "official_value": null,
+              "reason": "no official value",
+              "third_party_claimed_value": "$21 per month",
+              "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/",
+              "third_party_value": "$21 per month",
+              "verdict": "unknown"
+            },
+            "target_customer": {
+              "official_quote": "Your everyday small business software",
+              "official_value": "Small businesses",
+              "reason": null,
+              "third_party_claimed_value": "Small businesses",
+              "third_party_source": "https://www.capterra.com/compare/142390-184768/FreshBooks-vs-Link-My-Books",
+              "third_party_value": "Small businesses",
+              "verdict": "match"
+            }
+          },
+          "run": 3,
+          "status": "ok"
         }
       ]
     }

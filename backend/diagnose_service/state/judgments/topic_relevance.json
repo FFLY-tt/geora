@@ -1,4 +1,184 @@
 {
+  "090f854121d84cbee6a502bdbb7590b17c3ce26420c2725e48a1036725f8fee4": {
+    "cached_at": "2026-10-18T00:28:44.136344+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Record and send directly from your browser, without the headache of switching tools or context.",
+      "generation_failed": false,
+      "question": "Can I record my screen and webcam at the same time for sales outreach videos?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Record and send directly from your browser, without the headache of switching tools or context.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Record and send directly from your browser, without the headache of switching tools or context.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Record and send directly from your browser, without the headache of switching tools or context.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
+    }
+  },
+  "099f518235357cf52c31aa9a53db23247b22be6a646ad02974675605b31eb473": {
+    "cached_at": "2026-10-18T00:28:37.094498+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+      "generation_failed": false,
+      "question": "How do I stop my team from losing track of who is working on what?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "09f28a41f2b131fb11bea689b9ba141b836f3bb2f8b2c260cfa62135f2958436": {
+    "cached_at": "2026-10-18T00:28:38.166561+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "From calls and emails to texts and meetings, Close unifies all your communication channels into one sales workspace.",
+      "generation_failed": false,
+      "question": "What is the best way to manage calls emails and texts with my sales team",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "From calls and emails to texts and meetings, Close unifies all your communication channels into one sales workspace.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "From calls and emails to texts and meetings, Close unifies all your communication channels into one sales workspace.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "From calls and emails to texts and meetings, Close unifies all your communication channels into one sales workspace.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/communication"
+    }
+  },
+  "0c348efe2a9ad8c9935690fad080bc5101bbeae88690551c49a22f929202abdd": {
+    "cached_at": "2026-10-18T00:28:37.478581+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Advanced Payments lets your small business accept credit cards online and accept payments like bank transfers, and payments over the phone.",
+      "generation_failed": false,
+      "question": "How do I accept credit card payments as a freelancer without a merchant account?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Advanced Payments lets your small business accept credit cards online and accept payments like bank transfers, and payments over the phone.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Advanced Payments lets your small business accept credit cards online and accept payments like bank transfers, and payments over the phone.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Advanced Payments lets your small business accept credit cards online and accept payments like bank transfers, and payments over the phone.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/"
+    }
+  },
+  "0d594bb4fee7b7d75c491606a1d414ff8920947c182e1c84ae4082225e0063b5": {
+    "cached_at": "2026-10-18T00:28:41.712801+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders. Set up templates, timing, and triggers to handle your follow-ups automatically—while keeping your outreach personal and timely.",
+      "generation_failed": false,
+      "question": "How do I automate follow ups so my sales deals keep moving forward",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders. Set up templates, timing, and triggers to handle your follow-ups automatically—while keeping your outreach personal and timely.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders. Set up templates, timing, and triggers to handle your follow-ups automatically—while keeping your outreach personal and timely.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/communication"
+    }
+  },
   "0ebbff7a52f4b4c101b8e91a423cf25bcb457342dd48022b83d6a25979d97b13": {
     "cached_at": "2026-10-11T21:05:08.731254+00:00",
     "result": {
@@ -33,6 +213,78 @@
         }
       ],
       "source_url": "https://www.feroot.com/"
+    }
+  },
+  "0ffe0196a90f75a1077fe3e950c5fcaccf7386a8419b1887e3cf7206bcf3ea81": {
+    "cached_at": "2026-10-18T00:28:55.499037+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "Which video format works best for outreach emails so it does not get blocked or ignored?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "118807b00d3752ad50efe0eacb2d88c72084dcb5cb5a676e6a690638480b305d": {
+    "cached_at": "2026-10-18T00:29:01.413833+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "How can I see which pages a viewer visited after watching my video?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
     }
   },
   "11ed9c54db224d68f9a124a396b48e6f4fc6f19ba14b4fd602f2ee622ac07ce1": {
@@ -71,6 +323,150 @@
       "source_url": "https://close.com/pricing"
     }
   },
+  "127ab168c5d4f5a2d22283c2417958e257989c45cdcc384c73a9b9747575bf87": {
+    "cached_at": "2026-10-18T00:28:34.178333+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks makes it easy to stay organized, keep track of payments owed and expenses made, send invoices and accept payments.",
+      "generation_failed": false,
+      "question": "What is the easiest way to send an invoice to a client and get paid online?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks makes it easy to stay organized, keep track of payments owed and expenses made, send invoices and accept payments.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks makes it easy to stay organized, keep track of payments owed and expenses made, send invoices and accept payments.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks makes it easy to stay organized, keep track of payments owed and expenses made, send invoices and accept payments.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing"
+    }
+  },
+  "1518b4c732a3336d8f8f32115f001ca2cb3adcab9abf22bef216ed59a0d584dd": {
+    "cached_at": "2026-10-18T00:28:49.859655+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Calls, emails, texts, and meetings are automatically logged—no manual input required.",
+      "generation_failed": false,
+      "question": "How do I stop losing track of which leads my sales reps have already contacted",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Calls, emails, texts, and meetings are automatically logged—no manual input required.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Calls, emails, texts, and meetings are automatically logged—no manual input required.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Calls, emails, texts, and meetings are automatically logged—no manual input required.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/automation"
+    }
+  },
+  "1752e2d6e68d87caa92d327d6e70ae0fe6b3ff7b15f2115b0902086b6987d4e5": {
+    "cached_at": "2026-10-18T00:28:34.871444+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Get instant notifications on who’s watching so you can follow up ASAP.",
+      "generation_failed": false,
+      "question": "How can I send personalized videos to sales leads and know when they watch them?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Get instant notifications on who’s watching so you can follow up ASAP.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Get instant notifications on who’s watching so you can follow up ASAP.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Get instant notifications on who’s watching so you can follow up ASAP.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
+    }
+  },
+  "1b43f2f30ea8b3a63b5136cfc0aafb8f5f7e310c7d63afe3c10173a2948edded": {
+    "cached_at": "2026-10-18T00:28:46.332905+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Catch pre-consent activity, post-rejection tracking, mislabeled cookies, and controls that stop working.",
+      "generation_failed": false,
+      "question": "Which cookies on my site need consent before they load for visitors in Europe?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Catch pre-consent activity, post-rejection tracking, mislabeled cookies, and controls that stop working.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Catch pre-consent activity, post-rejection tracking, mislabeled cookies, and controls that stop working.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Catch pre-consent activity, post-rejection tracking, mislabeled cookies, and controls that stop working.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/dxcomply/"
+    }
+  },
   "1e57480285a1aea6ef8db5ae8f455a0501ff6d569d35b1fd2ccd06a79b5b8f28": {
     "cached_at": "2026-10-11T21:05:50.565197+00:00",
     "result": {
@@ -107,6 +503,114 @@
       "source_url": "https://close.com/automation"
     }
   },
+  "20cf2755fb7e87e4dd7e9e5c5c220f95d680b95eae171a3f795797d236357ebf": {
+    "cached_at": "2026-10-18T00:28:41.146390+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+      "generation_failed": false,
+      "question": "What software helps me manage my small business finances and taxes in one place?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/"
+    }
+  },
+  "217d1199fcbb104152a49f02fdb6d2f1391da1deb3986c41ec7f70745f2e78f9": {
+    "cached_at": "2026-10-18T00:29:04.486682+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "See deal updates and lead activity in real time without chasing reps or digging through notes.",
+      "generation_failed": false,
+      "question": "How can I measure how many follow ups my team actually sends each week",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "See deal updates and lead activity in real time without chasing reps or digging through notes.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "See deal updates and lead activity in real time without chasing reps or digging through notes.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "See deal updates and lead activity in real time without chasing reps or digging through notes.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/automation"
+    }
+  },
+  "224b9c5c31d7b20e8d74b42d6bba046d64d030d6c95a684eec019bfa1cc7a378": {
+    "cached_at": "2026-10-18T00:28:56.069905+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Calls, emails, texts, and meetings are automatically logged—no manual input required.",
+      "generation_failed": false,
+      "question": "My reps forget to log their calls and emails. How do I fix that",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Calls, emails, texts, and meetings are automatically logged—no manual input required.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Calls, emails, texts, and meetings are automatically logged—no manual input required.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Calls, emails, texts, and meetings are automatically logged—no manual input required.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/automation"
+    }
+  },
   "22cc20785d8c48775a24246a46126571966374d7e773198c2d78a339451b572f": {
     "cached_at": "2026-10-11T21:06:33.488597+00:00",
     "result": {
@@ -134,6 +638,366 @@
         {
           "classification": "partial",
           "evidence_sentence": "Planning and monitoring Plan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "2ae0417b75a6a9bf6c1601920233aa791197be9334cc2f25fdf2ed5c581fd3c0": {
+    "cached_at": "2026-10-18T00:29:10.355767+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "Can I see if a prospect shared my video with other people on their team?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "2e0bafbe23531783e22347d4412cd767685b4d46aac65fef01b0fa3afefb1804": {
+    "cached_at": "2026-10-18T00:29:04.876658+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Replicate winning tactics with real-time insight into video performance.",
+      "generation_failed": false,
+      "question": "What is a good way to test different video messages and see which one gets more replies?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Replicate winning tactics with real-time insight into video performance.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Replicate winning tactics with real-time insight into video performance.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Replicate winning tactics with real-time insight into video performance.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
+    }
+  },
+  "325fe57d09bbaac1a6f61763cf9d72bc8d8436d87f9d0a218360fdbd42f27aff": {
+    "cached_at": "2026-10-18T00:28:35.751902+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "See what’s running, including scripts, cookies, trackers, vendors, and load chains.",
+      "generation_failed": false,
+      "question": "How do I know which third party scripts are collecting visitor data on my site?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "See what’s running, including scripts, cookies, trackers, vendors, and load chains.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "See what’s running, including scripts, cookies, trackers, vendors, and load chains.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "See what’s running, including scripts, cookies, trackers, vendors, and load chains.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/dxcomply/"
+    }
+  },
+  "326d5cf46881559ead9f2a8c8cda58836ac7c8b3588d27808290a39665a80521": {
+    "cached_at": "2026-10-18T00:29:01.371740+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What is the easiest way to hand a lead from one rep to another without losing the history",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "3b5be6e25eb66570e51bae3d410332448f6e964836f9ad320a97f0e992650bf4": {
+    "cached_at": "2026-10-18T00:28:59.800100+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "How do I separate my personal money from my business money?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "3df8c6c2d2e83b8cde2c0282d8d3ba30fc58ceb755afe9f571acdb5458f6dfd2": {
+    "cached_at": "2026-10-18T00:28:57.481583+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+      "generation_failed": false,
+      "question": "What is the best way to handle a client who keeps paying late?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/invoice"
+    }
+  },
+  "476330e43b75bbffefa9cfde9f947396e652c52fa905c4cc819e939411f0cdae": {
+    "cached_at": "2026-10-18T00:29:07.261137+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "For small teams that want one place for every call, email, and deal.",
+      "generation_failed": false,
+      "question": "What should I look for when choosing a system to track sales activity for a small team",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "For small teams that want one place for every call, email, and deal.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "For small teams that want one place for every call, email, and deal.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "For small teams that want one place for every call, email, and deal.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/pricing"
+    }
+  },
+  "4cc3008316e51613a55d8c08add220e9d575210942953b86db902c30e1f3c76d": {
+    "cached_at": "2026-10-18T00:28:47.386168+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Check individual video analytics for real-time insight into who’s watching your videos, when, and for how long.",
+      "generation_failed": false,
+      "question": "How do I host sales videos so I can see who watched and for how long?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Check individual video analytics for real-time insight into who’s watching your videos, when, and for how long.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Check individual video analytics for real-time insight into who’s watching your videos, when, and for how long.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Check individual video analytics for real-time insight into who’s watching your videos, when, and for how long.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-hosting/"
+    }
+  },
+  "4d9e8bd4c5b5bbd83360b7962739d8a5e4a10c6c0c5b6eafd867eba5cb10fe24": {
+    "cached_at": "2026-10-18T00:29:15.367091+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What is a simple way to see all my unpaid invoices in one view?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "4dc7e94cfade33b8b656dd1e04ac5b7ab5131ff847e0fcc62bc186b927c9e00d": {
+    "cached_at": "2026-10-18T00:29:00.477033+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+      "generation_failed": false,
+      "question": "How do I decide which features to build next when everyone wants something different?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
           "evidence_verified": true,
           "run": 3,
           "source_url": "https://linear.app/",
@@ -179,6 +1043,42 @@
       "source_url": "https://www.feroot.com/"
     }
   },
+  "524653203ce0e7ce64c049492992dc8e20d41833a77b0d1e85e935bdf92cf1ae": {
+    "cached_at": "2026-10-18T00:28:48.294742+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+      "generation_failed": false,
+      "question": "How can I keep remote engineers and designers aligned on priorities?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
   "5c317e3dff9ea951d13b21af9400923b0795626d5dcde1a095bfe19fbf82b329": {
     "cached_at": "2026-10-11T21:06:30.352646+00:00",
     "result": {
@@ -213,6 +1113,150 @@
         }
       ],
       "source_url": "https://linear.app/"
+    }
+  },
+  "6333b44c47a3ec2df1470bb7967bbe2c7956c24861f3aa2b6363edb2f93a675a": {
+    "cached_at": "2026-10-18T00:28:45.389278+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What is a good way to run a weekly planning meeting for a small dev team?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "666412b0ac9c6269422aed201ed479c44631cc168ab72c25a4e2db7bd8dbc411": {
+    "cached_at": "2026-10-18T00:28:42.518375+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Maintain dated session recordings and reasoning logs for counsel, regulators, and internal teams.",
+      "generation_failed": false,
+      "question": "How can I keep an audit trail showing what data leaves my site and where it goes?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Maintain dated session recordings and reasoning logs for counsel, regulators, and internal teams.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Maintain dated session recordings and reasoning logs for counsel, regulators, and internal teams.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Maintain dated session recordings and reasoning logs for counsel, regulators, and internal teams.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/dxcomply/"
+    }
+  },
+  "66ecd90efef51dde89f12476357176521cb327f42500c9b71c6ac84f178e9b5c": {
+    "cached_at": "2026-10-18T00:28:48.952499+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Unauthorized Scripts 2 unauthorized scripts detected",
+      "generation_failed": false,
+      "question": "How do I spot a tracker that was added by a vendor without my team knowing?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Unauthorized Scripts 2 unauthorized scripts detected",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Unauthorized Scripts 2 unauthorized scripts detected",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Unauthorized Scripts 2 unauthorized scripts detected",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/index.html"
+    }
+  },
+  "6861c750e6c31455c0d785005aad1f696530ad6d942f3adbdd666f4e0c44e6f0": {
+    "cached_at": "2026-10-18T00:28:35.487474+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "All in one place: working your deals for you.",
+      "generation_failed": false,
+      "question": "How can I keep track of all my sales leads and customers in one place",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "All in one place: working your deals for you.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "All in one place: working your deals for you.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "All in one place: working your deals for you.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/"
     }
   },
   "68abfbaabb9c54f5ff8d1c2c205123d0ace660ee1bd5b266748a0f7de9184ea6": {
@@ -251,6 +1295,690 @@
       "source_url": "https://linear.app/"
     }
   },
+  "6d1aa76426a757baa073ba2812c2c4eeb42499895a438b1be68ae64e4fa0fcdc": {
+    "cached_at": "2026-10-18T00:28:45.013944+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+      "generation_failed": false,
+      "question": "How can I automate my invoicing and payment reminders for late clients?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/invoice"
+    }
+  },
+  "6dd8133827ec9202e456eb4233b283d02e401856c607e8c4df8db85e96f9e124": {
+    "cached_at": "2026-10-18T00:28:53.883682+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "When you’re small, friction is manageable. A two-person engineering team can keep track of their work in their heads, coordinate through chat, and still ship quickly.",
+      "generation_failed": false,
+      "question": "How do I move my team off spreadsheets and scattered chat messages?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "When you’re small, friction is manageable. A two-person engineering team can keep track of their work in their heads, coordinate through chat, and still ship quickly.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/customers/openai",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "A two-person engineering team can keep track of their work in their heads, coordinate through chat, and still ship quickly.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/customers/openai",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "When you’re small, friction is manageable. A two-person engineering team can keep track of their work in their heads, coordinate through chat, and still ship quickly.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/customers/openai",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/customers/openai"
+    }
+  },
+  "6e13ecb89b8d47ae1b48334b6ee49f006df08a583d888c96ea43e84e15aa4835": {
+    "cached_at": "2026-10-18T00:29:13.481755+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+      "generation_failed": false,
+      "question": "How do I set up a reminder system so my reps never miss a scheduled callback with a prospect",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/communication"
+    }
+  },
+  "725af40ee228325f200dbe50914d86a4bc1060b175d6a4edb36f1ea8431d29d3": {
+    "cached_at": "2026-10-18T00:29:07.581540+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Keep your content organized with custom folders and permissions across teams.",
+      "generation_failed": false,
+      "question": "How do I keep my sales videos organized when my team sends hundreds each month?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Keep your content organized with custom folders and permissions across teams.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Keep your content organized with custom folders and permissions across teams.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Keep your content organized with custom folders and permissions across teams.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-hosting/"
+    }
+  },
+  "738fef7fe7f169e1294410c222cce1710a1680a64bbead6ff133fe46f5a90fe3": {
+    "cached_at": "2026-10-18T00:28:52.786781+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Opportunity management Track your Opportunities and view the Total Value and Expected Value of the deals in your pipelines.",
+      "generation_failed": false,
+      "question": "What is a simple way to see every deal in my pipeline and know which stage it is at",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Opportunity management Track your Opportunities and view the Total Value and Expected Value of the deals in your pipelines.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Opportunity management Track your Opportunities and view the Total Value and Expected Value of the deals in your pipelines.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Opportunity management Track your Opportunities and view the Total Value and Expected Value of the deals in your pipelines.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/pricing"
+    }
+  },
+  "75995b59e0bab96dc5a5500cd84a465cad6e331f4522a1861ada244d14502ae6": {
+    "cached_at": "2026-10-18T00:28:50.738807+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What records do I need to keep for tax time as a freelancer?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "7602680536efceaa3184eb19a919e384d2cbdeb38ea3993d4bf00233b238dcc9": {
+    "cached_at": "2026-10-18T00:28:56.985302+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+      "generation_failed": false,
+      "question": "How can I show leadership a clear view of what my team will deliver this quarter?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "78f3bd3d40aec9f0c89f17b0bedf9d2f9cfc0b9a229e343607a40eed23a8050a": {
+    "cached_at": "2026-10-18T00:28:39.654481+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+      "generation_failed": false,
+      "question": "What happens if a marketing tag on my checkout page breaks payment security rules?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/index.html"
+    }
+  },
+  "7bd6d3251934c239e0d02bbc631c50178a3b3b4dd0b09fc99a77e98347c74d4c": {
+    "cached_at": "2026-10-18T00:28:54.160918+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Bank Connection & Expense management — general set-up and usage on workflows such as: adding, categorizing, and updating expenses; scanning and attaching receipts; manual entry and import",
+      "generation_failed": false,
+      "question": "How can I stop losing track of receipts and paper invoices?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Bank Connection & Expense management — general set-up and usage on workflows such as: adding, categorizing, and updating expenses; scanning and attaching receipts; manual entry and import",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/policies/buy-now-offer",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Bank Connection & Expense management — general set-up and usage on workflows such as: adding, categorizing, and updating expenses; scanning and attaching receipts; manual entry and import",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/policies/buy-now-offer",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Bank Connection & Expense management — general set-up and usage on workflows such as: adding, categorizing, and updating expenses; scanning and attaching receipts; manual entry and import",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/policies/buy-now-offer",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/policies/buy-now-offer"
+    }
+  },
+  "7c6b23cd47f38586e1ce162b86ab418363da8f282f7bffcb990da998fc1f6e52": {
+    "cached_at": "2026-10-18T00:29:12.238597+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "How do I estimate how much tax I will owe at the end of the year?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "7e0b9cb43735ecaabd50f5194e4407847d18f81939e1e308ce7376f575b0a687": {
+    "cached_at": "2026-10-18T00:29:06.042812+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Absolutely. If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+      "generation_failed": false,
+      "question": "How do I set up recurring bills for clients who pay me every month?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Absolutely. If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Absolutely. If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Absolutely. If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/invoice"
+    }
+  },
+  "7e4f58f42900ca6c99cadf18adea3b84fddd95dc32096f6928dc94d2e557b064": {
+    "cached_at": "2026-10-18T00:28:44.750305+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Leads Contacts are defined as individuals within an organization and are attached to a Lead in Close.",
+      "generation_failed": false,
+      "question": "What software helps sales teams organize their leads and customer contacts",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Leads Contacts are defined as individuals within an organization and are attached to a Lead in Close.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Leads Contacts are defined as individuals within an organization and are attached to a Lead in Close.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Leads Contacts are defined as individuals within an organization and are attached to a Lead in Close.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/pricing"
+    }
+  },
+  "7f56ff173acd262c9cf2a8dcc6e7b93a4040c31644d9d3deb0d0180be5816768": {
+    "cached_at": "2026-10-18T00:29:04.706208+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Maintain dated session recordings and reasoning logs for counsel, regulators, and internal teams.",
+      "generation_failed": false,
+      "question": "What should I document to prove to an auditor that trackers are under control?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Maintain dated session recordings and reasoning logs for counsel, regulators, and internal teams.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Maintain dated session recordings and reasoning logs for counsel, regulators, and internal teams.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Maintain dated session recordings and reasoning logs for counsel, regulators, and internal teams.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/dxcomply/"
+    }
+  },
+  "81a926ab8df55dc04c944f59d250ab2e21319d7f196653e6a4a5a2165a10900f": {
+    "cached_at": "2026-10-18T00:28:51.094086+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Planning and monitoring Plan and navigate from idea to launch.",
+      "generation_failed": false,
+      "question": "How do I spot when a project is falling behind schedule before it is too late?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Planning and monitoring Plan and navigate from idea to launch.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Planning and monitoring Plan and navigate from idea to launch.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Planning and monitoring Plan and navigate from idea to launch.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "84680fcb3484c44493f46bf3bac9b52e0cf1bf7afa20fa5969fe3c172059c927": {
+    "cached_at": "2026-10-18T00:28:58.589903+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Get your content in front of customers wherever they are, email, social media, website, or anywhere else.",
+      "generation_failed": false,
+      "question": "How do I add a video to my email so it plays right inside the inbox?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Get your content in front of customers wherever they are, email, social media, website, or anywhere else.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Cut through crowded inboxes with personal video that gets replies and shows you who’s watching.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Cut through crowded inboxes with personal video that gets replies and shows you who’s watching.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-hosting/"
+    }
+  },
+  "876736e82545a88c93ba73cfc473440023fd82229df4f41d8d702b41d7d39907": {
+    "cached_at": "2026-10-18T00:29:10.272687+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Multi-channel inbox view Centralize your to-do list to ensure no leads slip through the cracks.",
+      "generation_failed": false,
+      "question": "How can I connect my email inbox to my lead list so messages show up in one view",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Multi-channel inbox view Centralize your to-do list to ensure no leads slip through the cracks.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Multi-channel inbox view Centralize your to-do list to ensure no leads slip through the cracks.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Multi-channel inbox view Centralize your to-do list to ensure no leads slip through the cracks.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/pricing"
+    }
+  },
+  "8e9f8ad9989b1c7ac0da9eb12c171c615eacf18e879b80c123968c9431651327": {
+    "cached_at": "2026-10-18T00:28:48.072473+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "How do I know if my small business is actually making a profit each month?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "96164dcf910551cc2b5d0dae105a5aa53acf42b1c71a5f3d6f0d492f07655076": {
+    "cached_at": "2026-10-18T00:29:13.223889+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Turn every rep into a top performer by easily replicating the messages that are resonating with customers.",
+      "generation_failed": false,
+      "question": "How do I get my sales team to actually use video in their outreach instead of just email?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Turn every rep into a top performer by easily replicating the messages that are resonating with customers.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Turn every rep into a top performer by easily replicating the messages that are resonating with customers.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Turn every rep into a top performer by easily replicating the messages that are resonating with customers.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/"
+    }
+  },
+  "9664b6d7bb1be9a05cb36351e85fe7a9b386b180bf90474ecdd07c944f7f54cf": {
+    "cached_at": "2026-10-18T00:29:16.829696+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Chloe qualified your lead, booked your meeting, assigned the right rep, and now prepped your notes, before the call even starts.",
+      "generation_failed": false,
+      "question": "What is a fair way to divide new incoming leads among my sales reps so nobody gets overloaded",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Chloe qualified your lead, booked your meeting, assigned the right rep, and now prepped your notes, before the call even starts.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Chloe qualified your lead, booked your meeting, assigned the right rep, and now prepped your notes, before the call even starts.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Chloe qualified your lead, booked your meeting, assigned the right rep, and now prepped your notes, before the call even starts.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/"
+    }
+  },
   "96d84a8263f95e199fc61247cb8b05c8580d2ffbdbb53502cb25580fad5034f2": {
     "cached_at": "2026-10-11T21:05:11.866012+00:00",
     "result": {
@@ -285,6 +2013,42 @@
         }
       ],
       "source_url": "https://www.feroot.com/"
+    }
+  },
+  "99024af784667564c1bb69b79f3c6c5cf0046a51362aa672dbf019acabedaea1": {
+    "cached_at": "2026-10-18T00:28:31.341176+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+      "generation_failed": false,
+      "question": "How can I track my business income and expenses without using a spreadsheet?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing"
     }
   },
   "9d656b8b11fc95d08e5ccfb5dda36294b7048772aac3d96148fa7de31da87c6c": {
@@ -323,6 +2087,78 @@
       "source_url": "https://www.feroot.com/"
     }
   },
+  "a0af655241181b7ad3db9b7ec3cdefaa5f4344d8a08e368416f77adcceffd6b1": {
+    "cached_at": "2026-10-18T00:28:58.738370+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Spot deal slowdowns and take action with tasks and automations.",
+      "generation_failed": false,
+      "question": "How do I know which leads are going cold before it is too late",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Spot deal slowdowns and take action with tasks and automations.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Spot deal slowdowns and take action with tasks and automations.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Spot deal slowdowns and take action with tasks and automations.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/automation"
+    }
+  },
+  "a1b20ada376dcee302973567ad426014c5e48e2deecf95566a490afaa5d7bafc": {
+    "cached_at": "2026-10-18T00:28:40.201058+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Plan and navigate from idea to launch.",
+      "generation_failed": false,
+      "question": "What is a simple way to plan a product launch across several weeks?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Plan and navigate from idea to launch.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Plan and navigate from idea to launch.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Plan and navigate from idea to launch.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
   "b1e8105aa267c3c8767428419f3979f879df208874f3d4e29c8cc11c061d58c4": {
     "cached_at": "2026-10-11T21:05:01.593722+00:00",
     "result": {
@@ -359,6 +2195,42 @@
       "source_url": "https://www.feroot.com/"
     }
   },
+  "b3bfba79e37839357bfd5667ee96c8c46db29f4527681ad82eef66823231cef0": {
+    "cached_at": "2026-10-18T00:28:37.790528+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Get instant notifications on who’s watching so you can follow up ASAP.",
+      "generation_failed": false,
+      "question": "What is the best way to track if a prospect opened my video email?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Get instant notifications on who’s watching so you can follow up ASAP.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Get instant notifications on who’s watching so you can follow up ASAP.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Get instant notifications on who’s watching so you can follow up ASAP.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
+    }
+  },
   "b887b76ba9aba2a06690495ee98bfa1f016150a5b703340dab777a5bde1fddcc": {
     "cached_at": "2026-10-11T21:05:57.003371+00:00",
     "result": {
@@ -393,6 +2265,42 @@
         }
       ],
       "source_url": "https://close.com/automation"
+    }
+  },
+  "b89f7a2ecb6a4f5eae1192976028d51a9ff9718d79c7923ba826ef6a333e3934": {
+    "cached_at": "2026-10-18T00:28:50.122494+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Generate and send hundreds of personalized videos in minutes.",
+      "generation_failed": false,
+      "question": "How do I make a short video for each sales prospect without spending hours editing?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Generate and send hundreds of personalized videos in minutes.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Generate and send hundreds of personalized videos in minutes.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Generate and send hundreds of personalized videos in minutes.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
     }
   },
   "cae78d027a400c4797bfcbd1f1a98a6226fd66fce6e2e02731eb67b6bfdef062": {
@@ -467,6 +2375,78 @@
       "source_url": "https://linear.app/"
     }
   },
+  "d36b8cebafae8f3d4354634846decab69c9825d18a8ec27d58b9a0447036dac0": {
+    "cached_at": "2026-10-18T00:29:02.943044+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "How can I estimate how long a piece of software work will take before I commit to a deadline?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "d7e95ab43d6e57600b8d09e60b2d28595f76674276bd613c231aabea20d48919": {
+    "cached_at": "2026-10-18T00:28:55.316694+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+      "generation_failed": false,
+      "question": "How do I stop customer card data from leaking to analytics tools?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/index.html"
+    }
+  },
   "d94872fb12505fe3b4f4eb200efa6fb20ba591e5df1c26ba0816946f3255f08f": {
     "cached_at": "2026-10-11T21:05:44.525063+00:00",
     "result": {
@@ -503,6 +2483,186 @@
       "source_url": "https://close.com/pricing"
     }
   },
+  "defcf873039208135c9be08fcf2bdeab3a179d0568a5c25f82edd5376e62a137": {
+    "cached_at": "2026-10-18T00:28:40.856726+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Go beyond view counts with analytics that connect video performance to leads, pipeline, and revenue.",
+      "generation_failed": false,
+      "question": "How do I connect video views to leads and revenue in my marketing reports?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Go beyond view counts with analytics that connect video performance to leads, pipeline, and revenue.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Go beyond view counts with analytics that connect video performance to leads, pipeline, and revenue.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Go beyond view counts with analytics that connect video performance to leads, pipeline, and revenue.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/"
+    }
+  },
+  "e0f234da76ef3529b2094b7931bb7732dd6a3c15a8719f43ac82da1c1cf970c1": {
+    "cached_at": "2026-10-18T00:28:58.376258+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.",
+      "generation_failed": false,
+      "question": "Can I test my site to see if it sends personal data to ad networks?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
+  "e107c7797445804889ea4545029b2eed6409dbba968a616a5bf657809791c11a": {
+    "cached_at": "2026-10-18T00:28:53.007578+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Cut through crowded inboxes with personal video that gets replies and shows you who’s watching.",
+      "generation_failed": false,
+      "question": "What should I say in a video message to a cold prospect so they actually reply?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Cut through crowded inboxes with personal video that gets replies and shows you who’s watching.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Cut through crowded inboxes with personal video that gets replies and shows you who’s watching.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Cut through crowded inboxes with personal video that gets replies and shows you who’s watching.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/"
+    }
+  },
+  "e532a802b398a0d12421d6300671888e111dc2c3333d79dfe4c0eb657cbfc04f": {
+    "cached_at": "2026-10-18T00:28:47.476131+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Close uses forms and automated email sequences, task reminders, and customizable workflows to keep follow-ups on track.",
+      "generation_failed": false,
+      "question": "How can I make sure my sales team follows up with every lead on time",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Close uses forms and automated email sequences, task reminders, and customizable workflows to keep follow-ups on track.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Close uses forms and automated email sequences, task reminders, and customizable workflows to keep follow-ups on track.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Close uses forms and automated email sequences, task reminders, and customizable workflows to keep follow-ups on track.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/automation"
+    }
+  },
+  "e68ebb3a5e5f01c00b34e9833443adc2532fad256041acc7dba56f3a43364fb7": {
+    "cached_at": "2026-10-18T00:28:51.885752+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Unauthorized Scripts 2 unauthorized scripts detected",
+      "generation_failed": false,
+      "question": "What steps should I take when a new script appears on my site overnight?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Unauthorized Scripts 2 unauthorized scripts detected",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Unauthorized Scripts 2 unauthorized scripts detected",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Unauthorized Scripts 2 unauthorized scripts detected",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/index.html"
+    }
+  },
   "f086d7693791c4e7a15ba3adab89db984dad5603cd5b797bcd958d690e80a0fd": {
     "cached_at": "2026-10-11T21:06:36.029551+00:00",
     "result": {
@@ -537,6 +2697,186 @@
         }
       ],
       "source_url": "https://linear.app/"
+    }
+  },
+  "f29dc1743620f0ec473a6ee8969d972748f368112a7ced68fe9f77c8ffccf9ee": {
+    "cached_at": "2026-10-18T00:29:01.550931+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+      "generation_failed": false,
+      "question": "How do I keep third party scripts from slowing down my site while staying compliant?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "It scanned our pages with no overhead.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
+  "f74914ce6bea6cd0c025ee5e4de8e07d7b5b82cf4a3556882dee12524610c02e": {
+    "cached_at": "2026-10-18T00:28:42.686247+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "How can I see which tasks are blocking a release from shipping?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "f9c2dc1e9bb657d0edb3939f7cd4842d1b61c7ee0ceb50fbbbd0efbf38af0fac": {
+    "cached_at": "2026-10-18T00:29:16.446706+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What privacy rules should I follow when recording videos of customers and prospects?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "fb90f0391aa28b67f4179e4e06e353711e616e3b8e0417ea023c414d97d08cf5": {
+    "cached_at": "2026-10-18T00:29:03.106852+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "FreshBooks’ iOS and Android apps let you painlessly access our invoice generator to quickly invoice your clients wherever and whenever you need to.",
+      "generation_failed": false,
+      "question": "Can I send an invoice from my phone while I am out with a client?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "FreshBooks’ iOS and Android apps let you painlessly access our invoice generator to quickly invoice your clients wherever and whenever you need to.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "FreshBooks’ iOS and Android apps let you painlessly access our invoice generator to quickly invoice your clients wherever and whenever you need to.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "FreshBooks’ iOS and Android apps let you painlessly access our invoice generator to quickly invoice your clients wherever and whenever you need to.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/invoice"
+    }
+  },
+  "fd4341a3fcddba5bfa5c0926702e9cfa6a2104119a1adf5a2893fa1043c9b4cc": {
+    "cached_at": "2026-10-18T00:29:09.280559+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What should I do when a client disputes an invoice I sent?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
     }
   }
 }
