@@ -158,7 +158,7 @@ class FactEngineTests(unittest.TestCase):
         perplexity = _Sequence(perplexity_replies)
         deepseek = _Sequence(comparison_replies)
         with patch.object(fact_engine, "settings", _FAKE_SETTINGS), \
-             patch.object(fact_engine, "fetch_page_text", side_effect=lambda url: official_text if "pricing" not in url else ""), \
+             patch.object(fact_engine, "fetch_page_text", side_effect=lambda url, **_kw: official_text if "pricing" not in url else ""), \
              patch.object(fact_engine, "_call_perplexity", side_effect=perplexity), \
              patch.object(fact_engine, "_call_deepseek_for_fact_comparison", side_effect=deepseek), \
              patch.object(fact_engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING):
@@ -263,7 +263,7 @@ class FactEngineTests(unittest.TestCase):
         self.assertNotEqual(current, old)
 
     def test_versions_were_bumped(self):
-        self.assertEqual(fact_engine.METHOD_VERSION, "v3")
+        self.assertEqual(fact_engine.METHOD_VERSION, "v4")
         self.assertEqual(fact_engine.FIELDS_VERSION, "v2")
         self.assertTrue(fact_engine.THIRD_PARTY_LOOKUP_VERSION.startswith("v2"))
         self.assertTrue(fact_engine.COMPARISON_PROMPT_VERSION.startswith("v2"))
