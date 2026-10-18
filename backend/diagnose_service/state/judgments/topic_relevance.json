@@ -1,4 +1,112 @@
 {
+  "04e1334659e8664545859a2c29de8da8c16b745640ab141aefc64b419e2cb92a": {
+    "cached_at": "2026-10-18T04:31:53.349712+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Continuous consent auditing across every page, screen, consent state, and applicable regulation.",
+      "generation_failed": false,
+      "question": "What tool should a real estate agency choose to check trackers across many property listing pages?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Continuous consent auditing across every page, screen, consent state, and applicable regulation.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Continuous consent auditing across every page, screen, consent state, and applicable regulation.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Continuously audit consent behavior across every page and native app screen.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/dxcomply/"
+    }
+  },
+  "05fddf9965661dc1eaa3cdff7a5ef34367e5a6868b22cc53286ed1300f72dfe5": {
+    "cached_at": "2026-10-18T01:00:15.775946+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "The consent gap Your consent platform records the visitor’s choice. DXComply independently checks what happens next.",
+      "generation_failed": false,
+      "question": "Alternatives to OneTrust for monitoring website trackers?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "The consent gap Your consent platform records the visitor’s choice. DXComply independently checks what happens next.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "The consent gap Your consent platform records the visitor’s choice. DXComply independently checks what happens next.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "The consent gap Your consent platform records the visitor’s choice. DXComply independently checks what happens next.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/dxcomply/"
+    }
+  },
+  "063ec8a3831c055fe05c5aa693cc06c80aaacd69b3ec4a63516fa087b15659d3": {
+    "cached_at": "2026-10-18T01:00:24.017317+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+      "generation_failed": false,
+      "question": "Which website privacy scanner should I choose if I need to meet PCI DSS rules?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
   "090f854121d84cbee6a502bdbb7590b17c3ce26420c2725e48a1036725f8fee4": {
     "cached_at": "2026-10-18T00:28:44.136344+00:00",
     "result": {
@@ -143,6 +251,42 @@
       "source_url": "https://www.freshbooks.com/"
     }
   },
+  "0c80c7b5d00b183854960df71c56694598d21031b3bfd8eab8ff1872ef203ed0": {
+    "cached_at": "2026-10-18T04:31:45.928570+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+      "generation_failed": false,
+      "question": "Which website tracker scanner works well for a solo freelancer who runs a few client sites?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
   "0d594bb4fee7b7d75c491606a1d414ff8920947c182e1c84ae4082225e0063b5": {
     "cached_at": "2026-10-18T00:28:41.712801+00:00",
     "result": {
@@ -177,6 +321,42 @@
         }
       ],
       "source_url": "https://close.com/communication"
+    }
+  },
+  "0dacf4205c8b7a980f7c27fac3a90e7c04040d994b0227333b5197a50176b552": {
+    "cached_at": "2026-10-18T01:00:49.787254+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+      "generation_failed": false,
+      "question": "Best accounting software for a growing small business with multiple team members?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/"
     }
   },
   "0ebbff7a52f4b4c101b8e91a423cf25bcb457342dd48022b83d6a25979d97b13": {
@@ -215,6 +395,42 @@
       "source_url": "https://www.feroot.com/"
     }
   },
+  "0fb67c66aa2108dc8712c3ca8e726e276e548cabbe568ff67613b5a8699e26e6": {
+    "cached_at": "2026-10-18T04:31:54.078731+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "Which video platform works well for a nonprofit that needs to report results to donors?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
   "0ffe0196a90f75a1077fe3e950c5fcaccf7386a8419b1887e3cf7206bcf3ea81": {
     "cached_at": "2026-10-18T00:28:55.499037+00:00",
     "result": {
@@ -251,6 +467,42 @@
       "source_url": null
     }
   },
+  "10f4dffcc344ed9904abcd576c6f2b10f3a86f2c2bf07b6b71165a1e77095ee9": {
+    "cached_at": "2026-10-18T01:00:38.494159+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+      "generation_failed": false,
+      "question": "Which cookie scanner is easiest to set up for a team with no security staff?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
   "118807b00d3752ad50efe0eacb2d88c72084dcb5cb5a676e6a690638480b305d": {
     "cached_at": "2026-10-18T00:29:01.413833+00:00",
     "result": {
@@ -258,6 +510,78 @@
       "evidence_sentence": null,
       "generation_failed": false,
       "question": "How can I see which pages a viewer visited after watching my video?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "11a8be9747e503016bd1c15f9a8e45b25970004213d9a03a2b7f8b533fe3de5a": {
+    "cached_at": "2026-10-18T01:00:09.895283+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Get instant notifications on who’s watching so you can follow up ASAP.",
+      "generation_failed": false,
+      "question": "Alternatives to Loom for sales teams that need viewer tracking?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Get instant notifications on who’s watching so you can follow up ASAP.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Get instant notifications on who’s watching so you can follow up ASAP.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Get instant notifications on who’s watching so you can follow up ASAP.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
+    }
+  },
+  "11caa0995c3d35a176680272841114e17bdc12876b7833725f45a81b5dd4482a": {
+    "cached_at": "2026-10-18T01:00:19.963539+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "HubSpot vs Pipedrive for automating follow-ups?",
       "runs": [
         {
           "classification": "missing",
@@ -321,6 +645,42 @@
         }
       ],
       "source_url": "https://close.com/pricing"
+    }
+  },
+  "11f577b5971cd3aeeef8a5e853d2d3d9ec8e18ac0c506746045081c7729a6a81": {
+    "cached_at": "2026-10-18T01:00:06.891547+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "The product development system for teams and agents Purpose-built for planning and building products.",
+      "generation_failed": false,
+      "question": "What is the best project management tool for a small software startup?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "The product development system for teams and agents Purpose-built for planning and building products.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "The product development system for teams and agents Purpose-built for planning and building products.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "A new species of product tool. Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
     }
   },
   "127ab168c5d4f5a2d22283c2417958e257989c45cdcc384c73a9b9747575bf87": {
@@ -395,6 +755,42 @@
       "source_url": "https://close.com/automation"
     }
   },
+  "1658887f38361d2df6999b7989ca8482ffbb29be11e2803334602943e92f75f1": {
+    "cached_at": "2026-10-18T01:00:56.676121+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "From a small trial, to over 3,000 people across the organization, teams at OpenAI organically adopted Linear to help them navigate the complexities of scale–from keeping teams aligned across complex dependencies, to maintaining speed as the organization grew.",
+      "generation_failed": false,
+      "question": "Best product management software for teams scaling past 50 engineers?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "From a small trial, to over 3,000 people across the organization, teams at OpenAI organically adopted Linear to help them navigate the complexities of scale–from keeping teams aligned across complex dependencies, to maintaining speed as the organization grew.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/customers/openai",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "From a small trial, to over 3,000 people across the organization, teams at OpenAI organically adopted Linear to help them navigate the complexities of scale–from keeping teams aligned across complex dependencies, to maintaining speed as the organization grew.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/customers/openai",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "From a small trial, to over 3,000 people across the organization, teams at OpenAI organically adopted Linear to help them navigate the complexities of scale–from keeping teams aligned across complex dependencies, to maintaining speed as the organization grew.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/customers/openai",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/customers/openai"
+    }
+  },
   "1752e2d6e68d87caa92d327d6e70ae0fe6b3ff7b15f2115b0902086b6987d4e5": {
     "cached_at": "2026-10-18T00:28:34.871444+00:00",
     "result": {
@@ -431,6 +827,114 @@
       "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
     }
   },
+  "1792060fa7bc7e7b278e1c1686fa3d471ebd85ac0e899bcb0302ba640a5478c4": {
+    "cached_at": "2026-10-18T01:00:42.276969+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "Alternatives to Wave for a small business owner who wants more features?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "18966c7fd82462718a490e8b3c93811887dcea072f518fe16d3c1d6cf5bc3442": {
+    "cached_at": "2026-10-18T01:00:48.971688+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "Wistia vs Vimeo for marketing teams that need lead capture from videos?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "19b9adae3e04de5a1fd956bb3b5df7e1c2641146e11b1ae0f5b039cf0ce0cd90": {
+    "cached_at": "2026-10-18T01:00:43.467742+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "Which roadmap tool is easiest for non-technical stakeholders to use?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
   "1b43f2f30ea8b3a63b5136cfc0aafb8f5f7e310c7d63afe3c10173a2948edded": {
     "cached_at": "2026-10-18T00:28:46.332905+00:00",
     "result": {
@@ -465,6 +969,78 @@
         }
       ],
       "source_url": "https://www.feroot.com/dxcomply/"
+    }
+  },
+  "1c32d5ca0266fa414e7b24f62bb521d15bf9609c62c18cc85cb538949a2bd007": {
+    "cached_at": "2026-10-18T04:31:52.281134+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "For founders and solo reps who need a real CRM, not a spreadsheet.",
+      "generation_failed": false,
+      "question": "What is the best sales CRM for a small business owner who wants something simple to learn?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "For founders and solo reps who need a real CRM, not a spreadsheet.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "For founders and solo reps who need a real CRM, not a spreadsheet.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "For founders and solo reps who need a real CRM, not a spreadsheet.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/pricing"
+    }
+  },
+  "1d02d5ce6be6a3cf20fe7c07a1141ddbb66ef765da6bed4e4474ecb14dbe9d05": {
+    "cached_at": "2026-10-18T01:00:02.261694+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Our video platform helps companies across the globe, from small businesses to Fortune 500 enterprises.",
+      "generation_failed": false,
+      "question": "What is the best video messaging tool for a small sales team just getting started?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Our video platform helps companies across the globe, from small businesses to Fortune 500 enterprises.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Our video platform helps companies across the globe, from small businesses to Fortune 500 enterprises.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Our video platform helps companies across the globe, from small businesses to Fortune 500 enterprises.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
     }
   },
   "1e57480285a1aea6ef8db5ae8f455a0501ff6d569d35b1fd2ccd06a79b5b8f28": {
@@ -611,6 +1187,78 @@
       "source_url": "https://close.com/automation"
     }
   },
+  "224ecd07e3279797f3949904f9d00d5a5f9aff88e342a26b93765df34810b169": {
+    "cached_at": "2026-10-18T01:00:27.833784+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Nope. Close comes with forms, calling, email, SMS, Notetaker, and even meeting scheduling built-in—out of the box. That means no extra software, no complex setups, and no switching between tabs.",
+      "generation_failed": false,
+      "question": "Which sales engagement tool is easiest to set up for a team with no admin?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Nope. Close comes with forms, calling, email, SMS, Notetaker, and even meeting scheduling built-in—out of the box. That means no extra software, no complex setups, and no switching between tabs.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Nope. Close comes with forms, calling, email, SMS, Notetaker, and even meeting scheduling built-in—out of the box. That means no extra software, no complex setups, and no switching between tabs.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Nope. Close comes with forms, calling, email, SMS, Notetaker, and even meeting scheduling built-in—out of the box. That means no extra software, no complex setups, and no switching between tabs.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/communication"
+    }
+  },
+  "22c714e4a760abde4e633c746ffa1508988d60512392f1764c6cf7c6da9e82a9": {
+    "cached_at": "2026-10-18T01:00:02.671756+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "It anticipates the needs of freelancers and small businesses well—better than competitors in this class.",
+      "generation_failed": false,
+      "question": "What is the best accounting software for a freelancer just starting out?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "It anticipates the needs of freelancers and small businesses well—better than competitors in this class.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "It anticipates the needs of freelancers and small businesses well—better than competitors in this class.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "It anticipates the needs of freelancers and small businesses well—better than competitors in this class.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing"
+    }
+  },
   "22cc20785d8c48775a24246a46126571966374d7e773198c2d78a339451b572f": {
     "cached_at": "2026-10-11T21:06:33.488597+00:00",
     "result": {
@@ -647,6 +1295,42 @@
       "source_url": "https://linear.app/"
     }
   },
+  "292e93e4310f77c11d344cb0821eaca33372d4cfeaa5d1414d02ca6cfb167cb2": {
+    "cached_at": "2026-10-18T01:00:15.629956+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "QuickBooks vs Xero for a small business owner who needs invoicing and payments?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
   "2ae0417b75a6a9bf6c1601920233aa791197be9334cc2f25fdf2ed5c581fd3c0": {
     "cached_at": "2026-10-18T00:29:10.355767+00:00",
     "result": {
@@ -681,6 +1365,78 @@
         }
       ],
       "source_url": null
+    }
+  },
+  "2b355a8a5729582232864868eebd318e76293f018ef108d181c75d8d423b0bd6": {
+    "cached_at": "2026-10-18T01:00:46.639019+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+      "generation_failed": false,
+      "question": "What is the best tool for a mid-size SaaS company to plan quarterly roadmaps?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "2dc6204c1bd2d93d88e6e049888f7559c0ddaa5bf7daa6dd710a1126ae6fbcd3": {
+    "cached_at": "2026-10-18T01:00:53.065014+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "You sure can. FreshBooks’ iOS and Android apps let you painlessly access our invoice generator to quickly invoice your clients wherever and whenever you need to.",
+      "generation_failed": false,
+      "question": "What is the best mobile friendly finance app for a freelancer who works on the go?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "You sure can. FreshBooks’ iOS and Android apps let you painlessly access our invoice generator to quickly invoice your clients wherever and whenever you need to.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks’ iOS and Android apps let you painlessly access our invoice generator to quickly invoice your clients wherever and whenever you need to.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks’ iOS and Android apps let you painlessly access our invoice generator to quickly invoice your clients wherever and whenever you need to.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/invoice"
     }
   },
   "2e0bafbe23531783e22347d4412cd767685b4d46aac65fef01b0fa3afefb1804": {
@@ -791,6 +1547,150 @@
       "source_url": null
     }
   },
+  "36cb6930d712baf7ffaabba0aaf37fa6dead8d340884daf7f8276a6d4b451311": {
+    "cached_at": "2026-10-18T01:00:39.883954+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Plan and navigate from idea to launch.",
+      "generation_failed": false,
+      "question": "Best tool for remote software teams to track sprints and tasks?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Plan and navigate from idea to launch.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "The product development system for teams and agents Purpose-built for planning and building products.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "The product development system for teams and agents Purpose-built for planning and building products.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "37f7c8d200e2b5324fcc8250ff069d1215b8cfcaeb360b052b0f43bc3fa6f774": {
+    "cached_at": "2026-10-18T04:31:50.929103+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Maintain consistent messaging and compliance standards across every sales conversation.",
+      "generation_failed": false,
+      "question": "What video tool should a healthcare sales team pick when privacy rules matter most?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Maintain consistent messaging and compliance standards across every sales conversation.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Maintain consistent messaging and compliance standards across every sales conversation.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Maintain consistent messaging and compliance standards across every sales conversation.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/"
+    }
+  },
+  "39e2faf44876e951cd675cdb98efefcb56f35220daf811ffff4b26afd62e08b0": {
+    "cached_at": "2026-10-18T04:32:00.477696+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+      "generation_failed": false,
+      "question": "Which website privacy scanning tool should a nonprofit with a tight budget choose to keep donor data safe?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
+  "3a39b9fc34a70973d4dde8dd05a56a9ee98c521da4a7918b578377ff2fd4ff94": {
+    "cached_at": "2026-10-18T01:00:58.431967+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "Cookiebot vs Osano for blocking unauthorized trackers on a retail website?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
   "3b5be6e25eb66570e51bae3d410332448f6e964836f9ad320a97f0e992650bf4": {
     "cached_at": "2026-10-18T00:28:59.800100+00:00",
     "result": {
@@ -863,6 +1763,150 @@
       "source_url": "https://www.freshbooks.com/invoice"
     }
   },
+  "3e54b4d2a29b8f660eebf16e58575d69fd3e5cc252f4897ef31a957811851090": {
+    "cached_at": "2026-10-18T04:31:59.256525+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Mobile app (iOS / Android) Manage the CRM, make & receive calls and texts, and review reports on t",
+      "generation_failed": false,
+      "question": "Which sales CRM is best for a field sales team that works mostly from mobile phones?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Mobile app (iOS / Android) Manage the CRM, make & receive calls and texts, and review reports on t",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Mobile app (iOS / Android) Manage the CRM, make & receive calls and texts, and review reports on t",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Mobile app (iOS / Android) Manage the CRM, make & receive calls and texts, and review reports on t",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/pricing"
+    }
+  },
+  "40333b1020c86f536c3e27a3ddf3425409cdfdab683fd3544898cb9488666c10": {
+    "cached_at": "2026-10-18T01:00:06.734140+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+      "generation_failed": false,
+      "question": "What is the best third party script scanner for a small marketing team?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
+  "4110f654be53557c85bb803ec31e3cff2760bc51e6b48c516181f7ffdf96bc82": {
+    "cached_at": "2026-10-18T01:00:40.695233+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Many of Close's communication features—like built-in forms, calling, SMS, email, Notetaker, and calendar integrations—are included in one of our base plans.",
+      "generation_failed": false,
+      "question": "Which CRM should I pick if I need it to connect with my email and calendar?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Many of Close's communication features—like built-in forms, calling, SMS, email, Notetaker, and calendar integrations—are included in one of our base plans.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Many of Close's communication features—like built-in forms, calling, SMS, email, Notetaker, and calendar integrations—are included in one of our base plans.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Many of Close's communication features—like built-in forms, calling, SMS, email, Notetaker, and calendar integrations—are included in one of our base plans.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/communication"
+    }
+  },
+  "42a5c73e949e97e3889940d815651916e0e1c3744c12c69b64c5ddc543446c53": {
+    "cached_at": "2026-10-18T01:00:48.416210+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Google Tag Manager Reads Transfers 14 Trackers",
+      "generation_failed": false,
+      "question": "Which website tracking scanner integrates with Google Tag Manager?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Google Tag Manager Reads Transfers 14 Trackers",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Google Tag Manager Reads Transfers 14 Trackers",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Google Tag Manager Reads Transfers 14 Trackers",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/index.html"
+    }
+  },
   "476330e43b75bbffefa9cfde9f947396e652c52fa905c4cc819e939411f0cdae": {
     "cached_at": "2026-10-18T00:29:07.261137+00:00",
     "result": {
@@ -897,6 +1941,42 @@
         }
       ],
       "source_url": "https://close.com/pricing"
+    }
+  },
+  "49ce555714bc6901378a8feebf87ac09f2e0fde4b2865f6cc80448e42f4fb24d": {
+    "cached_at": "2026-10-18T01:00:22.964269+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Plan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+      "generation_failed": false,
+      "question": "Which tool should I choose if I need strong roadmap and feedback features in one place?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Plan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Plan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
     }
   },
   "4cc3008316e51613a55d8c08add220e9d575210942953b86db902c30e1f3c76d": {
@@ -1007,6 +2087,78 @@
       "source_url": "https://linear.app/"
     }
   },
+  "4dde1225597195992a02b49f9d2ba3365fc11da49d2f7ca465d1f9ab4a8365c8": {
+    "cached_at": "2026-10-18T04:31:49.487271+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+      "generation_failed": false,
+      "question": "What cookie and script monitoring tool should an education company pick to protect student data?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
+  "4ec4e6d0516e3c8851eb5864c0f98fb74811ce94a1fcce163e39262a7894488e": {
+    "cached_at": "2026-10-18T01:00:55.275583+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "DXComply continuously audits your websites and mobile apps to uncover compliance gaps, prioritize remediation based on risk, and provide dated evidence.",
+      "generation_failed": false,
+      "question": "Which data transfer monitoring tool should I pick for a bank with compliance audits?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "DXComply continuously audits your websites and mobile apps to uncover compliance gaps, prioritize remediation based on risk, and provide dated evidence.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Trace where data goes, independent of where a vendor is registered.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Trace where data goes, independent of where a vendor is registered.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/dxcomply/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/dxcomply/"
+    }
+  },
   "50cf8f8eed92436c4dc161fdc4bc45886be1123b9b8d0a800dbf8925ea79a527": {
     "cached_at": "2026-10-11T21:05:16.146268+00:00",
     "result": {
@@ -1043,6 +2195,42 @@
       "source_url": "https://www.feroot.com/"
     }
   },
+  "517cc022163179fddde19f604ebddf74b8b0eba36fc7e13b48f114aa13853498": {
+    "cached_at": "2026-10-18T01:00:46.416013+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+      "generation_failed": false,
+      "question": "Which accounting software should I pick if I need strong tax reporting and compliance support?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/"
+    }
+  },
   "524653203ce0e7ce64c049492992dc8e20d41833a77b0d1e85e935bdf92cf1ae": {
     "cached_at": "2026-10-18T00:28:48.294742+00:00",
     "result": {
@@ -1077,6 +2265,150 @@
         }
       ],
       "source_url": "https://linear.app/"
+    }
+  },
+  "527f10e86c3db1605c0f279cb6c97fb64ddb92aa825833b8dfb05dabe8407a03": {
+    "cached_at": "2026-10-18T01:00:52.490462+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Go beyond view counts with analytics that connect video performance to leads, pipeline, and revenue.",
+      "generation_failed": false,
+      "question": "What is the best video platform for a B2B company that wants to tie video engagement to pipeline?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Go beyond view counts with analytics that connect video performance to leads, pipeline, and revenue.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Go beyond view counts with analytics that connect video performance to leads, pipeline, and revenue.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Go beyond view counts with analytics that connect video performance to leads, pipeline, and revenue.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/"
+    }
+  },
+  "58703f37ac62363a847fad5f4cd1bc4aaeba93014d176d9272b077cf20a2eb5e": {
+    "cached_at": "2026-10-18T01:00:20.061536+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Bank Connection & Expense management — general set-up and usage on workflows such as: adding, categorizing, and updating expenses; scanning and attaching receipts; manual entry and import",
+      "generation_failed": false,
+      "question": "Which cloud accounting tool should I choose if I need it to connect with my bank and payment apps?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Bank Connection & Expense management — general set-up and usage on workflows such as: adding, categorizing, and updating expenses; scanning and attaching receipts; manual entry and import",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/policies/buy-now-offer",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Bank Connection & Expense management — general set-up and usage on workflows such as: adding, categorizing, and updating expenses; scanning and attaching receipts; manual entry and import",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/policies/buy-now-offer",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Bank Connection & Expense management — general set-up and usage on workflows such as: adding, categorizing, and updating expenses; scanning and attaching receipts; manual entry and import",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/policies/buy-now-offer",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/policies/buy-now-offer"
+    }
+  },
+  "58ca905936a2ba39a7a24d84e8b1199a2d5bb224d8866811295c8c8a6af85bca": {
+    "cached_at": "2026-10-18T01:00:37.067663+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Solo$19 per user / month$9 per user / monthTry for free",
+      "generation_failed": false,
+      "question": "Sales CRM tools for a startup that needs to keep costs low?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Solo$19 per user / month$9 per user / monthTry for free",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Solo$19 per user / month$9 per user / monthTry for free",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Solo$19 per user / month$9 per user / monthTry for free",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/pricing"
+    }
+  },
+  "5bee038b6a88bbc1ee27e1b856a76026a5669f1a526c1a9c960ce81e23374771": {
+    "cached_at": "2026-10-18T01:00:19.946423+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "OneTrust vs Cookiebot for blocking unauthorized data transfers?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
     }
   },
   "5c317e3dff9ea951d13b21af9400923b0795626d5dcde1a095bfe19fbf82b329": {
@@ -1295,6 +2627,114 @@
       "source_url": "https://linear.app/"
     }
   },
+  "68bc99cb5564048be3cae60c36caa81df70d4ea433e16658f93e25afd879a427": {
+    "cached_at": "2026-10-18T01:00:18.934466+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "Jira vs Asana for software development teams?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "6a97dd3ed03becc683f2a87b2d2f7e195f092f8e65ae5e5018d2733f9eaf2ece": {
+    "cached_at": "2026-10-18T04:31:48.964709+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Works with the tools you already use Close connects to your favorite sales, marketing, and support tools.",
+      "generation_failed": false,
+      "question": "Which sales tool works well for a sales team that needs to connect with the apps they already use?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Works with the tools you already use Close connects to your favorite sales, marketing, and support tools.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Works with the tools you already use Close connects to your favorite sales, marketing, and support tools.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Works with the tools you already use Close connects to your favorite sales, marketing, and support tools.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/"
+    }
+  },
+  "6cf16d08a68c85ab024a063fa5bb7ecea7e784b52f8db93c8a5f64de6e174878": {
+    "cached_at": "2026-10-18T01:00:11.857754+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "It anticipates the needs of freelancers and small businesses well—better than competitors in this class.",
+      "generation_failed": false,
+      "question": "Alternatives to QuickBooks for a solo consultant who wants something simpler?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "It anticipates the needs of freelancers and small businesses well—better than competitors in this class.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "It anticipates the needs of freelancers and small businesses well—better than competitors in this class.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "It anticipates the needs of freelancers and small businesses well—better than competitors in this class.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing"
+    }
+  },
   "6d1aa76426a757baa073ba2812c2c4eeb42499895a438b1be68ae64e4fa0fcdc": {
     "cached_at": "2026-10-18T00:28:45.013944+00:00",
     "result": {
@@ -1329,6 +2769,42 @@
         }
       ],
       "source_url": "https://www.freshbooks.com/invoice"
+    }
+  },
+  "6d1d9807130de3bbf05f573d6c9ea7a8b45b0c63cb87a79f8bbb7084b819071c": {
+    "cached_at": "2026-10-18T01:00:34.255907+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Sync video engagement data with your CRM and MAP so sales and marketing can trigger follow-up, prioritize outreach, and prove video's influence on pipeline.",
+      "generation_failed": false,
+      "question": "Which video platform should I pick if I need to host videos on landing pages and track leads?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Sync video engagement data with your CRM and MAP so sales and marketing can trigger follow-up, prioritize outreach, and prove video's influence on pipeline.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Sync video engagement data with your CRM and MAP so sales and marketing can trigger follow-up, prioritize outreach, and prove video's influence on pipeline.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Sync video engagement data with your CRM and MAP so sales and marketing can trigger follow-up, prioritize outreach, and prove video's influence on pipeline.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-hosting/"
     }
   },
   "6dd8133827ec9202e456eb4233b283d02e401856c607e8c4df8db85e96f9e124": {
@@ -1401,6 +2877,42 @@
         }
       ],
       "source_url": "https://close.com/communication"
+    }
+  },
+  "6ef5ea38e0a9793248cf8bcad4ec5c3fb5a68f9626b1f2259d8041cbeed39f00": {
+    "cached_at": "2026-10-18T01:00:15.152691+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "Alternatives to Salesforce for a growing sales team?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
     }
   },
   "725af40ee228325f200dbe50914d86a4bc1060b175d6a4edb36f1ea8431d29d3": {
@@ -1583,6 +3095,78 @@
       "source_url": "https://www.feroot.com/index.html"
     }
   },
+  "79c4ec8469a9ffa7fcc0900c11677e28f066a546110e0a62e6eecaf060bcfe0b": {
+    "cached_at": "2026-10-18T01:00:34.212982+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks offers a well-rounded, intuitive, and attractive double-entry accounting experience.",
+      "generation_failed": false,
+      "question": "Which accounting software is easiest to use for someone with no bookkeeping background?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks offers a well-rounded, intuitive, and attractive double-entry accounting experience.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks offers a well-rounded, intuitive, and attractive double-entry accounting experience.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks offers a well-rounded, intuitive, and attractive double-entry accounting experience.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing"
+    }
+  },
+  "7b4cf47c140a6e7efbf6e90722b577f226662c3ca00aba61d6873143d528a31a": {
+    "cached_at": "2026-10-18T04:31:55.547131+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+      "generation_failed": false,
+      "question": "Which product planning tool is best for a software team that needs to connect customer support tickets with engineering tasks?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
   "7bd6d3251934c239e0d02bbc631c50178a3b3b4dd0b09fc99a77e98347c74d4c": {
     "cached_at": "2026-10-18T00:28:54.160918+00:00",
     "result": {
@@ -1727,6 +3311,42 @@
       "source_url": "https://close.com/pricing"
     }
   },
+  "7ed8af83b346819c230c1d948d957599d4c7dd861500c2d9c1105e8c519480b5": {
+    "cached_at": "2026-10-18T04:31:49.334787+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.",
+      "generation_failed": false,
+      "question": "What product planning software should a growing company pick when they need something simple to learn?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
   "7f56ff173acd262c9cf2a8dcc6e7b93a4040c31644d9d3deb0d0180be5816768": {
     "cached_at": "2026-10-18T00:29:04.706208+00:00",
     "result": {
@@ -1799,6 +3419,42 @@
       "source_url": "https://linear.app/"
     }
   },
+  "842ad41a452711a371498973bb6784b99587499cc1516ef75f25873d6e5f2978": {
+    "cached_at": "2026-10-18T01:00:50.895858+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Complete Call Coaching Whisper or barge on live calls and review call recordings.",
+      "generation_failed": false,
+      "question": "Which sales CRM is best for a team that needs call tracking and recordings?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Complete Call Coaching Whisper or barge on live calls and review call recordings.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Complete Call Coaching Whisper or barge on live calls and review call recordings.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Complete Call Coaching Whisper or barge on live calls and review call recordings.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/communication"
+    }
+  },
   "84680fcb3484c44493f46bf3bac9b52e0cf1bf7afa20fa5969fe3c172059c927": {
     "cached_at": "2026-10-18T00:28:58.589903+00:00",
     "result": {
@@ -1833,6 +3489,42 @@
         }
       ],
       "source_url": "https://www.vidyard.com/products/vidyard-hosting/"
+    }
+  },
+  "85f55f9e8efbd32a71ae81c4ae40222155817b412bf9e0fa6a6ec9c260922983": {
+    "cached_at": "2026-10-18T01:00:26.563347+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Free $0 Free for everyone - Unlimited members - 2 teams - 250 issues - Agent platform - Linear Agent",
+      "generation_failed": false,
+      "question": "Best affordable task tracking tool for a bootstrapped software team?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Free $0 Free for everyone - Unlimited members - 2 teams - 250 issues - Agent platform - Linear Agent",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Free $0 Free for everyone - Unlimited members - 2 teams - 250 issues - Agent platform - Linear Agent",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Free $0 Free for everyone - Unlimited members - 2 teams - 250 issues - Agent platform - Linear Agent",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/pricing"
     }
   },
   "876736e82545a88c93ba73cfc473440023fd82229df4f41d8d702b41d7d39907": {
@@ -1871,6 +3563,150 @@
       "source_url": "https://close.com/pricing"
     }
   },
+  "87c91e88c53ad085aee220703a02e1079c15ae50083ba185f01027124fa670fe": {
+    "cached_at": "2026-10-18T01:00:24.293315+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Invest in accounting software that respects your time so you can spend it on building your business, not crunching numbers.",
+      "generation_failed": false,
+      "question": "What is the best affordable accounting software for a small business on a tight budget?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Invest in accounting software that respects your time so you can spend it on building your business, not crunching numbers.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Invest in accounting software that respects your time so you can spend it on building your business, not crunching numbers.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Invest in accounting software that respects your time so you can spend it on building your business, not crunching numbers.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/"
+    }
+  },
+  "8a1b9e104c04ce3e301be1cfe14acc857027365da8dd76e4b0fb19d46e0d9ec4": {
+    "cached_at": "2026-10-18T04:31:50.230170+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What accounting software should a new online store choose to handle sales tax and inventory?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "8ae844378672b4898cc731095afb7d2ebdee9657916fc2594adf63a29b37fbb6": {
+    "cached_at": "2026-10-18T01:00:38.164642+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks makes it easy to stay organized, keep track of payments owed and expenses made, send invoices and accept payments.",
+      "generation_failed": false,
+      "question": "What is the best tool for a small business that needs to send invoices and accept card payments in one app?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks makes it easy to stay organized, keep track of payments owed and expenses made, send invoices and accept payments.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks makes it easy to stay organized, keep track of payments owed and expenses made, send invoices and accept payments.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks makes it easy to stay organized, keep track of payments owed and expenses made, send invoices and accept payments.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing"
+    }
+  },
+  "8bd476c04235d0e5bbc6e0eef757962b8f82e5510352f9629e18982bd5b66424": {
+    "cached_at": "2026-10-18T01:00:42.397102+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+      "generation_failed": false,
+      "question": "Best tool to monitor and block data leaks from website tags for an enterprise?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
   "8e9f8ad9989b1c7ac0da9eb12c171c615eacf18e879b80c123968c9431651327": {
     "cached_at": "2026-10-18T00:28:48.072473+00:00",
     "result": {
@@ -1905,6 +3741,42 @@
         }
       ],
       "source_url": null
+    }
+  },
+  "94899075d48bb2824c2f0785f762e2fd6255360898cc1718b6432d67f9997d45": {
+    "cached_at": "2026-10-18T01:00:52.095651+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.",
+      "generation_failed": false,
+      "question": "What is the best affordable tool to audit cookies and trackers on a small business site?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
     }
   },
   "96164dcf910551cc2b5d0dae105a5aa53acf42b1c71a5f3d6f0d492f07655076": {
@@ -2015,6 +3887,42 @@
       "source_url": "https://www.feroot.com/"
     }
   },
+  "984e8da0493701cf12609b350432dcf45c13018790f6656f773b27c7279faa05": {
+    "cached_at": "2026-10-18T01:00:17.128644+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Get detailed insight into video performance and viewer engagement.",
+      "generation_failed": false,
+      "question": "What is the best video tool for a marketing team that wants to track viewer engagement?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Get detailed insight into video performance and viewer engagement.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Get detailed insight into video performance and viewer engagement.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Get detailed insight into video performance and viewer engagement.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/"
+    }
+  },
   "99024af784667564c1bb69b79f3c6c5cf0046a51362aa672dbf019acabedaea1": {
     "cached_at": "2026-10-18T00:28:31.341176+00:00",
     "result": {
@@ -2085,6 +3993,42 @@
         }
       ],
       "source_url": "https://www.feroot.com/"
+    }
+  },
+  "a00f93cf12c2a468845e9188601d1cd96465148e67b565bf2f82c2693c3d67ce": {
+    "cached_at": "2026-10-18T04:31:47.503728+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What is the best accounting tool for a small construction company that needs to track job costs?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
     }
   },
   "a0af655241181b7ad3db9b7ec3cdefaa5f4344d8a08e368416f77adcceffd6b1": {
@@ -2159,6 +4103,186 @@
       "source_url": "https://linear.app/"
     }
   },
+  "a44a70be75509c7e9b71207e38534590cb7ae098cabffc20854f750c4477dbb1": {
+    "cached_at": "2026-10-18T01:00:11.240630+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "From a small trial, to over 3,000 people across the organization, teams at OpenAI organically adopted Linear to help them navigate the complexities of scale–from keeping teams aligned across complex dependencies, to maintaining speed as the organization grew.",
+      "generation_failed": false,
+      "question": "Which product management platform works best for enterprise engineering teams?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "From a small trial, to over 3,000 people across the organization, teams at OpenAI organically adopted Linear to help them navigate the complexities of scale–from keeping teams aligned across complex dependencies, to maintaining speed as the organization grew.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/customers/openai",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "From a small trial, to over 3,000 people across the organization, teams at OpenAI organically adopted Linear to help them navigate the complexities of scale–from keeping teams aligned across complex dependencies, to maintaining speed as the organization grew.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/customers/openai",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "From a small trial, to over 3,000 people across the organization, teams at OpenAI organically adopted Linear to help them navigate the complexities of scale–from keeping teams aligned across complex dependencies, to maintaining speed as the organization grew.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/customers/openai",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/customers/openai"
+    }
+  },
+  "a986149edcd41c6615cd089b910f0c862a990a73db5098a69605c0ff92044617": {
+    "cached_at": "2026-10-18T04:31:56.741195+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Export Report Scan Now High Priority 95 Policy Issues 29 Web Trackers Pages 33 Passwords 5 Billing 5 24 Data Assets 12 Cookies 12 Data Transfers 121 Scripts Active Vendors View All Google Tag Manager Reads Transfers 14 Trackers Facebook Business Reads 7 Trackers Facebook Pixel Reads 9 Trackers Active Issues Manage All Misconfigured Trackers 12 misconfigured trackers detected Unauthorized Scripts 2 unauthorized scripts detected Unauthorized Countries 4 unauthorized countries detected",
+      "generation_failed": false,
+      "question": "Which script and cookie scanner offers the best reporting and analytics for a mid-size software company?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Export Report Scan Now High Priority 95 Policy Issues 29 Web Trackers Pages 33 Passwords 5 Billing 5 24 Data Assets 12 Cookies 12 Data Transfers 121 Scripts Active Vendors View All Google Tag Manager Reads Transfers 14 Trackers Facebook Business Reads 7 Trackers Facebook Pixel Reads 9 Trackers Active Issues Manage All Misconfigured Trackers 12 misconfigured trackers detected Unauthorized Scripts 2 unauthorized scripts detected Unauthorized Countries 4 unauthorized countries detected",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Export Report Scan Now High Priority 95 Policy Issues 29 Web Trackers Pages 33 Passwords 5 Billing 5 24 Data Assets 12 Cookies 12 Data Transfers 121 Scripts",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Export Report Scan Now High Priority 95 Policy Issues 29 Web Trackers Pages 33 Passwords 5 Billing 5 24 Data Assets 12 Cookies 12 Data Transfers 121 Scripts",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/index.html"
+    }
+  },
+  "ab456252da0b3de4864ff78c321b707fe25def516c5a77129d3fa42fe502b698": {
+    "cached_at": "2026-10-18T01:00:42.343069+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Generate and send hundreds of personalized videos in minutes.",
+      "generation_failed": false,
+      "question": "What is the best tool for sending personalized video emails at scale?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Generate and send hundreds of personalized videos in minutes.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Generate and send hundreds of personalized videos in minutes.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Generate and send hundreds of personalized videos in minutes.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
+    }
+  },
+  "af2312e15e5f27e57595ad830c1b3648766e00d88ba3c6ca3911a192fdcd34fc": {
+    "cached_at": "2026-10-18T01:00:52.874653+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Enterprise-grade security",
+      "generation_failed": false,
+      "question": "Which task management tool has the best compliance and security for regulated industries?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Enterprise-grade security",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Enterprise-grade security",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Enterprise-grade security",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/pricing"
+    }
+  },
+  "b1a2adf06fde4be2e9a99b8b1e08bfd164444d1f1a55312653c134063ced7501": {
+    "cached_at": "2026-10-18T01:00:35.554513+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "In PR descriptions, Linear converts callouts to the closest matching GitHub callout type, so the emphasis carries over.",
+      "generation_failed": false,
+      "question": "Which product planning tool integrates well with GitHub and Slack?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "In PR descriptions, Linear converts callouts to the closest matching GitHub callout type, so the emphasis carries over.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/changelog/2026-09-14-loops-for-product-management",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "In PR descriptions, Linear converts callouts to the closest matching GitHub callout type, so the emphasis carries over.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/changelog/2026-09-14-loops-for-product-management",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "In PR descriptions, Linear converts callouts to the closest matching GitHub callout type, so the emphasis carries over.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/changelog/2026-09-14-loops-for-product-management",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/changelog/2026-09-14-loops-for-product-management"
+    }
+  },
   "b1e8105aa267c3c8767428419f3979f879df208874f3d4e29c8cc11c061d58c4": {
     "cached_at": "2026-10-11T21:05:01.593722+00:00",
     "result": {
@@ -2229,6 +4353,42 @@
         }
       ],
       "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
+    }
+  },
+  "b5aaa8fd9e44ba694fe0098fbed44874e286bd64b619880f2ff4157d6c44682c": {
+    "cached_at": "2026-10-18T01:00:38.220033+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Go beyond view counts with analytics that connect video performance to leads, pipeline, and revenue.",
+      "generation_failed": false,
+      "question": "Alternatives to Wistia for teams that want to connect video views to revenue?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Go beyond view counts with analytics that connect video performance to leads, pipeline, and revenue.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Go beyond view counts with analytics that connect video performance to leads, pipeline, and revenue.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Go beyond view counts with analytics that connect video performance to leads, pipeline, and revenue.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/"
     }
   },
   "b887b76ba9aba2a06690495ee98bfa1f016150a5b703340dab777a5bde1fddcc": {
@@ -2303,6 +4463,222 @@
       "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
     }
   },
+  "bf27547e72b8a6253c45668630f4688523d6b0693e1c6dbd8020b33e645f874a": {
+    "cached_at": "2026-10-18T01:00:23.926431+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close",
+      "generation_failed": false,
+      "question": "What is the best CRM for a real estate sales team that makes lots of calls?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/"
+    }
+  },
+  "bff5bb9a26a042ac7a71f8d6a876326d1a1a56f9385cdaa0d865c9798b452061": {
+    "cached_at": "2026-10-18T04:31:47.479480+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Check individual video analytics for real-time insight into who’s watching your videos, when, and for how long.",
+      "generation_failed": false,
+      "question": "Which video platform should an ecommerce shop choose to show products and track who watches?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Check individual video analytics for real-time insight into who’s watching your videos, when, and for how long.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "No matter where you share your hosted videos, Vidyard’s video analytics turn every view into an actionable signal, so you always know who's watching, and when to follow up.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Check individual video analytics for real-time insight into who’s watching your videos, when, and for how long.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-hosting/"
+    }
+  },
+  "c3415a3821e1205be46a09158b7e6b21e950af5fa82279d7e2ae2fc46dc63876": {
+    "cached_at": "2026-10-18T04:31:55.953158+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Automate Follow-Ups: Build email workflows that send reminders and nudges for you.",
+      "generation_failed": false,
+      "question": "Which sales platform should a sales team choose if they need automated follow-ups on a tight budget?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Automate Follow-Ups: Build email workflows that send reminders and nudges for you.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Automate Follow-Ups: Build email workflows that send reminders and nudges for you.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Automate Follow-Ups: Build email workflows that send reminders and nudges for you.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/communication"
+    }
+  },
+  "c87c66a81fd91b3b80888b58791c43c29ec432d5d3d563e92414a5ea19e80b9d": {
+    "cached_at": "2026-10-18T01:00:07.008846+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "For small teams that want one place for every call, email, and deal.",
+      "generation_failed": false,
+      "question": "What is the best sales CRM for a small team of five reps?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "For small teams that want one place for every call, email, and deal.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "For small teams that want one place for every call, email, and deal.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "For small teams that want one place for every call, email, and deal.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/pricing"
+    }
+  },
+  "c904c6298ef3b27be90f3a9269f577f0c05486226c434eead7cb85f233e5d557": {
+    "cached_at": "2026-10-18T01:00:28.464026+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+      "generation_failed": false,
+      "question": "Invoicing and expense tracking tools for a freelance designer with international clients?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing"
+    }
+  },
+  "caad2b432ef9fb206623640e94d72c5ed373ccc5017ea4fed37d40b28ea3756f": {
+    "cached_at": "2026-10-18T04:31:53.964265+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+      "generation_failed": false,
+      "question": "Which finance tool should a solo consultant pick to handle both client invoices and personal expense tracking?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing"
+    }
+  },
   "cae78d027a400c4797bfcbd1f1a98a6226fd66fce6e2e02731eb67b6bfdef062": {
     "cached_at": "2026-10-11T21:05:47.521723+00:00",
     "result": {
@@ -2337,6 +4713,78 @@
         }
       ],
       "source_url": "https://close.com/communication"
+    }
+  },
+  "cb542617f798c4c34a56851b706efc2e89e95ecad0128cd27e154ba94bf3559b": {
+    "cached_at": "2026-10-18T01:00:21.326425+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Record and send directly from your browser, without the headache of switching tools or context.",
+      "generation_failed": false,
+      "question": "Which sales video platform is easiest to use for reps who are not tech savvy?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Record and send directly from your browser, without the headache of switching tools or context.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Record and send directly from your browser, without the headache of switching tools or context.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Record and send directly from your browser, without the headache of switching tools or context.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
+    }
+  },
+  "cc53752a6f21408051b45d47fc8b93a8789066aa5be87a79928dbcfcbb30af4d": {
+    "cached_at": "2026-10-18T01:00:45.412370+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "Alternatives to TrustArc for third party script monitoring?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
     }
   },
   "cd3ceae80ede0a220e0de52c22e28f09b877250bc4f079a511ecf279e245b9d4": {
@@ -2375,6 +4823,78 @@
       "source_url": "https://linear.app/"
     }
   },
+  "cfc189ffe4e01619108c413d6cfc4ae38d8601b56ec49143b8b5c65290195821": {
+    "cached_at": "2026-10-18T01:00:43.949429+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What is the best sales CRM for an insurance agency with a large client list?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "d07bd4b4a6580e2838a537247ba0984ad74526644e5af0de44a0745b6dd28de1": {
+    "cached_at": "2026-10-18T01:00:28.353177+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+      "generation_failed": false,
+      "question": "What tool is best for finding all third party scripts on a large corporate website?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/"
+    }
+  },
   "d36b8cebafae8f3d4354634846decab69c9825d18a8ec27d58b9a0447036dac0": {
     "cached_at": "2026-10-18T00:29:02.943044+00:00",
     "result": {
@@ -2411,6 +4931,150 @@
       "source_url": null
     }
   },
+  "d4a558d155f8e42dd087a7fb8255dfe8cd9caf6a1958db15479d7000bd834e77": {
+    "cached_at": "2026-10-18T04:31:52.635550+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.",
+      "generation_failed": false,
+      "question": "Which product planning tool works well for a hardware and software team that ships together?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "d50c2a317f47368469ba5c831f7495dcc6d6beb4969561b45c9f06c3bd5e9076": {
+    "cached_at": "2026-10-18T01:00:55.182431+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What CRM should a mid-size sales team choose if compliance and data security matter?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "d519ee027a1374281b984693399c4891730608d2282be6023b6e6ce8fa1a2921": {
+    "cached_at": "2026-10-18T01:00:32.369433+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+      "generation_failed": false,
+      "question": "What CRM works best for a B2B sales team that needs email and text automation?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/communication"
+    }
+  },
+  "d5c532d55a33e60db539c799b6bffdb9f8e553017e6543fc82b3aa6a30cb2067": {
+    "cached_at": "2026-10-18T01:00:45.760464+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "See aggregate analytics in a dashboard that gives strategic insight into video performance metrics and trends.",
+      "generation_failed": false,
+      "question": "Which video sales tool works best for a large team that needs analytics on every viewer?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "See aggregate analytics in a dashboard that gives strategic insight into video performance metrics and trends.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "See aggregate analytics in a dashboard that gives strategic insight into video performance metrics and trends.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "See aggregate analytics in a dashboard that gives strategic insight into video performance metrics and trends.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-hosting/"
+    }
+  },
   "d7e95ab43d6e57600b8d09e60b2d28595f76674276bd613c231aabea20d48919": {
     "cached_at": "2026-10-18T00:28:55.316694+00:00",
     "result": {
@@ -2445,6 +5109,42 @@
         }
       ],
       "source_url": "https://www.feroot.com/index.html"
+    }
+  },
+  "d934cc3fd8c179792f40184d780db35458c304cc1bf3dc1ee043efc070af34b6": {
+    "cached_at": "2026-10-18T01:00:56.716434+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Absolutely. If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+      "generation_failed": false,
+      "question": "Which invoicing tool should I choose if I want automatic payment reminders and recurring invoices?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Absolutely. If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/invoice",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/invoice"
     }
   },
   "d94872fb12505fe3b4f4eb200efa6fb20ba591e5df1c26ba0816946f3255f08f": {
@@ -2627,6 +5327,42 @@
       "source_url": "https://close.com/automation"
     }
   },
+  "e631eb28f2d99b13d0fa480dd882581aebd357956bef3295dcf89f3faeefcef1": {
+    "cached_at": "2026-10-18T01:00:11.131907+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+      "generation_failed": false,
+      "question": "Which cookie and tracker scanning tool works best for an online store that takes card payments?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/index.html"
+    }
+  },
   "e68ebb3a5e5f01c00b34e9833443adc2532fad256041acc7dba56f3a43364fb7": {
     "cached_at": "2026-10-18T00:28:51.885752+00:00",
     "result": {
@@ -2661,6 +5397,294 @@
         }
       ],
       "source_url": "https://www.feroot.com/index.html"
+    }
+  },
+  "e8d6a705e5297aa434d628f09ef95a834e0ce406627fa5b4186885eeef8ed965": {
+    "cached_at": "2026-10-18T01:00:47.581905+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+      "generation_failed": false,
+      "question": "Alternatives to Zoho CRM for teams that want simple follow-up automation?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/communication",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Close uses forms and automated email sequences, task reminders, and customizable workflows to keep follow-ups on track.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Close uses forms and automated email sequences, task reminders, and customizable workflows to keep follow-ups on track.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/automation",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/communication"
+    }
+  },
+  "ebd12ef9554e209eb1a7ca211e83ea4b8233c1825a56bd4758ffcf2876f99efd": {
+    "cached_at": "2026-10-18T01:00:06.270127+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Sync video engagement data with your CRM and MAP so sales and marketing can trigger follow-up, prioritize outreach, and prove video's influence on pipeline.",
+      "generation_failed": false,
+      "question": "Which video sales platform should I choose if I need it to connect with my CRM?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Sync video engagement data with your CRM and MAP so sales and marketing can trigger follow-up, prioritize outreach, and prove video's influence on pipeline.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Sync video engagement data with your CRM and MAP so sales and marketing can trigger follow-up, prioritize outreach, and prove video's influence on pipeline.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Sync video engagement data with your CRM and MAP so sales and marketing can trigger follow-up, prioritize outreach, and prove video's influence on pipeline.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-hosting/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-hosting/"
+    }
+  },
+  "ec138c68c4d8c9e90f3342491cb63247eca7dc106f877a159e20769b1c676f2f": {
+    "cached_at": "2026-10-18T04:31:45.815393+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "For high-volume orgs that need advanced controls and the fastest dialing.",
+      "generation_failed": false,
+      "question": "What sales CRM should a growing sales team pick when they need to scale past twenty reps?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "For high-volume orgs that need advanced controls and the fastest dialing.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "For high-volume orgs that need advanced controls and the fastest dialing.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "For high-volume orgs that need advanced controls and the fastest dialing.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/pricing",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/pricing"
+    }
+  },
+  "ec95de93733be9cf33a74d6f8b185cadcbe623781e52e1716c864f6017530c33": {
+    "cached_at": "2026-10-18T01:00:29.222414+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What is the best affordable video tool for a startup sales team on a tight budget?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
+  "ecc564d4842a6b234f74e295dc94618b6b52297eaf323ea676fcf7bef73d1738": {
+    "cached_at": "2026-10-18T01:00:49.636788+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+      "generation_failed": false,
+      "question": "Alternatives to Trello for engineering teams that need roadmaps?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "ee5b2256bf7a34a97b5efb9c5b7876626c804624a2de4255d555f25d289ed29f": {
+    "cached_at": "2026-10-18T01:00:15.191968+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+      "generation_failed": false,
+      "question": "Alternatives to Jira for tracking product roadmaps?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Plan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Plan and navigate from idea to launch. Align your team with product initiatives, strategic roadmaps, and clear, up-to-date PRDs.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "eea8aea3fe00f1f0ed0a8cdf4bf832c748fce76ef5c389c966ddcc18b00b9466": {
+    "cached_at": "2026-10-18T01:00:25.287130+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Maintain consistent messaging and compliance standards across every sales conversation.",
+      "generation_failed": false,
+      "question": "Video messaging tools for enterprise teams with strict security and compliance needs?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Maintain consistent messaging and compliance standards across every sales conversation.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Maintain consistent messaging and compliance standards across every sales conversation.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Maintain consistent messaging and compliance standards across every sales conversation.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/"
+    }
+  },
+  "ef9602e1bd3a071bfdf48b085a151919cfb2bf159073a4dc2c96ad84f984634a": {
+    "cached_at": "2026-10-18T01:00:13.498386+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "Loom vs Vimeo for personalized sales outreach videos?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
     }
   },
   "f086d7693791c4e7a15ba3adab89db984dad5603cd5b797bcd958d690e80a0fd": {
@@ -2699,6 +5723,42 @@
       "source_url": "https://linear.app/"
     }
   },
+  "f1406d3a6e1d002b2d8fe2c62b2b9d4dbe6f365b487324328e8d93f055462007": {
+    "cached_at": "2026-10-18T04:31:44.081783+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Help sellers stand out in a crowded inbox with personalized video messages that build customer rapport and drive wins.",
+      "generation_failed": false,
+      "question": "What is the best video messaging tool for a solo sales rep who works alone?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Help sellers stand out in a crowded inbox with personalized video messages that build customer rapport and drive wins.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Help sellers stand out in a crowded inbox with personalized video messages that build customer rapport and drive wins.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Help sellers stand out in a crowded inbox with personalized video messages that build customer rapport and drive wins.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.vidyard.com/products/vidyard-video-messages/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.vidyard.com/products/vidyard-video-messages/"
+    }
+  },
   "f29dc1743620f0ec473a6ee8969d972748f368112a7ced68fe9f77c8ffccf9ee": {
     "cached_at": "2026-10-18T00:29:01.550931+00:00",
     "result": {
@@ -2735,6 +5795,78 @@
       "source_url": "https://www.feroot.com/"
     }
   },
+  "f2c85ca9f871beb69805db735728b74ebee057a7ccde32fd3fcf849e5733f80f": {
+    "cached_at": "2026-10-18T04:31:45.846402+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "The product development system for teams and agents Purpose-built for planning and building products.",
+      "generation_failed": false,
+      "question": "Which product planning tool works well for a design and engineering team that shares one backlog?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "The product development system for teams and agents Purpose-built for planning and building products.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Purpose-built for modern teams with AI workflows at its core, Linear sets a new standard for planning and building products.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "f33150da7f7c17c6c1a8dbadba7c26ad66c6d88f49abf92507b9c642988c4b37": {
+    "cached_at": "2026-10-18T01:00:55.389945+00:00",
+    "result": {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "Which video messaging tool should I choose if I need screen recording and webcam together for demos?",
+      "runs": [
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": null,
+          "status": "ok"
+        },
+        {
+          "classification": "missing",
+          "evidence_sentence": null,
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": null,
+          "status": "ok"
+        }
+      ],
+      "source_url": null
+    }
+  },
   "f74914ce6bea6cd0c025ee5e4de8e07d7b5b82cf4a3556882dee12524610c02e": {
     "cached_at": "2026-10-18T00:28:42.686247+00:00",
     "result": {
@@ -2769,6 +5901,78 @@
         }
       ],
       "source_url": null
+    }
+  },
+  "f80f494aa61419a967ad0473bca5e11afa093939a98792238424d0a7de30d164": {
+    "cached_at": "2026-10-18T01:00:07.798627+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+      "generation_failed": false,
+      "question": "Which invoicing and expense tool works best for a small retail shop with a few employees?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.freshbooks.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.freshbooks.com/"
+    }
+  },
+  "f9055e5fd05069bc2068f2a2b2cc24b4b08f5f3579eaa79e7d2fc08caf7da43e": {
+    "cached_at": "2026-10-18T01:00:34.193900+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+      "generation_failed": false,
+      "question": "Cookie consent and tracker blocking tools for a healthcare company with strict privacy rules?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://www.feroot.com/index.html",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://www.feroot.com/index.html"
     }
   },
   "f9c2dc1e9bb657d0edb3939f7cd4842d1b61c7ee0ceb50fbbbd0efbf38af0fac": {
@@ -2841,6 +6045,78 @@
         }
       ],
       "source_url": "https://www.freshbooks.com/invoice"
+    }
+  },
+  "fb955c88270f0b695d612af5c6c72a7db2ed3cbac5311a1a5d15654be3924c22": {
+    "cached_at": "2026-10-18T01:00:30.925388+00:00",
+    "result": {
+      "classification": "partial",
+      "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+      "generation_failed": false,
+      "question": "What is the best tool for managing product feedback and feature requests?",
+      "runs": [
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        },
+        {
+          "classification": "partial",
+          "evidence_sentence": "Intake and integrations Automatically turn conversations and customer feedback into actionable issues that are instantly routed, labeled, and prioritized for the right team.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://linear.app/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://linear.app/"
+    }
+  },
+  "fceef80a7087f008043fead8cb19a37f03b6844df699f1483358a1e8e7c722b6": {
+    "cached_at": "2026-10-18T01:00:11.464826+00:00",
+    "result": {
+      "classification": "answered",
+      "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close - 2B+ Calls, emails, and texts - 4.7★ Rated on G2 Built for conversations.Now Close runs them, end-to-end.",
+      "generation_failed": false,
+      "question": "Which sales CRM should I choose if I need built-in calling and texting?",
+      "runs": [
+        {
+          "classification": "answered",
+          "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close - 2B+ Calls, emails, and texts - 4.7★ Rated on G2 Built for conversations.Now Close runs them, end-to-end.",
+          "evidence_verified": true,
+          "run": 1,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close - 2B+ Calls, emails, and texts - 4.7★ Rated on G2 Built for conversations.Now Close runs them, end-to-end.",
+          "evidence_verified": true,
+          "run": 2,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        },
+        {
+          "classification": "answered",
+          "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close - 2B+ Calls, emails, and texts - 4.7★ Rated on G2 Built for conversations.Now Close runs them, end-to-end.",
+          "evidence_verified": true,
+          "run": 3,
+          "source_url": "https://close.com/",
+          "status": "ok"
+        }
+      ],
+      "source_url": "https://close.com/"
     }
   },
   "fd4341a3fcddba5bfa5c0926702e9cfa6a2104119a1adf5a2893fa1043c9b4cc": {
