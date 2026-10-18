@@ -494,13 +494,56 @@ class QueryGenerationTests(unittest.TestCase):
         for question in (
             "What is the best CRM for a 10-person sales team?",
             "CRM tools for a startup with no sales process?",
-            "Alternatives to Salesforce for small teams?",
-            "HubSpot vs Pipedrive for a 5-person team?",
             "What software helps sales teams organize their leads?",
+            "What CRM should a mid-size sales team choose if data security matters?",
             "Which CRM is easiest to set up for a team with no IT support?",
             "Which sales CRM should I choose if compliance and call recording matter?",
         ):
             self.assertIsNone(citation_engine.buying_question_issue(question), question)
+
+    def test_questions_that_name_a_product_are_blocked(self):
+        for question in (
+            "Alternatives to Salesforce for a growing sales team?",
+            "HubSpot vs Pipedrive for a 5-person team?",
+            "Best Jira alternative for small teams",
+            "What is the best CRM for a sales team that uses Slack?",
+        ):
+            blocking, _format = citation_engine._deterministic_question_issues(question, [])
+            self.assertTrue(blocking, question)
+            batch = list(QUERIES)
+            batch[2] = question
+            with patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(15)):
+                attempt = citation_engine._check_question_batch(batch, CATEGORY, self.BRANDS)
+            self.assertFalse(attempt["all_passed"], question)
+            self.assertFalse(attempt["questions"][2]["substantive_pass"], question)
+            self.assertEqual(attempt["passed_count"], 14, question)
+
+    def test_neutral_questions_are_not_blocked(self):
+        for question in (
+            "What is the best CRM for a sales team of five reps?",
+            "Which CRM tools work well for a real estate team?",
+            "What accounting software should a freelancer choose for invoicing?",
+        ):
+            self.assertEqual(citation_engine._deterministic_question_issues(question, [])[0], [], question)
+
+    def test_ordinary_words_that_are_also_names_are_not_mistaken_for_the_product(self):
+        brands = [{"company_name": "Close", "domain": "close.com"}, {"company_name": "Linear", "domain": "linear.app"}]
+        for question in (
+            "What is the best CRM to close a deal faster for a small team?",
+            "Which tools give a linear growth view of the sales pipeline?",
+            "Close deals faster: which CRM is best for a small team?",
+            "Which sales outreach tools work well for a small team?",
+        ):
+            self.assertEqual(citation_engine._deterministic_question_issues(question, brands)[0], [], question)
+        for question in ("Which CRM should a Close user pick?", "What is the best planning tool compared with Linear for a startup?"):
+            self.assertTrue(citation_engine._deterministic_question_issues(question, brands)[0], question)
+
+    def test_the_review_prompts_forbid_product_names(self):
+        self.assertIn("NEVER name any product, company, or brand", citation_engine._query_system_prompt(15))
+        self.assertIn("are NOT allowed", citation_engine._query_system_prompt(15))
+        review = citation_engine._QUESTION_REVIEW_SYSTEM_PROMPT
+        self.assertIn("does NOT name any product, company, brand, or website", review)
+        self.assertIn("FAIL", review)
 
     def test_a_how_to_question_in_a_batch_fails_even_when_the_reviewer_passes_it(self):
         batch = list(QUERIES)

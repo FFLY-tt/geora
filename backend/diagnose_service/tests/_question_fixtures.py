@@ -8,7 +8,7 @@ the near-duplicate check).
 # 15 different buying questions for a browser-side script security product.
 QUESTIONS_15 = [
     "What is the best tool to monitor third party scripts on a checkout page?",
-    "Alternatives to a basic content security policy for a small online store?",
+    "Which small online store tools can replace a basic content security policy?",
     "Which software detects card skimming code on an ecommerce site?",
     "Best PCI DSS 4.0 compliance tools for a mid sized retailer?",
     "Client side security platforms for a team with no security staff?",

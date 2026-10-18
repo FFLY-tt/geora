@@ -52,6 +52,12 @@ class CommittedQuestionSetTests(unittest.TestCase):
                 blocking, _format = citation_engine._deterministic_question_issues(question, brands)
                 self.assertEqual(blocking, [], f"{category_id}: {question!r}")
 
+    def test_no_question_names_any_known_product(self):
+        for category_id, current, brands in _current_sets():
+            for question in current["questions"]:
+                extra = [b["company_name"] for b in brands]
+                self.assertEqual(citation_engine.product_names_in_question(question, extra), [], f"{category_id}: {question!r}")
+
     def test_the_set_was_made_with_the_current_method(self):
         for category_id, current, _brands in _current_sets():
             self.assertEqual(current["generation_method_version"], citation_engine.QUESTION_SET_METHOD_VERSION, category_id)
