@@ -390,7 +390,7 @@ class QueryGenerationTests(unittest.TestCase):
     def test_queries_call_never_receives_homepage_text(self):
         received_args = []
 
-        def fake_call_for_queries(received_category, count=None, existing=()):
+        def fake_call_for_queries(received_category, count=None, existing=(), avoid_names=()):
             received_args.append((received_category, count, list(existing)))
             return list(QUERIES)
 
@@ -405,7 +405,7 @@ class QueryGenerationTests(unittest.TestCase):
     def test_contaminated_batch_is_retried(self):
         call_count = {"n": 0}
 
-        def fake_call_for_queries(received_category, count=None, existing=()):
+        def fake_call_for_queries(received_category, count=None, existing=(), avoid_names=()):
             call_count["n"] += 1
             if call_count["n"] == 1:
                 return [f"{COMPANY_NAME} is great"] + distinct_questions(0, 14)
@@ -428,7 +428,7 @@ class QueryGenerationTests(unittest.TestCase):
 
     def test_reworded_question_in_one_batch_fails_that_question(self):
         batch = list(QUERIES)
-        batch[1] = "How can I see which scripts run on my checkout page today?"  # reword of question 0
+        batch[1] = "What is the best tool to monitor third party scripts on a checkout page today?"  # reword of question 0
         with patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(15)):
             attempt = citation_engine._check_question_batch(batch, CATEGORY, self.BRANDS)
 
@@ -441,7 +441,7 @@ class QueryGenerationTests(unittest.TestCase):
         added = QUERIES[5:]
         seen = {}
 
-        def fake_call_for_queries(received_category, count=None, existing=()):
+        def fake_call_for_queries(received_category, count=None, existing=(), avoid_names=()):
             seen["count"], seen["existing"] = count, list(existing)
             return list(added)
 
@@ -459,7 +459,7 @@ class QueryGenerationTests(unittest.TestCase):
         first_batch = QUERIES[5:]
         calls = []
 
-        def fake_call_for_queries(received_category, count=None, existing=()):
+        def fake_call_for_queries(received_category, count=None, existing=(), avoid_names=()):
             calls.append((count, list(existing)))
             return list(first_batch) if len(calls) == 1 else distinct_questions(0, count)
 
@@ -478,9 +478,87 @@ class QueryGenerationTests(unittest.TestCase):
         self.assertEqual(record["kept_questions_from_earlier_version"], 5)
         self.assertEqual(len(set(record["questions"])), 15)
 
+    def test_how_to_and_definition_questions_are_not_buying_questions(self):
+        for question in (
+            "How to follow up with sales leads?",
+            "What is client-side security?",
+            "How do I stop losing track of leads when my sales team gets busy?",
+            "What is the best way to track if a prospect opened my video email?",
+            "Why do deals go cold after a demo?",
+            "Can I record my screen and webcam at the same time?",
+            "How do I know which third party scripts are collecting visitor data on my site?",
+        ):
+            self.assertIsNotNone(citation_engine.buying_question_issue(question), question)
+
+    def test_buying_questions_pass_the_rule(self):
+        for question in (
+            "What is the best CRM for a 10-person sales team?",
+            "CRM tools for a startup with no sales process?",
+            "Alternatives to Salesforce for small teams?",
+            "HubSpot vs Pipedrive for a 5-person team?",
+            "What software helps sales teams organize their leads?",
+            "Which CRM is easiest to set up for a team with no IT support?",
+            "Which sales CRM should I choose if compliance and call recording matter?",
+        ):
+            self.assertIsNone(citation_engine.buying_question_issue(question), question)
+
+    def test_a_how_to_question_in_a_batch_fails_even_when_the_reviewer_passes_it(self):
+        batch = list(QUERIES)
+        batch[3] = "How to follow up with sales leads?"
+        with patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(15)):
+            attempt = citation_engine._check_question_batch(batch, CATEGORY, self.BRANDS)
+
+        self.assertFalse(attempt["all_passed"])
+        self.assertTrue(attempt["usable"])
+        self.assertIsNotNone(attempt["questions"][3]["not_a_buying_question"])
+        self.assertEqual(attempt["passed_count"], 14)
+
+    def test_a_question_with_the_company_name_is_blocked(self):
+        for question in (f"Is {COMPANY_NAME} the best tool for small teams?", f"Alternatives to {COMPANY_NAME} for startups?", f"Best tool for {DOMAIN} users?"):
+            batch = list(QUERIES)
+            batch[0] = question
+            with patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(15)):
+                attempt = citation_engine._check_question_batch(batch, CATEGORY, self.BRANDS)
+            self.assertFalse(attempt["usable"], question)
+            self.assertTrue(attempt["questions"][0]["blocking_issues"], question)
+
+    def test_the_review_prompt_asks_for_buying_questions(self):
+        for prompt in (citation_engine._QUESTION_REVIEW_SYSTEM_PROMPT, citation_engine._query_system_prompt(15)):
+            self.assertIn("alternatives to", prompt.lower())
+            self.assertIn("how-to", prompt.lower())
+
+    def test_refresh_keeps_buying_questions_and_replaces_the_rest(self):
+        current = ["How can I keep track of all my leads in one place?", QUERIES[0], "What is client-side security?"] + QUERIES[1:13]
+        seen = {}
+
+        def fake_call_for_queries(received_category, count=None, existing=(), avoid_names=()):
+            seen["count"], seen["existing"] = count, list(existing)
+            return QUERIES[13:15]
+
+        def fake_review(description, questions, existing=()):
+            return _all_pass(len(questions))
+
+        with patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries),              patch.object(citation_engine, "_call_deepseek_for_question_review", side_effect=fake_review):
+            record, attempts, review = citation_engine.refresh_question_set(CATEGORY, self.BRANDS, current)
+
+        self.assertEqual([entry["keep"] for entry in review[:3]], [False, True, False])
+        self.assertEqual(seen["count"], 2)
+        self.assertEqual(seen["existing"], [QUERIES[0]] + QUERIES[1:13])
+        self.assertEqual(record["status"], "frozen")
+        self.assertEqual(record["questions"], QUERIES[:13] + QUERIES[13:15])
+        self.assertEqual(record["kept_questions_from_earlier_version"], 13)
+        self.assertTrue(all(citation_engine.buying_question_issue(q) is None for q in record["questions"]))
+
+    def test_refresh_with_nothing_to_replace_asks_for_no_new_questions(self):
+        with patch.object(citation_engine, "_call_deepseek_for_queries") as generate,              patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(15)):
+            record, attempts, review = citation_engine.refresh_question_set(CATEGORY, self.BRANDS, list(QUERIES))
+        generate.assert_not_called()
+        self.assertEqual(record["questions"], QUERIES)
+        self.assertEqual(record["status"], "frozen")
+
     def test_extension_rejects_a_new_question_that_repeats_a_kept_one(self):
         kept = QUERIES[:5]
-        batch = distinct_questions(0, 9) + ["Which scripts run on my checkout page, how can I see them?"]
+        batch = distinct_questions(0, 9) + ["Best tool to monitor third party scripts on my checkout page?"]
         with patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(10)):
             attempt = citation_engine._check_question_batch(batch, CATEGORY, self.BRANDS, kept)
 

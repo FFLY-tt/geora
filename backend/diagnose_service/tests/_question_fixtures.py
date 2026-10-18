@@ -1,29 +1,30 @@
 """
 Shared test fixtures for the 15-question sets: a realistic list of 15 different
-buyer questions, and a generator of obviously different filler questions (none
-repeats or rewords another, so they pass the near-duplicate check).
+buying questions ("which product should I choose"), and a generator of obviously
+different filler buying questions (none repeats or rewords another, so they pass
+the near-duplicate check).
 """
 
-# 15 different buyer questions for a browser-side script security product.
+# 15 different buying questions for a browser-side script security product.
 QUESTIONS_15 = [
-    "How can I see which scripts run on my checkout page?",
-    "What tools detect card skimming code on a website?",
-    "How do I keep third party tags compliant with privacy laws?",
-    "How can a small team audit the JavaScript on its site?",
-    "What should I check before adding a new tracking script?",
-    "Who is responsible for payment page security under PCI DSS 4.0?",
-    "How do attackers inject malicious code into online stores?",
-    "Can I block unauthorized cookies before visitors consent?",
-    "What does a consent banner need to record for regulators?",
-    "Which monitoring catches a compromised analytics vendor quickly?",
-    "How often should I rescan my site for new trackers?",
-    "What is the difference between a CSP header and script monitoring?",
-    "How do I prove to an auditor that my pages are protected?",
-    "Why did my site start sending data to unknown domains?",
-    "How much does client side protection usually cost a mid sized shop?",
+    "What is the best tool to monitor third party scripts on a checkout page?",
+    "Alternatives to a basic content security policy for a small online store?",
+    "Which software detects card skimming code on an ecommerce site?",
+    "Best PCI DSS 4.0 compliance tools for a mid sized retailer?",
+    "Client side security platforms for a team with no security staff?",
+    "What is the best consent management platform for a European shop?",
+    "Cookie scanning tools for a site with many marketing tags?",
+    "Compare website tag governance products for a large enterprise",
+    "Which monitoring software alerts me when a vendor script changes?",
+    "Best privacy compliance software for a healthcare provider website?",
+    "Top rated tools for auditing JavaScript on a banking site?",
+    "What software should a SaaS startup choose to prove compliance to auditors?",
+    "Tracker blocking tools that do not slow down the website?",
+    "Affordable script monitoring services for a small business?",
+    "Which platform is best for an agency managing many client websites?",
 ]
 
 
 def distinct_questions(start: int, count: int) -> list[str]:
-    """`count` questions that share only a few words, each with its own two unique tokens."""
-    return [f"How do teams handle zone{2 * k} and zone{2 * k + 1} issues?" for k in range(start, start + count)]
+    """`count` buying questions that share only a few words, each with its own two unique tokens."""
+    return [f"Best tool for zone{2 * k} and zone{2 * k + 1} teams?" for k in range(start, start + count)]

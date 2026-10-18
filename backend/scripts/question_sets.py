@@ -18,6 +18,8 @@ Usage:
     python backend/scripts/question_sets.py regenerate <category_id>
     python backend/scripts/question_sets.py extend <category_id>
     python backend/scripts/question_sets.py extend-all
+    python backend/scripts/question_sets.py refresh <category_id>
+    python backend/scripts/question_sets.py refresh-all
 
 `extend` grows a category's current set to the required number of questions
 (15) by keeping its questions as they are and generating only the missing
@@ -25,7 +27,14 @@ ones, which are checked like any new question and must not repeat or reword
 the kept ones. It adds a new version; the older, smaller version is kept.
 `extend-all` does that for every category whose current set is too small.
 
-After `regenerate` or `extend`, commit and push the change to state/.
+`refresh` re-checks every question of a category's current set against the
+buying-question rule (each question must ask which product to choose: "best X
+for Y", "X tools for Z", "alternatives to", "A vs B"; how-to and definition
+questions fail), keeps the ones that pass exactly as they are, and replaces only
+the others, with the same checks as a new set. It adds a new version, and writes
+nothing unless the whole new set passes. `refresh-all` does it for every category.
+
+After `regenerate`, `extend` or `refresh`, commit and push the change to state/.
 """
 
 import argparse
@@ -137,6 +146,51 @@ def _extend_all() -> int:
     return status
 
 
+def _refresh(category_id: str) -> int:
+    record = _question_sets.get_category(category_id)
+    if record is None:
+        print(f"Unknown category: {category_id}", file=sys.stderr)
+        return 1
+    if not settings.has_deepseek_key():
+        print("DEEPSEEK_API_KEY is not configured.", file=sys.stderr)
+        return 1
+    current = _question_sets.get_current_question_set(category_id)
+    brand_terms = _question_sets.get_companies_in_category(category_id)
+    version_record, attempts, review = citation_engine.refresh_question_set(
+        record["category_description"], brand_terms, list(current["questions"])
+    )
+
+    print(f"{category_id}: version {current['version']} review")
+    for entry in review:
+        print(f"  {'keep   ' if entry['keep'] else 'replace'} {entry['question']}")
+        for reason in entry["reasons"]:
+            print(f"            - {reason}")
+
+    if version_record is None or version_record["status"] != "frozen":
+        print(
+            f"{category_id}: the new set did not pass every check after {len(attempts)} attempts; nothing was written.",
+            file=sys.stderr,
+        )
+        return 1
+
+    version_record["extends_version"] = current["version"]
+    new_version = _question_sets.add_question_set_version(category_id, version_record)
+    kept = version_record["kept_questions_from_earlier_version"]
+    print(f"{category_id}: version {current['version']} -> version {new_version} ({kept} kept, "
+          f"{len(version_record['questions']) - kept} new, {version_record['status']})")
+    for index, question in enumerate(version_record["questions"], start=1):
+        print(f"  {index:2d} {'[kept]' if index <= kept else '[new] '} {question}")
+    return 0
+
+
+def _refresh_all() -> int:
+    status = 0
+    for category in _question_sets.list_categories():
+        status |= _refresh(category["category_id"])
+    print("Commit and push backend/diagnose_service/state/ to share it.")
+    return status
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Inspect or explicitly regenerate frozen buyer question sets.")
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -152,6 +206,11 @@ def main() -> int:
     )
     extend_parser.add_argument("category_id")
     subparsers.add_parser("extend-all", help="Extend every category whose current set is too small.")
+    refresh_parser = subparsers.add_parser(
+        "refresh", help="Re-check a category's set against the buying-question rule and replace the questions that fail."
+    )
+    refresh_parser.add_argument("category_id")
+    subparsers.add_parser("refresh-all", help="Refresh every category.")
     args = parser.parse_args()
 
     if args.command == "list":
@@ -162,6 +221,10 @@ def main() -> int:
         return _extend(args.category_id)
     if args.command == "extend-all":
         return _extend_all()
+    if args.command == "refresh":
+        return _refresh(args.category_id)
+    if args.command == "refresh-all":
+        return _refresh_all()
     return _regenerate(args.category_id)
 
 

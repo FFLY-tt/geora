@@ -89,7 +89,7 @@ def _citation_patches(stack: ExitStack, *, queries_side_effect=None, match=None,
             patch.object(
                 citation_engine,
                 "_call_deepseek_for_queries",
-                side_effect=queries_side_effect or (lambda description, count=None, existing=(): list(QUESTIONS)),
+                side_effect=queries_side_effect or (lambda description, count=None, existing=(), avoid_names=(): list(QUESTIONS)),
             )
         ),
         review=stack.enter_context(
@@ -228,7 +228,7 @@ class QuestionSetAutoCheckTests(_StateDirTestCase):
             ]
 
         with ExitStack() as stack:
-            mocks = _citation_patches(stack, queries_side_effect=lambda d, count=None, existing=(): next(batches), review=review)
+            mocks = _citation_patches(stack, queries_side_effect=lambda d, count=None, existing=(), avoid_names=(): next(batches), review=review)
             result = citation_engine.check_citation_visibility("Feroot Security", "feroot.com")
 
         self.assertEqual(mocks.queries.call_count, citation_engine.MAX_GENERATION_ATTEMPTS)
@@ -252,7 +252,7 @@ class QuestionSetAutoCheckTests(_StateDirTestCase):
             ]
         )
         with ExitStack() as stack:
-            _citation_patches(stack, queries_side_effect=lambda d, count=None, existing=(): next(batches))
+            _citation_patches(stack, queries_side_effect=lambda d, count=None, existing=(), avoid_names=(): next(batches))
             result = citation_engine.check_citation_visibility("Feroot Security", "feroot.com")
 
         self.assertEqual(result.score, -1)
