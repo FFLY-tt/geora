@@ -103,13 +103,13 @@ class WilsonIntervalTests(unittest.TestCase):
 
 class CitationIntervalTests(unittest.TestCase):
     def test_citation_details_carry_mentions_total_and_interval(self):
-        queries = [f"Question {i}?" for i in range(5)]
+        queries = [f"Question {i}?" for i in range(15)]
         question_set = (
             {"category_id": "c", "category_name": "C", "category_description": "d", "version": 1,
              "status": "frozen", "questions": queries, "source": "existing_company_assignment"},
             {},
         )
-        hits = iter([True, False, False] * 5)
+        hits = iter([True, False, False] * 5)  # 15 questions, each asked once
         lock = threading.Lock()
 
         def fake_perplexity(query):
