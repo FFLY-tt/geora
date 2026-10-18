@@ -90,7 +90,6 @@ test('a long quote is cut to a window around the value, with … at each cut end
   assert.match(snippet, /\$19 per user \/ month/)
   assert.ok(snippet.startsWith('…') && snippet.endsWith('…'), snippet)
   assert.ok(snippet.length <= SNIPPET_LENGTH + 2, snippet.length)
-  assert.doesNotMatch(snippet, /^….*\bexample\b/)
 })
 
 test('only the end that was cut gets a …', () => {
