@@ -2,7 +2,7 @@
   "product-management-software": {
     "category_description": "A tool that helps software teams plan, track, and ship product work by organizing tasks, roadmaps, and feedback in one place.",
     "category_name": "Product Management Software",
-    "current_version": 3,
+    "current_version": 4,
     "versions": [
       {
         "auto_check": {
@@ -446,13 +446,239 @@
         ],
         "status": "frozen",
         "version": 3
+      },
+      {
+        "auto_check": {
+          "attempts": [
+            {
+              "all_passed": false,
+              "attempt": 1,
+              "passed_count": 1,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question about choosing a planning tool for a shared backlog.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "Which product planning tool works well for a design and engineering team that shares one backlog?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": false,
+                  "llm_reason": "It repeats the existing question about task management tools with the best compliance and security for regulated industries.",
+                  "not_a_buying_question": null,
+                  "passed": false,
+                  "question": "What task tracking software should a healthcare software company choose for strict data rules?",
+                  "substantive_pass": false
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": false,
+                  "llm_reason": "It repeats the existing question about strong roadmap and feedback features in one place.",
+                  "not_a_buying_question": null,
+                  "passed": false,
+                  "question": "Which roadmap and feedback tool is best for a team moving from spreadsheets for the first time?",
+                  "substantive_pass": false
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": false,
+                  "llm_reason": "It names chat and code tools the buyer would integrate with, which leads the answer to those products.",
+                  "not_a_buying_question": null,
+                  "passed": false,
+                  "question": "What product management platform fits a growing company that needs to connect with its existing chat and code tools?",
+                  "substantive_pass": false
+                }
+              ],
+              "right_count": true,
+              "substantive_passed_count": 1,
+              "usable": true
+            },
+            {
+              "all_passed": false,
+              "attempt": 2,
+              "passed_count": 0,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": false,
+                  "llm_reason": "It asks about compliance and security for regulated industries, which is essentially the same as the existing question about compliance and security for regulated industries.",
+                  "not_a_buying_question": null,
+                  "passed": false,
+                  "question": "What is the best product planning tool for a healthcare software company with strict data rules?",
+                  "substantive_pass": false
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": false,
+                  "llm_reason": "It names chat and code tools the buyer would integrate with, which leads the answer toward those products.",
+                  "not_a_buying_question": null,
+                  "passed": false,
+                  "question": "Which task tracking tools work well for a small team that needs to connect with their existing chat and code tools?",
+                  "substantive_pass": false
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": false,
+                  "llm_reason": "It asks for simple software for a growing company, which overlaps with the existing question about the best project management tool for a small software startup.",
+                  "not_a_buying_question": null,
+                  "passed": false,
+                  "question": "What product management software should a growing company choose when they need something simple to learn fast?",
+                  "substantive_pass": false
+                }
+              ],
+              "right_count": true,
+              "substantive_passed_count": 0,
+              "usable": true
+            },
+            {
+              "all_passed": false,
+              "attempt": 3,
+              "passed_count": 1,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": false,
+                  "llm_reason": "This is a near duplicate of the existing question about task management tools with the best compliance and security for regulated industries.",
+                  "not_a_buying_question": null,
+                  "passed": false,
+                  "question": "What is the best product management tool for a healthcare software company with strict data rules?",
+                  "substantive_pass": false
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": false,
+                  "llm_reason": "It names chat and code tools the buyer would integrate with, which leads the answer toward those products.",
+                  "not_a_buying_question": null,
+                  "passed": false,
+                  "question": "Which task tracking tool works well for a small team that needs to connect with their existing chat and code tools?",
+                  "substantive_pass": false
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question about simple product planning software for a growing company and does not repeat another question.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "What product planning software should a growing company pick when they need something simple to learn?",
+                  "substantive_pass": true
+                }
+              ],
+              "right_count": true,
+              "substantive_passed_count": 1,
+              "usable": true
+            },
+            {
+              "all_passed": false,
+              "attempt": 4,
+              "passed_count": 1,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question about choosing a tool for a specific team type and no other question covers hardware and software teams shipping together.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "Which product planning tool works well for a hardware and software team that ships together?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": false,
+                  "llm_reason": "It asks about connecting support tickets to the roadmap, which is close to the existing question about managing product feedback and feature requests.",
+                  "not_a_buying_question": null,
+                  "passed": false,
+                  "question": "What is the best tool for a product team that needs to connect customer support tickets to the roadmap?",
+                  "substantive_pass": false
+                }
+              ],
+              "right_count": true,
+              "substantive_passed_count": 1,
+              "usable": true
+            },
+            {
+              "all_passed": true,
+              "attempt": 5,
+              "passed_count": 1,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question about choosing a tool for a specific need, and it does not name any product or repeat an existing question.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "Which product planning tool is best for a software team that needs to connect customer support tickets with engineering tasks?",
+                  "substantive_pass": true
+                }
+              ],
+              "right_count": true,
+              "substantive_passed_count": 1,
+              "usable": true
+            }
+          ],
+          "chosen_attempt": 5,
+          "passed_count": 1,
+          "substantive_passed_count": 1
+        },
+        "extends_version": 3,
+        "generated_on": "2026-10-18",
+        "generation_method_version": "v4",
+        "kept_questions_from_earlier_version": 11,
+        "model": "deepseek-chat",
+        "questions": [
+          "What tool helps software teams plan and manage their work?",
+          "What is the best project management tool for a small software startup?",
+          "Which product management platform works best for enterprise engineering teams?",
+          "Which tool should I choose if I need strong roadmap and feedback features in one place?",
+          "Best affordable task tracking tool for a bootstrapped software team?",
+          "What is the best tool for managing product feedback and feature requests?",
+          "Best tool for remote software teams to track sprints and tasks?",
+          "Which roadmap tool is easiest for non-technical stakeholders to use?",
+          "What is the best tool for a mid-size SaaS company to plan quarterly roadmaps?",
+          "Which task management tool has the best compliance and security for regulated industries?",
+          "Best product management software for teams scaling past 50 engineers?",
+          "Which product planning tool works well for a design and engineering team that shares one backlog?",
+          "What product planning software should a growing company pick when they need something simple to learn?",
+          "Which product planning tool works well for a hardware and software team that ships together?",
+          "Which product planning tool is best for a software team that needs to connect customer support tickets with engineering tasks?"
+        ],
+        "status": "frozen",
+        "version": 4
       }
     ]
   },
   "sales-crm-software": {
     "category_description": "A tool that helps sales teams track leads and customers, manage calls, emails, and texts, and automate follow-ups so deals move forward.",
     "category_name": "Sales CRM Software",
-    "current_version": 3,
+    "current_version": 4,
     "versions": [
       {
         "auto_check": {
@@ -885,13 +1111,132 @@
         ],
         "status": "frozen",
         "version": 3
+      },
+      {
+        "auto_check": {
+          "attempts": [
+            {
+              "all_passed": false,
+              "attempt": 1,
+              "passed_count": 4,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question about which sales CRM a growing team should pick, and it is distinct from the existing small team and startup questions.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "What sales CRM should a growing sales team pick when they need to scale past twenty reps?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It asks which sales tool to choose for connecting with existing apps, which is a neutral buying question not covered by the existing list.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "Which sales tool works well for a sales team that needs to connect with the apps they already use?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It asks which sales CRM is best for a small business owner, a distinct buyer and need from the existing small team question.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "What is the best sales CRM for a small business owner who wants something simple to learn?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It asks which sales platform to choose for automated follow-ups on a budget, which is a buying question distinct from the existing automation and low cost questions.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "Which sales platform should a sales team choose if they need automated follow-ups on a tight budget?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It asks which sales CRM fits a multi country team with multiple currencies, a distinct buying question not covered by the existing list.",
+                  "not_a_buying_question": "does not ask which product or tool to choose",
+                  "passed": false,
+                  "question": "What sales CRM fits a team that sells in several countries and needs to handle different currencies?",
+                  "substantive_pass": false
+                }
+              ],
+              "right_count": true,
+              "substantive_passed_count": 4,
+              "usable": true
+            },
+            {
+              "all_passed": true,
+              "attempt": 2,
+              "passed_count": 1,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question about choosing a sales CRM for a mobile field team and does not name any product or repeat an existing question.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "Which sales CRM is best for a field sales team that works mostly from mobile phones?",
+                  "substantive_pass": true
+                }
+              ],
+              "right_count": true,
+              "substantive_passed_count": 1,
+              "usable": true
+            }
+          ],
+          "chosen_attempt": 2,
+          "passed_count": 1,
+          "substantive_passed_count": 1
+        },
+        "extends_version": 3,
+        "generated_on": "2026-10-18",
+        "generation_method_version": "v4",
+        "kept_questions_from_earlier_version": 10,
+        "model": "deepseek-chat",
+        "questions": [
+          "What software helps sales teams organize their leads and customer contacts",
+          "What is the best sales CRM for a small team of five reps?",
+          "Which sales CRM should I choose if I need built-in calling and texting?",
+          "What is the best CRM for a real estate sales team that makes lots of calls?",
+          "Which sales engagement tool is easiest to set up for a team with no admin?",
+          "What CRM works best for a B2B sales team that needs email and text automation?",
+          "Sales CRM tools for a startup that needs to keep costs low?",
+          "What is the best sales CRM for an insurance agency with a large client list?",
+          "Which sales CRM is best for a team that needs call tracking and recordings?",
+          "What CRM should a mid-size sales team choose if compliance and data security matter?",
+          "What sales CRM should a growing sales team pick when they need to scale past twenty reps?",
+          "Which sales tool works well for a sales team that needs to connect with the apps they already use?",
+          "What is the best sales CRM for a small business owner who wants something simple to learn?",
+          "Which sales platform should a sales team choose if they need automated follow-ups on a tight budget?",
+          "Which sales CRM is best for a field sales team that works mostly from mobile phones?"
+        ],
+        "status": "frozen",
+        "version": 4
       }
     ]
   },
   "sales-video-engagement-platform": {
     "category_description": "A tool that lets sales and marketing teams record, send, host, and track personalized videos, then measure how viewers engage with them and connect that activity to leads and revenue.",
     "category_name": "Sales Video Engagement Platform",
-    "current_version": 3,
+    "current_version": 4,
     "versions": [
       {
         "auto_check": {
@@ -1346,13 +1691,100 @@
         ],
         "status": "frozen",
         "version": 3
+      },
+      {
+        "auto_check": {
+          "attempts": [
+            {
+              "all_passed": true,
+              "attempt": 1,
+              "passed_count": 4,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question about choosing a video messaging tool for a solo sales rep.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "What is the best video messaging tool for a solo sales rep who works alone?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question about choosing a video platform for an ecommerce shop with viewer tracking.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "Which video platform should an ecommerce shop choose to show products and track who watches?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question about choosing a video tool for a healthcare sales team with privacy needs.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "What video tool should a healthcare sales team pick when privacy rules matter most?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question about choosing a video platform for a nonprofit that reports to donors.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "Which video platform works well for a nonprofit that needs to report results to donors?",
+                  "substantive_pass": true
+                }
+              ],
+              "right_count": true,
+              "substantive_passed_count": 4,
+              "usable": true
+            }
+          ],
+          "chosen_attempt": 1,
+          "passed_count": 4,
+          "substantive_passed_count": 4
+        },
+        "extends_version": 3,
+        "generated_on": "2026-10-18",
+        "generation_method_version": "v4",
+        "kept_questions_from_earlier_version": 11,
+        "model": "deepseek-chat",
+        "questions": [
+          "What is the best video messaging tool for a small sales team just getting started?",
+          "Which video sales platform should I choose if I need it to connect with my CRM?",
+          "What is the best video tool for a marketing team that wants to track viewer engagement?",
+          "Which sales video platform is easiest to use for reps who are not tech savvy?",
+          "Video messaging tools for enterprise teams with strict security and compliance needs?",
+          "What is the best affordable video tool for a startup sales team on a tight budget?",
+          "Which video platform should I pick if I need to host videos on landing pages and track leads?",
+          "What is the best tool for sending personalized video emails at scale?",
+          "Which video sales tool works best for a large team that needs analytics on every viewer?",
+          "What is the best video platform for a B2B company that wants to tie video engagement to pipeline?",
+          "Which video messaging tool should I choose if I need screen recording and webcam together for demos?",
+          "What is the best video messaging tool for a solo sales rep who works alone?",
+          "Which video platform should an ecommerce shop choose to show products and track who watches?",
+          "What video tool should a healthcare sales team pick when privacy rules matter most?",
+          "Which video platform works well for a nonprofit that needs to report results to donors?"
+        ],
+        "status": "frozen",
+        "version": 4
       }
     ]
   },
   "small-business-accounting-software": {
     "category_description": "A cloud based tool that helps small business owners and freelancers track income and expenses, send invoices, accept payments, and manage their day to day finances.",
     "category_name": "Small Business Accounting Software",
-    "current_version": 3,
+    "current_version": 4,
     "versions": [
       {
         "auto_check": {
@@ -1767,13 +2199,110 @@
         ],
         "status": "frozen",
         "version": 3
+      },
+      {
+        "auto_check": {
+          "attempts": [
+            {
+              "all_passed": false,
+              "attempt": 1,
+              "passed_count": 2,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question about choosing accounting software for a specific business type and need.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "What is the best accounting tool for a small construction company that needs to track job costs?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": false,
+                  "llm_reason": "It is essentially the same as the existing question about invoicing and expense tools for a freelance designer with international clients.",
+                  "not_a_buying_question": null,
+                  "passed": false,
+                  "question": "Which finance software works well for a solo consultant who bills clients in several currencies?",
+                  "substantive_pass": false
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question about choosing accounting software for an online store with sales tax and inventory needs.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "What accounting software should a new online store choose to handle sales tax and inventory?",
+                  "substantive_pass": true
+                }
+              ],
+              "right_count": true,
+              "substantive_passed_count": 2,
+              "usable": true
+            },
+            {
+              "all_passed": true,
+              "attempt": 2,
+              "passed_count": 1,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question from a solo consultant about choosing a finance tool, and it is not a paraphrase of any existing question.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "Which finance tool should a solo consultant pick to handle both client invoices and personal expense tracking?",
+                  "substantive_pass": true
+                }
+              ],
+              "right_count": true,
+              "substantive_passed_count": 1,
+              "usable": true
+            }
+          ],
+          "chosen_attempt": 2,
+          "passed_count": 1,
+          "substantive_passed_count": 1
+        },
+        "extends_version": 3,
+        "generated_on": "2026-10-18",
+        "generation_method_version": "v4",
+        "kept_questions_from_earlier_version": 12,
+        "model": "deepseek-chat",
+        "questions": [
+          "What software helps me manage my small business finances and taxes in one place?",
+          "What is the best accounting software for a freelancer just starting out?",
+          "Which invoicing and expense tool works best for a small retail shop with a few employees?",
+          "Which cloud accounting tool should I choose if I need it to connect with my bank and payment apps?",
+          "What is the best affordable accounting software for a small business on a tight budget?",
+          "Invoicing and expense tracking tools for a freelance designer with international clients?",
+          "Which accounting software is easiest to use for someone with no bookkeeping background?",
+          "What is the best tool for a small business that needs to send invoices and accept card payments in one app?",
+          "Which accounting software should I pick if I need strong tax reporting and compliance support?",
+          "Best accounting software for a growing small business with multiple team members?",
+          "What is the best mobile friendly finance app for a freelancer who works on the go?",
+          "Which invoicing tool should I choose if I want automatic payment reminders and recurring invoices?",
+          "What is the best accounting tool for a small construction company that needs to track job costs?",
+          "What accounting software should a new online store choose to handle sales tax and inventory?",
+          "Which finance tool should a solo consultant pick to handle both client invoices and personal expense tracking?"
+        ],
+        "status": "frozen",
+        "version": 4
       }
     ]
   },
   "web-script-and-tracker-compliance-monitoring": {
     "category_description": "A tool that scans websites to find third party scripts, trackers, and cookies, then monitors and blocks unauthorized data transfers so companies can meet privacy and payment security rules.",
     "category_name": "Web Script and Tracker Compliance Monitoring",
-    "current_version": 3,
+    "current_version": 4,
     "versions": [
       {
         "auto_check": {
@@ -2226,6 +2755,125 @@
         ],
         "status": "frozen",
         "version": 3
+      },
+      {
+        "auto_check": {
+          "attempts": [
+            {
+              "all_passed": false,
+              "attempt": 1,
+              "passed_count": 4,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "Neutral buying question about which scanner fits a solo freelancer, and no existing question covers freelancers.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "Which website tracker scanner works well for a solo freelancer who runs a few client sites?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "Neutral buying question for an education company, a buyer type not covered by existing questions.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "What cookie and script monitoring tool should an education company pick to protect student data?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": false,
+                  "llm_reason": "It paraphrases the existing affordable small business question by asking about budget and free plans.",
+                  "not_a_buying_question": null,
+                  "passed": false,
+                  "question": "Which privacy scanning tool fits a nonprofit with a very tight budget or a free plan?",
+                  "substantive_pass": false
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "Neutral buying question for a real estate agency with many listing pages, a distinct buyer and need.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "What tool should a real estate agency choose to check trackers across many property listing pages?",
+                  "substantive_pass": true
+                },
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "Neutral buying question about reporting and analytics for a mid-size software company, not covered elsewhere.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "Which script and cookie scanner offers the best reporting and analytics for a mid-size software company?",
+                  "substantive_pass": true
+                }
+              ],
+              "right_count": true,
+              "substantive_passed_count": 4,
+              "usable": true
+            },
+            {
+              "all_passed": true,
+              "attempt": 2,
+              "passed_count": 1,
+              "questions": [
+                {
+                  "blocking_issues": [],
+                  "duplicate_of": null,
+                  "format_issues": [],
+                  "llm_passes": true,
+                  "llm_reason": "It is a neutral buying question from a nonprofit buyer asking which tool to choose, and it differs from the existing questions by targeting a nonprofit with donor data.",
+                  "not_a_buying_question": null,
+                  "passed": true,
+                  "question": "Which website privacy scanning tool should a nonprofit with a tight budget choose to keep donor data safe?",
+                  "substantive_pass": true
+                }
+              ],
+              "right_count": true,
+              "substantive_passed_count": 1,
+              "usable": true
+            }
+          ],
+          "chosen_attempt": 2,
+          "passed_count": 1,
+          "substantive_passed_count": 1
+        },
+        "extends_version": 3,
+        "generated_on": "2026-10-18",
+        "generation_method_version": "v4",
+        "kept_questions_from_earlier_version": 10,
+        "model": "deepseek-chat",
+        "questions": [
+          "What tools can help me stop unauthorized data transfers from my website?",
+          "What is the best third party script scanner for a small marketing team?",
+          "Which cookie and tracker scanning tool works best for an online store that takes card payments?",
+          "Which website privacy scanner should I choose if I need to meet PCI DSS rules?",
+          "What tool is best for finding all third party scripts on a large corporate website?",
+          "Cookie consent and tracker blocking tools for a healthcare company with strict privacy rules?",
+          "Which cookie scanner is easiest to set up for a team with no security staff?",
+          "Best tool to monitor and block data leaks from website tags for an enterprise?",
+          "What is the best affordable tool to audit cookies and trackers on a small business site?",
+          "Which data transfer monitoring tool should I pick for a bank with compliance audits?",
+          "Which website tracker scanner works well for a solo freelancer who runs a few client sites?",
+          "What cookie and script monitoring tool should an education company pick to protect student data?",
+          "What tool should a real estate agency choose to check trackers across many property listing pages?",
+          "Which script and cookie scanner offers the best reporting and analytics for a mid-size software company?",
+          "Which website privacy scanning tool should a nonprofit with a tight budget choose to keep donor data safe?"
+        ],
+        "status": "frozen",
+        "version": 4
       }
     ]
   }
