@@ -24,7 +24,26 @@ Formatting rules for every piece of text you write in this response:
   inside another.
 """.strip()
 
-_PAREN_OR_BRACKET_PATTERN = re.compile(r"[()\[\]]")
+_PAREN_OR_BRACKET_PATTERN = re.compile(r"[()\[\]{}]")
+_DASH_OR_BAR_PATTERN = re.compile(r"\s*[–|]\s*")
+
+# Words from our own working vocabulary. The report is read by marketing people who have never
+# seen them, so text written for the customer must say it in plain words instead. Checked on
+# whole words, case-insensitively.
+_INTERNAL_WORDS = [
+    "reliance", "presence", "gap", "gaps", "coverage", "citation", "citations", "unknown", "layer", "layers",
+    "method", "version", "cache", "cached", "engine", "judgment", "judgments", "judgement", "judgements",
+    "beta", "confidence interval", "wilson",
+]
+_INTERNAL_WORD_PATTERN = re.compile(r"\b(" + "|".join(re.escape(word) for word in _INTERNAL_WORDS) + r")\b", re.IGNORECASE)
+# Plain replacements used only as the last resort, after a real regeneration did not remove the word.
+_INTERNAL_WORD_REPLACEMENTS = {
+    "reliance": "dependence", "presence": "visibility", "gap": "problem", "gaps": "problems", "coverage": "reach",
+    "citation": "source", "citations": "sources", "unknown": "unclear", "layer": "level", "layers": "levels",
+    "method": "approach", "version": "edition", "cache": "stored copy", "cached": "stored", "engine": "tool",
+    "judgment": "decision", "judgments": "decisions", "judgement": "decision", "judgements": "decisions",
+    "beta": "early", "confidence interval": "likely range", "wilson": "likely range",
+}
 _CITATION_MARKER_PATTERN = re.compile(r"\[\s*\d+\s*\]")
 
 # The three plain_finding field labels are added by the frontend, never by
@@ -58,6 +77,10 @@ def find_banned_formatting(text: str) -> list[str]:
     found = []
     if "—" in text:
         found.append("em dash")
+    if "–" in text:
+        found.append("en dash")
+    if "|" in text:
+        found.append("vertical bar")
     if "--" in text:
         found.append("double hyphen")
     if _PAREN_OR_BRACKET_PATTERN.search(text):
@@ -84,6 +107,9 @@ def find_report_violations(text: str) -> list[str]:
         found.append("leaked field label")
     if _BUYER_WORD_PATTERN.search(text):
         found.append("used 'buyer' instead of 'customer'")
+    internal = {match.group(1).lower() for match in _INTERNAL_WORD_PATTERN.finditer(text)}
+    if internal:
+        found.append(f"internal word: {', '.join(sorted(internal))}")
     return found
 
 
@@ -101,7 +127,9 @@ def sanitize_banned_formatting(text: str) -> str:
     banned characters even if the model doesn't cooperate.
     """
     cleaned = text.replace("--", ", ").replace("—", ", ")
+    cleaned = _DASH_OR_BAR_PATTERN.sub(", ", cleaned)
     cleaned = _PAREN_OR_BRACKET_PATTERN.sub("", cleaned)
+    cleaned = _INTERNAL_WORD_PATTERN.sub(lambda m: _INTERNAL_WORD_REPLACEMENTS[m.group(1).lower()], cleaned)
     cleaned = _CITATION_MARKER_PATTERN.sub("", cleaned)
     cleaned = _VENDOR_NAME_PATTERN.sub("AI search tools", cleaned)
     cleaned = re.sub(r"\bbuyers\b", "customers", cleaned, flags=re.IGNORECASE)
