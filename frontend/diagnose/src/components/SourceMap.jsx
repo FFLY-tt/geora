@@ -1,8 +1,7 @@
-// "Pages AI read before answering" (part C): which domains AI actually
-// cited while answering the brand-free customer questions, read from
-// citation_engine.py's details.source_map. Shown only in the unlocked
-// part of the report — see BreakdownAccordion, which renders this
-// inside breakdown-content so it stays blurred/locked until unlock.
+// "Pages AI read before answering": which websites AI actually used while
+// answering the brand-free customer questions, read from citation_engine.py's
+// details.source_map. Shown only in the unlocked details, and only when there
+// is no layered view (see BreakdownAccordion).
 const MAX_DOMAINS_SHOWN = 8
 
 export default function SourceMap({ citation }) {
@@ -30,17 +29,16 @@ export default function SourceMap({ citation }) {
             className={entry.is_own_domain ? 'source-map-row source-map-row-own' : 'source-map-row'}
           >
             <span className="source-map-domain">
-              {entry.domain}
+              <span data-external="true">{entry.domain}</span>
               {entry.is_own_domain && <span className="source-map-own-tag">your site</span>}
             </span>
             <span className="source-map-stats">
-              cited in {entry.answers_citing} answer{entry.answers_citing === 1 ? '' : 's'} (
-              {Math.round(entry.share * 100)}%)
+              used in {entry.answers_citing} answer{entry.answers_citing === 1 ? '' : 's'}, {Math.round(entry.share * 100)}%
             </span>
           </li>
         ))}
       </ul>
-      <p className="source-map-own-share">Your own site was cited in {ownSharePercentage}% of answers</p>
+      <p className="source-map-own-share">Your own site was used in {ownSharePercentage}% of answers</p>
     </div>
   )
 }

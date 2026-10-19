@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import AccordionItem from './AccordionItem'
+import { plainText } from '../utils/text.js'
 import { citedText, dimensionsForLayer, layerRows, pageHref, pageStatusText, pageTitle, shortUrl, unplacedDimensions } from '../utils/sourceLayers.js'
 
 // One row per kind of website AI read: how much AI leaned on it, how much
@@ -24,13 +25,12 @@ function PageList({ layer, pages }) {
         {visible.map((page) => (
           <li key={page.url}>
             <a className="layer-page-url" href={pageHref(page.url)} target="_blank" rel="noreferrer">
-              {pageTitle(page)}
+              <span data-external="true">{pageTitle(page)}</span>
             </a>
-            <span className="layer-page-meta">{shortUrl(page.url)}</span>
-            <span className="layer-page-meta">
-              {citedText(page.citations)} · {pageStatusText(layer, page)}
-            </span>
-            {page.snippet && <span className="layer-page-snippet">“…{page.snippet}…”</span>}
+            <span className="layer-page-meta" data-external="true">{shortUrl(page.url)}</span>
+            <span className="layer-page-meta">{citedText(page.citations)}</span>
+            <span className="layer-page-meta">{pageStatusText(layer, page)}</span>
+            {page.snippet && <span className="layer-page-snippet">“…<span data-external="true">{plainText(page.snippet)}</span>…”</span>}
           </li>
         ))}
       </ul>
@@ -43,8 +43,8 @@ function PageList({ layer, pages }) {
   )
 }
 
-function LayerRow({ row, dimensions }) {
-  const [open, setOpen] = useState(false)
+function LayerRow({ row, dimensions, startOpen }) {
+  const [open, setOpen] = useState(startOpen)
   const details = dimensionsForLayer(row.layer, dimensions)
 
   return (
@@ -54,7 +54,7 @@ function LayerRow({ row, dimensions }) {
         <span className="layer-cell layer-cell-number">{row.relianceText}</span>
         <span className="layer-cell layer-cell-number">{row.presenceText}</span>
         <span className="layer-cell layer-cell-status">{row.statusText}</span>
-        <span className="layer-cell layer-cell-toggle">{open ? '−' : '+'}</span>
+        <span className="layer-cell layer-cell-toggle">{open ? 'Hide' : 'Show'}</span>
       </button>
 
       {open && (
@@ -65,7 +65,7 @@ function LayerRow({ row, dimensions }) {
             <div className="layer-details">
               {row.layer === 'own_site' && <h4 className="layer-details-title">Your website details</h4>}
               {details.map((dim) => (
-                <AccordionItem key={dim.dimension} dimension={dim} />
+                <AccordionItem key={dim.dimension} dimension={dim} startOpen={startOpen} />
               ))}
             </div>
           )}
@@ -75,26 +75,26 @@ function LayerRow({ row, dimensions }) {
   )
 }
 
-export default function SourceLayerTable({ sourceLayers, dimensions }) {
-  const rows = layerRows(sourceLayers)
+export default function SourceLayerTable({ sourceLayers, dimensions, radar = null, startOpen = false }) {
+  const rows = layerRows(sourceLayers, radar)
   const leftovers = unplacedDimensions(dimensions)
 
   return (
     <div className="layer-table">
       <div className="layer-table-head">
         <span className="layer-cell layer-cell-name">Where AI reads</span>
-        <span className="layer-cell layer-cell-number">How much AI relies on it</span>
+        <span className="layer-cell layer-cell-number">How much AI uses it</span>
         <span className="layer-cell layer-cell-number">How often you appear</span>
         <span className="layer-cell layer-cell-status">Status</span>
         <span className="layer-cell layer-cell-toggle" />
       </div>
       {rows.map((row) => (
-        <LayerRow key={row.layer} row={row} dimensions={dimensions} />
+        <LayerRow key={row.layer} row={row} dimensions={dimensions} startOpen={startOpen} />
       ))}
       {leftovers.length > 0 && (
         <div className="layer-details">
           {leftovers.map((dim) => (
-            <AccordionItem key={dim.dimension} dimension={dim} />
+            <AccordionItem key={dim.dimension} dimension={dim} startOpen={startOpen} />
           ))}
         </div>
       )}

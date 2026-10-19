@@ -1,12 +1,7 @@
 import { useState } from 'react'
 import Hero from './components/Hero'
 import SearchForm from './components/SearchForm'
-import CacheNotice from './components/CacheNotice'
-import ScoreChangeNote from './components/ScoreChangeNote'
-import CitationResultCard from './components/CitationResultCard'
-import LayerConclusion from './components/LayerConclusion'
-import CompetitorList from './components/CompetitorList'
-import BreakdownAccordion from './components/BreakdownAccordion'
+import ResultPage from './components/ResultPage'
 import { runDiagnosis, captureLead } from './api'
 
 // How long the one-time post-unlock scan-sweep highlight plays for. Must
@@ -78,38 +73,13 @@ export default function App() {
       </section>
 
       {result && (
-        <>
-          <section className="section">
-            <CacheNotice />
-            <ScoreChangeNote
-              previousScores={result.previous_scores}
-              currentScores={result.dimensions}
-              previousProvenance={result.previous_provenance}
-              currentProvenance={result.provenance}
-              previousCitationInterval={result.previous_citation_interval}
-              currentCitationInterval={result.dimensions.find((dim) => dim.dimension === 'citation_visibility')?.details}
-            />
-            <div className={justUnlocked ? 'scan-sweep-once' : ''}>
-              <CitationResultCard
-                citation={result.dimensions.find((dim) => dim.dimension === 'citation_visibility')}
-              />
-              <CompetitorList comparison={result.competitor_comparison} />
-              {/* The conclusion names the kind of website where the biggest gap is. */}
-              <LayerConclusion sourceLayers={result.source_layers} />
-            </div>
-          </section>
-
-          <section className="section">
-            <BreakdownAccordion
-              dimensions={result.dimensions}
-              sourceLayers={result.source_layers}
-              unlocked={unlocked}
-              onUnlock={handleUnlock}
-            />
-            {unlockError && <p className="form-error">{unlockError}</p>}
-          </section>
-
-        </>
+        <ResultPage
+          result={result}
+          unlocked={unlocked}
+          onUnlock={handleUnlock}
+          unlockError={unlockError}
+          justUnlocked={justUnlocked}
+        />
       )}
     </div>
   )

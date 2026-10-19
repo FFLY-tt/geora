@@ -1,0 +1,117 @@
+{
+ "company_name": "Clio",
+ "domain": "clio.com",
+ "dimensions": [
+  {
+   "dimension": "citation_visibility",
+   "score": -1,
+   "details": {
+    "status": "insufficient_data",
+    "reason": "Failed to fetch homepage for 'clio.com'",
+    "plain_finding": {
+     "what_we_found": "We could not open your homepage at clio.com, so we could not test how often AI search tools mention you when a customer researches your category without knowing your brand name.",
+     "what_it_costs_you": "If your site stays unreachable, AI search tools cannot read it, so customers comparing options never see you and pick a competitor instead.",
+     "fix_it_today": "Ask your web host or IT lead to confirm clio.com loads for outside visitors and remove any block on automated access, then tell us when it is live so we can run the test."
+    }
+   }
+  },
+  {
+   "dimension": "topic_relevance",
+   "score": -1,
+   "details": {
+    "status": "insufficient_data",
+    "reason": "No customer questions available from citation_engine: Failed to fetch homepage for 'clio.com'",
+    "plain_finding": {
+     "what_we_found": "We could not check your website against real customer questions because the step that gathers those questions returned none this time. So we have no confirmed example of a question your pages answer or miss.",
+     "what_it_costs_you": "Until your pages answer the exact questions customers ask, they will finish their research on a competitor's site and choose that competitor.",
+     "fix_it_today": "Write down the five questions customers ask most before they buy, then check whether your homepage answers each one in plain words."
+    }
+   }
+  },
+  {
+   "dimension": "evidence_density",
+   "score": -1,
+   "details": {
+    "status": "insufficient_data",
+    "fetch_failure": "blocked: HTTP 403",
+    "reason": "Could not read the homepage of 'clio.com': blocked: HTTP 403",
+    "pages_failed": [
+     {
+      "url": "clio.com",
+      "kind": "home",
+      "error": "blocked: HTTP 403"
+     }
+    ],
+    "plain_finding": {
+     "what_we_found": "We couldn't read this website. The homepage of clio.com returned: blocked: HTTP 403.",
+     "what_it_costs_you": "",
+     "fix_it_today": ""
+    }
+   }
+  },
+  {
+   "dimension": "content_recency",
+   "score": -1,
+   "details": {
+    "status": "insufficient_data",
+    "reason": "Failed to fetch homepage for 'clio.com'",
+    "plain_finding": {
+     "what_we_found": "We could not open your homepage at clio.com, so we could not check whether it shows a last updated date. AI search tools may hit the same block and skip your site entirely.",
+     "what_it_costs_you": "When those tools cannot read your homepage, they recommend a competitor instead, and you lose the customer before they ever reach you.",
+     "fix_it_today": "Ask your web host or developer to confirm the homepage loads for outside visitors and add a visible last updated date near the top of the page."
+    }
+   }
+  },
+  {
+   "dimension": "fact_consistency",
+   "score": -1,
+   "details": {
+    "status": "insufficient_data",
+    "reason": "Failed to fetch domain homepage 'clio.com'",
+    "plain_finding": {
+     "what_we_found": "We could not open your homepage at clio.com, so we could not check whether the facts there match what review sites and independent listings say about you. That leaves any mismatch between your site and those listings unseen and uncorrected.",
+     "what_it_costs_you": "A customer who sees one set of facts on a review site and a different set on your site may trust neither and pick a competitor.",
+     "fix_it_today": "Confirm your homepage loads for outside visitors, then compare your pricing, features, and contact details against your top three review site listings and correct any differences."
+    }
+   }
+  },
+  {
+   "dimension": "technical_readability",
+   "score": -1,
+   "details": {
+    "status": "insufficient_data",
+    "reason": "Failed to fetch homepage for 'clio.com': 403 Client Error: Forbidden for url: https://www.clio.com/",
+    "plain_finding": {
+     "what_we_found": "We could not open your homepage at clio.com, so we could not confirm whether AI search tools can read it. If the page is blocked to them, they cannot show your business in answers.",
+     "what_it_costs_you": "A customer asking an AI search tool for a legal software recommendation will get a competitor's name instead of yours.",
+     "fix_it_today": "Ask your web host or developer to confirm the homepage loads for outside visitors and is not blocking automated readers, then recheck it."
+    }
+   }
+  }
+ ],
+ "cached_at": "2026-10-19T03:00:16.064613+00:00",
+ "previous_scores": null,
+ "source_layers": null,
+ "radar": null,
+ "provenance": {
+  "run_date": "2026-10-19",
+  "run_at": "2026-10-19T03:00:16.064280+00:00",
+  "method_versions": {
+   "citation_visibility": "v4",
+   "topic_relevance": "v1",
+   "evidence_density": "v3.2-rules",
+   "content_recency": "v1",
+   "fact_consistency": "v4",
+   "technical_readability": "v1",
+   "source_layers": "v3"
+  },
+  "source_layer_list_version": "v2",
+  "page_type_rules_version": "v1",
+  "question_set": null,
+  "pages": {}
+ },
+ "previous_citation_interval": null,
+ "competitors": null,
+ "competitor_comparison": null,
+ "previous_provenance": null
+}

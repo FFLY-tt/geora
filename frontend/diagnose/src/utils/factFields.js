@@ -5,6 +5,8 @@
 // Each field shows only its conclusion, what review sites say, and what the
 // company's own site says.
 
+import { plainText } from './text.js'
+
 export const VERDICT_TEXT = {
   match: 'Matches your site',
   conflict: "Doesn't match your site",
@@ -60,9 +62,9 @@ export function factRows(details) {
     key: field.field,
     label: field.label || field.field,
     verdictText: verdictText(field.verdict),
-    thirdPartyValue: field.third_party_value || 'Not stated',
+    thirdPartyValue: plainText(field.third_party_value) || 'Not stated',
     thirdPartySource: field.third_party_source || null,
-    officialValue: field.official_value || 'Not stated',
-    officialQuote: field.official_quote ? quoteSnippet(field.official_quote, field.official_value) : null,
+    officialValue: plainText(field.official_value) || 'Not stated',
+    officialQuote: field.official_quote ? plainText(quoteSnippet(field.official_quote, field.official_value)) : null,
   }))
 }

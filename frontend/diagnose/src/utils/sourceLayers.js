@@ -3,15 +3,16 @@
 // The backend sends numbers and status codes; every word the customer
 // reads is decided here, and internal details (list versions, method
 // versions, raw error names) are never shown.
+import { cleanPageTitle } from './text.js'
 
 export const LAYER_LABELS = {
-  reference: 'Reference sources',
-  review_media: 'Review sites and media',
-  community: 'Community sites',
+  reference: 'Reference sites',
+  review_media: 'Review sites and news',
+  community: 'Community discussions',
   own_site: 'Your website',
-  lists: "Other companies' 'best tools' lists",
-  guides: "Other companies' guides and help pages",
-  product_pages: "Other companies' product pages",
+  lists: 'Best tools lists',
+  guides: 'Guides and articles',
+  product_pages: 'Competitor product pages',
   other_companies: "Other companies' websites",
 }
 
@@ -27,8 +28,8 @@ export const LAYER_HINTS = {
 }
 
 export const STATUS_LABELS = {
-  biggest_gap: 'Biggest gap',
-  gap: 'Gap',
+  biggest_gap: 'Missing most',
+  gap: 'Missing',
   covered: 'Covered',
   not_used: "AI didn't use this",
   unknown: "Couldn't check",
@@ -40,9 +41,9 @@ export const DIMENSIONS_BY_LAYER = {
   own_site: ['topic_relevance', 'evidence_density', 'content_recency', 'technical_readability'],
 }
 
-/** 0.4 -> "40%"; null/undefined -> "—" (not measurable). */
+/** 0.4 -> "40%"; null/undefined -> "Not checked" (nothing could be measured). */
 export function formatPercent(value) {
-  if (value === null || value === undefined) return '—'
+  if (value === null || value === undefined) return 'Not checked'
   return `${Math.round(value * 100)}%`
 }
 
@@ -66,10 +67,9 @@ export function pageStatusText(layer, page) {
   return page.mentions_you ? 'Mentions you' : "Doesn't mention you"
 }
 
-/** The text to show for a cited page: its title when we have one, otherwise its address. */
+/** The text to show for a cited page: its cleaned title when we have one, otherwise its address. */
 export function pageTitle(page) {
-  const title = (page.title || '').trim()
-  return title || shortUrl(page.url)
+  return cleanPageTitle(page.title) || shortUrl(page.url)
 }
 
 /** A short readable form of a citation URL (the backend sends host + path). */
@@ -83,23 +83,31 @@ export function pageHref(url) {
   return /^https?:\/\//.test(url) ? url : `https://${url}`
 }
 
-/** "cited in 3 answers" / "cited in 1 answer" */
+/** "used in 3 answers" / "used in 1 answer" */
 export function citedText(count) {
-  return `cited in ${count} answer${count === 1 ? '' : 's'}`
+  return `used in ${count} answer${count === 1 ? '' : 's'}`
+}
+
+function statusForChart(layer, radar) {
+  if (radar.biggest_gap === layer.layer) return 'biggest_gap'
+  return layer.status === 'biggest_gap' ? 'gap' : layer.status
 }
 
 /**
  * Rows for the layer table, in the order the backend sent them. Layers AI
  * never cited are still listed (the customer sees AI doesn't use them).
  */
-export function layerRows(sourceLayers) {
+export function layerRows(sourceLayers, radar = null) {
   return (sourceLayers?.layers || []).map((layer) => ({
     ...layer,
+    // "Missing most" belongs to the corner of the chart where the most is missing, so the table
+    // and the chart agree. The kinds of website without a corner can only be "Missing".
+    status: radar ? statusForChart(layer, radar) : layer.status,
     label: LAYER_LABELS[layer.layer] || layer.layer,
     hint: LAYER_HINTS[layer.layer] || '',
-    statusText: STATUS_LABELS[layer.status] || '',
+    statusText: STATUS_LABELS[radar ? statusForChart(layer, radar) : layer.status] || '',
     relianceText: formatPercent(layer.reliance),
     // A layer AI doesn't cite has nothing to be present in.
-    presenceText: layer.citations === 0 ? '—' : formatPercent(layer.presence),
+    presenceText: layer.citations === 0 ? 'Not used' : formatPercent(layer.presence),
   }))
 }

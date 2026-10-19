@@ -3,19 +3,6 @@
 // dimension's details; with only ~15 answers a single percentage hides
 // how uncertain it is, so we always show the likely range too.
 
-function pct(value) {
-  return `${Math.round(value * 100)}%`
-}
-
-/** "Mentioned in 3 of 15 answers (20%). Likely range: 7%–45%." or null when there is nothing to show. */
-export function mentionSummary(details) {
-  if (!details || !details.total) return null
-  const { mentions, total, ci_low: low, ci_high: high } = details
-  const base = `Mentioned in ${mentions} of ${total} answers (${pct(mentions / total)}).`
-  if (low === null || low === undefined || high === null || high === undefined) return base
-  return `${base} Likely range: ${pct(low)}–${pct(high)}.`
-}
-
 /** True when two {ci_low, ci_high} intervals overlap (touching counts as overlapping). */
 export function intervalsOverlap(a, b) {
   if (!a || !b) return false

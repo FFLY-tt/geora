@@ -1,0 +1,4443 @@
+{
+ "company_name": "Close",
+ "domain": "close.com",
+ "dimensions": [
+  {
+   "dimension": "citation_visibility",
+   "score": 33,
+   "details": {
+    "status": "ok",
+    "category": "Sales CRM Software",
+    "question_set": {
+     "category_id": "sales-crm-software",
+     "category_name": "Sales CRM Software",
+     "version": 4,
+     "status": "frozen",
+     "source": "existing_company_assignment"
+    },
+    "generation_attempts": [
+     {
+      "outcome": "existing_company_assignment",
+      "assignment": {
+       "assigned_on": "2026-10-11",
+       "category_id": "sales-crm-software",
+       "classified_as": {
+        "description": "A tool that helps sales teams track leads and customers, manage calls, emails, and texts, and automate follow-ups so deals move forward.",
+        "name": "Sales CRM Software"
+       },
+       "company_name": "Close",
+       "homepage_text_sha256": "880e16d3b6c29107fe882d7478f9f53aaece037721b71dbd8b915c91b1ef6aa9",
+       "match_decision": {
+        "matched_existing": false,
+        "reason": "Sales CRM Software helps sales teams manage leads and customer communication. Web Script and Tracker Compliance Monitoring scans websites for privacy and security compliance. These are different products for different needs, so a buyer would not compare them as alternatives."
+       }
+      }
+     }
+    ],
+    "runs_per_query": 1,
+    "queries_total": 15,
+    "queries_valid": 15,
+    "average_mention_rate": 0.333,
+    "name_is_common_word": true,
+    "total_uncertain_runs": 0,
+    "mentions": 5,
+    "total": 15,
+    "ci_low": 0.152,
+    "ci_high": 0.583,
+    "ci_method": "Wilson score interval, z = 1.96",
+    "per_query_results": [
+     {
+      "query": "What software helps sales teams organize their leads and customer contacts",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "What is the best sales CRM for a small team of five reps?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Which sales CRM should I choose if I need built-in calling and texting?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "hit",
+        "evidence_sentence": "If **built-in calling and texting are core to your sales workflow, choose Close**.",
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "What is the best CRM for a real estate sales team that makes lots of calls?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "citation_domain_match",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "Which sales engagement tool is easiest to set up for a team with no admin?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "What CRM works best for a B2B sales team that needs email and text automation?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "hit",
+        "evidence_sentence": "**Close** is likely the best fit for a B2B sales team that wants email and text automation built directly into a sales-focused CRM.",
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "Sales CRM tools for a startup that needs to keep costs low?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "What is the best sales CRM for an insurance agency with a large client list?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Which sales CRM is best for a team that needs call tracking and recordings?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "hit",
+        "evidence_sentence": "**Recommendation:** Choose **HubSpot** unless the team’s primary workflow is high-volume outbound calling—in that case, choose **Close**.",
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "What CRM should a mid-size sales team choose if compliance and data security matter?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "What sales CRM should a growing sales team pick when they need to scale past twenty reps?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Which sales tool works well for a sales team that needs to connect with the apps they already use?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "What is the best sales CRM for a small business owner who wants something simple to learn?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "citation_domain_match",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "Which sales platform should a sales team choose if they need automated follow-ups on a tight budget?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Which sales CRM is best for a field sales team that works mostly from mobile phones?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "llm_disambiguation",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     }
+    ],
+    "fully_failed_queries": [],
+    "source_map": {
+     "total_answers": 15,
+     "unique_domains": 66,
+     "unparseable_links": 0,
+     "own_domain_share": 0.133,
+     "top_domains": [
+      {
+       "domain": "blog.hubspot.com",
+       "answers_citing": 6,
+       "questions_citing": 6,
+       "share": 0.4,
+       "is_own_domain": false
+      },
+      {
+       "domain": "fitsmallbusiness.com",
+       "answers_citing": 6,
+       "questions_citing": 6,
+       "share": 0.4,
+       "is_own_domain": false
+      },
+      {
+       "domain": "folk.app",
+       "answers_citing": 6,
+       "questions_citing": 6,
+       "share": 0.4,
+       "is_own_domain": false
+      },
+      {
+       "domain": "monday.com",
+       "answers_citing": 6,
+       "questions_citing": 6,
+       "share": 0.4,
+       "is_own_domain": false
+      },
+      {
+       "domain": "salesforce.com",
+       "answers_citing": 6,
+       "questions_citing": 6,
+       "share": 0.4,
+       "is_own_domain": false
+      },
+      {
+       "domain": "sybill.ai",
+       "answers_citing": 6,
+       "questions_citing": 6,
+       "share": 0.4,
+       "is_own_domain": false
+      },
+      {
+       "domain": "zapier.com",
+       "answers_citing": 5,
+       "questions_citing": 5,
+       "share": 0.333,
+       "is_own_domain": false
+      },
+      {
+       "domain": "nutshell.com",
+       "answers_citing": 4,
+       "questions_citing": 4,
+       "share": 0.267,
+       "is_own_domain": false
+      },
+      {
+       "domain": "breakcold.com",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "capsulecrm.com",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "clarify.ai",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "mixmax.com",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "pipedrive.com",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "salesmate.io",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "attio.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "cal.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "close.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": true
+      },
+      {
+       "domain": "microsoft.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "pipelinecrm.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "rox.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      }
+     ]
+    },
+    "plain_finding": {
+     "what_we_found": "You were named in only 33% of answers when customers asked 15 common sales CRM questions without naming your brand. One question about software to organize leads and customer contacts never mentioned you at all.",
+     "what_it_costs_you": "A customer who asks that question hears only about competitors, so you lose the sale before you ever reach them.",
+     "fix_it_today": "Publish a clear page on your site that answers that exact leads and customer contacts question in plain language, then make sure it is easy for AI search tools to read."
+    }
+   }
+  },
+  {
+   "dimension": "topic_relevance",
+   "score": 63,
+   "details": {
+    "status": "ok",
+    "pages_read": [
+     "https://close.com/",
+     "https://close.com/pricing",
+     "https://close.com/communication",
+     "https://close.com/automation"
+    ],
+    "pages_failed": [],
+    "per_question_results": [
+     {
+      "classification": "answered",
+      "evidence_sentence": "Leads Contacts are defined as individuals within an organization and are attached to a Lead in Close.",
+      "generation_failed": false,
+      "question": "What software helps sales teams organize their leads and customer contacts",
+      "runs": [
+       {
+        "classification": "answered",
+        "evidence_sentence": "Leads Contacts are defined as individuals within an organization and are attached to a Lead in Close.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Leads Contacts are defined as individuals within an organization and are attached to a Lead in Close.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Leads Contacts are defined as individuals within an organization and are attached to a Lead in Close.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/pricing",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "For small teams that want one place for every call, email, and deal.",
+      "generation_failed": false,
+      "question": "What is the best sales CRM for a small team of five reps?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "For small teams that want one place for every call, email, and deal.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "For small teams that want one place for every call, email, and deal.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "For small teams that want one place for every call, email, and deal.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/pricing",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "answered",
+      "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close - 2B+ Calls, emails, and texts - 4.7★ Rated on G2 Built for conversations.Now Close runs them, end-to-end.",
+      "generation_failed": false,
+      "question": "Which sales CRM should I choose if I need built-in calling and texting?",
+      "runs": [
+       {
+        "classification": "answered",
+        "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close - 2B+ Calls, emails, and texts - 4.7★ Rated on G2 Built for conversations.Now Close runs them, end-to-end.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close - 2B+ Calls, emails, and texts - 4.7★ Rated on G2 Built for conversations.Now Close runs them, end-to-end.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close - 2B+ Calls, emails, and texts - 4.7★ Rated on G2 Built for conversations.Now Close runs them, end-to-end.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close",
+      "generation_failed": false,
+      "question": "What is the best CRM for a real estate sales team that makes lots of calls?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "The sales CRM built for calling, emailing, texting, automation and action - 11,500+ Sales teams trust Close",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Nope. Close comes with forms, calling, email, SMS, Notetaker, and even meeting scheduling built-in—out of the box. That means no extra software, no complex setups, and no switching between tabs.",
+      "generation_failed": false,
+      "question": "Which sales engagement tool is easiest to set up for a team with no admin?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Nope. Close comes with forms, calling, email, SMS, Notetaker, and even meeting scheduling built-in—out of the box. That means no extra software, no complex setups, and no switching between tabs.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/communication",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Nope. Close comes with forms, calling, email, SMS, Notetaker, and even meeting scheduling built-in—out of the box. That means no extra software, no complex setups, and no switching between tabs.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/communication",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Nope. Close comes with forms, calling, email, SMS, Notetaker, and even meeting scheduling built-in—out of the box. That means no extra software, no complex setups, and no switching between tabs.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/communication",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/communication",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "answered",
+      "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+      "generation_failed": false,
+      "question": "What CRM works best for a B2B sales team that needs email and text automation?",
+      "runs": [
+       {
+        "classification": "answered",
+        "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/communication",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/communication",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Absolutely. Close Workflows let you build multi-channel sequences using email, SMS, and task reminders.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/communication",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/communication",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "answered",
+      "evidence_sentence": "Solo$19 per user / month$9 per user / monthTry for free",
+      "generation_failed": false,
+      "question": "Sales CRM tools for a startup that needs to keep costs low?",
+      "runs": [
+       {
+        "classification": "answered",
+        "evidence_sentence": "Solo$19 per user / month$9 per user / monthTry for free",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Solo$19 per user / month$9 per user / monthTry for free",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Solo$19 per user / month$9 per user / monthTry for free",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/pricing",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What is the best sales CRM for an insurance agency with a large client list?",
+      "runs": [
+       {
+        "classification": "missing",
+        "evidence_sentence": null,
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": null,
+        "status": "ok"
+       },
+       {
+        "classification": "missing",
+        "evidence_sentence": null,
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": null,
+        "status": "ok"
+       },
+       {
+        "classification": "missing",
+        "evidence_sentence": null,
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": null,
+        "status": "ok"
+       }
+      ],
+      "source_url": null,
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "answered",
+      "evidence_sentence": "Complete Call Coaching Whisper or barge on live calls and review call recordings.",
+      "generation_failed": false,
+      "question": "Which sales CRM is best for a team that needs call tracking and recordings?",
+      "runs": [
+       {
+        "classification": "answered",
+        "evidence_sentence": "Complete Call Coaching Whisper or barge on live calls and review call recordings.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/communication",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Complete Call Coaching Whisper or barge on live calls and review call recordings.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/communication",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Complete Call Coaching Whisper or barge on live calls and review call recordings.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/communication",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/communication",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What CRM should a mid-size sales team choose if compliance and data security matter?",
+      "runs": [
+       {
+        "classification": "missing",
+        "evidence_sentence": null,
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": null,
+        "status": "ok"
+       },
+       {
+        "classification": "missing",
+        "evidence_sentence": null,
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": null,
+        "status": "ok"
+       },
+       {
+        "classification": "missing",
+        "evidence_sentence": null,
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": null,
+        "status": "ok"
+       }
+      ],
+      "source_url": null,
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "For high-volume orgs that need advanced controls and the fastest dialing.",
+      "generation_failed": false,
+      "question": "What sales CRM should a growing sales team pick when they need to scale past twenty reps?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "For high-volume orgs that need advanced controls and the fastest dialing.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "For high-volume orgs that need advanced controls and the fastest dialing.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "For high-volume orgs that need advanced controls and the fastest dialing.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/pricing",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "answered",
+      "evidence_sentence": "Works with the tools you already use Close connects to your favorite sales, marketing, and support tools.",
+      "generation_failed": false,
+      "question": "Which sales tool works well for a sales team that needs to connect with the apps they already use?",
+      "runs": [
+       {
+        "classification": "answered",
+        "evidence_sentence": "Works with the tools you already use Close connects to your favorite sales, marketing, and support tools.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Works with the tools you already use Close connects to your favorite sales, marketing, and support tools.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Works with the tools you already use Close connects to your favorite sales, marketing, and support tools.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "For founders and solo reps who need a real CRM, not a spreadsheet.",
+      "generation_failed": false,
+      "question": "What is the best sales CRM for a small business owner who wants something simple to learn?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "For founders and solo reps who need a real CRM, not a spreadsheet.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "For founders and solo reps who need a real CRM, not a spreadsheet.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "For founders and solo reps who need a real CRM, not a spreadsheet.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/pricing",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Automate Follow-Ups: Build email workflows that send reminders and nudges for you.",
+      "generation_failed": false,
+      "question": "Which sales platform should a sales team choose if they need automated follow-ups on a tight budget?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Automate Follow-Ups: Build email workflows that send reminders and nudges for you.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/communication",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Automate Follow-Ups: Build email workflows that send reminders and nudges for you.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/communication",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Automate Follow-Ups: Build email workflows that send reminders and nudges for you.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/communication",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/communication",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Mobile app (iOS / Android) Manage the CRM, make & receive calls and texts, and review reports on t",
+      "generation_failed": false,
+      "question": "Which sales CRM is best for a field sales team that works mostly from mobile phones?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Mobile app (iOS / Android) Manage the CRM, make & receive calls and texts, and review reports on t",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Mobile app (iOS / Android) Manage the CRM, make & receive calls and texts, and review reports on t",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Mobile app (iOS / Android) Manage the CRM, make & receive calls and texts, and review reports on t",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://close.com/pricing",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://close.com/pricing",
+      "cache_status": "cache_hit"
+     }
+    ],
+    "unanswered_questions": [
+     "What is the best sales CRM for a small team of five reps?",
+     "What is the best CRM for a real estate sales team that makes lots of calls?",
+     "Which sales engagement tool is easiest to set up for a team with no admin?",
+     "What is the best sales CRM for an insurance agency with a large client list?",
+     "What CRM should a mid-size sales team choose if compliance and data security matter?",
+     "What sales CRM should a growing sales team pick when they need to scale past twenty reps?",
+     "What is the best sales CRM for a small business owner who wants something simple to learn?",
+     "Which sales platform should a sales team choose if they need automated follow-ups on a tight budget?",
+     "Which sales CRM is best for a field sales team that works mostly from mobile phones?"
+    ],
+    "plain_finding": {
+     "what_we_found": "Your site answers only 6 of 15 real customer questions clearly. Seven get a partial answer and 2 get none, such as what CRM an insurance agency with a large client list should pick.",
+     "what_it_costs_you": "A customer asking these questions gets a vague answer from you and a clear one from a competitor, so they choose the competitor.",
+     "fix_it_today": "Write one plain page for each of the 9 unanswered or partly answered questions, starting with the insurance agency question, and state your answer in the first sentence."
+    }
+   }
+  },
+  {
+   "dimension": "evidence_density",
+   "score": 100,
+   "details": {
+    "status": "ok",
+    "items": [
+     {
+      "category": "number_or_statistic",
+      "key": "count:11500",
+      "text": "11,500 +",
+      "context": "is part of the CRM — not a separate tool or integration. 11,500 + Sales teams trust Close 2 B+ Calls, emails, and texts 4.7",
+      "rule": "number:count_plus",
+      "source_url": "https://close.com",
+      "source_page": "home",
+      "also_found_on": [
+       "https://close.com/about"
+      ]
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:2e+09",
+      "text": "2 B+",
+      "context": "tool or integration. 11,500 + Sales teams trust Close 2 B+ Calls, emails, and texts 4.7 ★ Rated on G2 “ Our booked",
+      "rule": "number:magnitude_plus",
+      "source_url": "https://close.com",
+      "source_page": "home",
+      "also_found_on": [
+       "https://close.com/about"
+      ]
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "rating:4.7",
+      "text": "4.7 ★ Rated",
+      "context": "+ Sales teams trust Close 2 B+ Calls, emails, and texts 4.7 ★ Rated on G2 “ Our booked appointments per week have gone up ~50%",
+      "rule": "number:rating_word",
+      "source_url": "https://close.com",
+      "source_page": "home",
+      "also_found_on": [
+       "https://close.com/about"
+      ]
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "percent:50",
+      "text": "50%",
+      "context": "on G2 “ Our booked appointments per week have gone up ~50% since Chloe went live. ” — Dana Derricks, Founder @",
+      "rule": "number:percent",
+      "source_url": "https://close.com",
+      "source_page": "home",
+      "also_found_on": [
+       "https://close.com/customers"
+      ]
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "currency:$100000",
+      "text": "$100,000",
+      "context": "the call even starts. Update your CRM “ We've saved over $100,000 in tech costs switching from Salesforce to Close. We're",
+      "rule": "number:currency",
+      "source_url": "https://close.com",
+      "source_page": "home",
+      "also_found_on": [
+       "https://close.com/about"
+      ]
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "percent:95",
+      "text": "95%",
+      "context": "Lean Team, Big Brands: How Ignite Productions Automated 95% of Event Deployment ~95% of event operations and",
+      "rule": "number:percent",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "percent:30",
+      "text": "30%",
+      "context": "client in staffing costs How RevPilot Increases Revenue 20-30% with No New Ad Spend 20-30% revenue increase, no new ad",
+      "rule": "number:percent",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "percent:33",
+      "text": "33%",
+      "context": "increase, no new ad spend Increased show rates from 33% to 72% in 14 days 33% more revenue per lead 75 Percent",
+      "rule": "number:percent",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "percent:72",
+      "text": "72%",
+      "context": "increase, no new ad spend Increased show rates from 33% to 72% in 14 days 33% more revenue per lead 75 Percent Increase",
+      "rule": "number:percent",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "currency:$200000",
+      "text": "$200,000",
+      "context": "percent reduction in customer acquisition cost More than $200,000 saved each year How Devvo Turns Dormant Leads Into an",
+      "rule": "number:currency",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:4000",
+      "text": "4,000 calls",
+      "context": "a Month 85 vehicle sales per month from dormant leads 4,000 calls per SDR per month, 3x avg dealership salesperson 20 to 30",
+      "rule": "number:counted_noun",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "multiplier:3",
+      "text": "3x",
+      "context": "month from dormant leads 4,000 calls per SDR per month, 3x avg dealership salesperson 20 to 30 percent revenue",
+      "rule": "number:multiplier",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:3",
+      "text": "3 teams",
+      "context": "and support Giveffect team scaled from 1 seat to 15 across 3 teams Built to sell better: How Posted garnered 2,200+ organic",
+      "rule": "number:counted_noun",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:2200",
+      "text": "2,200+",
+      "context": "across 3 teams Built to sell better: How Posted garnered 2,200+ organic leads in 5 months 2,200+ inbound leads in 5 months",
+      "rule": "number:count_plus",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "percent:100",
+      "text": "100%",
+      "context": "leads in 5 months 2,200+ inbound leads in 5 months (100% organic) 15-min demo calls, 1-week average sales cycle",
+      "rule": "number:percent",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": [
+       "https://close.com/about"
+      ]
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:500",
+      "text": "500+",
+      "context": "Achieved a 9-day Sales Cycle 9-day sales cycle Landed a 500+ Employee Client in 9 Days >3,000 emails/month How Hownd",
+      "rule": "number:count_plus",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:3000",
+      "text": "3,000 emails",
+      "context": "9-day sales cycle Landed a 500+ Employee Client in 9 Days >3,000 emails/month How Hownd 5x’d ROI by Switching to Close from",
+      "rule": "number:counted_noun",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "multiplier:5",
+      "text": "5x",
+      "context": "Employee Client in 9 Days >3,000 emails/month How Hownd 5x’d ROI by Switching to Close from Salesforce 5x ROI",
+      "rule": "number:multiplier",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "currency:$110000",
+      "text": "$110,000+",
+      "context": "5x’d ROI by Switching to Close from Salesforce 5x ROI $110,000+ saved annually 80% reduction in CRM costs How OutboundSync",
+      "rule": "number:currency",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "percent:80",
+      "text": "80%",
+      "context": "to Close from Salesforce 5x ROI $110,000+ saved annually 80% reduction in CRM costs How OutboundSync Cut Costs, Clicks,",
+      "rule": "number:percent",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:4",
+      "text": "4+",
+      "context": "Cut Costs, Clicks, and Complexity by Returning to Close 4+ tools consolidated into one command center >80% of tasks",
+      "rule": "number:count_plus",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "multiplier:10",
+      "text": "10x",
+      "context": "command center >80% of tasks automatically logged in Close 10x ROI even without closing additional deals How Printavo",
+      "rule": "number:multiplier",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:150",
+      "text": "150+",
+      "context": "per month How Underground Ecom Doubled Revenue and Saved 150+ Hours a Month by Going All-In on Close 150+ hours",
+      "rule": "number:count_plus",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:2000",
+      "text": "2,000+",
+      "context": "and emails sent ↗ + 0 since you got here 4.7 rating across 2,000+ G2 reviews Customer outcomes 75% increase in conversions",
+      "rule": "number:count_plus",
+      "source_url": "https://close.com/about",
+      "source_page": "about",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "percent:75",
+      "text": "75%",
+      "context": "here 4.7 rating across 2,000+ G2 reviews Customer outcomes 75% increase in conversions $100K saved on software 10×",
+      "rule": "number:percent",
+      "source_url": "https://close.com/about",
+      "source_page": "about",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:120",
+      "text": "120+",
+      "context": "OutboundSync See customer stories The team behind Close 120+ people. 100% remote. Close is a fully remote team working",
+      "rule": "number:count_plus",
+      "source_url": "https://close.com/about",
+      "source_page": "about",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:15",
+      "text": "15+",
+      "context": "in 2018 Joseph Sterner Director of Customer Support Brings 15+ years of finance leadership at tech companies to",
+      "rule": "number:count_plus",
+      "source_url": "https://close.com/about",
+      "source_page": "about",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/ignite-productions",
+      "text": "Lean Team, Big Brands: How Ignite Productions Automated 95% of Event Deployment ~95% of event operations and deployment automated 40–60 hours of manual coordination saved weekly Thousands of dollars saved per client in staffing costs",
+      "context": "https://close.com/customers/ignite-productions",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/revpilot",
+      "text": "How RevPilot Increases Revenue 20-30% with No New Ad Spend 20-30% revenue increase, no new ad spend Increased show rates from 33% to 72% in 14 days 33% more revenue per lead",
+      "context": "https://close.com/customers/revpilot",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/flatiron-school",
+      "text": "75 Percent Increase in Conversion in 60 Days: How Flatiron School Rebuilt Its Sales Motion in Close 75 percent increase in conversion within 60 days 91 percent reduction in customer acquisition cost More than $200,000 saved each year",
+      "context": "https://close.com/customers/flatiron-school",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/devvo",
+      "text": "How Devvo Turns Dormant Leads Into an Extra 85 Car Sales a Month 85 vehicle sales per month from dormant leads 4,000 calls per SDR per month, 3x avg dealership salesperson 20 to 30 percent revenue increase for Devvo clients",
+      "context": "https://close.com/customers/devvo",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/giveffect",
+      "text": "The Right Tool for the Job: How Giveffect Takes Its Own Advice Reporting that took an hour or two now takes a few prompts with Chloe Chat 11 years on Close, growing from one seat to 15 across sales, CS, and support Giveffect team scaled from 1 seat to 15 across 3 teams",
+      "context": "https://close.com/customers/giveffect",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/posted",
+      "text": "Built to sell better: How Posted garnered 2,200+ organic leads in 5 months 2,200+ inbound leads in 5 months (100% organic) 15-min demo calls, 1-week average sales cycle First SDR calls within 20 mins if demo isn’t booked",
+      "context": "https://close.com/customers/posted",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/hr-covered",
+      "text": "From Salesforce Fatigue to Sales Velocity: How HR Covered Made the Switch to Close Switched from Salesforce after 10 years Saved money by not hiring Salesforce consultants One CRM replaced multiple tools (dialer, email, SMS)",
+      "context": "https://close.com/customers/hr-covered",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/commonwealth-joe",
+      "text": "How Commonwealth Joe Achieved a 9-day Sales Cycle 9-day sales cycle Landed a 500+ Employee Client in 9 Days >3,000 emails/month",
+      "context": "https://close.com/customers/commonwealth-joe",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/hownd",
+      "text": "How Hownd 5x’d ROI by Switching to Close from Salesforce 5x ROI $110,000+ saved annually 80% reduction in CRM costs",
+      "context": "https://close.com/customers/hownd",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/outbound-sync",
+      "text": "How OutboundSync Cut Costs, Clicks, and Complexity by Returning to Close 4+ tools consolidated into one command center >80% of tasks automatically logged in Close 10x ROI even without closing additional deals",
+      "context": "https://close.com/customers/outbound-sync",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/printavo",
+      "text": "How Printavo Doubled Revenue After Switching to Close from Spreadsheets Doubled revenue every year Use Close across sales + customer success Improved lead qualification + closing",
+      "context": "https://close.com/customers/printavo",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/sales-transformation-group",
+      "text": "How Sales Transformation Group grew MRR 5x in 1 year using Close Grew MRR by 5x Team grew from 3 to 16 9 sales seats in Close",
+      "context": "https://close.com/customers/sales-transformation-group",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/resq-club",
+      "text": "How Switching from Pipedrive to Close Streamlined Sales for ResQ Club 50% customer growth 6 years using Close Thousands of meals saved per month",
+      "context": "https://close.com/customers/resq-club",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "customer_stories",
+      "key": "https://close.com/customers/underground-ecom",
+      "text": "How Underground Ecom Doubled Revenue and Saved 150+ Hours a Month by Going All-In on Close 150+ hours saved/month Doubled headcount, revenue, and profit Send 15k emails/week from 15 domains",
+      "context": "https://close.com/customers/underground-ecom",
+      "rule": "customer_story:child_page",
+      "source_url": "https://close.com/customers",
+      "source_page": "customers",
+      "also_found_on": []
+     },
+     {
+      "category": "attributed_quote",
+      "key": "dana derricks",
+      "text": "Dana Derricks, Founder @ FollowUp.com",
+      "context": "and texts 4.7 ★ Rated on G2 “ Our booked appointments per week have gone up ~50% since Chloe went live. ” — Dana Derricks, Founder @ FollowUp.com New lead comes in? Cold lead sitting in your CRM? Your rep forgot to follow-up? Your lead is now qualified and",
+      "rule": "attribution:name_title_company",
+      "source_url": "https://close.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "attributed_quote",
+      "key": "zac muir",
+      "text": "Zac Muir, VP of Revenue @ Sisu",
+      "context": "in tech costs switching from Salesforce to Close. We're doing things we never dreamed of doing in a CRM. ” — Zac Muir, VP of Revenue @ Sisu “ If you’re worried your clients will be turned off by AI, don’t be — it’s just noise. Close and Chloe have",
+      "rule": "attribution:name_title_company",
+      "source_url": "https://close.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "attributed_quote",
+      "key": "ben pace",
+      "text": "Ben Pace, President @ ClientMatchmaking.com",
+      "context": "be — it’s just noise. Close and Chloe have done nothing but impact my bottom line in a positive way. ” — Ben Pace, President @ ClientMatchmaking.com Customers can’t stop talking about how much they love Close Real customers loving Close and Chloe: Summarized calls",
+      "rule": "attribution:name_title_company",
+      "source_url": "https://close.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "attributed_quote",
+      "key": "jem millett",
+      "text": "Jem Millett, Director of Admissions @ Flatiron School See",
+      "context": "are unlocked to do more. Chloe is not just innovation. She is actually creating the work we need to do. ” — Jem Millett, Director of Admissions @ Flatiron School See all integrations Don't take our word for it Ask AI about Close See an unfiltered review of Close before you",
+      "rule": "attribution:name_title_company",
+      "source_url": "https://close.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "attributed_quote",
+      "key": "michael fomkin",
+      "text": "Michael Fomkin, CEO & Founder @ VIP Ignite Try",
+      "context": "rest. “ No matter what business model you’re in, your competition is about to be using this technology. ” — Michael Fomkin, CEO & Founder @ VIP Ignite Try for free No credit card required.",
+      "rule": "attribution:name_title_company",
+      "source_url": "https://close.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "third_party_source_or_certification",
+      "key": "g2",
+      "text": "G2",
+      "context": "trust Close 2 B+ Calls, emails, and texts 4.7 ★ Rated on G2 “ Our booked appointments per week have gone up ~50% since",
+      "rule": "third_party:review",
+      "source_url": "https://close.com",
+      "source_page": "home",
+      "also_found_on": [
+       "https://close.com/about"
+      ]
+     },
+     {
+      "category": "third_party_source_or_certification",
+      "key": "soc 2",
+      "text": "SOC 2",
+      "context": "training and technical support teams, as needed. Close is SOC 2 Type 2 compliant As a SOC 2 Type 2 certified SaaS",
+      "rule": "third_party:standard",
+      "source_url": "https://close.com/security",
+      "source_page": "security",
+      "also_found_on": [
+       "https://close.com/pricing"
+      ]
+     },
+     {
+      "category": "third_party_source_or_certification",
+      "key": "gdpr",
+      "text": "GDPR",
+      "context": "use, retain, and dispose of any data information. Close is GDPR compliant Close meets the Data Controller and Data",
+      "rule": "third_party:standard",
+      "source_url": "https://close.com/security",
+      "source_page": "security",
+      "also_found_on": []
+     }
+    ],
+    "counts_by_category": {
+     "number_or_statistic": 27,
+     "customer_stories": 14,
+     "attributed_quote": 5,
+     "third_party_source_or_certification": 3
+    },
+    "points_by_category": {
+     "number_or_statistic": 25,
+     "customer_stories": 25,
+     "attributed_quote": 25,
+     "third_party_source_or_certification": 25
+    },
+    "pages_by_category": {
+     "number_or_statistic": {
+      "home": 5,
+      "customers": 19,
+      "about": 9
+     },
+     "customer_stories": {
+      "customers": 14
+     },
+     "attributed_quote": {
+      "home": 5
+     },
+     "third_party_source_or_certification": {
+      "home": 1,
+      "security": 2,
+      "pricing": 1,
+      "about": 1
+     }
+    },
+    "customer_stories_reason": "Our judgment: AI assistants cannot see logo images, so logos are not evidence an AI can quote. A separate customer story page is text an AI can read and cite, so this category counts the distinct story pages linked one level below the customers page. Logos are listed for reference only.",
+    "customer_logos_reference": [
+     {
+      "category": "customer_logo_reference",
+      "key": "slackmessagefromaclosecustomer",
+      "text": "Slack message from a Close customer",
+      "context": "logo: Slack message from a Close customer",
+      "rule": "customer:logo_area",
+      "source_url": "https://close.com",
+      "source_page": "home"
+     },
+     {
+      "category": "customer_logo_reference",
+      "key": "emailfromaclosecustomer",
+      "text": "Email from a Close customer",
+      "context": "logo: Email from a Close customer",
+      "rule": "customer:logo_area",
+      "source_url": "https://close.com",
+      "source_page": "home"
+     },
+     {
+      "category": "customer_logo_reference",
+      "key": "textmessagefromaclosecustomer",
+      "text": "Text message from a Close customer",
+      "context": "logo: Text message from a Close customer",
+      "rule": "customer:logo_area",
+      "source_url": "https://close.com",
+      "source_page": "home"
+     },
+     {
+      "category": "customer_logo_reference",
+      "key": "fareharbor",
+      "text": "FareHarbor",
+      "context": "logo: FareHarbor",
+      "rule": "customer:logo_area",
+      "source_url": "https://close.com",
+      "source_page": "home"
+     },
+     {
+      "category": "customer_logo_reference",
+      "key": "hipcamp",
+      "text": "Hipcamp",
+      "context": "logo: Hipcamp",
+      "rule": "customer:logo_area",
+      "source_url": "https://close.com",
+      "source_page": "home"
+     },
+     {
+      "category": "customer_logo_reference",
+      "key": "workos",
+      "text": "WorkOS",
+      "context": "logo: WorkOS",
+      "rule": "customer:logo_area",
+      "source_url": "https://close.com",
+      "source_page": "home"
+     },
+     {
+      "category": "customer_logo_reference",
+      "key": "flatironschool",
+      "text": "Flatiron School",
+      "context": "logo: Flatiron School",
+      "rule": "customer:logo_area",
+      "source_url": "https://close.com",
+      "source_page": "home"
+     },
+     {
+      "category": "customer_logo_reference",
+      "key": "reverb",
+      "text": "Reverb",
+      "context": "logo: Reverb",
+      "rule": "customer:logo_area",
+      "source_url": "https://close.com",
+      "source_page": "home"
+     },
+     {
+      "category": "customer_logo_reference",
+      "key": "simpletire",
+      "text": "SimpleTire",
+      "context": "logo: SimpleTire",
+      "rule": "customer:logo_area",
+      "source_url": "https://close.com",
+      "source_page": "home"
+     },
+     {
+      "category": "customer_logo_reference",
+      "key": "paladinsecurity",
+      "text": "Paladin Security",
+      "context": "logo: Paladin Security",
+      "rule": "customer:logo_area",
+      "source_url": "https://close.com",
+      "source_page": "home"
+     },
+     {
+      "category": "customer_logo_reference",
+      "key": "classdojo",
+      "text": "ClassDojo",
+      "context": "logo: ClassDojo",
+      "rule": "customer:logo_area",
+      "source_url": "https://close.com",
+      "source_page": "home"
+     }
+    ],
+    "own_brands": [
+     "close",
+     "closecrm"
+    ],
+    "scoring_rule": "Our own fixed formula, not an AI judgment and not an outside standard: each of the 4 evidence categories is worth up to 25 points by how many distinct pieces of evidence the code rules found ({0: 0, 1: 15, 2: 20}, 25 points for 3 or more). Finding none is a score of 0, not missing data.",
+    "pages_read": [
+     {
+      "kind": "home",
+      "url": "https://close.com",
+      "text_length": 3794,
+      "evidence_found": 28
+     },
+     {
+      "kind": "customers",
+      "url": "https://close.com/customers",
+      "text_length": 4043,
+      "evidence_found": 44
+     },
+     {
+      "kind": "security",
+      "url": "https://close.com/security",
+      "text_length": 2984,
+      "evidence_found": 2
+     },
+     {
+      "kind": "pricing",
+      "url": "https://close.com/pricing",
+      "text_length": 17521,
+      "evidence_found": 1
+     },
+     {
+      "kind": "about",
+      "url": "https://close.com/about",
+      "text_length": 9547,
+      "evidence_found": 13
+     }
+    ],
+    "pages_failed": [],
+    "plain_finding": {
+     "what_we_found": "We read 5 pages on your site and found 27 specific numbers or statistics, 14 customer story pages, 5 named customer testimonials, and 3 third-party ratings or certifications.",
+     "what_it_costs_you": "Your site backs its claims with proof in every area we check.",
+     "fix_it_today": "Keep adding specific proof next to your biggest claims."
+    }
+   }
+  },
+  {
+   "dimension": "content_recency",
+   "score": 100,
+   "details": {
+    "status": "ok",
+    "source_used": "http_last_modified",
+    "http_last_modified": "2026-10-18T09:00:26+00:00",
+    "schema_date_modified": null,
+    "age_days": 0.8,
+    "plain_finding": {
+     "what_we_found": "Your homepage was last meaningfully updated about 1 day ago, so it looks current to anyone who checks.",
+     "what_it_costs_you": "This is not costing you customers right now, and keeping that habit protects the trust you have built.",
+     "fix_it_today": "Put a visible last updated date near the top of your homepage and refresh it every time you change the page."
+    }
+   }
+  },
+  {
+   "dimension": "fact_consistency",
+   "score": 95,
+   "details": {
+    "status": "ok",
+    "query": "Using only what third-party software review sites such as G2, Capterra, TrustRadius, GetApp or Software Advice say about Close (close.com), give a value for each of these fields. Use null when those sites do not state it. Do not use the company's own website.\n- starting_price: the price of the cheapest paid plan, as listed\n- free_plan_or_trial: whether a free plan or a free trial is offered\n- product_category: what kind of product it is\n- target_customer: who it is mainly for, for example small businesses, mid-market, or enterprise\n- deployment: cloud, on-premise, or both\nRespond with ONLY a JSON object, no other text, in this exact shape: {\"starting_price\": {\"value\": <string or null>, \"source_url\": <string or null>}, \"free_plan_or_trial\": {\"value\": <string or null>, \"source_url\": <string or null>}, \"product_category\": {\"value\": <string or null>, \"source_url\": <string or null>}, \"target_customer\": {\"value\": <string or null>, \"source_url\": <string or null>}, \"deployment\": {\"value\": <string or null>, \"source_url\": <string or null>}}",
+    "fields": [
+     {
+      "field": "starting_price",
+      "label": "Starting price",
+      "official_quote": "Solo$19 per user / month$9 per user / monthTry for free",
+      "official_value": "$9 per user / month",
+      "third_party_source": "https://www.g2.com/products/close/pricing",
+      "third_party_value": "$9 per user per month",
+      "verdict": "match",
+      "votes": [
+       "match",
+       "match",
+       "match"
+      ]
+     },
+     {
+      "field": "free_plan_or_trial",
+      "label": "Free plan or trial",
+      "official_quote": "See an unfiltered review of Close before you come back and start your free trial.",
+      "official_value": "Free trial offered; no free plan",
+      "third_party_source": "https://www.capterra.com/p/132667/Close-io/pricing/",
+      "third_party_value": "Free trial offered; no free plan",
+      "verdict": "match",
+      "votes": [
+       "match",
+       "unknown",
+       "match"
+      ]
+     },
+     {
+      "field": "product_category",
+      "label": "Product category",
+      "official_quote": "The sales CRM built for calling, emailing, texting, automation and action",
+      "official_value": "Sales CRM",
+      "third_party_source": "https://www.g2.com/products/close/reviews?page=8",
+      "third_party_value": "Sales CRM",
+      "verdict": "match",
+      "votes": [
+       "match",
+       "match",
+       "match"
+      ]
+     },
+     {
+      "field": "target_customer",
+      "label": "Target customer",
+      "official_quote": "For founders and solo reps who need a real CRM, not a spreadsheet. For small teams that want one place for every call, email, and deal. For teams ready to let Chloe work leads while reps focus on closing. For high-volume orgs that need advanced controls and the fastest dialing.",
+      "official_value": "Founders and solo reps, small teams, teams ready to let Chloe work leads, and high-volume orgs",
+      "third_party_source": "https://www.g2.com/products/close/pricing",
+      "third_party_value": "Small businesses",
+      "verdict": "match",
+      "votes": [
+       "match",
+       "unknown",
+       "match"
+      ]
+     },
+     {
+      "field": "deployment",
+      "label": "Deployment",
+      "official_quote": null,
+      "official_value": null,
+      "third_party_source": null,
+      "third_party_value": null,
+      "verdict": "unknown",
+      "votes": [
+       "match",
+       "unknown",
+       "unknown"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "fields": {
+       "deployment": {
+        "official_quote": "Mobile app (iOS / Android) Manage the CRM, make & receive calls and texts, and review reports on the go. Available for iOS & Android.",
+        "official_value": "Cloud/SaaS with mobile app (iOS / Android)",
+        "reason": null,
+        "third_party_claimed_value": "Cloud/SaaS, web-based, desktop, and mobile",
+        "third_party_source": "https://www.capterra.ca/software/132667/close-io",
+        "third_party_value": "Cloud/SaaS, web-based, desktop, and mobile",
+        "verdict": "match"
+       },
+       "free_plan_or_trial": {
+        "official_quote": "See an unfiltered review of Close before you come back and start your free trial.",
+        "official_value": "Free trial offered; no free plan",
+        "reason": null,
+        "third_party_claimed_value": "Free trial offered; no free plan",
+        "third_party_source": "https://www.capterra.com/p/132667/Close-io/pricing/",
+        "third_party_value": "Free trial offered; no free plan",
+        "verdict": "match"
+       },
+       "product_category": {
+        "official_quote": "The sales CRM built for calling, emailing, texting, automation and action",
+        "official_value": "Sales CRM",
+        "reason": null,
+        "third_party_claimed_value": "Sales CRM",
+        "third_party_source": "https://www.g2.com/products/close/reviews?page=8",
+        "third_party_value": "Sales CRM",
+        "verdict": "match"
+       },
+       "starting_price": {
+        "official_quote": "Solo$19 per user / month$9 per user / monthTry for free",
+        "official_value": "$9 per user / month",
+        "reason": null,
+        "third_party_claimed_value": "$9 per user per month",
+        "third_party_source": "https://www.g2.com/products/close/pricing",
+        "third_party_value": "$9 per user per month",
+        "verdict": "match"
+       },
+       "target_customer": {
+        "official_quote": "For founders and solo reps who need a real CRM, not a spreadsheet. For small teams that want one place for every call, email, and deal. For teams ready to let Chloe work leads while reps focus on closing. For high-volume orgs that need advanced controls and the fastest dialing.",
+        "official_value": "Founders and solo reps, small teams, teams ready to let Chloe work leads, and high-volume orgs",
+        "reason": null,
+        "third_party_claimed_value": "Small businesses",
+        "third_party_source": "https://www.g2.com/products/close/pricing",
+        "third_party_value": "Small businesses",
+        "verdict": "match"
+       }
+      },
+      "run": 1,
+      "status": "ok"
+     },
+     {
+      "fields": {
+       "deployment": {
+        "official_quote": null,
+        "official_value": null,
+        "reason": "no third-party value",
+        "third_party_claimed_value": null,
+        "third_party_source": null,
+        "third_party_value": null,
+        "verdict": "unknown"
+       },
+       "free_plan_or_trial": {
+        "official_quote": "See an unfiltered review of Close before you come back and start your free trial.",
+        "official_value": "free trial",
+        "reason": "no third-party value",
+        "third_party_claimed_value": null,
+        "third_party_source": null,
+        "third_party_value": null,
+        "verdict": "unknown"
+       },
+       "product_category": {
+        "official_quote": "The sales CRM built for calling, emailing, texting, automation and action",
+        "official_value": "sales CRM",
+        "reason": null,
+        "third_party_claimed_value": "Customer relationship management (CRM) software with call management and sales workflow automation",
+        "third_party_source": "https://www.trustradius.com/products/close-crm",
+        "third_party_value": "Customer relationship management (CRM) software with call management and sales workflow automation",
+        "verdict": "match"
+       },
+       "starting_price": {
+        "official_quote": "Solo$19 per user / month$9 per user / monthTry for free",
+        "official_value": "$9 per user / month",
+        "reason": null,
+        "third_party_claimed_value": "$9 per user per month, paid annually",
+        "third_party_source": "https://www.trustradius.com/products/close-crm",
+        "third_party_value": "$9 per user per month, paid annually",
+        "verdict": "match"
+       },
+       "target_customer": {
+        "official_quote": "For founders and solo reps who need a real CRM, not a spreadsheet. For small teams that want one place for every call, email, and deal. For teams ready to let Chloe work leads while reps focus on closing. For high-volume orgs that need advanced controls and the fastest dialing.",
+        "official_value": "founders and solo reps, small teams, teams, high-volume orgs",
+        "reason": "no third-party value",
+        "third_party_claimed_value": null,
+        "third_party_source": null,
+        "third_party_value": null,
+        "verdict": "unknown"
+       }
+      },
+      "run": 2,
+      "status": "ok"
+     },
+     {
+      "fields": {
+       "deployment": {
+        "official_quote": null,
+        "official_value": null,
+        "reason": "no official value",
+        "third_party_claimed_value": "Cloud/SaaS/web-based",
+        "third_party_source": "https://www.capterra.ca/software/132667/close-io",
+        "third_party_value": "Cloud/SaaS/web-based",
+        "verdict": "unknown"
+       },
+       "free_plan_or_trial": {
+        "official_quote": "See an unfiltered review of Close before you come back and start your free trial. Like what you heard? Try for free",
+        "official_value": "Free trial available; no free plan",
+        "reason": null,
+        "third_party_claimed_value": "Free trial available; no free plan",
+        "third_party_source": "https://www.capterra.com/p/132667/Close-io/pricing/",
+        "third_party_value": "Free trial available; no free plan",
+        "verdict": "match"
+       },
+       "product_category": {
+        "official_quote": "The sales CRM built for calling, emailing, texting, automation and action",
+        "official_value": "Sales CRM with calling, emailing, texting, automation",
+        "reason": null,
+        "third_party_claimed_value": "Customer relationship management (CRM) software with call management and sales workflow automation",
+        "third_party_source": "https://www.trustradius.com/products/close-crm",
+        "third_party_value": "Customer relationship management (CRM) software with call management and sales workflow automation",
+        "verdict": "match"
+       },
+       "starting_price": {
+        "official_quote": "Solo$19 per user / month$9 per user / monthTry for free",
+        "official_value": "$9 per user / month",
+        "reason": null,
+        "third_party_claimed_value": "$9 per user per month",
+        "third_party_source": "https://www.capterra.com/p/132667/Close-io/pricing/",
+        "third_party_value": "$9 per user per month",
+        "verdict": "match"
+       },
+       "target_customer": {
+        "official_quote": "For founders and solo reps who need a real CRM, not a spreadsheet. For small teams that want one place for every call, email, and deal.",
+        "official_value": "Sales teams, founders and solo reps, small teams, high-volume orgs",
+        "reason": null,
+        "third_party_claimed_value": "Small to midsize B2B sales teams, including solo reps, founders, and growth-stage organizations",
+        "third_party_source": "https://www.capterra.ca/software/132667/close-io",
+        "third_party_value": "Small to midsize B2B sales teams, including solo reps, founders, and growth-stage organizations",
+        "verdict": "match"
+       }
+      },
+      "run": 3,
+      "status": "ok"
+     }
+    ],
+    "voting_rule": "Each field is judged on 3 independent runs. It is a conflict only if at least 2 runs say conflict, a match only if at least 2 runs say match, and unknown otherwise. The score counts voted conflicts: 0, 1, 2, 3 or more give 95, 60, 35, 10.",
+    "fields_version": "v2",
+    "cache_status": "cache_hit",
+    "official_urls_fetched": [
+     "https://close.com",
+     "https://close.com/pricing"
+    ],
+    "conflict_fields": [],
+    "match_fields": [
+     "starting_price",
+     "free_plan_or_trial",
+     "product_category",
+     "target_customer"
+    ],
+    "unknown_fields": [
+     "deployment"
+    ],
+    "plain_finding": {
+     "what_we_found": "We checked your starting price, free trial, product category and target customer on your site against independent review sites for Close, and they match on every point.",
+     "what_it_costs_you": "Nothing is broken here, so no customer is being lost to a competitor over mismatched facts today.",
+     "fix_it_today": "Keep a simple monthly check of those four facts on your site and on the review sites, and correct any listing the moment it drifts."
+    }
+   }
+  },
+  {
+   "dimension": "technical_readability",
+   "score": 85,
+   "details": {
+    "status": "ok",
+    "method_note": "Check weights are our own judgment. AI crawler access, structured data, and heading structure come from GEO-16 (Kumar and Palkhouski, 2025). The static content check comes from Vercel and MERJ's December 2024 research, which found GPTBot and ClaudeBot only fetch raw HTML and never execute JavaScript, so content that only appears after a client-side render is invisible to them even though a human visitor sees it fine.",
+    "crawler_access": {
+     "points": 30,
+     "max_points": 30,
+     "allowed_crawlers": [
+      "GPTBot",
+      "PerplexityBot",
+      "ClaudeBot",
+      "Google-Extended"
+     ],
+     "blocked_crawlers": []
+    },
+    "static_content": {
+     "points": 15,
+     "max_points": 30,
+     "word_count": 407,
+     "h1_has_text": true
+    },
+    "structured_data": {
+     "points": 20,
+     "max_points": 20,
+     "found_types": [
+      "ImageObject",
+      "Organization",
+      "Person",
+      "SoftwareApplication",
+      "WebPage",
+      "WebSite"
+     ]
+    },
+    "heading_structure": {
+     "points": 20,
+     "max_points": 20,
+     "h1_count": 1,
+     "h2_count": 14
+    },
+    "plain_finding": {
+     "what_we_found": "AI search tools can reach your homepage, but they only read the raw text before any scripts run. That raw text is 407 words, so much of what a customer sees on screen may not be read at all.",
+     "what_it_costs_you": "When a customer asks an AI search tool about your product, it answers from that thin text, so it may describe you poorly or point the customer to a competitor.",
+     "fix_it_today": "Open your homepage with scripts turned off in your browser and check that the main headline, product description, and pricing text are all visible in plain text."
+    }
+   }
+  }
+ ],
+ "cached_at": "2026-10-19T03:03:47.665225+00:00",
+ "previous_scores": null,
+ "source_layers": {
+  "list_version": "v2",
+  "page_type_rules_version": "v1",
+  "method_version": "v3",
+  "total_answers": 15,
+  "total_citations": 150,
+  "pages_cited": 133,
+  "pages_checked": 58,
+  "pages_cap": 60,
+  "coverage": {
+   "checked_citations": 75,
+   "citations_outside_own_site": 148,
+   "ratio": 0.5068
+  },
+  "biggest_gap_layer": "lists",
+  "conclusion": [
+   "For these questions, AI mostly reads 'best tools' lists and comparisons written by other companies, and only 26% of them mention you. The most cited ones that don't: “10 Best CRM Tools for Sales Teams in 2026 | Sybill” (sybill.ai), “7 Best CRM Software | Best CRM Systems” (pipedrive.com), “7 Best Sales Engagement Platforms in 2026 (Ranked & Reviewed) | Cal.com - Scheduling So...” (cal.com)."
+  ],
+  "layers": [
+   {
+    "layer": "reference",
+    "parent": "reference",
+    "citations": 0,
+    "reliance": 0.0,
+    "presence": null,
+    "gap": 0.0,
+    "status": "not_used",
+    "coverage": {
+     "checked_citations": 0,
+     "citations": 0,
+     "ratio": null
+    },
+    "pages": [],
+    "pages_not_checked": 0,
+    "unknown_pages": [],
+    "domains": []
+   },
+   {
+    "layer": "review_media",
+    "parent": "review_media",
+    "citations": 11,
+    "reliance": 0.0733,
+    "presence": 0.1667,
+    "gap": 0.0611,
+    "status": "gap",
+    "coverage": {
+     "checked_citations": 6,
+     "citations": 11,
+     "ratio": 0.5455
+    },
+    "pages": [
+     {
+      "url": "fitsmallbusiness.com/best-crm-for-small-business",
+      "citations": 2,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "12 Best Small Business CRM Tools",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "26 min Choosing the right CRM can help your small business stay organized, manage leads, close more deals, and improve customer relationships without adding unnecessary complexity. The"
+     },
+     {
+      "url": "fitsmallbusiness.com/best-insurance-crm-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "8 Best Insurance CRM Software Options",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "wered Sales Assistant provides insurance agents with suggestions and next-best actions to close a deal faster. Its automation tools also enable you to streamline tasks and assign polici"
+     },
+     {
+      "url": "fitsmallbusiness.com/best-lead-management-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "Best Lead Management Software for Small Businesses in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "in 2026 Choosing the right CRM can help your small business stay organized, manage leads, close more deals, and improve customer relationships without adding unnecessary complexity. The"
+     },
+     {
+      "url": "fitsmallbusiness.com/best-sales-automation-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "10 Best Sales Automation Software for Small Businesses 2026",
+      "mentions_you": true,
+      "rule": "heading_or_list_is_name",
+      "snippet": "Close",
+      "near_miss": null
+     },
+     {
+      "url": "fitsmallbusiness.com/best-simple-crm",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "Best Simple CRM Systems for Small Businesses 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "in 2026 Choosing the right CRM can help your small business stay organized, manage leads, close more deals, and improve customer relationships without adding unnecessary complexity. The"
+     },
+     {
+      "url": "forbes.com/advisor/business/software/best-real-estate-crm",
+      "citations": 1,
+      "page_type": null,
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "pcmag.com/picks/the-best-small-business-crm-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "techradar.com/best/best-crm-for-small-business",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zdnet.com/article/best-real-estate-crm-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zdnet.com/article/best-small-business-crm-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 4,
+    "unknown_pages": [
+     {
+      "url": "forbes.com/advisor/business/software/best-real-estate-crm",
+      "citations": 1,
+      "error": "HTTPError"
+     }
+    ],
+    "domains": [
+     {
+      "domain": "fitsmallbusiness.com",
+      "citations": 6
+     },
+     {
+      "domain": "zdnet.com",
+      "citations": 2
+     },
+     {
+      "domain": "forbes.com",
+      "citations": 1
+     },
+     {
+      "domain": "pcmag.com",
+      "citations": 1
+     },
+     {
+      "domain": "techradar.com",
+      "citations": 1
+     }
+    ]
+   },
+   {
+    "layer": "community",
+    "parent": "community",
+    "citations": 0,
+    "reliance": 0.0,
+    "presence": null,
+    "gap": 0.0,
+    "status": "not_used",
+    "coverage": {
+     "checked_citations": 0,
+     "citations": 0,
+     "ratio": null
+    },
+    "pages": [],
+    "pages_not_checked": 0,
+    "unknown_pages": [],
+    "domains": []
+   },
+   {
+    "layer": "own_site",
+    "parent": "own_site",
+    "citations": 2,
+    "reliance": 0.0133,
+    "presence": 1.0,
+    "gap": 0.0,
+    "status": "covered",
+    "coverage": {
+     "checked_citations": 2,
+     "citations": 2,
+     "ratio": 1.0
+    },
+    "pages": [
+     {
+      "url": "close.com/blog/best-small-business-crms",
+      "citations": 1,
+      "page_type": null,
+      "status": "cited",
+      "mentions_you": true,
+      "rule": "own_site",
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "close.com/blog/real-estate-crms",
+      "citations": 1,
+      "page_type": null,
+      "status": "cited",
+      "mentions_you": true,
+      "rule": "own_site",
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 0,
+    "unknown_pages": [],
+    "domains": [
+     {
+      "domain": "close.com",
+      "citations": 2
+     }
+    ]
+   },
+   {
+    "layer": "lists",
+    "parent": "other_companies",
+    "citations": 93,
+    "reliance": 0.62,
+    "presence": 0.2581,
+    "gap": 0.46,
+    "status": "biggest_gap",
+    "coverage": {
+     "checked_citations": 62,
+     "citations": 93,
+     "ratio": 0.6667
+    },
+    "pages": [
+     {
+      "url": "sybill.ai/blogs/best-crm-tools",
+      "citations": 4,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best CRM Tools for Sales Teams in 2026 | Sybill",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "eeper learning curve for the project management side, smaller integration marketplace. 9. Close CRM Best for: Outbound-heavy sales teams that want a CRM with native calling, SMS, and em"
+     },
+     {
+      "url": "pipedrive.com/en/blog/best-crm-software",
+      "citations": 3,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "7 Best CRM Software | Best CRM Systems",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "teams Pipedrive’s sales CRM is an all-in-one visual sales platform to help revenue teams close more deals without spending half the day on admin. Pipedrive is designed to work as a pro"
+     },
+     {
+      "url": "breakcold.com/blog/crm-for-sales-teams",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The 14 Best CRMs for Sales Teams (2026)",
+      "mentions_you": true,
+      "rule": "domain_in_link",
+      "snippet": "link to https://www.close.com/",
+      "near_miss": null
+     },
+     {
+      "url": "cal.com/blog/best-sales-engagement-platforms",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "7 Best Sales Engagement Platforms in 2026 (Ranked & Reviewed) | Cal.com - Scheduling Software for Online Bookings",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "folk.app/articles/best-crm-b2b-sales",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "6 Best CRM for B2B Sales (2026)",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "folk.app/articles/best-crms-with-call-recording",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best CRMs With Call Recording in 2026",
+      "mentions_you": true,
+      "rule": "domain_in_link",
+      "snippet": "link to https://close.com/",
+      "near_miss": null
+     },
+     {
+      "url": "nutshell.com/blog/best-crm-for-sales-teams-compared",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best CRM for Sales Teams | Side-by-Side Comparison",
+      "mentions_you": true,
+      "rule": "domain_in_link",
+      "snippet": "link to https://close.com/",
+      "near_miss": null
+     },
+     {
+      "url": "pipelinecrm.com/blog/best-sales-crm-software",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Sales CRM Software 2026: 10 CRMs Ranked for Sales Teams",
+      "mentions_you": true,
+      "rule": "heading_or_list_is_name",
+      "snippet": "6. Close: Best for high-volume inside sales teams that live on the phone",
+      "near_miss": null
+     },
+     {
+      "url": "salesforce.com/crm/crm-for-small-business/best-crm?bc=OTH",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Small Business CRM in 2026 | Salesforce",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "es pipeline without having to interrupt their team for status updates. And, growing teams close deals faster and build stronger client relationships without forcing their employees to w"
+     },
+     {
+      "url": "salesmate.io/blog/best-sales-automation-software",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "25 Best Sales Automation Software and Tools for 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "ust automate tasks. They help sales and marketing teams move faster, stay consistent, and close more deals across the entire sales cycle. In this guide, we tested and compared the best"
+     },
+     {
+      "url": "sybill.ai/blogs/best-sales-email-automation-tools",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "12 Best Sales Email Automation Tools in 2026 | Sybill",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "sks, with email leading the charge. And the cruel irony is that the emails most likely to close deals, the ones sent within an hour of a call, personalized with details from the convers"
+     },
+     {
+      "url": "zapier.com/blog/best-crms-for-small-business",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The 11 Best CRMs for Small Business in 2026 | Zapier",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "ons. Check out the best free CRM software , where you'll find plenty of picks to help you close your first clients. What makes the best CRM for small business? How we evaluate and test"
+     },
+     {
+      "url": "albato.com/blog/publications/best-sales-automation-apps",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Sales Automation Apps for Faster Growth",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "attio.com/f/best-crm-for-startups",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best CRMs for startups in 2026 | Attio",
+      "mentions_you": true,
+      "rule": "heading_or_list_is_name",
+      "snippet": "Close : Best for outbound-heavy teams that spend most of the day on the phone.",
+      "near_miss": null
+     },
+     {
+      "url": "attio.com/f/best-sales-crm",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The best sales CRMs in 2026 | Attio",
+      "mentions_you": true,
+      "rule": "domain_in_link",
+      "snippet": "link to https://close.com/",
+      "near_miss": null
+     },
+     {
+      "url": "avoma.com/blog/best-sales-engagement-platforms",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best sales engagement platforms (2026 ranked)",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "baserow.io/blog/best-crm-tools-for-startups",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best CRM Tools for Startups",
+      "mentions_you": true,
+      "rule": "domain_in_link",
+      "snippet": "link to https://close.com/",
+      "near_miss": null
+     },
+     {
+      "url": "bigin.com/articles/best-crm-for-a-startup.html",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best CRM for startups: six options by how you sell | Bigin",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "bitrix24.com/articles/top-mobile-crm-solutions-of-2024.php",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Top Mobile CRM Solutions of 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "n't closing deals. Tool sprawl drives a lot of that. Sellers use an average of 8 tools to close a single deal. Nearly half feel overwhelmed by the volume, and overwhelmed reps are 45% l"
+     },
+     {
+      "url": "blog.hubspot.com/sales/mobile-crm-solutions",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "What is a mobile CRM? 12 best solutions",
+      "mentions_you": true,
+      "rule": "domain_in_link",
+      "snippet": "link to https://help.close.com/getting-started/close-mobile-app",
+      "near_miss": null
+     },
+     {
+      "url": "blog.hubspot.com/sales/real-estate-crm",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "6 best CRMs for real estate businesses in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": ": The cheapest option isn’t always the most cost-effective if it lacks features that help close more deals. Step 5: Choose a flexible platform. Select a CRM that grows with your busines"
+     },
+     {
+      "url": "blog.hubspot.com/sales/sales-collaboration-tools",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "7 best sales collaboration tools for growing companies",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "inate Friction at Every Step Learn More Updated: 08/18/26 Sales teams running lean stacks close deals faster than teams drowning in disconnected tools. That’s the pattern showing up acr"
+     },
+     {
+      "url": "blog.hubspot.com/sales/sales-engagement",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The 12 best sales engagement platforms for your team",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "onversations. Additionally, it provides real-time insights and coaching tips to help them close deals even faster. Best for: Companies seeking powerful yet simple sales engagement techn"
+     },
+     {
+      "url": "blog.hubspot.com/sales/startup-crm",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "9 popular startup CRMs & which is best for you",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "ch: According to HubSpot’s 2025 ROI Report , HubSpot customers generate 3x more leads and close 94% more deals. If you’re still on the fence, below are three reasons to ditch spreadshee"
+     },
+     {
+      "url": "blog.salesflare.com/best-sales-crm",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best Sales CRM Software + Feature Comparison [2026]",
+      "mentions_you": true,
+      "rule": "domain_in_link",
+      "snippet": "link to https://www.close.com/",
+      "near_miss": null
+     },
+     {
+      "url": "bloomreach.com/en/blog/best-marketing-automation-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Marketing Automation Software for 2026 | Bloomreach",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "breakcold.com/blog/best-crms-for-team-under-5-people",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The 9 Best CRMs for a Team Under 5 People in 2026",
+      "mentions_you": true,
+      "rule": "heading_or_list_is_name",
+      "snippet": "6. Close: Only If Your Team Lives on the Phone 📞",
+      "near_miss": null
+     },
+     {
+      "url": "cal.com/blog/best-sales-automation-tools",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "7 Best Sales Automation Tools 2026 | Cal.com - Scheduling Software for Online Bookings",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "regular automated communication with the lead to prevent the lead from going cold. Higher close rates The benefits listed above all work together to help sales teams achieve higher clos"
+     },
+     {
+      "url": "callhippo.com/blog/solutions/best-software-for-call-recording",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "What is Call Recording? Benefits, Features & Best Practices",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "callloop.com/blog/sales-team-communication-tools",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best Sales Team Communication Tools for 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "p slows deals down. Salesforce has noted earlier that sellers use a long list of tools to close business, and that lines up with what revenue teams deal with every day. More apps do not"
+     },
+     {
+      "url": "capsulecrm.com/blog/best-crm-for-small-teams",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best CRM for small teams: practical picks for 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "at work in one place. Contacts, emails, notes, tasks, opportunities, and projects all sit close to the customer record, so the team can see what happened and what needs to happen next."
+     },
+     {
+      "url": "capsulecrm.com/blog/best-mobile-crm",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best mobile CRM: 7 top CRMs to choose from in 2025",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "often desktop-only. Capsuleâs mobile app covers everything you need on the go and stays close to the desktop experience, but heavier admin work still happens on the web. What integrat"
+     },
+     {
+      "url": "claap.io/blog/best-sales-tracking-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Sales Team Management Software: 7 Best Tools (2026) | Claap",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "t share five building blocks: Pipeline management. Every deal by stage, owner, amount and close date, so the pipeline review starts from the same numbers. Activity tracking. Calls, emai"
+     },
+     {
+      "url": "claap.io/blog/crm-tracking-sales-calls",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best CRM for tracking sales calls: 6 compared (2026)",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "Salesforce is best for large teams with an admin to set up the dialer and call insights. Close is best for outbound teams that live on the phone. Pipedrive is best for small teams that"
+     },
+     {
+      "url": "claap.io/blog/sales-call-recording",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "8 Best AI Sales Call Recording Software in 2026 + Legal Guide",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "clarify.ai/blog/best-crms-for-b2b-sales-teams",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Clarify - The top 16 CRMs for B2B sales teams in 2026",
+      "mentions_you": true,
+      "rule": "heading_or_list_is_name",
+      "snippet": "3. Close",
+      "near_miss": null
+     },
+     {
+      "url": "clarify.ai/blog/best-sales-automation-tools-in-2026",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Clarify - 16 top sales automation tools in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "ng admin time translates to more pipeline conversations, faster deal velocity, and higher close rates. Consolidating tools also reduces context-switching costs. A rep moving between a C"
+     },
+     {
+      "url": "clarify.ai/blog/sales-tools-for-small-businesses",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Clarify - Best Sales Tools for Small Businesses in 2026",
+      "mentions_you": true,
+      "rule": "domain_in_link",
+      "snippet": "link to https://close.com/",
+      "near_miss": null
+     },
+     {
+      "url": "clay.com/guides/best/sales-engagement-tools",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best Sales Engagement Platforms 2026: How to run multichannel outreach - Clay",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "pipeline management. For a team that wants its whole selling motion, from first touch to close, running in one execution suite, Salesloft is a mature, well-supported choice. That compl"
+     },
+     {
+      "url": "clickup.com/blog/b2b-crm-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Top 10 B2B CRM Software Tools [2026 Edition] | ClickUp",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "sed. Each deal lives as a ClickUp Task enriched with Custom Fields in ClickUp —deal size, close probability, account owner, renewal date—so you can sort, filter, and forecast with preci"
+     },
+     {
+      "url": "folk.app/articles/best-crm-sales-reps",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "6 Best CRM for Sales Reps in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "folk.app/articles/best-crm-sales-teams",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "5 Best CRMs for sales teams",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "folk.app/articles/best-crm-with-mobile-app-for-field-sales",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "5 Best CRMs with Mobile App for Field Sales in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "folk.app/articles/best-field-sales-crm",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best field sales CRM",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "gumloop.com/blog/best-sales-automation-tools",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "8 best sales automation tools I've tested in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "hostinger.com/tutorials/best-real-estate-crms",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best real estate CRMs: Top tools and key features",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "e numbers first. BoldTrail costs about $499/month , which is roughly $6,000/year . If you close fewer than 15 deals a year, that’s a big chunk of each commission. Wise Agent costs $49/m"
+     },
+     {
+      "url": "housingwire.com/articles/best-free-real-estate-crm",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The 6 Best Free Real Estate CRMs for 2026 (+ Under $30 Alternatives)",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "just shared our favorite free real estate CRMs, but for many of you already hustling and close deals, these platforms may not have the functionality you need for your business stage. F"
+     },
+     {
+      "url": "housingwire.com/articles/best-real-estate-crm",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "lagrowthmachine.com/best-sales-crm-tools-2026",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "mixmax.com/blog/best-sales-automation-tool",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "mixmax.com/blog/best-sales-engagement-platforms",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "monday.com/blog/crm-and-sales/best-crm-software-for-insurance-agents",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "monday.com/blog/crm-and-sales/best-crm-with-email-marketing-integration",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "nethunt.com/blog/best-sales-tools-list",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "nutshell.com/blog/best-simple-crms",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "nutshell.com/blog/the-best-crm-for-insurance-agents",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "rox.com/articles/best-sales-crm",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "runo.ai/blog/best-crm-for-outbound-calling-teams",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "runo.ai/blog/best-mobile-crm-apps",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "salesforce.com/blog/small-business/best-free-crms-for-startups?bc=OTH",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "salesforce.com/financial-services/insurance-crm/best-crm-for-insurance-agents?bc=OTH",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "salesgenie.com/blog/best-crms-for-b2b-sales-teams",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "setshape.com/blog/best-crm-for-insurance",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "slack.com/blog/crm/best-crm-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "slack.com/blog/crm/best-crms-for-startups",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "softr.io/blog/best-crm-for-insurance-agents",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "stackby.com/blog/best-b2b-crm-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "streak.com/post/best-mobile-crm-apps-for-teams",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "superoffice.com/blog/best-sales-crm",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "sybill.ai/blogs/best-crm-software-for-small-business",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "sybill.ai/blogs/best-work-apps-for-sales-teams",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "textmagic.com/blog/best-crm-small-businesses",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "troopmessenger.com/blogs/best-crm-for-small-business",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "wifitalents.com/best/secure-crm-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "withallo.com/blog/best-crms-for-large-sales-teams",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zapier.com/blog/best-crm-app",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zapier.com/blog/best-sales-tools",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zite.com/blog/best-crm-software-for-small-business",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 31,
+    "unknown_pages": [],
+    "domains": [
+     {
+      "domain": "folk.app",
+      "citations": 8
+     },
+     {
+      "domain": "sybill.ai",
+      "citations": 8
+     },
+     {
+      "domain": "blog.hubspot.com",
+      "citations": 5
+     },
+     {
+      "domain": "nutshell.com",
+      "citations": 4
+     },
+     {
+      "domain": "salesforce.com",
+      "citations": 4
+     },
+     {
+      "domain": "zapier.com",
+      "citations": 4
+     },
+     {
+      "domain": "breakcold.com",
+      "citations": 3
+     },
+     {
+      "domain": "cal.com",
+      "citations": 3
+     },
+     {
+      "domain": "claap.io",
+      "citations": 3
+     },
+     {
+      "domain": "clarify.ai",
+      "citations": 3
+     },
+     {
+      "domain": "pipedrive.com",
+      "citations": 3
+     },
+     {
+      "domain": "attio.com",
+      "citations": 2
+     },
+     {
+      "domain": "capsulecrm.com",
+      "citations": 2
+     },
+     {
+      "domain": "housingwire.com",
+      "citations": 2
+     },
+     {
+      "domain": "mixmax.com",
+      "citations": 2
+     },
+     {
+      "domain": "monday.com",
+      "citations": 2
+     },
+     {
+      "domain": "pipelinecrm.com",
+      "citations": 2
+     },
+     {
+      "domain": "runo.ai",
+      "citations": 2
+     },
+     {
+      "domain": "salesmate.io",
+      "citations": 2
+     },
+     {
+      "domain": "slack.com",
+      "citations": 2
+     },
+     {
+      "domain": "albato.com",
+      "citations": 1
+     },
+     {
+      "domain": "avoma.com",
+      "citations": 1
+     },
+     {
+      "domain": "baserow.io",
+      "citations": 1
+     },
+     {
+      "domain": "bigin.com",
+      "citations": 1
+     },
+     {
+      "domain": "bitrix24.com",
+      "citations": 1
+     },
+     {
+      "domain": "blog.salesflare.com",
+      "citations": 1
+     },
+     {
+      "domain": "bloomreach.com",
+      "citations": 1
+     },
+     {
+      "domain": "callhippo.com",
+      "citations": 1
+     },
+     {
+      "domain": "callloop.com",
+      "citations": 1
+     },
+     {
+      "domain": "clay.com",
+      "citations": 1
+     },
+     {
+      "domain": "clickup.com",
+      "citations": 1
+     },
+     {
+      "domain": "gumloop.com",
+      "citations": 1
+     },
+     {
+      "domain": "hostinger.com",
+      "citations": 1
+     },
+     {
+      "domain": "lagrowthmachine.com",
+      "citations": 1
+     },
+     {
+      "domain": "nethunt.com",
+      "citations": 1
+     },
+     {
+      "domain": "rox.com",
+      "citations": 1
+     },
+     {
+      "domain": "salesgenie.com",
+      "citations": 1
+     },
+     {
+      "domain": "setshape.com",
+      "citations": 1
+     },
+     {
+      "domain": "softr.io",
+      "citations": 1
+     },
+     {
+      "domain": "stackby.com",
+      "citations": 1
+     },
+     {
+      "domain": "streak.com",
+      "citations": 1
+     },
+     {
+      "domain": "superoffice.com",
+      "citations": 1
+     },
+     {
+      "domain": "textmagic.com",
+      "citations": 1
+     },
+     {
+      "domain": "troopmessenger.com",
+      "citations": 1
+     },
+     {
+      "domain": "wifitalents.com",
+      "citations": 1
+     },
+     {
+      "domain": "withallo.com",
+      "citations": 1
+     },
+     {
+      "domain": "zite.com",
+      "citations": 1
+     }
+    ]
+   },
+   {
+    "layer": "guides",
+    "parent": "other_companies",
+    "citations": 31,
+    "reliance": 0.2067,
+    "presence": 0.1429,
+    "gap": 0.1771,
+    "status": "gap",
+    "coverage": {
+     "checked_citations": 7,
+     "citations": 31,
+     "ratio": 0.2258
+    },
+    "pages": [
+     {
+      "url": "microsoft.com/en-us/dynamics-365/resources/crm-software-for-small-business",
+      "citations": 2,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "CRM Software for Small Business | Microsoft Dynamics 365",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "small businesses need most: Customizable sales tools: Track leads, manage pipelines, and close deals faster with guided processes that fit your team’s style. Built-in marketing: Run ta"
+     },
+     {
+      "url": "algorcomp.pl/en/knowledge-base/how-to-choose-crm-mid-sized-company-decision-criteria",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "How to choose a CRM: 8 criteria, 4 systems | ALGORCOMP",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "alletec.com/blog/select-the-right-crm-software-for-your-business",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "Select the Right CRM Software For your Business",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "follow-up reminders, route tickets without manual handling Reporting — pipeline summary, close rate by rep, and revenue forecast as a minimum baseline Integrations — verify native conn"
+     },
+     {
+      "url": "blog.hubspot.com/marketing/crm-for-insurance-companies",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "CRM for insurance companies: What it does and why it matters",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": "tems for sales, policy documents, and customer service. Insurance CRM systems help agents close more deals and reduce manual data entry by organizing leads and automating routine tasks."
+     },
+     {
+      "url": "breakcold.com/blog/crm-call-tracking",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "CRM Call Tracking Explained: Features, Use Cases & Tools",
+      "mentions_you": true,
+      "rule": "domain_in_link",
+      "snippet": "link to https://www.close.com/",
+      "near_miss": null
+     },
+     {
+      "url": "capsulecrm.com/blog/easiest-crm-for-realtors",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "The easiest CRM for realtors in 2026 and beyond",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "findymail.com/blog/b2b-crm",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "justcall.io/blog/outbound-sales-tools-with-crm.html",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "mixmax.com/blog/automated-email-follow-up-tools",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "mixmax.com/blog/sales-outreach-software-tools",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "monday.com/blog/crm-and-sales/crm-for-phone",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "monday.com/blog/crm-and-sales/crm-for-start-ups",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "monday.com/blog/crm-and-sales/customer-engagement-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "monday.com/blog/crm-and-sales/insurance-agent-crm",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "monday.com/blog/crm-and-sales/life-insurance-crm",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "monday.com/blog/crm-and-sales/sales-tools",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "nutshell.com/blog/easy-to-use-crms",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "outreach.ai/resources/blog/call-tracking-and-recording-platforms",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "ringcentral.com/us/en/blog/sales-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "ringover.com/blog/crm-with-power-dialer",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "salesmate.io/blog/real-estate-crm",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "spotio.com/blog/mobile-crm-tools",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "textmagic.com/blog/sales-software-for-small-businesses",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zapier.com/blog/ai-sales-assistant",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zapier.com/blog/crm-for-real-estate",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zapier.com/blog/lead-management-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zapier.com/blog/sales-automation-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zapier.com/blog/sales-collaboration-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zeeg.me/en/blog/post/crm-with-phone-integration",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zeeg.me/en/blog/post/simple-crm",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 23,
+    "unknown_pages": [
+     {
+      "url": "findymail.com/blog/b2b-crm",
+      "citations": 1,
+      "error": "HTTPError"
+     }
+    ],
+    "domains": [
+     {
+      "domain": "monday.com",
+      "citations": 6
+     },
+     {
+      "domain": "zapier.com",
+      "citations": 5
+     },
+     {
+      "domain": "microsoft.com",
+      "citations": 2
+     },
+     {
+      "domain": "mixmax.com",
+      "citations": 2
+     },
+     {
+      "domain": "zeeg.me",
+      "citations": 2
+     },
+     {
+      "domain": "algorcomp.pl",
+      "citations": 1
+     },
+     {
+      "domain": "alletec.com",
+      "citations": 1
+     },
+     {
+      "domain": "blog.hubspot.com",
+      "citations": 1
+     },
+     {
+      "domain": "breakcold.com",
+      "citations": 1
+     },
+     {
+      "domain": "capsulecrm.com",
+      "citations": 1
+     },
+     {
+      "domain": "findymail.com",
+      "citations": 1
+     },
+     {
+      "domain": "justcall.io",
+      "citations": 1
+     },
+     {
+      "domain": "nutshell.com",
+      "citations": 1
+     },
+     {
+      "domain": "outreach.ai",
+      "citations": 1
+     },
+     {
+      "domain": "ringcentral.com",
+      "citations": 1
+     },
+     {
+      "domain": "ringover.com",
+      "citations": 1
+     },
+     {
+      "domain": "salesmate.io",
+      "citations": 1
+     },
+     {
+      "domain": "spotio.com",
+      "citations": 1
+     },
+     {
+      "domain": "textmagic.com",
+      "citations": 1
+     }
+    ]
+   },
+   {
+    "layer": "product_pages",
+    "parent": "other_companies",
+    "citations": 13,
+    "reliance": 0.0867,
+    "presence": null,
+    "gap": null,
+    "status": "unknown",
+    "coverage": {
+     "checked_citations": 0,
+     "citations": 13,
+     "ratio": 0.0
+    },
+    "pages": [
+     {
+      "url": "netsuite.com/portal/resource/articles/crm/crm-for-insurance.shtml",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pipeline.zoominfo.com/sales/sales-engagement-automation-platforms",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pipeline.zoominfo.com/sales/sales-engagement-platforms",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "rox.com/articles/sales-engagement-tools",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "salesforce.com/ap/sales/cloud/call-tracking-software?bc=OTH",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "salesforce.com/sales/cloud/call-tracking-software?bc=OTH",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "salesforce.com/sales/performance-management/deal-management-software?bc=OTH",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "salesforce.com/sales/sales-management/software?bc=OTH",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "salesforce.com/sales/software?bc=OTH",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "salesforce.com/sales/what-is-lead-management/software?bc=OTH",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "salesforce.com/small-business/lead-management?bc=OTH",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zendesk.com/sell/crm?department=sales",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zendesk.com/sell/features/field-sales-software",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 13,
+    "unknown_pages": [],
+    "domains": [
+     {
+      "domain": "salesforce.com",
+      "citations": 7
+     },
+     {
+      "domain": "pipeline.zoominfo.com",
+      "citations": 2
+     },
+     {
+      "domain": "zendesk.com",
+      "citations": 2
+     },
+     {
+      "domain": "netsuite.com",
+      "citations": 1
+     },
+     {
+      "domain": "rox.com",
+      "citations": 1
+     }
+    ]
+   }
+  ]
+ },
+ "radar": {
+  "scale_max": 70,
+  "axes": [
+   {
+    "key": "lists",
+    "gray": 62.0,
+    "blue": 16.0,
+    "status": "ok"
+   },
+   {
+    "key": "guides",
+    "gray": 20.7,
+    "blue": 3.0,
+    "status": "ok"
+   },
+   {
+    "key": "review_media",
+    "gray": 7.3,
+    "blue": 1.2,
+    "status": "ok"
+   },
+   {
+    "key": "community",
+    "gray": 0.0,
+    "blue": 0.0,
+    "status": "not_used"
+   },
+   {
+    "key": "own_site",
+    "gray": 1.3,
+    "blue": 1.3,
+    "status": "ok"
+   }
+  ],
+  "biggest_gap": "lists",
+  "total_sources": 150
+ },
+ "provenance": {
+  "run_date": "2026-10-19",
+  "run_at": "2026-10-19T03:03:47.664869+00:00",
+  "method_versions": {
+   "citation_visibility": "v4",
+   "topic_relevance": "v1",
+   "evidence_density": "v3.2-rules",
+   "content_recency": "v1",
+   "fact_consistency": "v4",
+   "technical_readability": "v1",
+   "source_layers": "v3"
+  },
+  "source_layer_list_version": "v2",
+  "page_type_rules_version": "v1",
+  "question_set": {
+   "category_id": "sales-crm-software",
+   "category_name": "Sales CRM Software",
+   "version": 4,
+   "status": "frozen"
+  },
+  "pages": {
+   "topic_relevance": [
+    {
+     "url": "https://close.com/",
+     "text_sha256": "880e16d3b6c29107fe882d7478f9f53aaece037721b71dbd8b915c91b1ef6aa9",
+     "text_length": 2457
+    },
+    {
+     "url": "https://close.com/pricing",
+     "text_sha256": "80ac5ae07d73aecbc376ca5931ab048863885c80959c23e7caffc884646d1395",
+     "text_length": 3000
+    },
+    {
+     "url": "https://close.com/communication",
+     "text_sha256": "252b94ed3f902e2cc42645f11a4e6246ea720e85c6c72963d9d299a837853f00",
+     "text_length": 3000
+    },
+    {
+     "url": "https://close.com/automation",
+     "text_sha256": "b35ddf8bdb4b25e8355b0d1176d6a85785a7a403823cbd96a0315aacfa5a3638",
+     "text_length": 3000
+    }
+   ],
+   "evidence_density": [
+    {
+     "url": "https://close.com",
+     "text_sha256": "d57dd7c8dfd8b85e61e333a268fbcce6576863c313f0b6b56a7160e780deba0c",
+     "text_length": 3794
+    },
+    {
+     "url": "https://close.com/customers",
+     "text_sha256": "0562f44139d3133ae201bc277c62d0c6315fdacffb85c010f80d461098338ba1",
+     "text_length": 4043
+    },
+    {
+     "url": "https://close.com/security",
+     "text_sha256": "b8be77b7698ca7cc6029cca537eeea5f1d8818c8482fcb2bf332d106a7f6d7f9",
+     "text_length": 2984
+    },
+    {
+     "url": "https://close.com/pricing",
+     "text_sha256": "34841e15a8ec662bc22b7efdb56c067fad0310393ba434e2d6ec867ed27dd59c",
+     "text_length": 17521
+    },
+    {
+     "url": "https://close.com/about",
+     "text_sha256": "c1f06d97e762192b04352b0d30c0407819404703093c7e8a28a67d0c197e0414",
+     "text_length": 9547
+    }
+   ],
+   "content_recency": [
+    {
+     "url": "https://close.com/",
+     "text_sha256": "880e16d3b6c29107fe882d7478f9f53aaece037721b71dbd8b915c91b1ef6aa9",
+     "text_length": 2457
+    }
+   ],
+   "fact_consistency": [
+    {
+     "url": "https://close.com",
+     "text_sha256": "e9c11f0475a0a35e4f0b08dcf55d0ed57acf03eb5cdb938f297f272ed4a68e7e",
+     "text_length": 2465
+    },
+    {
+     "url": "https://close.com/pricing",
+     "text_sha256": "577190874d930ac37397144f368083914e74ff2fda047132d2f2fa0efe70a7d6",
+     "text_length": 15305
+    }
+   ],
+   "technical_readability": [
+    {
+     "url": "https://close.com",
+     "text_sha256": "880e16d3b6c29107fe882d7478f9f53aaece037721b71dbd8b915c91b1ef6aa9",
+     "text_length": 2457
+    }
+   ]
+  }
+ },
+ "previous_citation_interval": null,
+ "competitors": [
+  {
+   "name": "HubSpot",
+   "domain": ""
+  },
+  {
+   "name": "Pipedrive",
+   "domain": ""
+  },
+  {
+   "name": "Salesforce",
+   "domain": ""
+  }
+ ],
+ "competitor_comparison": {
+  "competitors": [
+   {
+    "name": "HubSpot",
+    "domain": ""
+   },
+   {
+    "name": "Pipedrive",
+    "domain": ""
+   },
+   {
+    "name": "Salesforce",
+    "domain": ""
+   }
+  ],
+  "entries": [
+   {
+    "name": "HubSpot",
+    "domain": "",
+    "is_you": false,
+    "mentions": 13,
+    "total": 15,
+    "mentioned_in": [
+     {
+      "rule": "whole_word",
+      "snippet": "- **HubSpot CRM** — free starter CRM with lead tracking and sales tools.[4]"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| **HubSpot CRM** | Teams wanting a generous free tier and future marketing tools | Costs can rise as advanced features are added |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| **HubSpot Sales Hub** | Broader all-in-one sales platform | Good CRM, calling, sales engagement, reporting, and ease of use; telephony features may depend on plan or configuration.[2] |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "- **HubSpot:** Best if you want a flexible general-purpose CRM, but it may require more configuration for real-estate-specific workflows."
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "If the team already uses HubSpot, **HubSpot Sales Hub** may be equally easy because the CRM integration is built in; small teams can reportedly get started within a few days to a week.[2]"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| **HubSpot** | Inbound-focused B2B teams | Strong CRM and email automation ecosystem[5][8] | Text automation may require additional tools or integrations |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| **HubSpot CRM** | Best overall free option; contact management, deal tracking, email tracking, meetings, and basic reporting | Free; paid Sales Hub from about $20/user/month[1][5] |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| Growing agency seeking easier deployment | **HubSpot CRM** | Strong contact management, lead routing, pipeline management, automation, and a free entry tier.[4] |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "**HubSpot Sales Hub** is the best default choice for a team that wants call tracking, recordings, transcripts, and CRM activity history in one relatively easy-to-administer system."
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| **HubSpot Sales Hub** | Teams wanting faster deployment and a unified sales/marketing platform | Easier adoption and solid security/compliance foundations for many mid-market use cases.[2][6] | Less suitable than Salesforce or Dynamics f…"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "For a growing team moving beyond **20 sales reps, pick HubSpot Sales Hub Professional** as the safest default: it combines sales, marketing, service, reporting, and a broad integration ecosystem without requiring Salesforce-level administr…"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "- **HubSpot CRM — best free option:** A strong choice if you want to start at no cost and may later add marketing, support, or reporting tools.[3][5]"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "Choose **HubSpot Sales Hub**."
+     }
+    ]
+   },
+   {
+    "name": "Salesforce",
+    "domain": "",
+    "is_you": false,
+    "mentions": 8,
+    "total": 15,
+    "mentioned_in": [
+     {
+      "rule": "whole_word",
+      "snippet": "- **Salesforce Sales Cloud** — advanced CRM for lead management, automation, reporting, and forecasting.[2]"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| **Salesforce Starter** | Teams expecting substantial growth or complex workflows | More complexity than five reps usually need |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| **Salesforce** | Large, complex organizations | Powerful automation and broad integrations[8] | Higher cost, setup effort, and administration |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| **Salesforce Free Suite** | Startups needing basic sales, service, email marketing, and a path to Salesforce later | Free for up to two users; paid Starter Suite around $25/user/month[6][9] |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "For an insurance agency with a **large client list**, **Salesforce Financial Services Cloud** is the strongest overall choice if you need scalability, extensive customization, advanced reporting, and complex workflows."
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| **Salesforce** | Larger or highly customizable organizations | Automated call logging, recording, and synchronization with leads, contacts, and opportunities[4] |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "For a mid-size sales team where **compliance and data security are priorities, choose Salesforce**—unless the company is heavily invested in Microsoft 365, in which case **Microsoft Dynamics 365 Sales** may be the better fit."
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "For a growing team moving beyond **20 sales reps, pick HubSpot Sales Hub Professional** as the safest default: it combines sales, marketing, service, reporting, and a broad integration ecosystem without requiring Salesforce-level administr…"
+     }
+    ]
+   },
+   {
+    "name": "Pipedrive",
+    "domain": "",
+    "is_you": false,
+    "mentions": 7,
+    "total": 15,
+    "mentioned_in": [
+     {
+      "rule": "whole_word",
+      "snippet": "- **Pipedrive** — simple, visual pipeline and contact-management software.[4]"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "For a five-rep sales team, **Pipedrive is the best default choice**: it is focused on deal management, has an intuitive visual pipeline, and avoids the complexity of larger all-in-one CRMs."
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| **Pipedrive** | Sales teams that prioritize a clean, visual pipeline | From about $14/user/month[1][2] |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| Sales-focused team with simpler needs | **Pipedrive** | Straightforward opportunity and pipeline management, especially for tracking policy sales.[8] |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| **Pipedrive** | Sales-led teams with moderate compliance requirements | Simple administration and GDPR/SOC 2-related capabilities.[3][6] | Limited depth for advanced access governance, audit requirements, and complex enterprise controls |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "| Simple, sales-focused pipeline with fast adoption | **Pipedrive** |"
+     },
+     {
+      "rule": "whole_word",
+      "snippet": "- **Pipedrive — best for a focused sales pipeline:** Easy to understand visually, especially for tracking deals through defined stages.[5][8]"
+     }
+    ]
+   },
+   {
+    "name": "Close",
+    "domain": "close.com",
+    "is_you": true,
+    "mentions": 5,
+    "total": 15,
+    "mentioned_in": [
+     {
+      "rule": "llm_disambiguation",
+      "snippet": "If **built-in calling and texting are core to your sales workflow, choose Close**."
+     },
+     {
+      "rule": "citation_domain_match",
+      "snippet": "(cited close.com)"
+     },
+     {
+      "rule": "llm_disambiguation",
+      "snippet": "**Close** is likely the best fit for a B2B sales team that wants email and text automation built directly into a sales-focused CRM."
+     },
+     {
+      "rule": "llm_disambiguation",
+      "snippet": "**Recommendation:** Choose **HubSpot** unless the team’s primary workflow is high-volume outbound calling—in that case, choose **Close**."
+     },
+     {
+      "rule": "citation_domain_match",
+      "snippet": "(cited close.com)"
+     }
+    ]
+   }
+  ]
+ },
+ "previous_provenance": null
+}

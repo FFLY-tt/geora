@@ -5,8 +5,8 @@
 // here instead of maintaining its own copy of this map.
 export const DIMENSION_LABELS = {
   citation_visibility: {
-    label: 'Citation visibility',
-    description: 'How often AI answers mention or cite this brand',
+    label: 'How often AI mentions you',
+    description: 'How often AI answers mention this brand',
   },
   topic_relevance: {
     label: 'Matches what customers ask',

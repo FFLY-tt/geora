@@ -1,16 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { describeChange, intervalsOverlap, mentionSummary } from './mentionInterval.js'
-
-test('summary shows count, rate and likely range', () => {
-  const text = mentionSummary({ mentions: 3, total: 15, ci_low: 0.07, ci_high: 0.452 })
-  assert.equal(text, 'Mentioned in 3 of 15 answers (20%). Likely range: 7%–45%.')
-})
-
-test('summary without answers is null, without an interval is the count only', () => {
-  assert.equal(mentionSummary({ mentions: 0, total: 0, ci_low: null, ci_high: null }), null)
-  assert.equal(mentionSummary({ mentions: 2, total: 10 }), 'Mentioned in 2 of 10 answers (20%).')
-})
+import { describeChange, intervalsOverlap } from './mentionInterval.js'
 
 test('overlap', () => {
   assert.equal(intervalsOverlap({ ci_low: 0.07, ci_high: 0.45 }, { ci_low: 0.2, ci_high: 0.6 }), true)

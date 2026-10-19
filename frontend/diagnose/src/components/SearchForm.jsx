@@ -49,20 +49,20 @@ export default function SearchForm({ onSubmit, loading }) {
           disabled={loading}
           placeholder="e.g. acme.com"
         />
-        <p className="form-hint">e.g. yourcompany.com — no need for https://</p>
+        <p className="form-hint">For example yourcompany.com. No need for https://</p>
       </div>
 
       <div className="form-field">
-        <label htmlFor="competitors">Competitors (optional)</label>
+        <label htmlFor="competitors">Competitors, optional</label>
         <input
           id="competitors"
           type="text"
           value={competitors}
           onChange={(event) => setCompetitors(event.target.value)}
           disabled={loading}
-          placeholder="e.g. HubSpot, Pipedrive (pipedrive.com)"
+          placeholder="e.g. HubSpot, Pipedrive"
         />
-        <p className="form-hint">Up to 5, separated by commas. We'll show how often each one is mentioned too.</p>
+        <p className="form-hint">Up to 5 names, separated by commas.</p>
       </div>
 
       {error && <p className="form-error">{error}</p>}
