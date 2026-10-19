@@ -156,10 +156,13 @@ function expectedAboveTheButton(result) {
   }
   for (const entry of result.competitor_comparison?.entries ?? []) parts.push(entry.name, `${entry.mentions} of ${entry.total}`)
 
-  const rows = (result.source_bars?.rows ?? []).filter((row) => row.pages > 0).sort((a, b) => b.pages - a.pages)
-  if (rows.length > 0) {
+  // Other kinds of page need an opened page. Your own website always has its row, last: "N of N", or just "0".
+  if (result.source_bars) {
+    const rows = result.source_bars.rows.filter((row) => row.key !== 'own_site' && row.pages > 0).sort((a, b) => b.pages - a.pages)
     parts.push('Where AI looked for answers')
     for (const row of rows) parts.push(row.name, `${row.mention_pages} of ${row.pages}`)
+    const own = result.source_bars.rows.find((row) => row.key === 'own_site' && row.pages > 0)
+    parts.push('Your own website', own ? `${own.pages} of ${own.pages}` : '0')
   }
 
   const items = (result.site_readiness?.items ?? []).filter((item) => item.score !== null)
@@ -199,14 +202,40 @@ describe('what the page says above the Show details button', () => {
     assert.ok(freshbooks.includes('56 out of 100'), 'the total uses the checks that have a result')
   })
 
-  test('your own website is all blue and reads as all of its pages', () => {
+  test('your own website is all blue and reads as all of its pages when AI used it', () => {
     const markup = page(RESULTS['Close, with competitors'])
     assert.ok(visibleText(markup).all.includes('Your own website 2 of 2'))
+    assert.ok(visibleText(page(RESULTS['FreshBooks, mostly mentioned'])).all.includes('Your own website 3 of 3'))
   })
 
-  test('no kind with an opened page means no "Where AI looked for answers" block', () => {
+  test('your own website still has its row, with an empty bar and just 0, when AI never used it', () => {
+    const markup = page(RESULTS['Feroot, never mentioned'])
+    assert.ok(visibleText(markup).all.includes('Where AI looked for answers Best tools lists 1 of 27 Guides and articles 0 of 14 Your own website 0 Is your website'))
+    assert.match(markup, /Your own website<\/span><span class="bar-track bar-track-full"><\/span><span class="bar-number">0</)
+  })
+
+  test('your own website is always the last row of the bars', () => {
+    for (const name of ['Feroot, never mentioned', 'Close, with competitors', 'FreshBooks, mostly mentioned']) {
+      const markup = page(RESULTS[name])
+      const names = [...markup.matchAll(/<span class="bar-name">([^<]*)<\/span>/g)].map((m) => m[1])
+      const own = names.indexOf('Your own website')
+      assert.ok(own >= 0)
+      assert.ok(own < names.indexOf('Answers customer questions'))
+      // the last name of the first group is your own website: the next name belongs to the readiness bars
+      assert.equal(names[own + 1], 'Answers customer questions', name)
+    }
+  })
+
+  test('with no opened page in any other kind the block has only your own website', () => {
     const result = structuredClone(RESULTS['Feroot, never mentioned'])
     for (const row of result.source_bars.rows) row.pages = 0
+    const { all } = visibleText(page(result))
+    assert.ok(all.includes('Where AI looked for answers Your own website 0 Is your website'))
+  })
+
+  test('with no source bars at all (AI used no sources) there is no block', () => {
+    const result = structuredClone(RESULTS['Feroot, never mentioned'])
+    result.source_bars = null
     assert.ok(!visibleText(page(result)).all.includes('Where AI looked for answers'))
   })
 
