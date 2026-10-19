@@ -52,6 +52,10 @@ class DiagnosisResponse(BaseModel):
         None,
         description="Layered diagnosis: for each kind of website AI cited (reference, review_media, community, own_site, other_companies), how much AI relied on it, how often the company showed up there, and the gap. Null when AI cited no sources at all.",
     )
+    radar: dict | None = Field(
+        None,
+        description="The five-corner chart: per corner gray (share of all sources AI used from this kind of website), blue (the part that mentions the company) and a status, plus the shared scale and the corner with the most missing. Null when AI cited no sources.",
+    )
     provenance: dict | None = Field(
         None,
         description="What this result was computed from: run_date, method_versions per dimension, question_set (category_id, version, status), and pages read per dimension with text hashes.",

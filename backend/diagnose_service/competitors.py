@@ -64,7 +64,7 @@ def parse_competitors(raw: str | None, own_company_name: str = "", own_domain: s
         if not name:
             continue
         if domain and "." not in domain:
-            raise CompetitorInputError(f'"{domain}" doesn\'t look like a website address. Use the form Name (domain.com).')
+            raise CompetitorInputError(f'"{domain}" doesn\'t look like a website address. Try something like pipedrive.com.')
         if name.lower() == own_name or (domain and domain == own_domain):
             continue
         if name.lower() in seen_names or (domain and domain in seen_domains):

@@ -29,6 +29,7 @@ from engines.technical_engine import check_technical_readability
 from leads_store import save_lead
 from models import DiagnosisRequest, DiagnosisResponse, LeadCaptureRequest
 from provenance import build_provenance
+from radar import build_radar
 from source_layers import build_source_layers
 from result_cache import (
     get_cached_result,
@@ -80,6 +81,9 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
 
     cached = get_cached_result(request.domain)
     if cached:
+        if "radar" not in cached and cached.get("source_layers"):
+            # Results saved before the chart existed: the chart is made from the stored layers.
+            cached = {**cached, "radar": build_radar(cached["source_layers"])}
         if signature(cached.get("competitors")) != signature(competitors):
             # A different competitor list: recount from the answers stored with the cached
             # result. No new diagnosis and no Perplexity call.
@@ -130,6 +134,7 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
         "domain": request.domain,
         "dimensions": dimensions,
         "source_layers": layers,
+        "radar": build_radar(layers),
         "competitors": competitors or None,
         "competitor_comparison": await asyncio.to_thread(_comparison, request, competitors, {"dimensions": dimensions}),
         "provenance": build_provenance(dimensions),
