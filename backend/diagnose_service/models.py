@@ -52,9 +52,13 @@ class DiagnosisResponse(BaseModel):
         None,
         description="Layered diagnosis: for each kind of website AI cited (reference, review_media, community, own_site, other_companies), how much AI relied on it, how often the company showed up there, and the gap. Null when AI cited no sources at all.",
     )
-    radar: dict | None = Field(
+    source_bars: dict | None = Field(
         None,
-        description="The five-corner chart: per corner gray (share of all sources AI used from this kind of website), blue (the part that mentions the company) and a status, plus the shared scale and the corner with the most missing. Null when AI cited no sources.",
+        description="The bars of 'Where AI looked for answers': per kind of website its name, the pages we opened, how many of them mention the company, and how many pages could not be opened or were not tried; plus the longest bar and the kind where the most is missing. Counted by page. Null when AI used no sources.",
+    )
+    site_readiness: dict | None = Field(
+        None,
+        description="'Is your website ready for AI?': the four checks with score and level, the total (average), its level, the closing sentence and the checks to fix first.",
     )
     provenance: dict | None = Field(
         None,
