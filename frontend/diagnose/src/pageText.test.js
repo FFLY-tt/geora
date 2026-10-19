@@ -3,7 +3,7 @@
 // that text breaks the Customer-facing UI rules in CLAUDE.md:
 //   - no ( ) [ ] { }, no dashes, no vertical bars, no slash used to separate things
 //   - none of our internal words
-// It also reads the two new blocks of the page, the bars of where AI looked and the website readiness.
+// It also checks that the text above the Show details button is exactly the allowed text and no more.
 // Words that come from other websites (page titles, quotes, addresses) are marked
 // data-external in the page. They are checked for the characters, and left out of the word check.
 //
@@ -11,6 +11,7 @@
 //   result_feroot.json                     a company AI never mentions
 //   result_close_with_competitors.json     a company that is mentioned, with three competitors entered
 //   result_clio_unreadable.json            a website that blocked our visit, so nothing could be read
+//   result_freshbooks.json                 a company that is mentioned a lot
 import { after, before, describe, test } from 'node:test'
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
@@ -27,6 +28,7 @@ const fixture = (name) => JSON.parse(readFileSync(new URL(`./fixtures/${name}`, 
 const RESULTS = {
   'Feroot, never mentioned': fixture('result_feroot.json'),
   'Close, with competitors': fixture('result_close_with_competitors.json'),
+  'FreshBooks, mostly mentioned': fixture('result_freshbooks.json'),
   'Clio, website could not be read': fixture('result_clio_unreadable.json'),
 }
 
@@ -140,45 +142,94 @@ describe('error and empty messages follow the rules too', () => {
   })
 })
 
-describe('what the page says', () => {
-  test('Feroot: the headline, the range, the chart and the conclusion come first and need no email', () => {
-    const { all } = visibleText(page(RESULTS['Feroot, never mentioned'], { unlocked: false }))
-    assert.ok(all.includes('This result will stay the same for the next 24 hours.'))
-    assert.ok(all.includes('AI mentioned you in 0 of 15 answers.'))
-    assert.ok(all.includes('The true rate is likely between 0% and 20%.'))
-    assert.ok(all.includes('Where AI looked for answers'))
-    assert.ok(all.includes('We asked AI 15 questions your customers ask. To answer them, AI read these kinds of pages.'))
-    assert.ok(all.includes('Is your website ready for AI?'))
-    assert.ok(all.includes('You are missing most from'))
-    assert.ok(all.includes('Show details'))
-    assert.ok(!all.includes('Enter your email'), 'the email box only appears behind Show details')
+// Everything above the "Show details" button, written out from the saved numbers and nothing else.
+// The page may show exactly this text and no more.
+function expectedAboveTheButton(result) {
+  const parts = ['This result will stay the same for the next 24 hours.']
+  const citation = result.dimensions.find((dim) => dim.dimension === 'citation_visibility')
+  if (citation.score === -1) {
+    parts.push('Not enough data', citation.details.plain_finding.what_we_found)
+  } else {
+    const details = citation.details
+    parts.push(`AI mentioned you in ${details.mentions} of ${details.total} answers.`)
+    parts.push(`The true rate is likely between ${Math.round(details.ci_low * 100)}% and ${Math.round(details.ci_high * 100)}%.`)
+  }
+  for (const entry of result.competitor_comparison?.entries ?? []) parts.push(entry.name, `${entry.mentions} of ${entry.total}`)
+
+  const rows = (result.source_bars?.rows ?? []).filter((row) => row.pages > 0).sort((a, b) => b.pages - a.pages)
+  if (rows.length > 0) {
+    parts.push('Where AI looked for answers')
+    for (const row of rows) parts.push(row.name, `${row.mention_pages} of ${row.pages}`)
+  }
+
+  const items = (result.site_readiness?.items ?? []).filter((item) => item.score !== null)
+  if (items.length > 0) {
+    parts.push('Is your website ready for AI?', `${result.site_readiness.total} out of 100`)
+    for (const item of items) parts.push(item.name, String(item.score), item.level)
+  }
+  parts.push('Show details')
+  return parts.join(' ')
+}
+
+describe('what the page says above the Show details button', () => {
+  for (const [name, result] of Object.entries(RESULTS)) {
+    test(`${name}: only the allowed text`, () => {
+      const { all } = visibleText(page(result, { unlocked: false }))
+      assert.equal(all, expectedAboveTheButton(result))
+    })
+  }
+
+  test('no explanation, no legend, no conclusion box, no note about pages we could not open', () => {
+    for (const name of ['Feroot, never mentioned', 'Close, with competitors', 'FreshBooks, mostly mentioned']) {
+      const { all } = visibleText(page(RESULTS[name]))
+      for (const unwanted of [/could not/i, /did not check/i, /We asked AI/, /pages? mentions? you/, /missing most/i, /Start by fixing/, /in good shape/, /Keep it that way/]) {
+        assert.doesNotMatch(all, unwanted, `${name}: ${unwanted}`)
+      }
+    }
   })
 
-  test('Close: the competitors are listed, most mentions first, with your own line bold', () => {
+  test('Feroot: a kind with no opened page has no row, and so does a check with no result', () => {
+    const feroot = visibleText(page(RESULTS['Feroot, never mentioned'])).all
+    assert.ok(feroot.includes('Best tools lists 1 of 27'))
+    assert.ok(feroot.includes('Guides and articles 0 of 14'))
+    assert.ok(!feroot.includes('Review sites and news'), 'all its pages could not be opened')
+    const freshbooks = visibleText(page(RESULTS['FreshBooks, mostly mentioned'])).all
+    assert.ok(!freshbooks.includes('Guides and articles'), 'none of its pages were checked')
+    assert.ok(!freshbooks.includes('Up to date'), 'that check has no result')
+    assert.ok(freshbooks.includes('56 out of 100'), 'the total uses the checks that have a result')
+  })
+
+  test('your own website is all blue and reads as all of its pages', () => {
+    const markup = page(RESULTS['Close, with competitors'])
+    assert.ok(visibleText(markup).all.includes('Your own website 2 of 2'))
+  })
+
+  test('no kind with an opened page means no "Where AI looked for answers" block', () => {
+    const result = structuredClone(RESULTS['Feroot, never mentioned'])
+    for (const row of result.source_bars.rows) row.pages = 0
+    assert.ok(!visibleText(page(result)).all.includes('Where AI looked for answers'))
+  })
+
+  test('no score for any check means no "Is your website ready for AI?" block', () => {
+    const result = structuredClone(RESULTS['Feroot, never mentioned'])
+    for (const item of result.site_readiness.items) item.score = null
+    result.site_readiness.total = null
+    assert.ok(!visibleText(page(result)).all.includes('Is your website ready for AI?'))
+  })
+
+  test('the competitor list is most mentions first, with your own line bold', () => {
     const result = RESULTS['Close, with competitors']
     const markup = page(result)
-    const { all } = visibleText(markup)
-    const lines = result.competitor_comparison.entries.map((entry) => `${entry.name} ${entry.mentions} of ${entry.total} answers`)
-    assert.equal(lines.length, 4, 'you and three competitors')
-    let last = -1
-    for (const line of lines) {
-      const at = all.indexOf(line)
-      assert.ok(at > last, `${line} is listed, after the ones with more mentions`)
-      last = at
-    }
     const counts = result.competitor_comparison.entries.map((entry) => entry.mentions)
     assert.deepEqual(counts, [...counts].sort((a, b) => b - a), 'sent most mentions first')
     assert.match(markup, /class="competitor-you"><span class="competitor-name"[^>]*>Close</)
+    assert.ok(!visibleText(page(RESULTS['Feroot, never mentioned'])).all.includes('HubSpot'), 'no competitors entered, no list')
   })
 
-  test('Clio: a website that could not be read says so in plain words, with no chart', () => {
-    const { all } = visibleText(page(RESULTS['Clio, website could not be read']))
-    assert.ok(all.includes('Not enough data'))
-    assert.ok(all.includes('We could not open your homepage at clio.com'))
-    assert.ok(!all.includes('Where AI looked for answers'))
-    assert.ok(all.includes('We could not read your website.'))
-    assert.ok(!all.includes('out of 100'), 'no score when nothing could be read')
-    assert.ok(all.includes('AI did not use any websites as sources for these questions'))
+  test('the bars are plain HTML, not a chart', () => {
+    const markup = page(RESULTS['Close, with competitors'])
+    assert.ok(!markup.includes('<canvas'))
+    assert.ok(markup.includes('class="bar-row"'))
   })
 
   test('the details stay behind the button until it is pressed, and behind the email box until it is entered', () => {

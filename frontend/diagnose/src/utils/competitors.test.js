@@ -15,7 +15,7 @@ test('no comparison gives no lines', () => {
   assert.deepEqual(comparisonLines({}), [])
 })
 
-test('lines keep the backend order and read "X of N answers"', () => {
+test('lines keep the backend order and read "X of N"', () => {
   const lines = comparisonLines({
     entries: [
       { name: 'HubSpot', domain: '', is_you: false, mentions: 10, total: 15 },
@@ -25,8 +25,8 @@ test('lines keep the backend order and read "X of N answers"', () => {
   assert.deepEqual(
     lines.map((line) => [line.name, line.isYou, line.text]),
     [
-      ['HubSpot', false, '10 of 15 answers'],
-      ['Close', true, '3 of 15 answers'],
+      ['HubSpot', false, '10 of 15'],
+      ['Close', true, '3 of 15'],
     ],
   )
 })

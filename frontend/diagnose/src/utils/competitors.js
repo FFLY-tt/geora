@@ -18,6 +18,6 @@ export function comparisonLines(comparison) {
     key: `${entry.name}|${entry.domain || ''}`,
     name: entry.name,
     isYou: Boolean(entry.is_you),
-    text: `${entry.mentions} of ${entry.total} answers`,
+    text: `${entry.mentions} of ${entry.total}`,
   }))
 }

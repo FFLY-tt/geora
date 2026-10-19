@@ -1,10 +1,5 @@
-// The words at the top of the result page: the headline, the likely range and the one sentence
-// that says where the company is missing most, with the pages behind it. Everything is built
-// from numbers and pages the backend already sent.
-import { cleanPageTitle, siteName } from './text.js'
-import { pageHref, shortUrl } from './sourceLayers.js'
-
-const GAP_PAGES_SHOWN = 3
+// The words at the top of the result page: the headline and the likely range. Everything is
+// built from numbers the backend already sent.
 
 function percent(value) {
   return `${Math.round(value * 100)}%`
@@ -41,46 +36,4 @@ export function rangeText(details) {
   const high = details?.ci_high
   if (!total || low === null || low === undefined || high === null || high === undefined) return null
   return `The true rate is likely between ${percent(low)} and ${percent(high)}.`
-}
-
-/** The most used pages of a kind of website that do not mention the company, at most three. */
-export function pagesWithoutYou(sourceLayers, layerKey) {
-  const layer = (sourceLayers?.layers || []).find((entry) => entry.layer === layerKey)
-  return (layer?.pages || [])
-    .filter((page) => page.status === 'checked' && !page.mentions_you)
-    .sort((a, b) => b.citations - a.citations)
-    .slice(0, GAP_PAGES_SHOWN)
-    .map((page) => ({
-      key: page.url,
-      title: cleanPageTitle(page.title) || shortUrl(page.url),
-      site: siteName(page.url),
-      href: pageHref(page.url),
-    }))
-}
-
-/**
- * The one-sentence conclusion and the pages under it: { sentence, pages }. It names the kind of page
- * AI read where the most pages do not mention the company (source_bars.most_missing, never the
- * company's own website) and lists the most used pages there that do not mention it.
- */
-export function gapConclusion(sourceBars, sourceLayers) {
-  if (!sourceBars) {
-    return { sentence: 'AI did not use any websites as sources for these questions, so there is nothing to compare.', pages: [] }
-  }
-  const key = sourceBars.most_missing
-  if (key) {
-    const row = sourceBars.rows.find((entry) => entry.key === key)
-    const where = (row?.name || key).toLowerCase()
-    const pages = pagesWithoutYou(sourceLayers, key)
-    const sentence =
-      pages.length > 0
-        ? `You are missing most from ${where}. These are the pages AI read there that don't mention you:`
-        : `You are missing most from ${where}.`
-    return { sentence, pages }
-  }
-  const others = sourceBars.rows.filter((row) => row.key !== 'own_site')
-  if (others.length > 0 && others.every((row) => row.pages === 0)) {
-    return { sentence: 'We could not open the pages AI read, so we could not check where you are missing.', pages: [] }
-  }
-  return { sentence: 'You show up on every kind of page AI read. Keep it that way.', pages: [] }
 }
