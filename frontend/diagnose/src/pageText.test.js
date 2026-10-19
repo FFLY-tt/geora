@@ -3,6 +3,7 @@
 // that text breaks the Customer-facing UI rules in CLAUDE.md:
 //   - no ( ) [ ] { }, no dashes, no vertical bars, no slash used to separate things
 //   - none of our internal words
+// It also reads the two new blocks of the page, the bars of where AI looked and the website readiness.
 // Words that come from other websites (page titles, quotes, addresses) are marked
 // data-external in the page. They are checked for the characters, and left out of the word check.
 //
@@ -145,8 +146,9 @@ describe('what the page says', () => {
     assert.ok(all.includes('This result will stay the same for the next 24 hours.'))
     assert.ok(all.includes('AI mentioned you in 0 of 15 answers.'))
     assert.ok(all.includes('The true rate is likely between 0% and 20%.'))
-    assert.ok(all.includes('Where AI looks for answers'))
-    assert.ok(all.includes('Where AI finds you'))
+    assert.ok(all.includes('Where AI looked for answers'))
+    assert.ok(all.includes('We asked AI 15 questions your customers ask. To answer them, AI read these kinds of pages.'))
+    assert.ok(all.includes('Is your website ready for AI?'))
     assert.ok(all.includes('You are missing most from'))
     assert.ok(all.includes('Show details'))
     assert.ok(!all.includes('Enter your email'), 'the email box only appears behind Show details')
@@ -173,7 +175,9 @@ describe('what the page says', () => {
     const { all } = visibleText(page(RESULTS['Clio, website could not be read']))
     assert.ok(all.includes('Not enough data'))
     assert.ok(all.includes('We could not open your homepage at clio.com'))
-    assert.ok(!all.includes('Where AI looks for answers'))
+    assert.ok(!all.includes('Where AI looked for answers'))
+    assert.ok(all.includes('We could not read your website.'))
+    assert.ok(!all.includes('out of 100'), 'no score when nothing could be read')
     assert.ok(all.includes('AI did not use any websites as sources for these questions'))
   })
 

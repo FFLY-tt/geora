@@ -1,9 +1,9 @@
 import { gapConclusion } from '../utils/resultPage.js'
 
-// One sentence that points at the corner of the chart where the company is missing most,
-// and under it the pages AI reads there that do not mention the company, each a link.
-export default function GapConclusion({ radar, sourceLayers }) {
-  const { sentence, pages } = gapConclusion(radar, sourceLayers)
+// One sentence that says which kind of page AI read is missing you the most, and under it the
+// pages there that do not mention you, each a link. Props: sourceBars and sourceLayers (result).
+export default function GapConclusion({ sourceBars, sourceLayers }) {
+  const { sentence, pages } = gapConclusion(sourceBars, sourceLayers)
 
   return (
     <div className="gap-conclusion">

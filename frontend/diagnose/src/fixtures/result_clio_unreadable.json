@@ -92,7 +92,6 @@
  "cached_at": "2026-10-19T03:00:16.064613+00:00",
  "previous_scores": null,
  "source_layers": null,
- "radar": null,
  "provenance": {
   "run_date": "2026-10-19",
   "run_at": "2026-10-19T03:00:16.064280+00:00",
@@ -113,5 +112,38 @@
  "previous_citation_interval": null,
  "competitors": null,
  "competitor_comparison": null,
- "previous_provenance": null
+ "previous_provenance": null,
+ "source_bars": null,
+ "site_readiness": {
+  "total": null,
+  "level": null,
+  "items": [
+   {
+    "key": "topic_relevance",
+    "name": "Answers customer questions",
+    "score": null,
+    "level": null
+   },
+   {
+    "key": "evidence_density",
+    "name": "Has real numbers and proof",
+    "score": null,
+    "level": null
+   },
+   {
+    "key": "content_recency",
+    "name": "Up to date",
+    "score": null,
+    "level": null
+   },
+   {
+    "key": "technical_readability",
+    "name": "Easy for AI to read",
+    "score": null,
+    "level": null
+   }
+  ],
+  "sentence": "We could not read your website.",
+  "fix_first": []
+ }
 }

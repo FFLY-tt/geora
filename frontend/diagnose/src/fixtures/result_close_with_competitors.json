@@ -4103,43 +4103,6 @@
    }
   ]
  },
- "radar": {
-  "scale_max": 70,
-  "axes": [
-   {
-    "key": "lists",
-    "gray": 62.0,
-    "blue": 16.0,
-    "status": "ok"
-   },
-   {
-    "key": "guides",
-    "gray": 20.7,
-    "blue": 3.0,
-    "status": "ok"
-   },
-   {
-    "key": "review_media",
-    "gray": 7.3,
-    "blue": 1.2,
-    "status": "ok"
-   },
-   {
-    "key": "community",
-    "gray": 0.0,
-    "blue": 0.0,
-    "status": "not_used"
-   },
-   {
-    "key": "own_site",
-    "gray": 1.3,
-    "blue": 1.3,
-    "status": "ok"
-   }
-  ],
-  "biggest_gap": "lists",
-  "total_sources": 150
- },
  "provenance": {
   "run_date": "2026-10-19",
   "run_at": "2026-10-19T03:03:47.664869+00:00",
@@ -4439,5 +4402,75 @@
    }
   ]
  },
- "previous_provenance": null
+ "previous_provenance": null,
+ "source_bars": {
+  "rows": [
+   {
+    "key": "lists",
+    "name": "Best tools lists",
+    "pages": 47,
+    "mention_pages": 12,
+    "could_not_open": 0,
+    "not_checked": 31
+   },
+   {
+    "key": "guides",
+    "name": "Guides and articles",
+    "pages": 6,
+    "mention_pages": 1,
+    "could_not_open": 1,
+    "not_checked": 23
+   },
+   {
+    "key": "review_media",
+    "name": "Review sites and news",
+    "pages": 5,
+    "mention_pages": 1,
+    "could_not_open": 1,
+    "not_checked": 4
+   },
+   {
+    "key": "own_site",
+    "name": "Your own website",
+    "pages": 2,
+    "mention_pages": 2,
+    "could_not_open": 0,
+    "not_checked": 0
+   }
+  ],
+  "max_pages": 47,
+  "most_missing": "lists"
+ },
+ "site_readiness": {
+  "total": 87,
+  "level": "Good",
+  "items": [
+   {
+    "key": "topic_relevance",
+    "name": "Answers customer questions",
+    "score": 63,
+    "level": "Needs work"
+   },
+   {
+    "key": "evidence_density",
+    "name": "Has real numbers and proof",
+    "score": 100,
+    "level": "Good"
+   },
+   {
+    "key": "content_recency",
+    "name": "Up to date",
+    "score": 100,
+    "level": "Good"
+   },
+   {
+    "key": "technical_readability",
+    "name": "Easy for AI to read",
+    "score": 85,
+    "level": "Good"
+   }
+  ],
+  "sentence": "Your website is in good shape. AI used it in 2 of 15 answers.",
+  "fix_first": []
+ }
 }

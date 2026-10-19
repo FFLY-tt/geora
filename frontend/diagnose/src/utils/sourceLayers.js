@@ -88,8 +88,8 @@ export function citedText(count) {
   return `used in ${count} answer${count === 1 ? '' : 's'}`
 }
 
-function statusForChart(layer, radar) {
-  if (radar.biggest_gap === layer.layer) return 'biggest_gap'
+function statusForChart(layer, sourceBars) {
+  if (sourceBars.most_missing === layer.layer) return 'biggest_gap'
   return layer.status === 'biggest_gap' ? 'gap' : layer.status
 }
 
@@ -97,15 +97,15 @@ function statusForChart(layer, radar) {
  * Rows for the layer table, in the order the backend sent them. Layers AI
  * never cited are still listed (the customer sees AI doesn't use them).
  */
-export function layerRows(sourceLayers, radar = null) {
+export function layerRows(sourceLayers, sourceBars = null) {
   return (sourceLayers?.layers || []).map((layer) => ({
     ...layer,
-    // "Missing most" belongs to the corner of the chart where the most is missing, so the table
-    // and the chart agree. The kinds of website without a corner can only be "Missing".
-    status: radar ? statusForChart(layer, radar) : layer.status,
+    // "Missing most" belongs to the kind of page named in the conclusion, so the table and the
+    // bars agree. The kinds of page without a bar can only be "Missing".
+    status: sourceBars ? statusForChart(layer, sourceBars) : layer.status,
     label: LAYER_LABELS[layer.layer] || layer.layer,
     hint: LAYER_HINTS[layer.layer] || '',
-    statusText: STATUS_LABELS[radar ? statusForChart(layer, radar) : layer.status] || '',
+    statusText: STATUS_LABELS[sourceBars ? statusForChart(layer, sourceBars) : layer.status] || '',
     relianceText: formatPercent(layer.reliance),
     // A layer AI doesn't cite has nothing to be present in.
     presenceText: layer.citations === 0 ? 'Not used' : formatPercent(layer.presence),

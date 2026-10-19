@@ -3717,43 +3717,6 @@
    }
   ]
  },
- "radar": {
-  "scale_max": 40,
-  "axes": [
-   {
-    "key": "lists",
-    "gray": 32.7,
-    "blue": 0.9,
-    "status": "ok"
-   },
-   {
-    "key": "guides",
-    "gray": 29.3,
-    "blue": 0.0,
-    "status": "ok"
-   },
-   {
-    "key": "review_media",
-    "gray": 4.0,
-    "blue": 0.0,
-    "status": "could_not_check"
-   },
-   {
-    "key": "community",
-    "gray": 0.0,
-    "blue": 0.0,
-    "status": "not_used"
-   },
-   {
-    "key": "own_site",
-    "gray": 0.0,
-    "blue": 0.0,
-    "status": "not_used"
-   }
-  ],
-  "biggest_gap": "lists",
-  "total_sources": 150
- },
  "provenance": {
   "run_date": "2026-10-19",
   "run_at": "2026-10-19T03:03:45.485496+00:00",
@@ -3845,5 +3808,70 @@
  "previous_citation_interval": null,
  "competitors": null,
  "competitor_comparison": null,
- "previous_provenance": null
+ "previous_provenance": null,
+ "source_bars": {
+  "rows": [
+   {
+    "key": "lists",
+    "name": "Best tools lists",
+    "pages": 27,
+    "mention_pages": 1,
+    "could_not_open": 0,
+    "not_checked": 11
+   },
+   {
+    "key": "guides",
+    "name": "Guides and articles",
+    "pages": 14,
+    "mention_pages": 0,
+    "could_not_open": 0,
+    "not_checked": 29
+   },
+   {
+    "key": "review_media",
+    "name": "Review sites and news",
+    "pages": 0,
+    "mention_pages": 0,
+    "could_not_open": 3,
+    "not_checked": 2
+   }
+  ],
+  "max_pages": 27,
+  "most_missing": "lists"
+ },
+ "site_readiness": {
+  "total": 60,
+  "level": "Needs work",
+  "items": [
+   {
+    "key": "topic_relevance",
+    "name": "Answers customer questions",
+    "score": 63,
+    "level": "Needs work"
+   },
+   {
+    "key": "evidence_density",
+    "name": "Has real numbers and proof",
+    "score": 45,
+    "level": "Needs work"
+   },
+   {
+    "key": "content_recency",
+    "name": "Up to date",
+    "score": 60,
+    "level": "Needs work"
+   },
+   {
+    "key": "technical_readability",
+    "name": "Easy for AI to read",
+    "score": 70,
+    "level": "Good"
+   }
+  ],
+  "sentence": "Start by fixing these:",
+  "fix_first": [
+   "Has real numbers and proof",
+   "Up to date"
+  ]
+ }
 }

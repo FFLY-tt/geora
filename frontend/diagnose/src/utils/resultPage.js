@@ -1,7 +1,6 @@
 // The words at the top of the result page: the headline, the likely range and the one sentence
 // that says where the company is missing most, with the pages behind it. Everything is built
 // from numbers and pages the backend already sent.
-import { RADAR_LABELS } from './radar.js'
 import { cleanPageTitle, siteName } from './text.js'
 import { pageHref, shortUrl } from './sourceLayers.js'
 
@@ -60,27 +59,28 @@ export function pagesWithoutYou(sourceLayers, layerKey) {
 }
 
 /**
- * The one-sentence conclusion and the pages under it: { sentence, pages }. Points at the
- * corner of the chart with the biggest difference between gray and blue (radar.biggest_gap).
+ * The one-sentence conclusion and the pages under it: { sentence, pages }. It names the kind of page
+ * AI read where the most pages do not mention the company (source_bars.most_missing, never the
+ * company's own website) and lists the most used pages there that do not mention it.
  */
-export function gapConclusion(radar, sourceLayers) {
-  if (!radar) {
+export function gapConclusion(sourceBars, sourceLayers) {
+  if (!sourceBars) {
     return { sentence: 'AI did not use any websites as sources for these questions, so there is nothing to compare.', pages: [] }
   }
-  const key = radar.biggest_gap
+  const key = sourceBars.most_missing
   if (key) {
+    const row = sourceBars.rows.find((entry) => entry.key === key)
+    const where = (row?.name || key).toLowerCase()
     const pages = pagesWithoutYou(sourceLayers, key)
-    const where = (RADAR_LABELS[key] || key).toLowerCase()
     const sentence =
       pages.length > 0
-        ? `You are missing most from ${where}. These are the pages AI reads there that don't mention you:`
+        ? `You are missing most from ${where}. These are the pages AI read there that don't mention you:`
         : `You are missing most from ${where}.`
     return { sentence, pages }
   }
-  const none = radar.axes.every((axis) => axis.status !== 'ok' || axis.gray === 0)
-  const unreadable = radar.axes.some((axis) => axis.status === 'could_not_check')
-  if (none && unreadable) {
-    return { sentence: 'We could not open the pages AI used, so we could not check where you are missing.', pages: [] }
+  const others = sourceBars.rows.filter((row) => row.key !== 'own_site')
+  if (others.length > 0 && others.every((row) => row.pages === 0)) {
+    return { sentence: 'We could not open the pages AI read, so we could not check where you are missing.', pages: [] }
   }
-  return { sentence: 'Good news. The websites AI reads mostly mention you.', pages: [] }
+  return { sentence: 'You show up on every kind of page AI read. Keep it that way.', pages: [] }
 }

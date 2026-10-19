@@ -83,13 +83,13 @@ test('layer rows carry customer wording and no internal terms', () => {
   }
 })
 
-test('the table says "Missing most" for the same corner as the chart', () => {
+test('the table says "Missing most" for the same kind of page as the conclusion', () => {
   const layers = [
     { layer: 'product_pages', citations: 9, reliance: 0.3, presence: 0, status: 'biggest_gap' },
     { layer: 'lists', citations: 9, reliance: 0.3, presence: 0.2, status: 'gap' },
     { layer: 'guides', citations: 4, reliance: 0.1, presence: 1, status: 'covered' },
   ]
-  const rows = layerRows({ layers }, { biggest_gap: 'lists' })
+  const rows = layerRows({ layers }, { most_missing: 'lists' })
   assert.deepEqual(rows.map((r) => [r.layer, r.statusText]), [
     ['product_pages', 'Missing'],
     ['lists', 'Missing most'],

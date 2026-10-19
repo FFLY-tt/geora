@@ -12,7 +12,7 @@ const UNLOCK_TRANSITION_MS = 400
 // onUnlock is required in addition to the two props from the original
 // spec because this component is the one that renders EmailGate, so it
 // must be the one to forward the unlock callback down to it.
-export default function BreakdownAccordion({ dimensions, sourceLayers, unlocked, onUnlock, radar = null, startOpen = false }) {
+export default function BreakdownAccordion({ dimensions, sourceLayers, unlocked, onUnlock, sourceBars = null, startOpen = false }) {
   // The lock overlay stays mounted for one extra transition after
   // `unlocked` flips true, so it can animate out (shrink + fade) instead
   // of vanishing the instant the prop changes.
@@ -37,7 +37,7 @@ export default function BreakdownAccordion({ dimensions, sourceLayers, unlocked,
       <div className={`breakdown-content ${unlocked ? '' : 'breakdown-locked'}`}>
         {sourceLayers ? (
           // Layered view: where AI reads, with the older checks filed under their layer.
-          <SourceLayerTable sourceLayers={sourceLayers} dimensions={dimensions} radar={radar} startOpen={startOpen} />
+          <SourceLayerTable sourceLayers={sourceLayers} dimensions={dimensions} sourceBars={sourceBars} startOpen={startOpen} />
         ) : (
           // No layers (AI cited no sources): the plain list of checks.
           <>

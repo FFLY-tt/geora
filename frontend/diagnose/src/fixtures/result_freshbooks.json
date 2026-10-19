@@ -3420,43 +3420,6 @@
    }
   ]
  },
- "radar": {
-  "scale_max": 50,
-  "axes": [
-   {
-    "key": "lists",
-    "gray": 46.7,
-    "blue": 35.7,
-    "status": "ok"
-   },
-   {
-    "key": "guides",
-    "gray": 13.3,
-    "blue": 0.0,
-    "status": "could_not_check"
-   },
-   {
-    "key": "review_media",
-    "gray": 27.3,
-    "blue": 18.8,
-    "status": "ok"
-   },
-   {
-    "key": "community",
-    "gray": 0.0,
-    "blue": 0.0,
-    "status": "not_used"
-   },
-   {
-    "key": "own_site",
-    "gray": 2.7,
-    "blue": 2.7,
-    "status": "ok"
-   }
-  ],
-  "biggest_gap": "lists",
-  "total_sources": 150
- },
  "provenance": {
   "run_date": "2026-10-19",
   "run_at": "2026-10-19T03:03:52.360972+00:00",
@@ -3546,5 +3509,78 @@
  "previous_citation_interval": null,
  "competitors": null,
  "competitor_comparison": null,
- "previous_provenance": null
+ "previous_provenance": null,
+ "source_bars": {
+  "rows": [
+   {
+    "key": "lists",
+    "name": "Best tools lists",
+    "pages": 34,
+    "mention_pages": 27,
+    "could_not_open": 3,
+    "not_checked": 15
+   },
+   {
+    "key": "review_media",
+    "name": "Review sites and news",
+    "pages": 16,
+    "mention_pages": 9,
+    "could_not_open": 4,
+    "not_checked": 7
+   },
+   {
+    "key": "own_site",
+    "name": "Your own website",
+    "pages": 3,
+    "mention_pages": 3,
+    "could_not_open": 0,
+    "not_checked": 0
+   },
+   {
+    "key": "guides",
+    "name": "Guides and articles",
+    "pages": 0,
+    "mention_pages": 0,
+    "could_not_open": 0,
+    "not_checked": 20
+   }
+  ],
+  "max_pages": 34,
+  "most_missing": "lists"
+ },
+ "site_readiness": {
+  "total": 56,
+  "level": "Needs work",
+  "items": [
+   {
+    "key": "topic_relevance",
+    "name": "Answers customer questions",
+    "score": 47,
+    "level": "Needs work"
+   },
+   {
+    "key": "evidence_density",
+    "name": "Has real numbers and proof",
+    "score": 40,
+    "level": "Needs work"
+   },
+   {
+    "key": "content_recency",
+    "name": "Up to date",
+    "score": null,
+    "level": null
+   },
+   {
+    "key": "technical_readability",
+    "name": "Easy for AI to read",
+    "score": 80,
+    "level": "Good"
+   }
+  ],
+  "sentence": "Start by fixing these:",
+  "fix_first": [
+   "Has real numbers and proof",
+   "Answers customer questions"
+  ]
+ }
 }

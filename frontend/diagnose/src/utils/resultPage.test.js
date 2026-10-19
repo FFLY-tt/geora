@@ -43,20 +43,30 @@ test('the pages under the conclusion are the most used ones that do not mention 
   ])
 })
 
-test('the conclusion points at the corner with the biggest difference', () => {
-  const radar = { biggest_gap: 'lists', axes: [{ key: 'lists', gray: 50, blue: 10, status: 'ok' }] }
-  const { sentence, pages } = gapConclusion(radar, sourceLayers)
-  assert.equal(sentence, "You are missing most from best tools lists. These are the pages AI reads there that don't mention you:")
+const bars = (mostMissing, rows) => ({ most_missing: mostMissing, max_pages: 10, rows })
+const row = (key, name, pages, mention = 0) => ({ key, name, pages, mention_pages: mention, could_not_open: 0, not_checked: 0 })
+
+test('the conclusion names the kind of page with the most pages that do not mention you', () => {
+  const { sentence, pages } = gapConclusion(bars('lists', [row('lists', 'Best tools lists', 10, 2)]), sourceLayers)
+  assert.equal(sentence, "You are missing most from best tools lists. These are the pages AI read there that don't mention you:")
   assert.equal(pages.length, 3)
 })
 
-test('without a gap the conclusion says so, and says when nothing could be checked', () => {
-  const fine = { biggest_gap: null, axes: [{ key: 'lists', gray: 50, blue: 50, status: 'ok' }] }
-  assert.equal(gapConclusion(fine, sourceLayers).sentence, 'Good news. The websites AI reads mostly mention you.')
-  const unreadable = { biggest_gap: null, axes: [{ key: 'lists', gray: 50, blue: 0, status: 'could_not_check' }] }
+test('the sentence for each kind of page uses its display name', () => {
+  const names = { lists: 'Best tools lists', guides: 'Guides and articles', review_media: 'Review sites and news', community: 'Community discussions' }
+  for (const [key, name] of Object.entries(names)) {
+    const { sentence } = gapConclusion(bars(key, [row(key, name, 5)]), { layers: [{ layer: key, pages: [] }] })
+    assert.equal(sentence, `You are missing most from ${name.toLowerCase()}.`)
+  }
+})
+
+test('with nothing missing it says you show up everywhere, and says when nothing could be opened', () => {
+  const fine = bars(null, [row('lists', 'Best tools lists', 5, 5), row('own_site', 'Your own website', 2, 2)])
+  assert.equal(gapConclusion(fine, sourceLayers).sentence, 'You show up on every kind of page AI read. Keep it that way.')
+  const unreadable = bars(null, [{ ...row('community', 'Community discussions', 0), could_not_open: 4 }])
   assert.equal(
     gapConclusion(unreadable, sourceLayers).sentence,
-    'We could not open the pages AI used, so we could not check where you are missing.',
+    'We could not open the pages AI read, so we could not check where you are missing.',
   )
   assert.equal(
     gapConclusion(null, null).sentence,
@@ -64,9 +74,8 @@ test('without a gap the conclusion says so, and says when nothing could be check
   )
 })
 
-test('a gap corner with no page to name gives the sentence without a colon', () => {
-  const radar = { biggest_gap: 'guides', axes: [{ key: 'guides', gray: 30, blue: 0, status: 'ok' }] }
-  const { sentence, pages } = gapConclusion(radar, { layers: [{ layer: 'guides', pages: [] }] })
+test('a kind with no page to name gives the sentence without a colon', () => {
+  const { sentence, pages } = gapConclusion(bars('guides', [row('guides', 'Guides and articles', 3)]), { layers: [{ layer: 'guides', pages: [] }] })
   assert.equal(sentence, 'You are missing most from guides and articles.')
   assert.deepEqual(pages, [])
 })

@@ -75,8 +75,8 @@ function LayerRow({ row, dimensions, startOpen }) {
   )
 }
 
-export default function SourceLayerTable({ sourceLayers, dimensions, radar = null, startOpen = false }) {
-  const rows = layerRows(sourceLayers, radar)
+export default function SourceLayerTable({ sourceLayers, dimensions, sourceBars = null, startOpen = false }) {
+  const rows = layerRows(sourceLayers, sourceBars)
   const leftovers = unplacedDimensions(dimensions)
 
   return (
