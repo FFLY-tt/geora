@@ -39,9 +39,10 @@ function getReportParts(dim) {
   return [{ label: 'What we found', text: "We couldn't get enough data to evaluate this dimension." }]
 }
 
-// Props: dimension = { dimension, score, details }. Starts collapsed.
-export default function AccordionItem({ dimension }) {
-  const [expanded, setExpanded] = useState(false)
+// Props: dimension = { dimension, score, details }. Starts collapsed unless startOpen is set
+// (the page text test opens everything to read all of it).
+export default function AccordionItem({ dimension, startOpen = false }) {
+  const [expanded, setExpanded] = useState(startOpen)
 
   const label = getDimensionLabel(dimension.dimension)
   const band = getScoreBand(dimension.score)
@@ -60,7 +61,7 @@ export default function AccordionItem({ dimension }) {
             {scoreText(dimension)}
           </span>
         </span>
-        <span className="accordion-toggle">{expanded ? '−' : '+'}</span>
+        <span className="accordion-toggle">{expanded ? 'Hide' : 'Show'}</span>
       </button>
 
       {expanded && (
@@ -71,7 +72,7 @@ export default function AccordionItem({ dimension }) {
               {part.text}
             </p>
           ))}
-          {dimension.dimension === 'evidence_density' && <EvidenceList details={dimension.details} />}
+          {dimension.dimension === 'evidence_density' && <EvidenceList details={dimension.details} startOpen={startOpen} />}
           {dimension.dimension === 'fact_consistency' && <FactFieldsTable details={dimension.details} />}
         </div>
       )}

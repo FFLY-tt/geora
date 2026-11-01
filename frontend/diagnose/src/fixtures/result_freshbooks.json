@@ -1,0 +1,3586 @@
+{
+ "company_name": "FreshBooks",
+ "domain": "freshbooks.com",
+ "dimensions": [
+  {
+   "dimension": "citation_visibility",
+   "score": 73,
+   "details": {
+    "status": "ok",
+    "category": "Small Business Accounting Software",
+    "question_set": {
+     "category_id": "small-business-accounting-software",
+     "category_name": "Small Business Accounting Software",
+     "version": 4,
+     "status": "frozen",
+     "source": "existing_company_assignment"
+    },
+    "generation_attempts": [
+     {
+      "outcome": "existing_company_assignment",
+      "assignment": {
+       "assigned_on": "2026-10-12",
+       "category_id": "small-business-accounting-software",
+       "classified_as": {
+        "description": "A cloud based tool that helps small business owners and freelancers track income and expenses, send invoices, accept payments, and manage their day to day finances.",
+        "name": "Small Business Accounting Software"
+       },
+       "company_name": "FreshBooks",
+       "homepage_text_sha256": "efb9c99dd8a8f5ec49ea7824d1d11fa5f74a687658bc08b017e89916e84521ca",
+       "match_decision": {
+        "matched_existing": false,
+        "reason": "None of the existing categories cover accounting or finance tools. Product management, sales CRM, and web compliance monitoring are all different types of software. A small business owner shopping for accounting software would not compare it against any of these."
+       }
+      }
+     }
+    ],
+    "runs_per_query": 1,
+    "queries_total": 15,
+    "queries_valid": 15,
+    "average_mention_rate": 0.733,
+    "name_is_common_word": false,
+    "total_uncertain_runs": 0,
+    "mentions": 11,
+    "total": 15,
+    "ci_low": 0.48,
+    "ci_high": 0.891,
+    "ci_method": "Wilson score interval, z = 1.96",
+    "per_query_results": [
+     {
+      "query": "What software helps me manage my small business finances and taxes in one place?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "What is the best accounting software for a freelancer just starting out?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "Which invoicing and expense tool works best for a small retail shop with a few employees?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "Which cloud accounting tool should I choose if I need it to connect with my bank and payment apps?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "What is the best affordable accounting software for a small business on a tight budget?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Invoicing and expense tracking tools for a freelance designer with international clients?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "Which accounting software is easiest to use for someone with no bookkeeping background?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "What is the best tool for a small business that needs to send invoices and accept card payments in one app?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "Which accounting software should I pick if I need strong tax reporting and compliance support?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Best accounting software for a growing small business with multiple team members?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "What is the best mobile friendly finance app for a freelancer who works on the go?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "Which invoicing tool should I choose if I want automatic payment reminders and recurring invoices?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "What is the best accounting tool for a small construction company that needs to track job costs?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     },
+     {
+      "query": "What accounting software should a new online store choose to handle sales tax and inventory?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Which finance tool should a solo consultant pick to handle both client invoices and personal expense tracking?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "hit",
+        "evidence_sentence": null,
+        "is_hit": true,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 1.0
+     }
+    ],
+    "fully_failed_queries": [],
+    "source_map": {
+     "total_answers": 15,
+     "unique_domains": 68,
+     "unparseable_links": 0,
+     "own_domain_share": 0.267,
+     "top_domains": [
+      {
+       "domain": "fitsmallbusiness.com",
+       "answers_citing": 10,
+       "questions_citing": 10,
+       "share": 0.667,
+       "is_own_domain": false
+      },
+      {
+       "domain": "xero.com",
+       "answers_citing": 6,
+       "questions_citing": 6,
+       "share": 0.4,
+       "is_own_domain": false
+      },
+      {
+       "domain": "zapier.com",
+       "answers_citing": 6,
+       "questions_citing": 6,
+       "share": 0.4,
+       "is_own_domain": false
+      },
+      {
+       "domain": "bigtime.net",
+       "answers_citing": 5,
+       "questions_citing": 5,
+       "share": 0.333,
+       "is_own_domain": false
+      },
+      {
+       "domain": "uk.pcmag.com",
+       "answers_citing": 5,
+       "questions_citing": 5,
+       "share": 0.333,
+       "is_own_domain": false
+      },
+      {
+       "domain": "business.org",
+       "answers_citing": 4,
+       "questions_citing": 4,
+       "share": 0.267,
+       "is_own_domain": false
+      },
+      {
+       "domain": "cnbc.com",
+       "answers_citing": 4,
+       "questions_citing": 4,
+       "share": 0.267,
+       "is_own_domain": false
+      },
+      {
+       "domain": "freshbooks.com",
+       "answers_citing": 4,
+       "questions_citing": 4,
+       "share": 0.267,
+       "is_own_domain": true
+      },
+      {
+       "domain": "nerdwallet.com",
+       "answers_citing": 4,
+       "questions_citing": 4,
+       "share": 0.267,
+       "is_own_domain": false
+      },
+      {
+       "domain": "quickbooks.intuit.com",
+       "answers_citing": 4,
+       "questions_citing": 4,
+       "share": 0.267,
+       "is_own_domain": false
+      },
+      {
+       "domain": "business.com",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "forbes.com",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "hostinger.com",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "use.expensify.com",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "albato.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "getjobber.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "investopedia.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "keka.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "pcmag.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "planfix.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      }
+     ]
+    },
+    "plain_finding": {
+     "what_we_found": "When customers ask AI search tools for affordable accounting software on a tight budget, your company is not mentioned at all. On that question you appeared in 0% of answers, while other questions brought you up 100% of the time.",
+     "what_it_costs_you": "A customer comparing budget options sees your competitors named and never hears about you, so they sign up with someone else.",
+     "fix_it_today": "Publish a clear pricing page and a short comparison page that states your entry price and what it includes, then ask your web team to make both pages easy for AI search tools to read."
+    }
+   }
+  },
+  {
+   "dimension": "topic_relevance",
+   "score": 47,
+   "details": {
+    "status": "ok",
+    "pages_read": [
+     "https://www.freshbooks.com/",
+     "https://www.freshbooks.com/pricing",
+     "https://www.freshbooks.com/policies/buy-now-offer",
+     "https://www.freshbooks.com/invoice"
+    ],
+    "pages_failed": [],
+    "per_question_results": [
+     {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+      "generation_failed": false,
+      "question": "What software helps me manage my small business finances and taxes in one place?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "It anticipates the needs of freelancers and small businesses well—better than competitors in this class.",
+      "generation_failed": false,
+      "question": "What is the best accounting software for a freelancer just starting out?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "It anticipates the needs of freelancers and small businesses well—better than competitors in this class.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "It anticipates the needs of freelancers and small businesses well—better than competitors in this class.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "It anticipates the needs of freelancers and small businesses well—better than competitors in this class.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+      "generation_failed": false,
+      "question": "Which invoicing and expense tool works best for a small retail shop with a few employees?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Bank Connection & Expense management — general set-up and usage on workflows such as: adding, categorizing, and updating expenses; scanning and attaching receipts; manual entry and import",
+      "generation_failed": false,
+      "question": "Which cloud accounting tool should I choose if I need it to connect with my bank and payment apps?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Bank Connection & Expense management — general set-up and usage on workflows such as: adding, categorizing, and updating expenses; scanning and attaching receipts; manual entry and import",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/policies/buy-now-offer",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Bank Connection & Expense management — general set-up and usage on workflows such as: adding, categorizing, and updating expenses; scanning and attaching receipts; manual entry and import",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/policies/buy-now-offer",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Bank Connection & Expense management — general set-up and usage on workflows such as: adding, categorizing, and updating expenses; scanning and attaching receipts; manual entry and import",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/policies/buy-now-offer",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/policies/buy-now-offer",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Invest in accounting software that respects your time so you can spend it on building your business, not crunching numbers.",
+      "generation_failed": false,
+      "question": "What is the best affordable accounting software for a small business on a tight budget?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Invest in accounting software that respects your time so you can spend it on building your business, not crunching numbers.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Invest in accounting software that respects your time so you can spend it on building your business, not crunching numbers.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Invest in accounting software that respects your time so you can spend it on building your business, not crunching numbers.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+      "generation_failed": false,
+      "question": "Invoicing and expense tracking tools for a freelance designer with international clients?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks offers a well-rounded, intuitive, and attractive double-entry accounting experience.",
+      "generation_failed": false,
+      "question": "Which accounting software is easiest to use for someone with no bookkeeping background?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks offers a well-rounded, intuitive, and attractive double-entry accounting experience.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks offers a well-rounded, intuitive, and attractive double-entry accounting experience.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks offers a well-rounded, intuitive, and attractive double-entry accounting experience.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks makes it easy to stay organized, keep track of payments owed and expenses made, send invoices and accept payments.",
+      "generation_failed": false,
+      "question": "What is the best tool for a small business that needs to send invoices and accept card payments in one app?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks makes it easy to stay organized, keep track of payments owed and expenses made, send invoices and accept payments.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks makes it easy to stay organized, keep track of payments owed and expenses made, send invoices and accept payments.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks makes it easy to stay organized, keep track of payments owed and expenses made, send invoices and accept payments.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+      "generation_failed": false,
+      "question": "Which accounting software should I pick if I need strong tax reporting and compliance support?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks has really helped me to be more efficient throughout the year so that tax time…it’s less stressful",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+      "generation_failed": false,
+      "question": "Best accounting software for a growing small business with multiple team members?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Businesses with employees Save time (and money!) by using FreshBooks to collaborate with your team while handling accounting, billing, and payroll.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "You sure can. FreshBooks’ iOS and Android apps let you painlessly access our invoice generator to quickly invoice your clients wherever and whenever you need to.",
+      "generation_failed": false,
+      "question": "What is the best mobile friendly finance app for a freelancer who works on the go?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "You sure can. FreshBooks’ iOS and Android apps let you painlessly access our invoice generator to quickly invoice your clients wherever and whenever you need to.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/invoice",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks’ iOS and Android apps let you painlessly access our invoice generator to quickly invoice your clients wherever and whenever you need to.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/invoice",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks’ iOS and Android apps let you painlessly access our invoice generator to quickly invoice your clients wherever and whenever you need to.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/invoice",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/invoice",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "answered",
+      "evidence_sentence": "Absolutely. If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+      "generation_failed": false,
+      "question": "Which invoicing tool should I choose if I want automatic payment reminders and recurring invoices?",
+      "runs": [
+       {
+        "classification": "answered",
+        "evidence_sentence": "Absolutely. If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/invoice",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/invoice",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "If you invoice the same amount on a set schedule, FreshBooks automates everything from making invoices to collecting payments and even (gently) reminding any late-paying customers.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/invoice",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/invoice",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What is the best accounting tool for a small construction company that needs to track job costs?",
+      "runs": [
+       {
+        "classification": "missing",
+        "evidence_sentence": null,
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": null,
+        "status": "ok"
+       },
+       {
+        "classification": "missing",
+        "evidence_sentence": null,
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": null,
+        "status": "ok"
+       },
+       {
+        "classification": "missing",
+        "evidence_sentence": null,
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": null,
+        "status": "ok"
+       }
+      ],
+      "source_url": null,
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "missing",
+      "evidence_sentence": null,
+      "generation_failed": false,
+      "question": "What accounting software should a new online store choose to handle sales tax and inventory?",
+      "runs": [
+       {
+        "classification": "missing",
+        "evidence_sentence": null,
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": null,
+        "status": "ok"
+       },
+       {
+        "classification": "missing",
+        "evidence_sentence": null,
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": null,
+        "status": "ok"
+       },
+       {
+        "classification": "missing",
+        "evidence_sentence": null,
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": null,
+        "status": "ok"
+       }
+      ],
+      "source_url": null,
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+      "generation_failed": false,
+      "question": "Which finance tool should a solo consultant pick to handle both client invoices and personal expense tracking?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "FreshBooks automates daily accounting activities namely invoice creation, payment acceptance, expenses tracking, billable time tracking, and financial reporting.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.freshbooks.com/pricing",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.freshbooks.com/pricing",
+      "cache_status": "cache_hit"
+     }
+    ],
+    "unanswered_questions": [
+     "What software helps me manage my small business finances and taxes in one place?",
+     "What is the best accounting software for a freelancer just starting out?",
+     "Which invoicing and expense tool works best for a small retail shop with a few employees?",
+     "Which cloud accounting tool should I choose if I need it to connect with my bank and payment apps?",
+     "What is the best affordable accounting software for a small business on a tight budget?",
+     "Invoicing and expense tracking tools for a freelance designer with international clients?",
+     "Which accounting software is easiest to use for someone with no bookkeeping background?",
+     "What is the best tool for a small business that needs to send invoices and accept card payments in one app?",
+     "Which accounting software should I pick if I need strong tax reporting and compliance support?",
+     "Best accounting software for a growing small business with multiple team members?",
+     "What is the best mobile friendly finance app for a freelancer who works on the go?",
+     "What is the best accounting tool for a small construction company that needs to track job costs?",
+     "What accounting software should a new online store choose to handle sales tax and inventory?",
+     "Which finance tool should a solo consultant pick to handle both client invoices and personal expense tracking?"
+    ],
+    "plain_finding": {
+     "what_we_found": "Your website gives a clear direct answer to just 1 of 15 real customer questions. For example, a customer asking which tool suits a small construction company tracking job costs finds nothing on your site.",
+     "what_it_costs_you": "Customers who get no clear answer from you will pick a competitor that gives them one.",
+     "fix_it_today": "Add a plain question and answer block to your product pages that directly answers the 12 partly covered questions, starting with the construction job cost and online store sales tax questions."
+    }
+   }
+  },
+  {
+   "dimension": "evidence_density",
+   "score": 40,
+   "details": {
+    "status": "ok",
+    "items": [
+     {
+      "category": "number_or_statistic",
+      "key": "count:160",
+      "text": "160 +",
+      "context": "553 hrs Save up to 553 hours each year by using FreshBooks 160 + People in over 160 countries have used FreshBooks $ 7000",
+      "rule": "number:count_plus",
+      "source_url": "https://freshbooks.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "currency:$7000",
+      "text": "$ 7000",
+      "context": "160 + People in over 160 countries have used FreshBooks $ 7000 Save up to $7000 in billable hours every year 500K + 500K+",
+      "rule": "number:currency",
+      "source_url": "https://freshbooks.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:500000",
+      "text": "500K",
+      "context": "$ 7000 Save up to $7000 in billable hours every year 500K + 500K+ small businesses have used FreshBooks 100+ apps.",
+      "rule": "number:magnitude",
+      "source_url": "https://freshbooks.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:100",
+      "text": "100+ apps",
+      "context": "year 500K + 500K+ small businesses have used FreshBooks 100+ apps. Infinite possibilities. Fuel growth and save time with",
+      "rule": "number:counted_noun",
+      "source_url": "https://freshbooks.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:10000",
+      "text": "10K",
+      "context": "further for your next growth opportunity! Become a Partner 10K + Businesses have partnered with FreshBooks Support that",
+      "rule": "number:magnitude",
+      "source_url": "https://freshbooks.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "rating:4.8",
+      "text": "4.8/5",
+      "context": "and never transfers you to other departments. 4.8/5.0 Star Reviews Yup, that’s our Support team approval",
+      "rule": "number:rating_slash",
+      "source_url": "https://freshbooks.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:120000",
+      "text": "120,000+ reviews",
+      "context": "Yup, that’s our Support team approval rating across 120,000+ reviews Global Support We’ve got over 100 Support staff working",
+      "rule": "number:counted_noun",
+      "source_url": "https://freshbooks.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:3e+07",
+      "text": "30 million",
+      "context": "know exactly why it’s the accounting software used by over 30 million business owners. That doesn’t mean your small business",
+      "rule": "number:magnitude_word",
+      "source_url": "https://freshbooks.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "count:25",
+      "text": "25+",
+      "context": "for small business owners and accountants alike. With over 25+ years of leadership experience as an entrepreneur and CEO,",
+      "rule": "number:count_plus",
+      "source_url": "https://freshbooks.com/about",
+      "source_page": "about",
+      "also_found_on": []
+     },
+     {
+      "category": "third_party_source_or_certification",
+      "key": "pci dss",
+      "text": "PCI DSS",
+      "context": "payments on recurring templates) FreshBooks leverages PCI DSS Level 1 Compliant partners who undergo an annual audit of",
+      "rule": "third_party:standard",
+      "source_url": "https://freshbooks.com/policies/security-safeguards",
+      "source_page": "security",
+      "also_found_on": []
+     }
+    ],
+    "counts_by_category": {
+     "number_or_statistic": 9,
+     "customer_stories": 0,
+     "attributed_quote": 0,
+     "third_party_source_or_certification": 1
+    },
+    "points_by_category": {
+     "number_or_statistic": 25,
+     "customer_stories": 0,
+     "attributed_quote": 0,
+     "third_party_source_or_certification": 15
+    },
+    "pages_by_category": {
+     "number_or_statistic": {
+      "home": 8,
+      "about": 1
+     },
+     "customer_stories": {},
+     "attributed_quote": {},
+     "third_party_source_or_certification": {
+      "security": 1
+     }
+    },
+    "customer_stories_reason": "Our judgment: AI assistants cannot see logo images, so logos are not evidence an AI can quote. A separate customer story page is text an AI can read and cite, so this category counts the distinct story pages linked one level below the customers page. Logos are listed for reference only.",
+    "customer_logos_reference": [
+     {
+      "category": "customer_logo_reference",
+      "key": "chevronup",
+      "text": "Chevron Up",
+      "context": "logo: Chevron Up",
+      "rule": "customer:logo_area",
+      "source_url": "https://freshbooks.com",
+      "source_page": "home"
+     }
+    ],
+    "own_brands": [
+     "freshbooks"
+    ],
+    "scoring_rule": "Our own fixed formula, not an AI judgment and not an outside standard: each of the 4 evidence categories is worth up to 25 points by how many distinct pieces of evidence the code rules found ({0: 0, 1: 15, 2: 20}, 25 points for 3 or more). Finding none is a score of 0, not missing data.",
+    "pages_read": [
+     {
+      "kind": "home",
+      "url": "https://freshbooks.com",
+      "text_length": 9945,
+      "evidence_found": 13
+     },
+     {
+      "kind": "security",
+      "url": "https://freshbooks.com/policies/security-safeguards",
+      "text_length": 4371,
+      "evidence_found": 1
+     },
+     {
+      "kind": "pricing",
+      "url": "https://freshbooks.com/pricing",
+      "text_length": 17757,
+      "evidence_found": 0
+     },
+     {
+      "kind": "about",
+      "url": "https://freshbooks.com/about",
+      "text_length": 4388,
+      "evidence_found": 2
+     }
+    ],
+    "pages_failed": [],
+    "plain_finding": {
+     "what_we_found": "We read 4 pages on your site and found 9 specific numbers or statistics, 0 customer story pages, 0 named customer testimonials, and 1 third-party ratings or certifications.",
+     "what_it_costs_you": "Your site is thin on customer story pages, so that part of your story rests on claims alone.",
+     "fix_it_today": "Add real customer story pages next to your biggest claim on the homepage."
+    }
+   }
+  },
+  {
+   "dimension": "content_recency",
+   "score": -1,
+   "details": {
+    "status": "insufficient_data",
+    "reason": "Neither a Last-Modified HTTP header nor a schema.org dateModified value was found; recency cannot be determined.",
+    "plain_finding": {
+     "what_we_found": "We opened your homepage and found no date anywhere showing when it was last updated. A customer landing there has no way to tell if the page is current or years old.",
+     "what_it_costs_you": "When a customer cannot tell if your page is current, they may trust it less and pick a competitor whose site looks actively maintained.",
+     "fix_it_today": "Add a visible last updated date near the top or bottom of your homepage and refresh it whenever you change the page."
+    }
+   }
+  },
+  {
+   "dimension": "fact_consistency",
+   "score": 95,
+   "details": {
+    "status": "ok",
+    "query": "Using only what third-party software review sites such as G2, Capterra, TrustRadius, GetApp or Software Advice say about FreshBooks (freshbooks.com), give a value for each of these fields. Use null when those sites do not state it. Do not use the company's own website.\n- starting_price: the price of the cheapest paid plan, as listed\n- free_plan_or_trial: whether a free plan or a free trial is offered\n- product_category: what kind of product it is\n- target_customer: who it is mainly for, for example small businesses, mid-market, or enterprise\n- deployment: cloud, on-premise, or both\nRespond with ONLY a JSON object, no other text, in this exact shape: {\"starting_price\": {\"value\": <string or null>, \"source_url\": <string or null>}, \"free_plan_or_trial\": {\"value\": <string or null>, \"source_url\": <string or null>}, \"product_category\": {\"value\": <string or null>, \"source_url\": <string or null>}, \"target_customer\": {\"value\": <string or null>, \"source_url\": <string or null>}, \"deployment\": {\"value\": <string or null>, \"source_url\": <string or null>}}",
+    "fields": [
+     {
+      "field": "starting_price",
+      "label": "Starting price",
+      "official_quote": null,
+      "official_value": null,
+      "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/pricing/",
+      "third_party_value": "$21.00 per month",
+      "verdict": "unknown",
+      "votes": [
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     },
+     {
+      "field": "free_plan_or_trial",
+      "label": "Free plan or trial",
+      "official_quote": "As a small business owner, you get unlimited access to FreshBooks accounting software through our 30-day free trial, with no contracts and no credit card required.",
+      "official_value": "30-day free trial, no credit card required",
+      "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/pricing/",
+      "third_party_value": "Free trial available; free version not available",
+      "verdict": "match",
+      "votes": [
+       "match",
+       "match",
+       "match"
+      ]
+     },
+     {
+      "field": "product_category",
+      "label": "Product category",
+      "official_quote": "Plus, as a cloud accounting software – your data is stored and ready to be accessed wherever you are in the world.",
+      "official_value": "Cloud accounting software",
+      "third_party_source": "https://www.capterra.ca/compare/73970/142390/ap-forensics-enterprise-suite/vs/freshbooks",
+      "third_party_value": "Cloud-based accounting software",
+      "verdict": "match",
+      "votes": [
+       "match",
+       "unknown",
+       "match"
+      ]
+     },
+     {
+      "field": "target_customer",
+      "label": "Target customer",
+      "official_quote": "It’s perfect for everyone from self-employed professionals to growing business owners.",
+      "official_value": "Small businesses, freelancers, solopreneurs, self-employed professionals",
+      "third_party_source": "https://www.capterra.ca/compare/73970/142390/ap-forensics-enterprise-suite/vs/freshbooks",
+      "third_party_value": "Small businesses and self-employed users",
+      "verdict": "match",
+      "votes": [
+       "match",
+       "match",
+       "match"
+      ]
+     },
+     {
+      "field": "deployment",
+      "label": "Deployment",
+      "official_quote": "FreshBooks and all FreshBooks features are 100% web-based, meaning you can access them anywhere.",
+      "official_value": "Web-based/cloud",
+      "third_party_source": "https://www.capterra.ca/software/142390/freshbooks",
+      "third_party_value": "Cloud, SaaS, and web-based",
+      "verdict": "match",
+      "votes": [
+       "match",
+       "match",
+       "match"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "fields": {
+       "deployment": {
+        "official_quote": "FreshBooks and all FreshBooks features are 100% web-based, meaning you can access them anywhere.",
+        "official_value": "Web-based/cloud",
+        "reason": null,
+        "third_party_claimed_value": "Cloud, SaaS, and web-based",
+        "third_party_source": "https://www.capterra.ca/software/142390/freshbooks",
+        "third_party_value": "Cloud, SaaS, and web-based",
+        "verdict": "match"
+       },
+       "free_plan_or_trial": {
+        "official_quote": "As a small business owner, you get unlimited access to FreshBooks accounting software through our 30-day free trial, with no contracts and no credit card required.",
+        "official_value": "30-day free trial, no credit card required",
+        "reason": null,
+        "third_party_claimed_value": "Free trial available; free version not available",
+        "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/pricing/",
+        "third_party_value": "Free trial available; free version not available",
+        "verdict": "match"
+       },
+       "product_category": {
+        "official_quote": "Plus, as a cloud accounting software – your data is stored and ready to be accessed wherever you are in the world.",
+        "official_value": "Cloud accounting software",
+        "reason": null,
+        "third_party_claimed_value": "Cloud-based accounting software",
+        "third_party_source": "https://www.capterra.ca/compare/73970/142390/ap-forensics-enterprise-suite/vs/freshbooks",
+        "third_party_value": "Cloud-based accounting software",
+        "verdict": "match"
+       },
+       "starting_price": {
+        "official_quote": null,
+        "official_value": null,
+        "reason": "no official value",
+        "third_party_claimed_value": "$21.00 per month",
+        "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/pricing/",
+        "third_party_value": "$21.00 per month",
+        "verdict": "unknown"
+       },
+       "target_customer": {
+        "official_quote": "It’s perfect for everyone from self-employed professionals to growing business owners.",
+        "official_value": "Small businesses, freelancers, solopreneurs, self-employed professionals",
+        "reason": null,
+        "third_party_claimed_value": "Small businesses and self-employed users",
+        "third_party_source": "https://www.capterra.ca/compare/73970/142390/ap-forensics-enterprise-suite/vs/freshbooks",
+        "third_party_value": "Small businesses and self-employed users",
+        "verdict": "match"
+       }
+      },
+      "run": 1,
+      "status": "ok"
+     },
+     {
+      "fields": {
+       "deployment": {
+        "official_quote": "Plus, as a cloud accounting software – your data is stored and ready to be accessed wherever you are in the world.",
+        "official_value": "Cloud, web-based",
+        "reason": null,
+        "third_party_claimed_value": "Cloud, SaaS, web-based",
+        "third_party_source": "https://www.capterra.ca/software/142390/freshbooks",
+        "third_party_value": "Cloud, SaaS, web-based",
+        "verdict": "match"
+       },
+       "free_plan_or_trial": {
+        "official_quote": "As a small business owner, you get unlimited access to FreshBooks accounting software through our 30-day free trial, with no contracts and no credit card required.",
+        "official_value": "30-day free trial, no credit card required",
+        "reason": null,
+        "third_party_claimed_value": "Free trial available; free version not available",
+        "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/pricing/",
+        "third_party_value": "Free trial available; free version not available",
+        "verdict": "match"
+       },
+       "product_category": {
+        "official_quote": "Accounting software is a tool that allows you to track and manage the day-to-day finances of your businesses.",
+        "official_value": "Accounting software",
+        "reason": "no third-party value",
+        "third_party_claimed_value": null,
+        "third_party_source": null,
+        "third_party_value": null,
+        "verdict": "unknown"
+       },
+       "starting_price": {
+        "official_quote": null,
+        "official_value": null,
+        "reason": "no official value",
+        "third_party_claimed_value": "$21.00 per month",
+        "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/pricing/",
+        "third_party_value": "$21.00 per month",
+        "verdict": "unknown"
+       },
+       "target_customer": {
+        "official_quote": "Your everyday small business software",
+        "official_value": "Small businesses, freelancers, solopreneurs",
+        "reason": null,
+        "third_party_claimed_value": "Freelancers, solopreneurs, and small service-based businesses",
+        "third_party_source": "https://www.g2.com/products/freshbooks/pricing",
+        "third_party_value": "Freelancers, solopreneurs, and small service-based businesses",
+        "verdict": "match"
+       }
+      },
+      "run": 2,
+      "status": "ok"
+     },
+     {
+      "fields": {
+       "deployment": {
+        "official_quote": "FreshBooks and all FreshBooks features are 100% web-based, meaning you can access them anywhere.",
+        "official_value": "Cloud, web-based",
+        "reason": null,
+        "third_party_claimed_value": "Cloud, SaaS, web-based",
+        "third_party_source": "https://www.capterra.com/compare/142390-222215/FreshBooks-vs-Invoiced",
+        "third_party_value": "Cloud, SaaS, web-based",
+        "verdict": "match"
+       },
+       "free_plan_or_trial": {
+        "official_quote": "As a small business owner, you get unlimited access to FreshBooks accounting software through our 30-day free trial, with no contracts and no credit card required.",
+        "official_value": "Free 30-day trial, no credit card required",
+        "reason": null,
+        "third_party_claimed_value": "Free 30-day trial; no free plan",
+        "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/",
+        "third_party_value": "Free 30-day trial; no free plan",
+        "verdict": "match"
+       },
+       "product_category": {
+        "official_quote": "Plus, as a cloud accounting software – your data is stored and ready to be accessed wherever you are in the world.",
+        "official_value": "Cloud accounting software",
+        "reason": null,
+        "third_party_claimed_value": "Cloud-based accounting software",
+        "third_party_source": "https://www.capterra.com/compare/142390-184768/FreshBooks-vs-Link-My-Books",
+        "third_party_value": "Cloud-based accounting software",
+        "verdict": "match"
+       },
+       "starting_price": {
+        "official_quote": null,
+        "official_value": null,
+        "reason": "no official value",
+        "third_party_claimed_value": "$21 per month",
+        "third_party_source": "https://www.capterra.com/p/142390/FreshBooks/",
+        "third_party_value": "$21 per month",
+        "verdict": "unknown"
+       },
+       "target_customer": {
+        "official_quote": "Your everyday small business software",
+        "official_value": "Small businesses",
+        "reason": null,
+        "third_party_claimed_value": "Small businesses",
+        "third_party_source": "https://www.capterra.com/compare/142390-184768/FreshBooks-vs-Link-My-Books",
+        "third_party_value": "Small businesses",
+        "verdict": "match"
+       }
+      },
+      "run": 3,
+      "status": "ok"
+     }
+    ],
+    "voting_rule": "Each field is judged on 3 independent runs. It is a conflict only if at least 2 runs say conflict, a match only if at least 2 runs say match, and unknown otherwise. The score counts voted conflicts: 0, 1, 2, 3 or more give 95, 60, 35, 10.",
+    "fields_version": "v2",
+    "cache_status": "cache_hit",
+    "official_urls_fetched": [
+     "https://freshbooks.com",
+     "https://freshbooks.com/pricing"
+    ],
+    "conflict_fields": [],
+    "match_fields": [
+     "free_plan_or_trial",
+     "product_category",
+     "target_customer",
+     "deployment"
+    ],
+    "unknown_fields": [
+     "starting_price"
+    ],
+    "plain_finding": {
+     "what_we_found": "We compared what FreshBooks says on its own site about its free trial, product category, target customer, and deployment against what independent review sites say. All of it matches.",
+     "what_it_costs_you": "Nothing here is costing you customers, so you can set this concern aside and focus your effort where real problems exist.",
+     "fix_it_today": "Keep your site facts current by checking them against the top review sites once a quarter."
+    }
+   }
+  },
+  {
+   "dimension": "technical_readability",
+   "score": 80,
+   "details": {
+    "status": "ok",
+    "method_note": "Check weights are our own judgment. AI crawler access, structured data, and heading structure come from GEO-16 (Kumar and Palkhouski, 2025). The static content check comes from Vercel and MERJ's December 2024 research, which found GPTBot and ClaudeBot only fetch raw HTML and never execute JavaScript, so content that only appears after a client-side render is invisible to them even though a human visitor sees it fine.",
+    "crawler_access": {
+     "points": 30,
+     "max_points": 30,
+     "allowed_crawlers": [
+      "GPTBot",
+      "PerplexityBot",
+      "ClaudeBot",
+      "Google-Extended"
+     ],
+     "blocked_crawlers": []
+    },
+    "static_content": {
+     "points": 30,
+     "max_points": 30,
+     "word_count": 1219,
+     "h1_has_text": true
+    },
+    "structured_data": {
+     "points": 0,
+     "max_points": 20,
+     "found_types": []
+    },
+    "heading_structure": {
+     "points": 20,
+     "max_points": 20,
+     "h1_count": 1,
+     "h2_count": 9
+    },
+    "plain_finding": {
+     "what_we_found": "AI search tools can reach your homepage, but they read only the raw text and find no structured data that tells them what your company does, so they cannot describe your business clearly to customers.",
+     "what_it_costs_you": "When a customer asks an AI search tool for a company like yours, it may name a competitor it can understand instead of you.",
+     "fix_it_today": "Add simple structured data to your homepage that states your company name, what you sell, and your location, then test it with a free online checker."
+    }
+   }
+  }
+ ],
+ "cached_at": "2026-10-19T03:03:52.361334+00:00",
+ "previous_scores": null,
+ "source_layers": {
+  "list_version": "v2",
+  "page_type_rules_version": "v1",
+  "method_version": "v3",
+  "total_answers": 15,
+  "total_citations": 150,
+  "pages_cited": 117,
+  "pages_checked": 53,
+  "pages_cap": 60,
+  "coverage": {
+   "checked_citations": 83,
+   "citations_outside_own_site": 146,
+   "ratio": 0.5685
+  },
+  "biggest_gap_layer": "lists",
+  "conclusion": [
+   "For these questions, AI often reads 'best tools' lists and comparisons written by other companies, and only 76% of them mention you. The most cited ones that don't: “10 Best Billing Software [2026] | Keka HR” (keka.com), “Best Accounting Software for Small Businesses | QuickBooks” (quickbooks.intuit.com), “Top Free Personal Finance Software in 2026 (Plus a Smart Pick for Freelancers)” (use.expensify.com)."
+  ],
+  "layers": [
+   {
+    "layer": "reference",
+    "parent": "reference",
+    "citations": 0,
+    "reliance": 0.0,
+    "presence": null,
+    "gap": 0.0,
+    "status": "not_used",
+    "coverage": {
+     "checked_citations": 0,
+     "citations": 0,
+     "ratio": null
+    },
+    "pages": [],
+    "pages_not_checked": 0,
+    "unknown_pages": [],
+    "domains": []
+   },
+   {
+    "layer": "review_media",
+    "parent": "review_media",
+    "citations": 41,
+    "reliance": 0.2733,
+    "presence": 0.6897,
+    "gap": 0.0848,
+    "status": "gap",
+    "coverage": {
+     "checked_citations": 29,
+     "citations": 41,
+     "ratio": 0.7073
+    },
+    "pages": [
+     {
+      "url": "uk.pcmag.com/smb-accounting/32761/the-best-small-business-accounting-software",
+      "citations": 5,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "The Best Accounting Software for Small Businesses in 2026",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "apabilities, costs, and ease of use. Three products stand out as Editors' Choice winners: FreshBooks for service-based businesses, Intuit QuickBooks Online for companies that sell both produ",
+      "near_miss": null
+     },
+     {
+      "url": "nerdwallet.com/business/software/best/accounting-software",
+      "citations": 4,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "Best Accounting Software for Small Business of 2026 - NerdWallet",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "ich can add up quickly. Xero offers a large number of integrations, too. Read full review FreshBooks Best for Freelancers FreshBooks Best for Freelancers 4.7 NerdWallet’s ratings are determi",
+      "near_miss": null
+     },
+     {
+      "url": "nerdwallet.com/business/software/learn/accounting-software",
+      "citations": 3,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "5 Best Accounting Software Picks for 2026 - NerdWallet",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "es Xero: The best for ease of use Zoho Books: The best all-in-one business software suite FreshBooks: The best for project management Wave: The best for free, unlimited invoicing Helpful Res",
+      "near_miss": null
+     },
+     {
+      "url": "cnbc.com/amp/select/how-to-choose-the-right-accounting-software",
+      "citations": 2,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "How to Choose The Right Accounting Software for Your Business",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cnbc.com/select/how-to-choose-the-right-accounting-software",
+      "citations": 2,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "How to Choose The Right Accounting Software for Your Business",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "fitsmallbusiness.com/best-invoicing-software",
+      "citations": 2,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "7 Best Invoicing & Billing Software for Small Businesses 2026",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "onthly price My ratings QuickBooks Online Full accounts receivable and accounting $38 4.8 FreshBooks Automated payment reminders and service billing $23 4.6 Xero Scalable invoicing with unli",
+      "near_miss": null
+     },
+     {
+      "url": "fitsmallbusiness.com/best-retail-accounting-software",
+      "citations": 2,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "5 Best Accounting Software for Small Retail Businesses",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "the best invoicing software for small business in 2026. See expert reviews of QuickBooks, FreshBooks, Xero, Wave, and more. JR Suralta Â· Sep 11, 2026 Accounting QuickBooks Online Comparison",
+      "near_miss": null
+     },
+     {
+      "url": "forbes.com/advisor/business/software/best-accounting-software",
+      "citations": 2,
+      "page_type": null,
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "capterra.com/resources/simple-accounting-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "cnbc.com/select/best-accounting-software-for-small-businesses",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "Best Accounting Software for Small Businesses in 2026",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "for small businesses Best for finding mistakes: Intuit QuickBooks Best for customization: Freshbooks Best for affordability: Xero Best free plan: Zoho Books Best for solopreneurs: Wave Best",
+      "near_miss": null
+     },
+     {
+      "url": "cnet.com/tech/services-and-software/best-budgeting-apps",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "The Best Budgeting Apps of 2026: Our Top Picks for Debt Payoff, Cash Flow and Zero-Based Budgeting - CNET",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "fitsmallbusiness.com/best-accounting-software-for-freelancers",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "6 Best Accounting Software for Freelancers",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "utstanding mobile app QuickBooks Online : Best for access to local bookkeeping assistance FreshBooks : Best easy-to-use software for service-based freelancers Wave : Best free accounting sof",
+      "near_miss": null
+     },
+     {
+      "url": "fitsmallbusiness.com/best-construction-accounting-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "6 Best Construction Accounting Software Programs",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "fitsmallbusiness.com/best-free-accounting-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "7 Best Free Accounting Software for 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "fitsmallbusiness.com/best-small-business-accounting-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "7 Best Small Business Accounting Software for 2026",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "ble small business accounting $38 Wave Best free option for basic bookkeeping Free or $19 FreshBooks Best for service businesses billing by project $23 Xero Best for multiuser teams and inve",
+      "near_miss": null
+     },
+     {
+      "url": "fitsmallbusiness.com/credit-card-payment-app",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "Best Credit Card Payment Apps for 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "fitsmallbusiness.com/mobile-accounting-apps",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "5 Best Mobile Accounting Apps for Small Business in 2026",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "and mobile accounting Free Xero Teams needing unlimited users and scalable accounting $25 FreshBooks Freelancers and service-based businesses $23 Zoho Invoice Freelancers needing free invoic",
+      "near_miss": null
+     },
+     {
+      "url": "fitsmallbusiness.com/what-is-quickbooks",
+      "citations": 1,
+      "page_type": null,
+      "status": "checked",
+      "error": null,
+      "title": "What Is QuickBooks? Products, Features & Services",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "forbes.com/advisor/banking/best-budgeting-apps",
+      "citations": 1,
+      "page_type": null,
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "forbes.com/financial-services/best-budgeting-apps-2",
+      "citations": 1,
+      "page_type": null,
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "nerdwallet.com/business/software/best/freelancer-accounting-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pcmag.com/picks/the-best-personal-finance-services",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pcmag.com/picks/the-best-small-business-accounting-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "smallbiztrends.com/freelancer-accounting-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "techradar.com/best/best-billing-and-invoicing-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "techradar.com/best/best-personal-finance-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zdnet.com/article/best-small-business-accounting-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 7,
+    "unknown_pages": [
+     {
+      "url": "forbes.com/advisor/business/software/best-accounting-software",
+      "citations": 2,
+      "error": "HTTPError"
+     },
+     {
+      "url": "capterra.com/resources/simple-accounting-software",
+      "citations": 1,
+      "error": "HTTPError"
+     },
+     {
+      "url": "forbes.com/advisor/banking/best-budgeting-apps",
+      "citations": 1,
+      "error": "HTTPError"
+     },
+     {
+      "url": "forbes.com/financial-services/best-budgeting-apps-2",
+      "citations": 1,
+      "error": "HTTPError"
+     }
+    ],
+    "domains": [
+     {
+      "domain": "fitsmallbusiness.com",
+      "citations": 11
+     },
+     {
+      "domain": "nerdwallet.com",
+      "citations": 8
+     },
+     {
+      "domain": "cnbc.com",
+      "citations": 5
+     },
+     {
+      "domain": "uk.pcmag.com",
+      "citations": 5
+     },
+     {
+      "domain": "forbes.com",
+      "citations": 4
+     },
+     {
+      "domain": "pcmag.com",
+      "citations": 2
+     },
+     {
+      "domain": "techradar.com",
+      "citations": 2
+     },
+     {
+      "domain": "capterra.com",
+      "citations": 1
+     },
+     {
+      "domain": "cnet.com",
+      "citations": 1
+     },
+     {
+      "domain": "smallbiztrends.com",
+      "citations": 1
+     },
+     {
+      "domain": "zdnet.com",
+      "citations": 1
+     }
+    ]
+   },
+   {
+    "layer": "community",
+    "parent": "community",
+    "citations": 0,
+    "reliance": 0.0,
+    "presence": null,
+    "gap": 0.0,
+    "status": "not_used",
+    "coverage": {
+     "checked_citations": 0,
+     "citations": 0,
+     "ratio": null
+    },
+    "pages": [],
+    "pages_not_checked": 0,
+    "unknown_pages": [],
+    "domains": []
+   },
+   {
+    "layer": "own_site",
+    "parent": "own_site",
+    "citations": 4,
+    "reliance": 0.0267,
+    "presence": 1.0,
+    "gap": 0.0,
+    "status": "covered",
+    "coverage": {
+     "checked_citations": 4,
+     "citations": 4,
+     "ratio": 1.0
+    },
+    "pages": [
+     {
+      "url": "freshbooks.com/hub/invoicing/best-invoicing-software-for-small-business",
+      "citations": 2,
+      "page_type": null,
+      "status": "cited",
+      "mentions_you": true,
+      "rule": "own_site",
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "freshbooks.com/accounting-software/for-small-business",
+      "citations": 1,
+      "page_type": null,
+      "status": "cited",
+      "mentions_you": true,
+      "rule": "own_site",
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "freshbooks.com/hub/accounting/construction-accounting-software",
+      "citations": 1,
+      "page_type": null,
+      "status": "cited",
+      "mentions_you": true,
+      "rule": "own_site",
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 0,
+    "unknown_pages": [],
+    "domains": [
+     {
+      "domain": "freshbooks.com",
+      "citations": 4
+     }
+    ]
+   },
+   {
+    "layer": "lists",
+    "parent": "other_companies",
+    "citations": 70,
+    "reliance": 0.4667,
+    "presence": 0.7647,
+    "gap": 0.1098,
+    "status": "biggest_gap",
+    "coverage": {
+     "checked_citations": 51,
+     "citations": 70,
+     "ratio": 0.7286
+    },
+    "pages": [
+     {
+      "url": "bigtime.net/blogs/billing-invoicing-software",
+      "citations": 5,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Billing and Invoicing Software for 2026",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "d Invoicing Software Ranking Billing and Invoicing Software: Comparison QuickBooks Online FreshBooks Zoho Invoice Square Invoices Wave Xero Bill.com Invoice2go (by Bill) Harvest Which Billin",
+      "near_miss": null
+     },
+     {
+      "url": "business.org/finance/accounting/best-small-business-accounting-software",
+      "citations": 3,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The 9 Best Small Business Accounting Software of 2026",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "utstanding mobile app Up to 25 users Easy tax tracking Shop Now Learn More Best invoicing FreshBooks Starting from $8.50/mo.** Unlimited invoices Unlimited users (addt'l fee) Client portal f",
+      "near_miss": null
+     },
+     {
+      "url": "hostinger.com/tutorials/best-invoicing-software",
+      "citations": 3,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best invoicing software: Top tools and key features",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "a. These are the best invoicing software based on common use cases: Best for freelancers: FreshBooks or Bonsai Best for small businesses: QuickBooks or Xero Best free option: Wave or Zoho In",
+      "near_miss": null
+     },
+     {
+      "url": "business.com/categories/accounting-software",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Accounting Software Programs Reviews of 2026",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "grams for 2026 Top cloud accounting software in 2026 includes QuickBooks Online, Xero and FreshBooks. These platforms offer automated bank feeds, receipt capture and invoicing, with various",
+      "near_miss": null
+     },
+     {
+      "url": "investopedia.com/the-best-accounting-software-for-small-business-8780908",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "keka.com/best-billing-software",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best Billing Software [2026] | Keka HR",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "planfix.com/blog/industry-insights/top-10-online-software-for-accounting",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best CRM for Accounting Firms to Streamline Workflows | Planfix Blog",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "e? Top 10 Online Accounting Software Platforms 1. Planfix 2. QuickBooks Online 3. Xero 4. FreshBooks 5. Zoho Books 6. Wave 7. Sage Business Cloud 8. NetSuite by Oracle 9. Kashoo 10. OneUp Co",
+      "near_miss": null
+     },
+     {
+      "url": "quickbooks.intuit.com/accounting",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Accounting Software for Small Businesses | QuickBooks",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "use.expensify.com/resource-center/guides/free-personal-finance-software",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Top Free Personal Finance Software in 2026 (Plus a Smart Pick for Freelancers)",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "xero.com/us/guides/best-invoicing-software",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best invoicing software for small businesses | Xero US",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "g without switching between tools. You can explore all features at Xero's features page . FreshBooks: most user friendly FreshBooks focuses on making invoicing as simple as possible, especia",
+      "near_miss": null
+     },
+     {
+      "url": "zapier.com/blog/best-accounting-software",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The 9 best accounting software tools for small business",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "res. See how QuickBooks compares to another accounting software solution in our showdown: FreshBooks vs. QuickBooks . Best free accounting software Wave (Web, iOS, Android) Wave pros: Plenty",
+      "near_miss": null
+     },
+     {
+      "url": "zapier.com/blog/best-free-invoice-software",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The 6 best free invoicing software in 2026 | Zapier",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "zapier.com/blog/best-invoicing-software",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The best invoicing software in 2026 | Zapier",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "a2xaccounting.com/ecommerce-accounting-hub/best-ecommerce-accounting-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Top 5 Best Ecommerce Accounting Software [2026 Guide]",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "ghter-weight tools before upgrading to more powerful accounting software. Here are a few: FreshBooks . Simple invoicing and expense tracking, but less built-in ecommerce functionality. Wave",
+      "near_miss": null
+     },
+     {
+      "url": "agiled.app/blog/best-invoicing-software-for-web-designers",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "12 Best Invoicing Software for Web Designers (2026) | Agiled",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "Agiled — One Platform for Proposals, Contracts, Time Tracking, and Milestone Invoicing 2. FreshBooks — Fastest Time-to-Invoice for Hourly Design Work 3. Bonsai — Proposal-to-Invoice Flow Bui",
+      "near_miss": null
+     },
+     {
+      "url": "aimoneyvault.app/resources/articles/best-finance-apps-for-freelancers",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Finance Apps for Freelancers in 2026 | Money Vault",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": ": QuickBooks Self-Employed ($15/mo, Schedule C ready) Best for client-facing freelancers: FreshBooks ($19/mo, time tracking + invoices) Best corporate expense reports: Expensify ($4.99/mo, r",
+      "near_miss": null
+     },
+     {
+      "url": "albato.com/blog/publications/best-accounting-software-online-sellers",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best Accounting Software for Online Sellers (2026)",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "want maximum accountant compatibility, Xero for international and multi-currency sellers, FreshBooks for service-based sellers and freelancers, Wave for low-volume or budget-conscious seller",
+      "near_miss": null
+     },
+     {
+      "url": "albato.com/blog/publications/best-invoicing-software-ecommerce-tools",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best Invoicing Software for E-commerce in 2026",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "international stores $25/mo Native Shopify, WooCommerce apps 7 triggers, 13 actions 4.3/5 FreshBooks Small e-commerce teams $19/mo Shopify via app store 5 triggers, 6 actions 4.5/5 Stripe In",
+      "near_miss": null
+     },
+     {
+      "url": "bench.co/blog/accounting/accounting-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Top 8 Easy-to-Use SMB Accounting Software | Bench Accounting",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "ss accounting software for ease of use are: Bench: Best full service accounting solution. FreshBooks: Best user-friendly accounting and invoicing software. Xero: Best advanced features for a",
+      "near_miss": null
+     },
+     {
+      "url": "bigtime.net/blogs/best-billing-and-invoicing-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Billing and Invoicing Software - 2026 Review",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "minders often require extra setup; not ideal for teams needing deeper invoice processing. FreshBooks Simple invoicing software aimed at freelancers. Easy to create professional invoices; str",
+      "near_miss": null
+     },
+     {
+      "url": "bill.com/blog/best-smb-accounting-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best accounting software for small business",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "Online a standout (with the options for QuickBooks desktop available, too). Best invoices FreshBooks Price : $15/mo Key features : Unlimited invoices Customer review : “Freshbooks allows me",
+      "near_miss": null
+     },
+     {
+      "url": "bookipi.com/bookkeeping/best-invoicing-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best Invoicing Software for Small Business (2026) | Bookipi",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "Square Invoice (seamless POS + payments integration). Best for freelancers & consultants: FreshBooks (polished interface + strong payment options). Best budget tool with time tracking: ZipBo",
+      "near_miss": null
+     },
+     {
+      "url": "business.com/categories/best-accounting-software-for-multiple-businesses",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The Best Accounting Software for Multiple Businesses",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "-day free trial More than 1,000 integrations Visit Site Links to Xero Accounting Software FreshBooks Accounting 9.1 /10 Editor's rating Best Accounting Software for Invoicing Starts at $23 p",
+      "near_miss": null
+     },
+     {
+      "url": "business.org/finance/accounting/best-bookkeeping-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Bookkeeping Software for Small Business 2026",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "l bookkeeping software in our top five? Here are two more bookkeeping options to explore. FreshBooks Kashoo Compare business bookkeeping software: Honorable mentions Bookkeeping software Sta",
+      "near_miss": null
+     },
+     {
+      "url": "business.org/finance/accounting/best-self-employed-accounting-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "7 Best Self-Employed Accounting Software of 2026",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "self-employed freelancers to bring you our top 9 accounting software picks. Best overall FreshBooks 4.0 Starting from $15.00/mo. Automatic recurring invoices Customer portal for easy collab",
+      "near_miss": null
+     },
+     {
+      "url": "companionlink.com/blog/2026/01/8-best-invoice-apps-for-graphic-designers-in-2026",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "8 Best Invoice Apps for Graphic Designers in 2026",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": ". In this article, we’ll look at the best invoice apps for graphic designers, focusing on FreshBooks as the number one choice, along with other great alternatives. Overview of the 8 Best Inv",
+      "near_miss": null
+     },
+     {
+      "url": "demilked.com/best/invoicing-software-for-freelancers",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best invoicing software for freelancers in 2026 (Tested) | Demilked",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "ing software for freelancers in 2026 (Tested) | Demilked 1 . Dubsado 2 . Zoho Invoice 3 . FreshBooks 4 . Bonsai 5 . HoneyBook 6 . Wave Go to our final verdict Best tools / Invoicing software",
+      "near_miss": null
+     },
+     {
+      "url": "feedough.com/startup-resources/the-10-best-financial-management-tools",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The 10 Best Financial Management Tools [2026 ] - Feedough",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "loyee management for small to mid-size businesses.” Best for invoicing and time tracking: FreshBooks , “Creates professional invoices, tracks business expenses, logs billable hours, and gene",
+      "near_miss": null
+     },
+     {
+      "url": "fueler.io/blog/best-financial-planning-tools-for-us-solopreneurs",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Financial Planning Tools for US Solopreneurs",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "aboration • Ad-free platform Monthly: $14.99/month Annual: $99.99/year Free Trial: 7 days FreshBooks Consultants, agencies, marketers, developers, and client-service businesses Automated tim",
+      "near_miss": null
+     },
+     {
+      "url": "getjobber.com/academy/best-invoice-app",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Invoice App: 9 Top Tools for 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "getjobber.com/academy/best-invoicing-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "6 Best Invoicing Software for Contractors in 2026: Get Paid Faster",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "d with top invoicing tools. Solutions like Jobber, Wave, QuickBooks Online, Zoho Invoice, FreshBooks, and Paymo let you send invoices quickly, automate reminders, and accept online payments—",
+      "near_miss": null
+     },
+     {
+      "url": "hellobonsai.com/blog/invoicing-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "30+ best invoicing software for business owners and SMBs",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "g software for freelancers (33, to be precise) to help you decide. Bonsai QuickBooks Xero FreshBooks Zoho Books Wave Sage 50cloud Harvest OneUp FreeAgent ChargeBee WORKetc SliQ Invoicing Pay",
+      "near_miss": null
+     },
+     {
+      "url": "home.swipesimple.com/connect/blog/best-invoicing-software-for-small-business-in-2026",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Invoicing Software for Small Business (2026): Get Paid Faster",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "sses, including HVAC, plumbing, electrical, auto repair, and salons. Compares QuickBooks, FreshBooks, Wave, Jobber, and SwipeSimple on the criteria that matter most for getting paid faster.\"",
+      "near_miss": null
+     },
+     {
+      "url": "launchadvisor.co/guides/quickbooks-vs-freshbooks-vs-wave-vs-xero-consulting-any-type",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "linkmybooks.com/blog/ecommerce-sales-tax-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best Sales Tax Software for Ecommerce (2026) 🧾💰",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "liveflow.com/blog/the-best-construction-accounting-software-in-2026-a-contractor-s-guide-by-growth-stage",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "mercury.com/blog/best-accounting-software-startups-2025",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best accounting software for startups (2026 Guide) | Mercury",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "and data portability if you ever switch platforms. Top options include QuickBooks, Xero, FreshBooks, Wave, Zoho Books, NetSuite, Sage, Campfire, and Puzzle — the best fit depends on your st",
+      "near_miss": null
+     },
+     {
+      "url": "miter.com/resources/best-construction-accounting-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "myworks.software/blog/best-5-accounting-software-for-shopify",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "plutio.com/freelancer-magazine/best-accounting-software-for-freelancers",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "puzzle.io/blog/best-cloud-accounting-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "quickbooks.intuit.com/ca/resources/invoicing/best-invoicing-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "quicken.com/blog/best-accounting-software-for-small-businesses-transitioning-from-spreadsheets-2026",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "rightworks.com/blog/best-accounting-tax-software-applications",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "tax.thomsonreuters.com/blog/the-best-tax-software-for-tax-preparers-a-buyers-guide",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "techrepublic.com/article/best-accounting-software-for-consultants",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "thecfoclub.com/tools/best-accounting-software-for-consultants",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "thecfoclub.com/tools/best-tax-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "use.expensify.com/resource-center/guides/best-business-expense-tracking-app",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "verito.com/blog/best-software-for-accounting-firms",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "wise.com/us/blog/best-accounting-software-for-contractors",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "worldmetrics.org/best/personal-business-accounting-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 15,
+    "unknown_pages": [
+     {
+      "url": "investopedia.com/the-best-accounting-software-for-small-business-8780908",
+      "citations": 2,
+      "error": "HTTPError"
+     },
+     {
+      "url": "launchadvisor.co/guides/quickbooks-vs-freshbooks-vs-wave-vs-xero-consulting-any-type",
+      "citations": 1,
+      "error": "HTTPError"
+     },
+     {
+      "url": "liveflow.com/blog/the-best-construction-accounting-software-in-2026-a-contractor-s-guide-by-growth-stage",
+      "citations": 1,
+      "error": "HTTPError"
+     }
+    ],
+    "domains": [
+     {
+      "domain": "bigtime.net",
+      "citations": 6
+     },
+     {
+      "domain": "zapier.com",
+      "citations": 6
+     },
+     {
+      "domain": "business.org",
+      "citations": 5
+     },
+     {
+      "domain": "business.com",
+      "citations": 3
+     },
+     {
+      "domain": "hostinger.com",
+      "citations": 3
+     },
+     {
+      "domain": "quickbooks.intuit.com",
+      "citations": 3
+     },
+     {
+      "domain": "use.expensify.com",
+      "citations": 3
+     },
+     {
+      "domain": "albato.com",
+      "citations": 2
+     },
+     {
+      "domain": "getjobber.com",
+      "citations": 2
+     },
+     {
+      "domain": "investopedia.com",
+      "citations": 2
+     },
+     {
+      "domain": "keka.com",
+      "citations": 2
+     },
+     {
+      "domain": "planfix.com",
+      "citations": 2
+     },
+     {
+      "domain": "thecfoclub.com",
+      "citations": 2
+     },
+     {
+      "domain": "xero.com",
+      "citations": 2
+     },
+     {
+      "domain": "a2xaccounting.com",
+      "citations": 1
+     },
+     {
+      "domain": "agiled.app",
+      "citations": 1
+     },
+     {
+      "domain": "aimoneyvault.app",
+      "citations": 1
+     },
+     {
+      "domain": "bench.co",
+      "citations": 1
+     },
+     {
+      "domain": "bill.com",
+      "citations": 1
+     },
+     {
+      "domain": "bookipi.com",
+      "citations": 1
+     },
+     {
+      "domain": "companionlink.com",
+      "citations": 1
+     },
+     {
+      "domain": "demilked.com",
+      "citations": 1
+     },
+     {
+      "domain": "feedough.com",
+      "citations": 1
+     },
+     {
+      "domain": "fueler.io",
+      "citations": 1
+     },
+     {
+      "domain": "hellobonsai.com",
+      "citations": 1
+     },
+     {
+      "domain": "home.swipesimple.com",
+      "citations": 1
+     },
+     {
+      "domain": "launchadvisor.co",
+      "citations": 1
+     },
+     {
+      "domain": "linkmybooks.com",
+      "citations": 1
+     },
+     {
+      "domain": "liveflow.com",
+      "citations": 1
+     },
+     {
+      "domain": "mercury.com",
+      "citations": 1
+     },
+     {
+      "domain": "miter.com",
+      "citations": 1
+     },
+     {
+      "domain": "myworks.software",
+      "citations": 1
+     },
+     {
+      "domain": "plutio.com",
+      "citations": 1
+     },
+     {
+      "domain": "puzzle.io",
+      "citations": 1
+     },
+     {
+      "domain": "quicken.com",
+      "citations": 1
+     },
+     {
+      "domain": "rightworks.com",
+      "citations": 1
+     },
+     {
+      "domain": "tax.thomsonreuters.com",
+      "citations": 1
+     },
+     {
+      "domain": "techrepublic.com",
+      "citations": 1
+     },
+     {
+      "domain": "verito.com",
+      "citations": 1
+     },
+     {
+      "domain": "wise.com",
+      "citations": 1
+     },
+     {
+      "domain": "worldmetrics.org",
+      "citations": 1
+     }
+    ]
+   },
+   {
+    "layer": "guides",
+    "parent": "other_companies",
+    "citations": 20,
+    "reliance": 0.1333,
+    "presence": null,
+    "gap": null,
+    "status": "unknown",
+    "coverage": {
+     "checked_citations": 0,
+     "citations": 20,
+     "ratio": 0.0
+    },
+    "pages": [
+     {
+      "url": "myworks.software/blog/ecommerce-sales-tax-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "quickbooks.intuit.com/ca/resources/construction/accounting-for-construction-business",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "quickbooks.intuit.com/ca/resources/construction/how-to-choose-accounting-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "quicken.com/blog/all-in-one-software-solutions-for-self-employed-and-small-business-budgeting-2026",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "ramp.com/blog/accounting-software-for-consultants",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "rho.co/blog/business-finance-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "shipbob.com/blog/ecommerce-accounting-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "shopify.com/blog/ecommerce-accounting",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "shopify.com/blog/small-business-accounting-tools",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "stripe.com/resources/more/invoice-software-for-small-businesses-a-guide-to-get-started",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "teamwork.com/blog/consultant-billing-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "webflow.com/blog/invoicing-for-freelancers",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "wise.com/gb/blog/automated-invoicing-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "xero.com/au/guides/construction-job-costing",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "xero.com/hk/guides/small-business-cloud-accounting",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "xero.com/us/guides/e-commerce-accounting",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "xero.com/us/guides/mobile-accounting-app",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "xero.com/us/guides/small-business-management-guide",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zapier.com/blog/accounting-bookkeeping-software-freelance",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zenskar.com/buyers-guide/accounting-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 20,
+    "unknown_pages": [],
+    "domains": [
+     {
+      "domain": "xero.com",
+      "citations": 5
+     },
+     {
+      "domain": "quickbooks.intuit.com",
+      "citations": 2
+     },
+     {
+      "domain": "shopify.com",
+      "citations": 2
+     },
+     {
+      "domain": "myworks.software",
+      "citations": 1
+     },
+     {
+      "domain": "quicken.com",
+      "citations": 1
+     },
+     {
+      "domain": "ramp.com",
+      "citations": 1
+     },
+     {
+      "domain": "rho.co",
+      "citations": 1
+     },
+     {
+      "domain": "shipbob.com",
+      "citations": 1
+     },
+     {
+      "domain": "stripe.com",
+      "citations": 1
+     },
+     {
+      "domain": "teamwork.com",
+      "citations": 1
+     },
+     {
+      "domain": "webflow.com",
+      "citations": 1
+     },
+     {
+      "domain": "wise.com",
+      "citations": 1
+     },
+     {
+      "domain": "zapier.com",
+      "citations": 1
+     },
+     {
+      "domain": "zenskar.com",
+      "citations": 1
+     }
+    ]
+   },
+   {
+    "layer": "product_pages",
+    "parent": "other_companies",
+    "citations": 15,
+    "reliance": 0.1,
+    "presence": 0.0,
+    "gap": 0.1,
+    "status": "gap",
+    "coverage": {
+     "checked_citations": 3,
+     "citations": 15,
+     "ratio": 0.2
+    },
+    "pages": [
+     {
+      "url": "fortune.com/article/easy-to-use-accounting-software",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "What accounting software is easiest for a small business to use? | Fortune",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "incharge.org/es/herramientas-recursos/mejores-apps-de-dinero",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Las 10 mejores apps para finanzas personales 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "invoiceninja.com",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Free Invoicing Software for Small Business - Invoice Ninja",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "process.st/finance-integration",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "quickbooks.intuit.com/global",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "quickbooks.intuit.com/global/accounting-software",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "quickbooks.intuit.com/industry/construction",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "quickbooks.intuit.com/r/bookkeeping/bookkeeping-for-construction-companies",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "quickbooks.intuit.com/small-business",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "squareup.com/gb/en/invoices",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "tax.thomsonreuters.com/en/tax-accounting/tax-software-for-accountants",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "uschamber.com/co/run/finance/free-accounting-tools-for-small-businesses",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "waveapps.com/invoicing",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "xero.com/us/accounting-software",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "xero.com/us/small-businesses/xero-for-medium-sized-business",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 12,
+    "unknown_pages": [],
+    "domains": [
+     {
+      "domain": "quickbooks.intuit.com",
+      "citations": 5
+     },
+     {
+      "domain": "xero.com",
+      "citations": 2
+     },
+     {
+      "domain": "fortune.com",
+      "citations": 1
+     },
+     {
+      "domain": "incharge.org",
+      "citations": 1
+     },
+     {
+      "domain": "invoiceninja.com",
+      "citations": 1
+     },
+     {
+      "domain": "process.st",
+      "citations": 1
+     },
+     {
+      "domain": "squareup.com",
+      "citations": 1
+     },
+     {
+      "domain": "tax.thomsonreuters.com",
+      "citations": 1
+     },
+     {
+      "domain": "uschamber.com",
+      "citations": 1
+     },
+     {
+      "domain": "waveapps.com",
+      "citations": 1
+     }
+    ]
+   }
+  ]
+ },
+ "provenance": {
+  "run_date": "2026-10-19",
+  "run_at": "2026-10-19T03:03:52.360972+00:00",
+  "method_versions": {
+   "citation_visibility": "v4",
+   "topic_relevance": "v1",
+   "evidence_density": "v3.2-rules",
+   "content_recency": "v1",
+   "fact_consistency": "v4",
+   "technical_readability": "v1",
+   "source_layers": "v3"
+  },
+  "source_layer_list_version": "v2",
+  "page_type_rules_version": "v1",
+  "question_set": {
+   "category_id": "small-business-accounting-software",
+   "category_name": "Small Business Accounting Software",
+   "version": 4,
+   "status": "frozen"
+  },
+  "pages": {
+   "topic_relevance": [
+    {
+     "url": "https://www.freshbooks.com/",
+     "text_sha256": "46781cbf2f0c212a87c2ef64b0f0da9c24cebe13e7cba7a18059c69dd6c96668",
+     "text_length": 3000
+    },
+    {
+     "url": "https://www.freshbooks.com/pricing",
+     "text_sha256": "03945eb95592f123020822a30255b86359cf8508f5159f26d18287ea3f4265cf",
+     "text_length": 3000
+    },
+    {
+     "url": "https://www.freshbooks.com/policies/buy-now-offer",
+     "text_sha256": "2868d7f7955d89bec348b14ac4c5e1f53ade25075b324036641e813a01c5add8",
+     "text_length": 3000
+    },
+    {
+     "url": "https://www.freshbooks.com/invoice",
+     "text_sha256": "0addb0713382eb2b6400deac8ee497efc3208596b0d1cc9110a2eb83a2f1dca8",
+     "text_length": 3000
+    }
+   ],
+   "evidence_density": [
+    {
+     "url": "https://freshbooks.com",
+     "text_sha256": "abe6b8c530f45bef6e7c1c33a02c69947c8a8cb20067e0fdd0123a766991c18f",
+     "text_length": 9945
+    },
+    {
+     "url": "https://freshbooks.com/policies/security-safeguards",
+     "text_sha256": "c8a2d8dc0334dcb31b11db9b3a5870554245f285a4d4c1a3e8021bf1686608a4",
+     "text_length": 4371
+    },
+    {
+     "url": "https://freshbooks.com/pricing",
+     "text_sha256": "b2036d75668aa9e65e18cc5e638f1fb5913ea75e9463a73144dac3cd630ec365",
+     "text_length": 17757
+    },
+    {
+     "url": "https://freshbooks.com/about",
+     "text_sha256": "aa56ef80013158b1ddbce4d8433ce5ff488eb35a9cec366efc111d728de045f2",
+     "text_length": 4388
+    }
+   ],
+   "fact_consistency": [
+    {
+     "url": "https://freshbooks.com",
+     "text_sha256": "c43c3cfd334aa82e61c58200bebb5aedb0f01686408f481e9c654a3ed165c6bc",
+     "text_length": 7552
+    },
+    {
+     "url": "https://freshbooks.com/pricing",
+     "text_sha256": "5c5f446bb1cebdf587fae99e18f48cfbb05b0e71248c76c5cc5d0ae4cce2f5fe",
+     "text_length": 11543
+    }
+   ],
+   "technical_readability": [
+    {
+     "url": "https://freshbooks.com",
+     "text_sha256": "58f56b8a77a3b32b16e4f4528f6c25bb8d0f6f365eb476313298eddeb609a656",
+     "text_length": 7549
+    }
+   ]
+  }
+ },
+ "previous_citation_interval": null,
+ "competitors": null,
+ "competitor_comparison": null,
+ "previous_provenance": null,
+ "source_bars": {
+  "rows": [
+   {
+    "key": "lists",
+    "name": "Best tools lists",
+    "pages": 34,
+    "mention_pages": 27,
+    "could_not_open": 3,
+    "not_checked": 15
+   },
+   {
+    "key": "review_media",
+    "name": "Review sites and news",
+    "pages": 16,
+    "mention_pages": 9,
+    "could_not_open": 4,
+    "not_checked": 7
+   },
+   {
+    "key": "own_site",
+    "name": "Your own website",
+    "pages": 3,
+    "mention_pages": 3,
+    "could_not_open": 0,
+    "not_checked": 0
+   },
+   {
+    "key": "guides",
+    "name": "Guides and articles",
+    "pages": 0,
+    "mention_pages": 0,
+    "could_not_open": 0,
+    "not_checked": 20
+   }
+  ],
+  "max_pages": 34,
+  "most_missing": "lists"
+ },
+ "site_readiness": {
+  "total": 56,
+  "level": "Needs work",
+  "items": [
+   {
+    "key": "topic_relevance",
+    "name": "Answers customer questions",
+    "score": 47,
+    "level": "Needs work"
+   },
+   {
+    "key": "evidence_density",
+    "name": "Has real numbers and proof",
+    "score": 40,
+    "level": "Needs work"
+   },
+   {
+    "key": "content_recency",
+    "name": "Up to date",
+    "score": null,
+    "level": null
+   },
+   {
+    "key": "technical_readability",
+    "name": "Easy for AI to read",
+    "score": 80,
+    "level": "Good"
+   }
+  ],
+  "sentence": "Start by fixing these:",
+  "fix_first": [
+   "Has real numbers and proof",
+   "Answers customer questions"
+  ]
+ }
+}

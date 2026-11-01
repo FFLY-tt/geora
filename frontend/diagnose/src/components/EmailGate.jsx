@@ -21,14 +21,14 @@ export default function EmailGate({ onUnlock }) {
 
   return (
     <form className="email-gate" onSubmit={handleSubmit}>
-      <p className="email-gate-title">Enter your email to unlock the full report</p>
+      <p className="email-gate-title">Enter your email to unlock the details</p>
       <input
         type="email"
         value={email}
         onChange={(event) => setEmail(event.target.value)}
         placeholder="you@company.com"
       />
-      <button type="submit" className="btn-mechanical">Unlock report</button>
+      <button type="submit" className="btn-mechanical">Unlock details</button>
       {error && <p className="form-error">{error}</p>}
     </form>
   )

@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { factRows, verdictText } from './factFields.js'
+import { factRows, quoteSnippet, SNIPPET_LENGTH, verdictText } from './factFields.js'
 
 // Words and details that must never reach the customer-facing page. ("match" is
 // allowed inside the sentences "Matches your site" and "Doesn't match your site".)
@@ -77,4 +77,46 @@ test('the votes, the runs and the voting rule never reach the rows', () => {
 test('missing details give no rows', () => {
   assert.deepEqual(factRows(undefined), [])
   assert.deepEqual(factRows({}), [])
+})
+
+test('a short quote is shown whole, with whitespace collapsed', () => {
+  assert.equal(quoteSnippet('Plans start at\n  $29 per user per month.', '$29'), 'Plans start at $29 per user per month.')
+})
+
+test('a long quote is cut to a window around the value, with … at each cut end', () => {
+  const before = 'Our plans are designed for teams of every size and every budget, from startups to enterprises. '
+  const after = ' Every plan includes unlimited projects, priority support and a dedicated customer success manager for you.'
+  const snippet = quoteSnippet(`${before}Solo starts at $19 per user / month${after}`, '$19 per user / month')
+  assert.match(snippet, /\$19 per user \/ month/)
+  assert.ok(snippet.startsWith('…') && snippet.endsWith('…'), snippet)
+  assert.ok(snippet.length <= SNIPPET_LENGTH + 2, snippet.length)
+})
+
+test('only the end that was cut gets a …', () => {
+  const head = `Solo is $19 per user / month. ${'More detail about every plan we sell and what it includes. '.repeat(5)}`
+  const atStart = quoteSnippet(head, '$19 per user / month')
+  assert.ok(!atStart.startsWith('…') && atStart.endsWith('…'), atStart)
+  const tail = `${'More detail about every plan we sell and what it includes. '.repeat(5)}Solo is $19 per user / month.`
+  const atEnd = quoteSnippet(tail, '$19 per user / month')
+  assert.ok(atEnd.startsWith('…') && !atEnd.endsWith('…'), atEnd)
+})
+
+test('the cut never lands inside a word or inside the value', () => {
+  const quote = `${'abcdefghij '.repeat(20)}$19 per user / month ${'klmnopqrst '.repeat(20)}`
+  const snippet = quoteSnippet(quote, '$19 per user / month')
+  const words = snippet.replace(/…/g, '').trim().split(' ')
+  for (const word of words) assert.ok(['abcdefghij', 'klmnopqrst', '$19', 'per', 'user', '/', 'month'].includes(word), word)
+  assert.match(snippet, /\$19 per user \/ month/)
+})
+
+test('a value that is not in the quote shows the start of the quote', () => {
+  const snippet = quoteSnippet('word '.repeat(60), 'nonexistent')
+  assert.ok(!snippet.startsWith('…') && snippet.endsWith('…'))
+})
+
+test('rows show the snippet, not the whole quote', () => {
+  const long = `${'Intro words here. '.repeat(15)}Plans start at $29 per user per month. ${'Closing words here. '.repeat(15)}`
+  const [row] = factRows({ fields: [{ field: 'starting_price', verdict: 'match', official_value: '$29 per user per month', official_quote: long }] })
+  assert.match(row.officialQuote, /\$29 per user per month/)
+  assert.ok(row.officialQuote.length <= SNIPPET_LENGTH + 2)
 })

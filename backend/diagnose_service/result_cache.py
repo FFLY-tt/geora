@@ -144,6 +144,35 @@ def get_previous_citation_interval(domain: str) -> dict | None:
     return None
 
 
+def update_cached_competitors(domain: str, competitors: list[dict] | None, comparison: dict | None) -> dict | None:
+    """
+    Replace the competitor list and comparison stored with `domain`'s entry,
+    leaving everything else, including `cached_at`, untouched (recounting
+    competitors from stored answers does not make the diagnosis any newer).
+    Returns the updated entry, or None if there is no entry.
+    """
+    try:
+        with open(_CACHE_FILE, "r+", encoding="utf-8") as file_handle:
+            if _HAS_FCNTL:
+                fcntl.flock(file_handle.fileno(), fcntl.LOCK_EX)
+            try:
+                cache = _read_cache(file_handle)
+                entry = cache.get(domain)
+                if not isinstance(entry, dict):
+                    return None
+                entry["competitors"] = competitors or None
+                entry["competitor_comparison"] = comparison
+                file_handle.seek(0)
+                file_handle.truncate()
+                json.dump(cache, file_handle, indent=2, ensure_ascii=False)
+                return entry
+            finally:
+                if _HAS_FCNTL:
+                    fcntl.flock(file_handle.fileno(), fcntl.LOCK_UN)
+    except (FileNotFoundError, ValueError, json.JSONDecodeError, OSError):
+        return None
+
+
 def get_previous_scores(domain: str) -> dict | None:
     """
     Return {dimension: score} from whatever entry currently exists for

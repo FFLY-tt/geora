@@ -36,6 +36,27 @@
 - frontend/diagnose and frontend/dashboard are customer-facing.
   Never show internal details (method versions, cache, engine names,
   debug notes) in UI text. Keep them in the API response or logs.
+- The reader is a marketer who is not technical. Every piece of text a visitor can see
+  must be plain English with short sentences: headings, labels, buttons, hints, placeholders,
+  error messages, empty states, chart text and the details. It applies to every frontend change.
+  1. Simple words, short sentences, one idea per sentence. Write the way you would say it out loud.
+  2. No brackets of any kind: ( ) [ ] { }.
+  3. No dashes: no em dash, no en dash, and no hyphen used as a dash ("A - B").
+     Write number ranges as "between 7% and 45%", never "7%-45%".
+  4. No vertical bar |, and no slash used to separate things.
+  5. No internal words: reliance, presence, gap, coverage, citation, unknown, layer, method,
+     version, cache, engine, judgment, beta, confidence interval, Wilson.
+     Say it in plain words instead, for example "source" for "citation".
+  6. Titles of other websites' pages are cleaned before they are shown: the site name at the end
+     is removed, brackets and what is inside them are removed, and the site name is shown on its
+     own as "on example.com". See frontend/diagnose/src/utils/text.js.
+  7. Text that is not ours (page titles, quotes found on a website) is wrapped in an element with
+     data-external="true". It still may not contain the characters in rules 2 to 4, but it is not
+     checked for the words in rule 5.
+- The rules are checked by an automatic test, frontend/diagnose/src/pageText.test.js. It renders the
+  real result page from saved real results, reads all visible text and fails when a rule is broken.
+  Text written by the backend for customers is held to the same rules, see backend/shared/_text_format.py.
+  Keep that test passing. Do not weaken it to make a change pass; change the wording instead.
 
 ## Language
 - Always reply to the repo owner in Simplified Chinese: explanations, questions, progress updates,

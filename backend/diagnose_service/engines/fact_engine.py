@@ -55,7 +55,8 @@ DIMENSION_NAME = "fact_consistency"
 # Bump whenever this dimension's measurement method changes in a way
 # that makes results computed before and after not directly comparable.
 # v3: key_integrations removed from the fixed fields.
-METHOD_VERSION = "v3"
+# v4: the official text keeps a space between adjacent elements and buttons.
+METHOD_VERSION = "v4"
 
 # All folded into the judgment cache key, so changing any of them never
 # reuses a result produced under the old wording or field list.
@@ -360,13 +361,13 @@ def _fetch_official_text(domain: str) -> tuple[str, list[str], list[dict]]:
     requests.RequestException if the homepage itself could not be fetched.
     """
     homepage_url = domain if domain.startswith("http") else f"https://{domain}"
-    homepage_text = fetch_page_text(domain)
+    homepage_text = fetch_page_text(domain, separate_blocks=True)
     fetched_urls = [homepage_url]
     fingerprints = [page_fingerprint(homepage_url, homepage_text)]
 
     pricing_url = f"{homepage_url.rstrip('/')}/pricing"
     try:
-        pricing_text = fetch_page_text(pricing_url)
+        pricing_text = fetch_page_text(pricing_url, separate_blocks=True)
         fetched_urls.append(pricing_url)
         fingerprints.append(page_fingerprint(pricing_url, pricing_text))
     except requests.RequestException:

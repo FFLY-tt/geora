@@ -2,8 +2,8 @@ import { factRows } from '../utils/factFields.js'
 
 // Props: details = fact_consistency's details. One row per fixed field: the
 // conclusion, what review sites say (with a link to the source), and what
-// your own site says (with the exact quote), so a customer can check each
-// one. The individual runs and votes are not shown.
+// your own site says (with a short piece of its own words), so a customer
+// can check each one. The individual runs and votes are not shown.
 export default function FactFieldsTable({ details }) {
   const rows = factRows(details)
   if (rows.length === 0) return null
@@ -17,7 +17,7 @@ export default function FactFieldsTable({ details }) {
               {row.label}: {row.verdictText}
             </span>
             <span className="evidence-context">
-              Review sites: {row.thirdPartyValue}
+              Review sites say: <span data-external="true">{row.thirdPartyValue}</span>
               {row.thirdPartySource && (
                 <>
                   {' '}
@@ -27,10 +27,8 @@ export default function FactFieldsTable({ details }) {
                 </>
               )}
             </span>
-            <span className="evidence-context">
-              Your site: {row.officialValue}
-              {row.officialQuote && <> (“{row.officialQuote}”)</>}
-            </span>
+            <span className="evidence-context">Your site says: <span data-external="true">{row.officialValue}</span></span>
+            {row.officialQuote && <span className="evidence-context">Your words: “<span data-external="true">{row.officialQuote}</span>”</span>}
           </li>
         ))}
       </ul>

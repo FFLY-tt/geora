@@ -16,9 +16,10 @@ from pathlib import Path
 # is its sibling under backend/).
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
+from competitors import CompetitorInputError, compare_competitors, parse_competitors, signature
 from engines.citation_engine import check_citation_visibility
 from engines.evidence_engine import check_evidence_density
 from engines.fact_engine import check_fact_consistency
@@ -28,6 +29,8 @@ from engines.technical_engine import check_technical_readability
 from leads_store import save_lead
 from models import DiagnosisRequest, DiagnosisResponse, LeadCaptureRequest
 from provenance import build_provenance
+from site_readiness import build_site_readiness
+from source_bars import build_source_bars
 from source_layers import build_source_layers
 from result_cache import (
     get_cached_result,
@@ -35,6 +38,7 @@ from result_cache import (
     get_previous_provenance,
     get_previous_scores,
     save_result,
+    update_cached_competitors,
 )
 
 logger = logging.getLogger(__name__)
@@ -71,8 +75,26 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
     citation_engine generated, so it runs after that result is
     available.
     """
+    try:
+        competitors = parse_competitors(request.competitors, request.company_name, request.domain)
+    except CompetitorInputError as error:
+        raise HTTPException(status_code=422, detail=str(error))
+
     cached = get_cached_result(request.domain)
     if cached:
+        if "source_bars" not in cached or "site_readiness" not in cached:
+            # Results saved before these blocks existed: they are made from what was stored.
+            cached = {
+                **cached,
+                "source_bars": build_source_bars(cached.get("source_layers")),
+                "site_readiness": build_site_readiness(cached.get("dimensions") or [], request.domain),
+            }
+        if signature(cached.get("competitors")) != signature(competitors):
+            # A different competitor list: recount from the answers stored with the cached
+            # result. No new diagnosis and no Perplexity call.
+            comparison = await asyncio.to_thread(_comparison, request, competitors, cached)
+            updated = await asyncio.to_thread(update_cached_competitors, request.domain, competitors, comparison)
+            cached = updated or {**cached, "competitors": competitors or None, "competitor_comparison": comparison}
         return DiagnosisResponse(**cached)
 
     # Grab whatever result currently exists for this domain (even an
@@ -117,6 +139,10 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
         "domain": request.domain,
         "dimensions": dimensions,
         "source_layers": layers,
+        "source_bars": build_source_bars(layers),
+        "site_readiness": build_site_readiness(dimensions, request.domain),
+        "competitors": competitors or None,
+        "competitor_comparison": await asyncio.to_thread(_comparison, request, competitors, {"dimensions": dimensions}),
         "provenance": build_provenance(dimensions),
     }
     cached_entry = await asyncio.to_thread(save_result, request.domain, result)
@@ -126,6 +152,20 @@ async def diagnose(request: DiagnosisRequest) -> DiagnosisResponse:
         previous_provenance=previous_provenance,
         previous_citation_interval=previous_citation_interval,
     )
+
+
+def _comparison(request: DiagnosisRequest, competitors: list[dict], result: dict) -> dict | None:
+    """The competitor comparison for `result`'s stored citation answers; never takes the diagnosis down."""
+    if not competitors:
+        return None
+    citation = next((d for d in result.get("dimensions") or [] if d.get("dimension") == "citation_visibility"), None)
+    if not citation:
+        return None
+    try:
+        return compare_competitors(request.company_name, request.domain, competitors, citation.get("details") or {})
+    except Exception:
+        logger.exception("Competitor comparison failed for %s", request.domain)
+        return None
 
 
 @app.post("/api/capture-lead")

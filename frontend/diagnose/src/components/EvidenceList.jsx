@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { fetchFailureText } from '../utils/scoreDisplay.js'
+import { plainText } from '../utils/text.js'
 
 // Display names for the four evidence categories evidence_density returns.
 const CATEGORY_LABELS = {
@@ -20,8 +21,8 @@ const PAGE_LABELS = {
 // Props: details = evidence_density's details. Renders every piece of
 // evidence the code rules found, with the original wording and the page
 // it came from, so a user can check each one themselves.
-export default function EvidenceList({ details }) {
-  const [open, setOpen] = useState(false)
+export default function EvidenceList({ details, startOpen = false }) {
+  const [open, setOpen] = useState(startOpen)
   // The homepage could not be fetched at all: say so plainly instead of
   // showing an empty evidence list or a score, without the status code.
   if (details?.fetch_failure) {
@@ -47,10 +48,10 @@ export default function EvidenceList({ details }) {
               <ul>
                 {group.map((item) => (
                   <li key={`${item.category}-${item.key}`}>
-                    <span className="evidence-text">{item.text}</span>
-                    <span className="evidence-context">{item.context}</span>
+                    <span className="evidence-text" data-external="true">{plainText(item.text)}</span>
+                    <span className="evidence-context" data-external="true">{plainText(item.context)}</span>
                     <a className="evidence-source" href={item.source_url} target="_blank" rel="noreferrer">
-                      {PAGE_LABELS[item.source_page] || item.source_page}: {item.source_url}
+                      {PAGE_LABELS[item.source_page] || item.source_page}: <span data-external="true">{item.source_url}</span>
                     </a>
                   </li>
                 ))}
@@ -60,7 +61,7 @@ export default function EvidenceList({ details }) {
         })}
       {open && Array.isArray(details.customer_logos_reference) && details.customer_logos_reference.length > 0 && (
         <div className="evidence-group">
-          <p className="evidence-group-title">Customer logos we found (shown for reference, not counted)</p>
+          <p className="evidence-group-title">Customer logos we found. They are shown for reference and not counted.</p>
           <p className="evidence-none">
             AI assistants can't see logo images, so logos don't count as proof. Pages that tell a customer's
             story do, because AI can read and quote them.
@@ -68,7 +69,7 @@ export default function EvidenceList({ details }) {
           <ul>
             {details.customer_logos_reference.map((item) => (
               <li key={`logo-${item.key}`}>
-                <span className="evidence-text">{item.text}</span>
+                <span className="evidence-text" data-external="true">{plainText(item.text)}</span>
                 <span className="evidence-context">{PAGE_LABELS[item.source_page] || item.source_page}</span>
               </li>
             ))}

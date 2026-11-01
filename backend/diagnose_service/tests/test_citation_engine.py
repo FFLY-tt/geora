@@ -22,20 +22,16 @@ _BACKEND_DIR = _SERVICE_DIR.parent  # backend/
 
 sys.path.insert(0, str(_BACKEND_DIR))
 sys.path.insert(0, str(_SERVICE_DIR))
+sys.path.insert(0, str(_THIS_DIR))
 
 import engines.citation_engine as citation_engine  # noqa: E402
 from shared.config import Settings  # noqa: E402
+from _question_fixtures import QUESTIONS_15, distinct_questions  # noqa: E402
 
 COMPANY_NAME = "ExampleCo"
 DOMAIN = "exampleco.com"
 CATEGORY = "browser side security and privacy compliance monitoring"
-QUERIES = [
-    "How do teams monitor third party scripts on checkout pages?",
-    "What tools help meet PCI DSS requirements for client side code?",
-    "How can a security team detect unauthorized data collection scripts?",
-    "What is the best way to audit JavaScript running in a browser?",
-    "How do companies stay compliant with privacy laws for web tracking?",
-]
+QUERIES = list(QUESTIONS_15)
 
 _FAKE_QUESTION_SET = (
     {
@@ -109,79 +105,60 @@ def _run_with_patterns(patterns: dict[str, list[str]]):
     return result, stub
 
 
-class CitationEngineMultiRunTests(unittest.TestCase):
+def _patterns(hits: int, misses: int = 0, fails: int = 0) -> dict[str, list[str]]:
+    """One outcome per question (each question is asked exactly once), in question order."""
+    outcomes = ["hit"] * hits + ["miss"] * misses + ["fail"] * fails
+    assert len(outcomes) == len(QUERIES)
+    return {query: [outcome] for query, outcome in zip(QUERIES, outcomes)}
+
+
+class CitationEngineSingleRunTests(unittest.TestCase):
     def test_score_from_mixed_hit_patterns(self):
-        # 3/3, 2/3, 1/3, 0/3, 0/3 -> average mention rate 0.4 -> score 40.
-        patterns = {
-            QUERIES[0]: ["hit", "hit", "hit"],
-            QUERIES[1]: ["hit", "hit", "miss"],
-            QUERIES[2]: ["hit", "miss", "miss"],
-            QUERIES[3]: ["miss", "miss", "miss"],
-            QUERIES[4]: ["miss", "miss", "miss"],
-        }
-        result, stub = _run_with_patterns(patterns)
+        # 6 of 15 answers mention the company -> mention rate 0.4 -> score 40.
+        result, stub = _run_with_patterns(_patterns(hits=6, misses=9))
 
         self.assertEqual(result.score, 40)
         self.assertEqual(stub.call_count, 15)
+        self.assertEqual(result.details["queries_valid"], 15)
 
-    def test_partial_run_failure_uses_only_successful_runs(self):
-        patterns = {
-            QUERIES[0]: ["hit", "fail", "miss"],  # 1 hit out of 2 successful runs -> 0.5
-            QUERIES[1]: ["hit", "hit", "hit"],
-            QUERIES[2]: ["hit", "hit", "hit"],
-            QUERIES[3]: ["hit", "hit", "hit"],
-            QUERIES[4]: ["hit", "hit", "hit"],
-        }
-        result, _ = _run_with_patterns(patterns)
+    def test_failed_question_is_left_out_of_the_denominator(self):
+        result, _ = _run_with_patterns(_patterns(hits=14, fails=1))
 
-        entry = next(e for e in result.details["per_query_results"] if e["query"] == QUERIES[0])
-        self.assertEqual(entry["successful_runs"], 2)
-        self.assertEqual(entry["failed_runs"], 1)
-        self.assertAlmostEqual(entry["mention_rate"], 0.5)
-
-    def test_question_with_all_runs_failed_excluded_from_average(self):
-        patterns = {
-            QUERIES[0]: ["fail", "fail", "fail"],
-            QUERIES[1]: ["hit", "hit", "hit"],
-            QUERIES[2]: ["hit", "hit", "hit"],
-            QUERIES[3]: ["hit", "hit", "hit"],
-            QUERIES[4]: ["hit", "hit", "hit"],
-        }
-        result, _ = _run_with_patterns(patterns)
-
-        self.assertIn(QUERIES[0], result.details["fully_failed_queries"])
-        self.assertEqual(result.details["queries_valid"], 4)
-        # The 4 remaining valid queries are all 3/3 hits.
+        failed = result.details["fully_failed_queries"]
+        self.assertEqual(failed, [QUERIES[14]])
+        self.assertEqual(result.details["queries_valid"], 14)
         self.assertEqual(result.score, 100)
 
     def test_all_calls_failed_returns_insufficient_data(self):
-        patterns = {query: ["fail", "fail", "fail"] for query in QUERIES}
-        result, stub = _run_with_patterns(patterns)
+        result, stub = _run_with_patterns(_patterns(hits=0, fails=15))
 
         self.assertEqual(result.score, -1)
         self.assertEqual(result.details["status"], "insufficient_data")
         self.assertEqual(stub.call_count, 15)
 
     def test_deterministic_output_for_same_mock_input(self):
-        patterns = {
-            QUERIES[0]: ["hit", "hit", "hit"],
-            QUERIES[1]: ["hit", "hit", "miss"],
-            QUERIES[2]: ["hit", "miss", "miss"],
-            QUERIES[3]: ["miss", "miss", "miss"],
-            QUERIES[4]: ["miss", "miss", "miss"],
-        }
-        first, _ = _run_with_patterns(patterns)
-        second, _ = _run_with_patterns(patterns)
+        first, _ = _run_with_patterns(_patterns(hits=5, misses=10))
+        second, _ = _run_with_patterns(_patterns(hits=5, misses=10))
 
         self.assertEqual(first.score, second.score)
         self.assertEqual(first.details["average_mention_rate"], second.details["average_mention_rate"])
+        self.assertEqual(first.details["per_query_results"], second.details["per_query_results"])
 
-    def test_exactly_15_calls_made(self):
-        patterns = {query: ["hit", "miss", "hit"] for query in QUERIES}
-        _, stub = _run_with_patterns(patterns)
+    def test_each_question_is_asked_exactly_once(self):
+        asked = []
+        real_stub = _PerplexityStub(_patterns(hits=7, misses=8))
 
-        self.assertEqual(stub.call_count, len(QUERIES) * citation_engine.RUNS_PER_QUERY)
-        self.assertEqual(stub.call_count, 15)
+        def recording(query):
+            asked.append(query)
+            return real_stub(query)
+
+        fake_settings = Settings(perplexity_api_key="test-key", deepseek_api_key=None)
+        with patch.object(citation_engine, "settings", fake_settings),              patch.object(citation_engine, "_resolve_question_set", return_value=_FAKE_QUESTION_SET),              patch.object(citation_engine, "_call_perplexity", side_effect=recording),              patch.object(citation_engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING):
+            citation_engine.check_citation_visibility(COMPANY_NAME, DOMAIN)
+
+        self.assertEqual(citation_engine.RUNS_PER_QUERY, 1)
+        self.assertEqual(len(asked), 15)
+        self.assertEqual(sorted(asked), sorted(QUERIES))
 
 
 class CompanyNameMatchingTests(unittest.TestCase):
@@ -380,72 +357,256 @@ class _ExecuteSingleRunStub:
 
 
 class UncertainDenominatorTests(unittest.TestCase):
-    """check_citation_visibility excludes 'uncertain' runs from both the hit count and the mention_rate denominator."""
+    """check_citation_visibility excludes 'uncertain' answers from both the hit count and the mention_rate denominator."""
 
-    def test_uncertain_runs_excluded_from_denominator_and_hit_count(self):
+    def test_uncertain_answers_excluded_from_denominator_and_hit_count(self):
         fake_settings = Settings(perplexity_api_key="test-key", deepseek_api_key=None)
-        classifications = {
-            # 1 hit, 1 uncertain, 1 no_mention -> countable runs = 2, hits = 1 -> mention_rate 0.5.
-            QUERIES[0]: ["hit", "uncertain", "no_mention"],
-            QUERIES[1]: ["hit", "hit", "hit"],
-            QUERIES[2]: ["hit", "hit", "hit"],
-            QUERIES[3]: ["hit", "hit", "hit"],
-            QUERIES[4]: ["hit", "hit", "hit"],
-        }
+        # 3 hits, 1 uncertain, 11 no_mention -> countable answers = 14, hits = 3.
+        classifications = {query: ["no_mention"] for query in QUERIES}
+        for query in QUERIES[:3]:
+            classifications[query] = ["hit"]
+        classifications[QUERIES[3]] = ["uncertain"]
         stub = _ExecuteSingleRunStub(classifications)
 
-        with patch.object(citation_engine, "settings", fake_settings), \
-             patch.object(citation_engine, "_resolve_question_set", return_value=_FAKE_QUESTION_SET), \
-             patch.object(citation_engine, "_execute_single_run", side_effect=stub), \
-             patch.object(citation_engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING):
+        with patch.object(citation_engine, "settings", fake_settings),              patch.object(citation_engine, "_resolve_question_set", return_value=_FAKE_QUESTION_SET),              patch.object(citation_engine, "_execute_single_run", side_effect=stub),              patch.object(citation_engine, "make_plain_finding", return_value=_FAKE_PLAIN_FINDING):
             result = citation_engine.check_citation_visibility(COMPANY_NAME, DOMAIN)
 
-        entry = next(e for e in result.details["per_query_results"] if e["query"] == QUERIES[0])
-        self.assertEqual(entry["successful_runs"], 3)
+        entry = next(e for e in result.details["per_query_results"] if e["query"] == QUERIES[3])
         self.assertEqual(entry["uncertain_runs"], 1)
-        self.assertAlmostEqual(entry["mention_rate"], 0.5)
         self.assertEqual(result.details["total_uncertain_runs"], 1)
+        self.assertEqual(result.details["queries_valid"], 14)
+        self.assertAlmostEqual(result.details["average_mention_rate"], 3 / 14, places=2)
+
+
+def _all_pass(count: int) -> list[dict]:
+    return [{"passes": True, "reason": "A buyer would ask this."}] * count
 
 
 class QueryGenerationTests(unittest.TestCase):
-    """generate_checked_question_set: brand-free retries, and that homepage text never reaches the queries call."""
+    """generate_checked_question_set: 15 questions, brand-free retries, duplicates, extension of an older set."""
 
-    _ALL_PASS = [{"passes": True, "reason": "A buyer would ask this."}] * 5
+    BRANDS = [{"company_name": COMPANY_NAME, "domain": DOMAIN}]
 
     def test_queries_call_never_receives_homepage_text(self):
         received_args = []
 
-        def fake_call_for_queries(received_category):
-            received_args.append(received_category)
+        def fake_call_for_queries(received_category, count=None, existing=(), avoid_names=()):
+            received_args.append((received_category, count, list(existing)))
             return list(QUERIES)
 
-        with patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries),              patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=self._ALL_PASS):
-            record, _attempts = citation_engine.generate_checked_question_set(
-                CATEGORY, [{"company_name": COMPANY_NAME, "domain": DOMAIN}]
-            )
+        with patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries),              patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(15)):
+            record, _attempts = citation_engine.generate_checked_question_set(CATEGORY, self.BRANDS)
 
         self.assertEqual(record["questions"], QUERIES)
         self.assertEqual(record["status"], "frozen")
-        # The queries call received ONLY the category description.
-        self.assertEqual(received_args, [CATEGORY])
+        # The queries call received ONLY the category description and the number wanted.
+        self.assertEqual(received_args, [(CATEGORY, 15, [])])
 
     def test_contaminated_batch_is_retried(self):
         call_count = {"n": 0}
 
-        def fake_call_for_queries(received_category):
+        def fake_call_for_queries(received_category, count=None, existing=(), avoid_names=()):
             call_count["n"] += 1
             if call_count["n"] == 1:
-                return [f"{COMPANY_NAME} is great", "q2", "q3", "q4", "q5"]
+                return [f"{COMPANY_NAME} is great"] + distinct_questions(0, 14)
             return list(QUERIES)
 
-        with patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries),              patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=self._ALL_PASS):
-            record, attempts = citation_engine.generate_checked_question_set(
-                CATEGORY, [{"company_name": COMPANY_NAME, "domain": DOMAIN}]
-            )
+        with patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries),              patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(15)):
+            record, attempts = citation_engine.generate_checked_question_set(CATEGORY, self.BRANDS)
 
         self.assertEqual(call_count["n"], 2)
         self.assertFalse(attempts[0]["usable"])
         self.assertEqual(record["questions"], QUERIES)
+
+    def test_wrong_count_is_never_usable(self):
+        with patch.object(citation_engine, "_call_deepseek_for_queries", return_value=QUERIES[:5]),              patch.object(citation_engine, "_call_deepseek_for_question_review") as review:
+            record, attempts = citation_engine.generate_checked_question_set(CATEGORY, self.BRANDS)
+
+        self.assertIsNone(record)
+        self.assertEqual(len(attempts), citation_engine.MAX_GENERATION_ATTEMPTS)
+        review.assert_not_called()
+
+    def test_reworded_question_in_one_batch_fails_that_question(self):
+        batch = list(QUERIES)
+        batch[1] = "What is the best tool to monitor third party scripts on a checkout page today?"  # reword of question 0
+        with patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(15)):
+            attempt = citation_engine._check_question_batch(batch, CATEGORY, self.BRANDS)
+
+        self.assertFalse(attempt["all_passed"])
+        self.assertEqual(attempt["questions"][1]["duplicate_of"], QUERIES[0])
+        self.assertEqual(attempt["passed_count"], 14)
+
+    def test_extension_keeps_old_questions_and_adds_only_the_missing_ones(self):
+        kept = QUERIES[:5]
+        added = QUERIES[5:]
+        seen = {}
+
+        def fake_call_for_queries(received_category, count=None, existing=(), avoid_names=()):
+            seen["count"], seen["existing"] = count, list(existing)
+            return list(added)
+
+        with patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries),              patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(10)):
+            record, _ = citation_engine.generate_checked_question_set(CATEGORY, self.BRANDS, existing_questions=kept)
+
+        self.assertEqual(seen, {"count": 10, "existing": kept})
+        self.assertEqual(record["questions"], QUERIES)
+        self.assertEqual(record["questions"][:5], kept)
+        self.assertEqual(record["kept_questions_from_earlier_version"], 5)
+        self.assertEqual(len(set(record["questions"])), 15)
+
+    def test_extension_retry_keeps_passing_questions_and_only_replaces_failed_ones(self):
+        kept = QUERIES[:5]
+        first_batch = QUERIES[5:]
+        calls = []
+
+        def fake_call_for_queries(received_category, count=None, existing=(), avoid_names=()):
+            calls.append((count, list(existing)))
+            return list(first_batch) if len(calls) == 1 else distinct_questions(0, count)
+
+        def fake_review(description, questions, existing=()):
+            if len(calls) == 1:  # first batch: the last two are called paraphrases
+                return [{"passes": i < 8, "reason": "ok" if i < 8 else "Paraphrase."} for i in range(len(questions))]
+            return _all_pass(len(questions))
+
+        with patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries),              patch.object(citation_engine, "_call_deepseek_for_question_review", side_effect=fake_review):
+            record, attempts = citation_engine.generate_checked_question_set(CATEGORY, self.BRANDS, existing_questions=kept)
+
+        self.assertEqual([count for count, _ in calls], [10, 2])
+        self.assertEqual(calls[1][1], kept + first_batch[:8])  # the 8 that passed were kept
+        self.assertEqual(record["questions"], kept + first_batch[:8] + distinct_questions(0, 2))
+        self.assertEqual(record["status"], "frozen")
+        self.assertEqual(record["kept_questions_from_earlier_version"], 5)
+        self.assertEqual(len(set(record["questions"])), 15)
+
+    def test_how_to_and_definition_questions_are_not_buying_questions(self):
+        for question in (
+            "How to follow up with sales leads?",
+            "What is client-side security?",
+            "How do I stop losing track of leads when my sales team gets busy?",
+            "What is the best way to track if a prospect opened my video email?",
+            "Why do deals go cold after a demo?",
+            "Can I record my screen and webcam at the same time?",
+            "How do I know which third party scripts are collecting visitor data on my site?",
+        ):
+            self.assertIsNotNone(citation_engine.buying_question_issue(question), question)
+
+    def test_buying_questions_pass_the_rule(self):
+        for question in (
+            "What is the best CRM for a 10-person sales team?",
+            "CRM tools for a startup with no sales process?",
+            "What software helps sales teams organize their leads?",
+            "What CRM should a mid-size sales team choose if data security matters?",
+            "Which CRM is easiest to set up for a team with no IT support?",
+            "Which sales CRM should I choose if compliance and call recording matter?",
+        ):
+            self.assertIsNone(citation_engine.buying_question_issue(question), question)
+
+    def test_questions_that_name_a_product_are_blocked(self):
+        for question in (
+            "Alternatives to Salesforce for a growing sales team?",
+            "HubSpot vs Pipedrive for a 5-person team?",
+            "Best Jira alternative for small teams",
+            "What is the best CRM for a sales team that uses Slack?",
+        ):
+            blocking, _format = citation_engine._deterministic_question_issues(question, [])
+            self.assertTrue(blocking, question)
+            batch = list(QUERIES)
+            batch[2] = question
+            with patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(15)):
+                attempt = citation_engine._check_question_batch(batch, CATEGORY, self.BRANDS)
+            self.assertFalse(attempt["all_passed"], question)
+            self.assertFalse(attempt["questions"][2]["substantive_pass"], question)
+            self.assertEqual(attempt["passed_count"], 14, question)
+
+    def test_neutral_questions_are_not_blocked(self):
+        for question in (
+            "What is the best CRM for a sales team of five reps?",
+            "Which CRM tools work well for a real estate team?",
+            "What accounting software should a freelancer choose for invoicing?",
+        ):
+            self.assertEqual(citation_engine._deterministic_question_issues(question, [])[0], [], question)
+
+    def test_ordinary_words_that_are_also_names_are_not_mistaken_for_the_product(self):
+        brands = [{"company_name": "Close", "domain": "close.com"}, {"company_name": "Linear", "domain": "linear.app"}]
+        for question in (
+            "What is the best CRM to close a deal faster for a small team?",
+            "Which tools give a linear growth view of the sales pipeline?",
+            "Close deals faster: which CRM is best for a small team?",
+            "Which sales outreach tools work well for a small team?",
+        ):
+            self.assertEqual(citation_engine._deterministic_question_issues(question, brands)[0], [], question)
+        for question in ("Which CRM should a Close user pick?", "What is the best planning tool compared with Linear for a startup?"):
+            self.assertTrue(citation_engine._deterministic_question_issues(question, brands)[0], question)
+
+    def test_the_review_prompts_forbid_product_names(self):
+        self.assertIn("NEVER name any product, company, or brand", citation_engine._query_system_prompt(15))
+        self.assertIn("are NOT allowed", citation_engine._query_system_prompt(15))
+        review = citation_engine._QUESTION_REVIEW_SYSTEM_PROMPT
+        self.assertIn("does NOT name any product, company, brand, or website", review)
+        self.assertIn("FAIL", review)
+
+    def test_a_how_to_question_in_a_batch_fails_even_when_the_reviewer_passes_it(self):
+        batch = list(QUERIES)
+        batch[3] = "How to follow up with sales leads?"
+        with patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(15)):
+            attempt = citation_engine._check_question_batch(batch, CATEGORY, self.BRANDS)
+
+        self.assertFalse(attempt["all_passed"])
+        self.assertTrue(attempt["usable"])
+        self.assertIsNotNone(attempt["questions"][3]["not_a_buying_question"])
+        self.assertEqual(attempt["passed_count"], 14)
+
+    def test_a_question_with_the_company_name_is_blocked(self):
+        for question in (f"Is {COMPANY_NAME} the best tool for small teams?", f"Alternatives to {COMPANY_NAME} for startups?", f"Best tool for {DOMAIN} users?"):
+            batch = list(QUERIES)
+            batch[0] = question
+            with patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(15)):
+                attempt = citation_engine._check_question_batch(batch, CATEGORY, self.BRANDS)
+            self.assertFalse(attempt["usable"], question)
+            self.assertTrue(attempt["questions"][0]["blocking_issues"], question)
+
+    def test_the_review_prompt_asks_for_buying_questions(self):
+        for prompt in (citation_engine._QUESTION_REVIEW_SYSTEM_PROMPT, citation_engine._query_system_prompt(15)):
+            self.assertIn("alternatives to", prompt.lower())
+            self.assertIn("how-to", prompt.lower())
+
+    def test_refresh_keeps_buying_questions_and_replaces_the_rest(self):
+        current = ["How can I keep track of all my leads in one place?", QUERIES[0], "What is client-side security?"] + QUERIES[1:13]
+        seen = {}
+
+        def fake_call_for_queries(received_category, count=None, existing=(), avoid_names=()):
+            seen["count"], seen["existing"] = count, list(existing)
+            return QUERIES[13:15]
+
+        def fake_review(description, questions, existing=()):
+            return _all_pass(len(questions))
+
+        with patch.object(citation_engine, "_call_deepseek_for_queries", side_effect=fake_call_for_queries),              patch.object(citation_engine, "_call_deepseek_for_question_review", side_effect=fake_review):
+            record, attempts, review = citation_engine.refresh_question_set(CATEGORY, self.BRANDS, current)
+
+        self.assertEqual([entry["keep"] for entry in review[:3]], [False, True, False])
+        self.assertEqual(seen["count"], 2)
+        self.assertEqual(seen["existing"], [QUERIES[0]] + QUERIES[1:13])
+        self.assertEqual(record["status"], "frozen")
+        self.assertEqual(record["questions"], QUERIES[:13] + QUERIES[13:15])
+        self.assertEqual(record["kept_questions_from_earlier_version"], 13)
+        self.assertTrue(all(citation_engine.buying_question_issue(q) is None for q in record["questions"]))
+
+    def test_refresh_with_nothing_to_replace_asks_for_no_new_questions(self):
+        with patch.object(citation_engine, "_call_deepseek_for_queries") as generate,              patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(15)):
+            record, attempts, review = citation_engine.refresh_question_set(CATEGORY, self.BRANDS, list(QUERIES))
+        generate.assert_not_called()
+        self.assertEqual(record["questions"], QUERIES)
+        self.assertEqual(record["status"], "frozen")
+
+    def test_extension_rejects_a_new_question_that_repeats_a_kept_one(self):
+        kept = QUERIES[:5]
+        batch = distinct_questions(0, 9) + ["Best tool to monitor third party scripts on my checkout page?"]
+        with patch.object(citation_engine, "_call_deepseek_for_question_review", return_value=_all_pass(10)):
+            attempt = citation_engine._check_question_batch(batch, CATEGORY, self.BRANDS, kept)
+
+        self.assertFalse(attempt["all_passed"])
+        self.assertEqual(attempt["questions"][9]["duplicate_of"], QUERIES[0])
 
 
 if __name__ == "__main__":

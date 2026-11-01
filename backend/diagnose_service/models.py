@@ -13,6 +13,10 @@ class DiagnosisRequest(BaseModel):
 
     domain: str = Field(..., description="Target company domain, e.g. 'example.com'.")
     company_name: str = Field(..., description="Target company name, e.g. 'Example Inc.'.")
+    competitors: str | None = Field(
+        None,
+        description="Optional. Up to 5 competitors, comma separated, each 'Name' or 'Name (domain.com)'. Counted in the answers already collected; no extra AI calls.",
+    )
 
 
 class DimensionScore(BaseModel):
@@ -48,6 +52,14 @@ class DiagnosisResponse(BaseModel):
         None,
         description="Layered diagnosis: for each kind of website AI cited (reference, review_media, community, own_site, other_companies), how much AI relied on it, how often the company showed up there, and the gap. Null when AI cited no sources at all.",
     )
+    source_bars: dict | None = Field(
+        None,
+        description="The bars of 'Where AI looked for answers': per kind of website its name, the pages we opened, how many of them mention the company, and how many pages could not be opened or were not tried; plus the longest bar and the kind where the most is missing. Counted by page. Null when AI used no sources.",
+    )
+    site_readiness: dict | None = Field(
+        None,
+        description="'Is your website ready for AI?': the four checks with score and level, the total (average), its level, the closing sentence and the checks to fix first.",
+    )
     provenance: dict | None = Field(
         None,
         description="What this result was computed from: run_date, method_versions per dimension, question_set (category_id, version, status), and pages read per dimension with text hashes.",
@@ -55,6 +67,14 @@ class DiagnosisResponse(BaseModel):
     previous_citation_interval: dict | None = Field(
         None,
         description="The previous result's citation mention count and Wilson 95% interval {mentions, total, ci_low, ci_high}, or null. Overlapping intervals mean a change is within the margin of error.",
+    )
+    competitors: list[dict] | None = Field(
+        None,
+        description="The competitors this result was counted for, [{name, domain}], or null when none were given.",
+    )
+    competitor_comparison: dict | None = Field(
+        None,
+        description="Null when no competitors were given. Otherwise {competitors, entries}: entries holds the company and each competitor with mentions, total (answers counted) and the answer sentence of every mention, sorted by mentions, highest first.",
     )
     previous_provenance: dict | None = Field(
         None,

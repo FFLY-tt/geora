@@ -49,6 +49,26 @@ from shared.config import settings
 # used instead, rather than running an engine on a near-empty string.
 MIN_EXTRACTED_CHARS = 200
 
+# Elements whose text must not run into its neighbour's. Extraction can glue
+# adjacent inline elements ("Solo" + "$19 per user / month" + a button) into
+# "Solo$19 per user / monthTry for free" when nothing but markup separates
+# them; with `separate_blocks=True` a space is put around each of these first.
+# Off by default: it changes the extracted text, and with it every hash and
+# word count computed from it.
+_SEPARATED_TAGS = [
+    "div", "span", "p", "li", "ul", "ol", "td", "th", "tr", "dt", "dd", "section", "article",
+    "h1", "h2", "h3", "h4", "h5", "h6", "button", "a", "label", "br", "option", "summary",
+]
+
+
+def _space_between_blocks(html: str) -> str:
+    """The same HTML with a space before and after every _SEPARATED_TAGS element."""
+    soup = BeautifulSoup(html, "html.parser")
+    for tag in soup.find_all(_SEPARATED_TAGS):
+        tag.insert_before(" ")
+        tag.insert_after(" ")
+    return str(soup)
+
 
 def _extract_text_with_beautifulsoup(html: str) -> str:
     """The original whole-page extraction: strip non-content tags, then take all remaining visible text."""
@@ -61,7 +81,9 @@ def _extract_text_with_beautifulsoup(html: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
-def extract_text_from_html_with_method(html: str, method: str = "main") -> tuple[str, str]:
+def extract_text_from_html_with_method(
+    html: str, method: str = "main", separate_blocks: bool = False
+) -> tuple[str, str]:
     """
     Extract body text from raw HTML, returning (text, used_method).
 
@@ -76,7 +98,14 @@ def extract_text_from_html_with_method(html: str, method: str = "main") -> tuple
     "beautifulsoup_full" (method="full" was requested directly). Never
     raises on empty or malformed HTML; worst case both approaches
     return "".
+
+    `separate_blocks=True` first puts a space between adjacent elements and
+    buttons (see _SEPARATED_TAGS); the default leaves the text exactly as it
+    always was.
     """
+    if separate_blocks:
+        html = _space_between_blocks(html)
+
     if method == "full":
         return _extract_text_with_beautifulsoup(html), "beautifulsoup_full"
 
@@ -89,13 +118,13 @@ def extract_text_from_html_with_method(html: str, method: str = "main") -> tuple
     return _extract_text_with_beautifulsoup(html), "beautifulsoup_fallback"
 
 
-def extract_text_from_html(html: str, method: str = "main") -> str:
-    """Pure function: raw HTML in, extracted visible body text out. See extract_text_from_html_with_method for `method` and which approach was actually used."""
-    text, _used_method = extract_text_from_html_with_method(html, method=method)
+def extract_text_from_html(html: str, method: str = "main", separate_blocks: bool = False) -> str:
+    """Pure function: raw HTML in, extracted visible body text out. See extract_text_from_html_with_method for `method`, `separate_blocks` and which approach was actually used."""
+    text, _used_method = extract_text_from_html_with_method(html, method=method, separate_blocks=separate_blocks)
     return text
 
 
-def fetch_page_text(url: str, method: str = "main") -> str:
+def fetch_page_text(url: str, method: str = "main", separate_blocks: bool = False) -> str:
     """
     Fetch `url` (an https:// scheme is added if missing) and return its
     extracted visible body text. `method` is passed straight through to
@@ -107,7 +136,7 @@ def fetch_page_text(url: str, method: str = "main") -> str:
     response = requests.get(full_url, headers=headers, timeout=settings.request_timeout_seconds)
     response.raise_for_status()
 
-    return extract_text_from_html(response.text, method=method)
+    return extract_text_from_html(response.text, method=method, separate_blocks=separate_blocks)
 
 
 def fetch_page_html(url: str) -> str:

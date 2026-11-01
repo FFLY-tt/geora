@@ -1,0 +1,3877 @@
+{
+ "company_name": "Feroot Security",
+ "domain": "feroot.com",
+ "dimensions": [
+  {
+   "dimension": "citation_visibility",
+   "score": 0,
+   "details": {
+    "status": "ok",
+    "category": "Web Script and Tracker Compliance Monitoring",
+    "question_set": {
+     "category_id": "web-script-and-tracker-compliance-monitoring",
+     "category_name": "Web Script and Tracker Compliance Monitoring",
+     "version": 4,
+     "status": "frozen",
+     "source": "existing_company_assignment"
+    },
+    "generation_attempts": [
+     {
+      "outcome": "existing_company_assignment",
+      "assignment": {
+       "assigned_on": "2026-10-11",
+       "category_id": "web-script-and-tracker-compliance-monitoring",
+       "classified_as": {
+        "description": "A tool that scans websites to find third party scripts, trackers, and cookies, then monitors and blocks unauthorized data transfers so companies can meet privacy and payment security rules.",
+        "name": "Web Script and Tracker Compliance Monitoring"
+       },
+       "company_name": "Feroot Security",
+       "homepage_text_sha256": "3e4d1487c9fe8014afaffddcc6f1a1719e0e4d16147a0e8868cc3aa80c7aedd5",
+       "match_decision": {
+        "matched_existing": false,
+        "reason": "No existing categories to compare against yet."
+       }
+      }
+     }
+    ],
+    "runs_per_query": 1,
+    "queries_total": 15,
+    "queries_valid": 15,
+    "average_mention_rate": 0.0,
+    "name_is_common_word": false,
+    "total_uncertain_runs": 0,
+    "mentions": 0,
+    "total": 15,
+    "ci_low": 0.0,
+    "ci_high": 0.204,
+    "ci_method": "Wilson score interval, z = 1.96",
+    "per_query_results": [
+     {
+      "query": "What tools can help me stop unauthorized data transfers from my website?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "What is the best third party script scanner for a small marketing team?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Which cookie and tracker scanning tool works best for an online store that takes card payments?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Which website privacy scanner should I choose if I need to meet PCI DSS rules?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "What tool is best for finding all third party scripts on a large corporate website?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Cookie consent and tracker blocking tools for a healthcare company with strict privacy rules?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Which cookie scanner is easiest to set up for a team with no security staff?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Best tool to monitor and block data leaks from website tags for an enterprise?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "What is the best affordable tool to audit cookies and trackers on a small business site?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Which data transfer monitoring tool should I pick for a bank with compliance audits?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Which website tracker scanner works well for a solo freelancer who runs a few client sites?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "What cookie and script monitoring tool should an education company pick to protect student data?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "What tool should a real estate agency choose to check trackers across many property listing pages?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Which script and cookie scanner offers the best reporting and analytics for a mid-size software company?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     },
+     {
+      "query": "Which website privacy scanning tool should a nonprofit with a tight budget choose to keep donor data safe?",
+      "runs_per_query": 1,
+      "runs": [
+       {
+        "status": "ok",
+        "mention_rule": "whole_word",
+        "mention_classification": "no_mention",
+        "evidence_sentence": null,
+        "is_hit": false,
+        "run": 1
+       }
+      ],
+      "successful_runs": 1,
+      "failed_runs": 0,
+      "uncertain_runs": 0,
+      "mention_rate": 0.0
+     }
+    ],
+    "fully_failed_queries": [],
+    "source_map": {
+     "total_answers": 15,
+     "unique_domains": 100,
+     "unparseable_links": 0,
+     "own_domain_share": 0.0,
+     "top_domains": [
+      {
+       "domain": "trackingplan.com",
+       "answers_citing": 6,
+       "questions_citing": 6,
+       "share": 0.4,
+       "is_own_domain": false
+      },
+      {
+       "domain": "enzuzo.com",
+       "answers_citing": 4,
+       "questions_citing": 4,
+       "share": 0.267,
+       "is_own_domain": false
+      },
+      {
+       "domain": "captaincompliance.com",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "cookie-script.com",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "g2.com",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "usercentrics.com",
+       "answers_citing": 3,
+       "questions_citing": 3,
+       "share": 0.2,
+       "is_own_domain": false
+      },
+      {
+       "domain": "cloud.google.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "cookieinspector.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "cside.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "elementor.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "guideflow.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "iabaustralia.com.au",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "immuniweb.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "itechguides.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "lemwatch.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "netwrix.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "oursprivacy.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "pagecrawl.io",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "safeguard.sh",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      },
+      {
+       "domain": "topbusinesssoftware.com",
+       "answers_citing": 2,
+       "questions_citing": 2,
+       "share": 0.133,
+       "is_own_domain": false
+      }
+     ]
+    },
+    "plain_finding": {
+     "what_we_found": "We asked 15 realistic customer questions about web script and tracker compliance monitoring without naming your brand, and AI search tools mentioned you 0% of the time. Even a question about an affordable privacy scanning tool for a nonprofit returned answers with no mention of you.",
+     "what_it_costs_you": "A customer researching tools for the first time sees only your competitors, so they pick one of them before they ever learn you exist.",
+     "fix_it_today": "Publish a plain page answering the exact questions customers ask, starting with affordable privacy scanning for nonprofits, so AI search tools have your own words to point to."
+    }
+   }
+  },
+  {
+   "dimension": "topic_relevance",
+   "score": 63,
+   "details": {
+    "status": "ok",
+    "pages_read": [
+     "https://www.feroot.com/index.html",
+     "https://www.feroot.com/news/feroot-security-research-reveals-deepseek-ais-hidden-data-pipeline-to-china/",
+     "https://www.feroot.com/",
+     "https://www.feroot.com/dxcomply/"
+    ],
+    "pages_failed": [],
+    "per_question_results": [
+     {
+      "classification": "answered",
+      "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+      "generation_failed": false,
+      "question": "What tools can help me stop unauthorized data transfers from my website?",
+      "runs": [
+       {
+        "classification": "answered",
+        "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+      "generation_failed": false,
+      "question": "What is the best third party script scanner for a small marketing team?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+      "generation_failed": false,
+      "question": "Which cookie and tracker scanning tool works best for an online store that takes card payments?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/index.html",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/index.html",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/index.html",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/index.html",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "answered",
+      "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+      "generation_failed": false,
+      "question": "Which website privacy scanner should I choose if I need to meet PCI DSS rules?",
+      "runs": [
+       {
+        "classification": "answered",
+        "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "PaymentGuard skimmer.js PCI DSS 4.0.1 protection for checkout flows and cardholder data, with payment-page script monitoring for requirements 6.4.3 and 11.6.1.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+      "generation_failed": false,
+      "question": "What tool is best for finding all third party scripts on a large corporate website?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "answered",
+      "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+      "generation_failed": false,
+      "question": "Cookie consent and tracker blocking tools for a healthcare company with strict privacy rules?",
+      "runs": [
+       {
+        "classification": "answered",
+        "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/index.html",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/index.html",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/index.html",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/index.html",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+      "generation_failed": false,
+      "question": "Which cookie scanner is easiest to set up for a team with no security staff?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Feroot met PCI DSS v4.0.1 requirements quickly and easily, with very little effort on my part, always a plus on a small team.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "answered",
+      "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+      "generation_failed": false,
+      "question": "Best tool to monitor and block data leaks from website tags for an enterprise?",
+      "runs": [
+       {
+        "classification": "answered",
+        "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "answered",
+        "evidence_sentence": "Browser-based security for every sensitive page and script, with real-time blocking for skimming, formjacking, script injection, and data exfiltration.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.",
+      "generation_failed": false,
+      "question": "What is the best affordable tool to audit cookies and trackers on a small business site?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds Enter your website's URL to see all pre-consent loaded trackers, scripts, and cookies.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "DXComply continuously audits your websites and mobile apps to uncover compliance gaps, prioritize remediation based on risk, and provide dated evidence.",
+      "generation_failed": false,
+      "question": "Which data transfer monitoring tool should I pick for a bank with compliance audits?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "DXComply continuously audits your websites and mobile apps to uncover compliance gaps, prioritize remediation based on risk, and provide dated evidence.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/dxcomply/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Trace where data goes, independent of where a vendor is registered.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/dxcomply/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Trace where data goes, independent of where a vendor is registered.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/dxcomply/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/dxcomply/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+      "generation_failed": false,
+      "question": "Which website tracker scanner works well for a solo freelancer who runs a few client sites?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+      "generation_failed": false,
+      "question": "What cookie and script monitoring tool should an education company pick to protect student data?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Continuous consent auditing across every page, screen, consent state, and applicable regulation.",
+      "generation_failed": false,
+      "question": "What tool should a real estate agency choose to check trackers across many property listing pages?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Continuous consent auditing across every page, screen, consent state, and applicable regulation.",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/dxcomply/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Continuous consent auditing across every page, screen, consent state, and applicable regulation.",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/dxcomply/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Continuously audit consent behavior across every page and native app screen.",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/dxcomply/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/dxcomply/",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Export Report Scan Now High Priority 95 Policy Issues 29 Web Trackers Pages 33 Passwords 5 Billing 5 24 Data Assets 12 Cookies 12 Data Transfers 121 Scripts Active Vendors View All Google Tag Manager Reads Transfers 14 Trackers Facebook Business Reads 7 Trackers Facebook Pixel Reads 9 Trackers Active Issues Manage All Misconfigured Trackers 12 misconfigured trackers detected Unauthorized Scripts 2 unauthorized scripts detected Unauthorized Countries 4 unauthorized countries detected",
+      "generation_failed": false,
+      "question": "Which script and cookie scanner offers the best reporting and analytics for a mid-size software company?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Export Report Scan Now High Priority 95 Policy Issues 29 Web Trackers Pages 33 Passwords 5 Billing 5 24 Data Assets 12 Cookies 12 Data Transfers 121 Scripts Active Vendors View All Google Tag Manager Reads Transfers 14 Trackers Facebook Business Reads 7 Trackers Facebook Pixel Reads 9 Trackers Active Issues Manage All Misconfigured Trackers 12 misconfigured trackers detected Unauthorized Scripts 2 unauthorized scripts detected Unauthorized Countries 4 unauthorized countries detected",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/index.html",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Export Report Scan Now High Priority 95 Policy Issues 29 Web Trackers Pages 33 Passwords 5 Billing 5 24 Data Assets 12 Cookies 12 Data Transfers 121 Scripts",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/index.html",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Export Report Scan Now High Priority 95 Policy Issues 29 Web Trackers Pages 33 Passwords 5 Billing 5 24 Data Assets 12 Cookies 12 Data Transfers 121 Scripts",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/index.html",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/index.html",
+      "cache_status": "cache_hit"
+     },
+     {
+      "classification": "partial",
+      "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+      "generation_failed": false,
+      "question": "Which website privacy scanning tool should a nonprofit with a tight budget choose to keep donor data safe?",
+      "runs": [
+       {
+        "classification": "partial",
+        "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+        "evidence_verified": true,
+        "run": 1,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+        "evidence_verified": true,
+        "run": 2,
+        "source_url": "https://www.feroot.com/index.html",
+        "status": "ok"
+       },
+       {
+        "classification": "partial",
+        "evidence_sentence": "Scan Your Website For Pre-consent Trackers And Scripts In 30 Seconds",
+        "evidence_verified": true,
+        "run": 3,
+        "source_url": "https://www.feroot.com/",
+        "status": "ok"
+       }
+      ],
+      "source_url": "https://www.feroot.com/",
+      "cache_status": "cache_hit"
+     }
+    ],
+    "unanswered_questions": [
+     "What is the best third party script scanner for a small marketing team?",
+     "Which cookie and tracker scanning tool works best for an online store that takes card payments?",
+     "What tool is best for finding all third party scripts on a large corporate website?",
+     "Which cookie scanner is easiest to set up for a team with no security staff?",
+     "What is the best affordable tool to audit cookies and trackers on a small business site?",
+     "Which data transfer monitoring tool should I pick for a bank with compliance audits?",
+     "Which website tracker scanner works well for a solo freelancer who runs a few client sites?",
+     "What cookie and script monitoring tool should an education company pick to protect student data?",
+     "What tool should a real estate agency choose to check trackers across many property listing pages?",
+     "Which script and cookie scanner offers the best reporting and analytics for a mid-size software company?",
+     "Which website privacy scanning tool should a nonprofit with a tight budget choose to keep donor data safe?"
+    ],
+    "plain_finding": {
+     "what_we_found": "Your website gives a clear answer to only 4 of 15 questions customers ask before buying. For example, a small marketing team asking which third party script scanner fits them finds no direct answer.",
+     "what_it_costs_you": "A customer who cannot find a straight answer on your site moves on and picks a competitor who answers it plainly.",
+     "fix_it_today": "Pick the 11 unanswered questions and add one short page or section for each that answers it in the first two sentences."
+    }
+   }
+  },
+  {
+   "dimension": "evidence_density",
+   "score": 45,
+   "details": {
+    "status": "ok",
+    "items": [
+     {
+      "category": "number_or_statistic",
+      "key": "count:70",
+      "text": "70+",
+      "context": "HIPAA, CIPA, CCPA/CPRA, GDPR, NIST, DORA, Law 25, and 70+ laws and standards. Get A Demo Free scan ★★★★★ Y Your",
+      "rule": "number:count_plus",
+      "source_url": "https://feroot.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "number_or_statistic",
+      "key": "rating:5",
+      "text": "Rated 5.0",
+      "context": "on the threats this platform was built to address. G2 Rated 5.0 By Its Users Customers cite fast setup and responsive",
+      "rule": "number:rated_number",
+      "source_url": "https://feroot.com/about",
+      "source_page": "about",
+      "also_found_on": []
+     },
+     {
+      "category": "third_party_source_or_certification",
+      "key": "g2",
+      "text": "G2",
+      "context": "is now business as usual. Chief Security Officer Verified G2 review 5 / 5 Popular reads Free report Why Consent",
+      "rule": "third_party:review",
+      "source_url": "https://feroot.com",
+      "source_page": "home",
+      "also_found_on": [
+       "https://feroot.com/about"
+      ]
+     },
+     {
+      "category": "third_party_source_or_certification",
+      "key": "hipaa",
+      "text": "HIPAA",
+      "context": "Feroot Security | Automated PCI, HIPAA & Privacy Compliance 🏆 Uncovering DeepSeek AI’s Hidden",
+      "rule": "third_party:standard",
+      "source_url": "https://feroot.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "third_party_source_or_certification",
+      "key": "gdpr",
+      "text": "GDPR",
+      "context": "DSS 4.0.1 (req 6.4.3 / 11.6.1), HIPAA, CIPA, CCPA/CPRA, GDPR, NIST, DORA, Law 25, and 70+ laws and standards. Get A",
+      "rule": "third_party:standard",
+      "source_url": "https://feroot.com",
+      "source_page": "home",
+      "also_found_on": []
+     },
+     {
+      "category": "third_party_source_or_certification",
+      "key": "pci dss",
+      "text": "PCI DSS",
+      "context": "Mobile Apps. No Code Required. → Make Payment Webpages PCI DSS 4.0.1 Compliant Make Every Website and Mobile App Privacy",
+      "rule": "third_party:standard",
+      "source_url": "https://feroot.com",
+      "source_page": "home",
+      "also_found_on": []
+     }
+    ],
+    "counts_by_category": {
+     "number_or_statistic": 2,
+     "customer_stories": 0,
+     "attributed_quote": 0,
+     "third_party_source_or_certification": 4
+    },
+    "points_by_category": {
+     "number_or_statistic": 20,
+     "customer_stories": 0,
+     "attributed_quote": 0,
+     "third_party_source_or_certification": 25
+    },
+    "pages_by_category": {
+     "number_or_statistic": {
+      "home": 1,
+      "about": 1
+     },
+     "customer_stories": {},
+     "attributed_quote": {},
+     "third_party_source_or_certification": {
+      "home": 4,
+      "about": 1
+     }
+    },
+    "customer_stories_reason": "Our judgment: AI assistants cannot see logo images, so logos are not evidence an AI can quote. A separate customer story page is text an AI can read and cite, so this category counts the distinct story pages linked one level below the customers page. Logos are listed for reference only.",
+    "customer_logos_reference": [],
+    "own_brands": [
+     "feroot",
+     "ferootsecurity"
+    ],
+    "scoring_rule": "Our own fixed formula, not an AI judgment and not an outside standard: each of the 4 evidence categories is worth up to 25 points by how many distinct pieces of evidence the code rules found ({0: 0, 1: 15, 2: 20}, 25 points for 3 or more). Finding none is a score of 0, not missing data.",
+    "pages_read": [
+     {
+      "kind": "home",
+      "url": "https://feroot.com",
+      "text_length": 5006,
+      "evidence_found": 7
+     },
+     {
+      "kind": "security",
+      "url": "https://trust.feroot.com",
+      "text_length": 19,
+      "evidence_found": 0
+     },
+     {
+      "kind": "about",
+      "url": "https://feroot.com/about",
+      "text_length": 3857,
+      "evidence_found": 2
+     }
+    ],
+    "pages_failed": [],
+    "plain_finding": {
+     "what_we_found": "We read 3 pages on your site and found 2 specific numbers or statistics, 0 customer story pages, 0 named customer testimonials, and 4 third-party ratings or certifications.",
+     "what_it_costs_you": "Your site is thin on customer story pages, so that part of your story rests on claims alone.",
+     "fix_it_today": "Add real customer story pages next to your biggest claim on the homepage."
+    }
+   }
+  },
+  {
+   "dimension": "content_recency",
+   "score": 60,
+   "details": {
+    "status": "ok",
+    "source_used": "schema_date_modified",
+    "http_last_modified": "2026-10-16T18:53:17+00:00",
+    "schema_date_modified": "2026-04-23T17:31:03-04:00",
+    "age_days": 178.2,
+    "plain_finding": {
+     "what_we_found": "Your homepage was last meaningfully updated about 178 days ago, and it shows no sign of that date to anyone visiting. AI search tools often skip pages that look stale when they compare you against competitors.",
+     "what_it_costs_you": "A customer asking an AI search tool for a recommendation may get a competitor whose site looks current while yours gets passed over.",
+     "fix_it_today": "Add a visible last updated date near the top of your homepage and refresh one key section this week so the date is real."
+    }
+   }
+  },
+  {
+   "dimension": "fact_consistency",
+   "score": 95,
+   "details": {
+    "status": "ok",
+    "query": "Using only what third-party software review sites such as G2, Capterra, TrustRadius, GetApp or Software Advice say about Feroot Security (feroot.com), give a value for each of these fields. Use null when those sites do not state it. Do not use the company's own website.\n- starting_price: the price of the cheapest paid plan, as listed\n- free_plan_or_trial: whether a free plan or a free trial is offered\n- product_category: what kind of product it is\n- target_customer: who it is mainly for, for example small businesses, mid-market, or enterprise\n- deployment: cloud, on-premise, or both\nRespond with ONLY a JSON object, no other text, in this exact shape: {\"starting_price\": {\"value\": <string or null>, \"source_url\": <string or null>}, \"free_plan_or_trial\": {\"value\": <string or null>, \"source_url\": <string or null>}, \"product_category\": {\"value\": <string or null>, \"source_url\": <string or null>}, \"target_customer\": {\"value\": <string or null>, \"source_url\": <string or null>}, \"deployment\": {\"value\": <string or null>, \"source_url\": <string or null>}}",
+    "fields": [
+     {
+      "field": "starting_price",
+      "label": "Starting price",
+      "official_quote": null,
+      "official_value": null,
+      "third_party_source": null,
+      "third_party_value": null,
+      "verdict": "unknown",
+      "votes": [
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     },
+     {
+      "field": "free_plan_or_trial",
+      "label": "Free plan or trial",
+      "official_quote": "Schedule a free demo today to discuss your needs and get personalized pricing.",
+      "official_value": "Free demo; free website scan",
+      "third_party_source": "https://www.g2.com/products/feroot-security/pricing",
+      "third_party_value": "Free trial offered; no permanent free plan",
+      "verdict": "unknown",
+      "votes": [
+       "unknown",
+       "unknown",
+       "unknown"
+      ]
+     },
+     {
+      "field": "product_category",
+      "label": "Product category",
+      "official_quote": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+      "official_value": "Client-side security, privacy compliance, and PCI DSS compliance platform",
+      "third_party_source": "https://www.g2.com/sellers/feroot-security",
+      "third_party_value": "Application shielding, client-side protection, data privacy management, security compliance, vulnerability scanner, and website security software",
+      "verdict": "match",
+      "votes": [
+       "match",
+       "match",
+       "match"
+      ]
+     },
+     {
+      "field": "target_customer",
+      "label": "Target customer",
+      "official_quote": "Enterprise privacy coverage for up to 5,000 domains, with mobile application coverage, combining DXComply with DXSecure and PaymentGuard for organizations that require enterprise-wide privacy governance, security, and PCI compliance in a single deployment.",
+      "official_value": "Enterprise",
+      "third_party_source": "https://www.g2.com/compare/feroot-security-vs-jscrambler",
+      "third_party_value": "Enterprise",
+      "verdict": "match",
+      "votes": [
+       "match",
+       "match",
+       "match"
+      ]
+     },
+     {
+      "field": "deployment",
+      "label": "Deployment",
+      "official_quote": "Deployment Method | AI Agents + Web Crawler + Script Tag",
+      "official_value": "AI Agents + Web Crawler + Script Tag",
+      "third_party_source": null,
+      "third_party_value": null,
+      "verdict": "unknown",
+      "votes": [
+       "match",
+       "unknown",
+       "unknown"
+      ]
+     }
+    ],
+    "runs": [
+     {
+      "fields": {
+       "deployment": {
+        "official_quote": "Deployment Method | AI Agents + Web Crawler + Script Tag",
+        "official_value": "Cloud (AI Agents + Web Crawler + Script Tag)",
+        "reason": null,
+        "third_party_claimed_value": "Cloud",
+        "third_party_source": "https://www.g2.com/products/feroot-security/reviews?qs=pros-and-cons",
+        "third_party_value": "Cloud",
+        "verdict": "match"
+       },
+       "free_plan_or_trial": {
+        "official_quote": "Schedule a free demo today to discuss your needs and get personalized pricing.",
+        "official_value": "Free demo; free website scan",
+        "reason": null,
+        "third_party_claimed_value": "Free trial offered; no permanent free plan",
+        "third_party_source": "https://www.g2.com/products/feroot-security/pricing",
+        "third_party_value": "Free trial offered; no permanent free plan",
+        "verdict": "unknown"
+       },
+       "product_category": {
+        "official_quote": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+        "official_value": "Client-side security, privacy compliance, and PCI DSS compliance platform",
+        "reason": null,
+        "third_party_claimed_value": "Application shielding, client-side protection, data privacy management, security compliance, vulnerability scanner, and website security software",
+        "third_party_source": "https://www.g2.com/sellers/feroot-security",
+        "third_party_value": "Application shielding, client-side protection, data privacy management, security compliance, vulnerability scanner, and website security software",
+        "verdict": "match"
+       },
+       "starting_price": {
+        "official_quote": null,
+        "official_value": null,
+        "reason": "no third-party value",
+        "third_party_claimed_value": null,
+        "third_party_source": null,
+        "third_party_value": null,
+        "verdict": "unknown"
+       },
+       "target_customer": {
+        "official_quote": "Enterprise privacy coverage for up to 5,000 domains, with mobile application coverage, combining DXComply with DXSecure and PaymentGuard for organizations that require enterprise-wide privacy governance, security, and PCI compliance in a single deployment.",
+        "official_value": "Enterprise",
+        "reason": null,
+        "third_party_claimed_value": "Enterprise",
+        "third_party_source": "https://www.g2.com/compare/feroot-security-vs-jscrambler",
+        "third_party_value": "Enterprise",
+        "verdict": "match"
+       }
+      },
+      "run": 1,
+      "status": "ok"
+     },
+     {
+      "fields": {
+       "deployment": {
+        "official_quote": "Deployment Method | AI Agents + Web Crawler + Script Tag",
+        "official_value": "AI Agents + Web Crawler + Script Tag",
+        "reason": "no third-party value",
+        "third_party_claimed_value": null,
+        "third_party_source": null,
+        "third_party_value": null,
+        "verdict": "unknown"
+       },
+       "free_plan_or_trial": {
+        "official_quote": "Schedule a free demo today to discuss your needs and get personalized pricing.",
+        "official_value": "Free demo; free website scan",
+        "reason": null,
+        "third_party_claimed_value": "Free trial offered; no permanent free plan",
+        "third_party_source": "https://www.g2.com/products/feroot-security/pricing",
+        "third_party_value": "Free trial offered; no permanent free plan",
+        "verdict": "unknown"
+       },
+       "product_category": {
+        "official_quote": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+        "official_value": "Client-side security, privacy compliance, and PCI DSS compliance platform",
+        "reason": null,
+        "third_party_claimed_value": "Client-side protection, application shielding, security compliance, website security, data privacy management, and vulnerability scanner software",
+        "third_party_source": "https://www.g2.com/compare/feroot-security-vs-cside",
+        "third_party_value": "Client-side protection, application shielding, security compliance, website security, data privacy management, and vulnerability scanner software",
+        "verdict": "match"
+       },
+       "starting_price": {
+        "official_quote": null,
+        "official_value": null,
+        "reason": "no third-party value",
+        "third_party_claimed_value": null,
+        "third_party_source": null,
+        "third_party_value": null,
+        "verdict": "unknown"
+       },
+       "target_customer": {
+        "official_quote": "Security teams at Instacart, Reddit, and Gusto use Feroot to monitor every third-party script, block unauthorized data exfiltration, and satisfy PCI DSS 4.0 requirements 6.4.3 and 11.6.1 without manual audits.",
+        "official_value": "Mid-market and enterprise organizations",
+        "reason": null,
+        "third_party_claimed_value": "Mid-market and enterprise organizations",
+        "third_party_source": "https://www.g2.com/products/feroot-security/pricing",
+        "third_party_value": "Mid-market and enterprise organizations",
+        "verdict": "match"
+       }
+      },
+      "run": 2,
+      "status": "ok"
+     },
+     {
+      "fields": {
+       "deployment": {
+        "official_quote": "Deployment Method | AI Agents + Web Crawler + Script Tag",
+        "official_value": "AI Agents + Web Crawler + Script Tag",
+        "reason": null,
+        "third_party_claimed_value": "Cloud-based SaaS",
+        "third_party_source": "https://www.g2.com/products/feroot-security/reviews?qs=pros-and-cons",
+        "third_party_value": "Cloud-based SaaS",
+        "verdict": "unknown"
+       },
+       "free_plan_or_trial": {
+        "official_quote": "Schedule a free demo today to discuss your needs and get personalized pricing.",
+        "official_value": "Free demo and free website scan",
+        "reason": null,
+        "third_party_claimed_value": "Free trial available; no permanent free plan",
+        "third_party_source": "https://www.g2.com/products/feroot-security/pricing",
+        "third_party_value": "Free trial available; no permanent free plan",
+        "verdict": "unknown"
+       },
+       "product_category": {
+        "official_quote": "Privacy and consent compliance automation for web and mobile, with consent audits, cookie tracking, policy enforcement, and evidence for GDPR, CCPA, HIPAA, and 70+ regulations.",
+        "official_value": "Client-side security, privacy and consent compliance, and PCI DSS payment-page protection platform",
+        "reason": null,
+        "third_party_claimed_value": "Client-side protection, application shielding, security compliance, website security, data privacy management, and vulnerability scanner software",
+        "third_party_source": "https://www.g2.com/compare/feroot-security-vs-cside",
+        "third_party_value": "Client-side protection, application shielding, security compliance, website security, data privacy management, and vulnerability scanner software",
+        "verdict": "match"
+       },
+       "starting_price": {
+        "official_quote": null,
+        "official_value": null,
+        "reason": "no official value",
+        "third_party_claimed_value": "Contact vendor",
+        "third_party_source": "https://www.capterra.com/p/192375/Web-Formjacking-Skimming-Attack-Detection/",
+        "third_party_value": "Contact vendor",
+        "verdict": "unknown"
+       },
+       "target_customer": {
+        "official_quote": "Great for companies with several websites or mobile applications that must comply with privacy laws and standards.",
+        "official_value": "Companies with multiple websites or mobile applications, including mid-market and enterprise organizations",
+        "reason": null,
+        "third_party_claimed_value": "Mid-market and enterprise organizations, especially in regulated industries",
+        "third_party_source": "https://www.g2.com/products/feroot-security/pricing",
+        "third_party_value": "Mid-market and enterprise organizations, especially in regulated industries",
+        "verdict": "match"
+       }
+      },
+      "run": 3,
+      "status": "ok"
+     }
+    ],
+    "voting_rule": "Each field is judged on 3 independent runs. It is a conflict only if at least 2 runs say conflict, a match only if at least 2 runs say match, and unknown otherwise. The score counts voted conflicts: 0, 1, 2, 3 or more give 95, 60, 35, 10.",
+    "fields_version": "v2",
+    "cache_status": "cache_hit",
+    "official_urls_fetched": [
+     "https://feroot.com",
+     "https://feroot.com/pricing"
+    ],
+    "conflict_fields": [],
+    "match_fields": [
+     "product_category",
+     "target_customer"
+    ],
+    "unknown_fields": [
+     "starting_price",
+     "free_plan_or_trial",
+     "deployment"
+    ],
+    "plain_finding": {
+     "what_we_found": "We compared what your website says about your product category and target customer against independent review sites for Feroot Security, and they match on every point.",
+     "what_it_costs_you": "Nothing is lost here, so you can move on to the parts of your online profile that do need work.",
+     "fix_it_today": "Check the same listings again next quarter so they stay accurate as your product and customers change."
+    }
+   }
+  },
+  {
+   "dimension": "technical_readability",
+   "score": 70,
+   "details": {
+    "status": "ok",
+    "method_note": "Check weights are our own judgment. AI crawler access, structured data, and heading structure come from GEO-16 (Kumar and Palkhouski, 2025). The static content check comes from Vercel and MERJ's December 2024 research, which found GPTBot and ClaudeBot only fetch raw HTML and never execute JavaScript, so content that only appears after a client-side render is invisible to them even though a human visitor sees it fine.",
+    "crawler_access": {
+     "points": 30,
+     "max_points": 30,
+     "allowed_crawlers": [
+      "GPTBot",
+      "PerplexityBot",
+      "ClaudeBot",
+      "Google-Extended"
+     ],
+     "blocked_crawlers": []
+    },
+    "static_content": {
+     "points": 15,
+     "max_points": 30,
+     "word_count": 535,
+     "h1_has_text": true
+    },
+    "structured_data": {
+     "points": 5,
+     "max_points": 20,
+     "found_types": [
+      "Article",
+      "ContactPoint",
+      "EntryPoint",
+      "ImageObject",
+      "Organization",
+      "SearchAction",
+      "WebPage",
+      "WebSite"
+     ]
+    },
+    "heading_structure": {
+     "points": 20,
+     "max_points": 20,
+     "h1_count": 1,
+     "h2_count": 6
+    },
+    "plain_finding": {
+     "what_we_found": "AI search tools read only the raw text of your homepage and never run the scripts that build the full page. Your raw page has 535 words of real text, so these tools see a thin edition of what a customer sees in a browser.",
+     "what_it_costs_you": "When a customer asks an AI search tool about your product, it answers from that thin text and may describe you poorly or point the customer to a competitor with clearer pages.",
+     "fix_it_today": "Ask your web developer to render the homepage on the server so the full text is in the raw page, then check it by viewing the page source and confirming your main product copy appears there."
+    }
+   }
+  }
+ ],
+ "cached_at": "2026-10-19T03:03:45.485876+00:00",
+ "previous_scores": null,
+ "source_layers": {
+  "list_version": "v2",
+  "page_type_rules_version": "v1",
+  "method_version": "v3",
+  "total_answers": 15,
+  "total_citations": 150,
+  "pages_cited": 134,
+  "pages_checked": 55,
+  "pages_cap": 60,
+  "coverage": {
+   "checked_citations": 70,
+   "citations_outside_own_site": 150,
+   "ratio": 0.4667
+  },
+  "biggest_gap_layer": "product_pages",
+  "conclusion": [
+   "For these questions, AI often reads other companies' product pages, and the top ones don't mention you: “Complete List of Cookie Scanner Tools (Free & Paid) - Captain Compliance” (captaincompliance.com), “Guidance on Establishing and Maintaining Website (and App) Tracking Audits – IAB Australia” (iabaustralia.com.au), “Healthcare Cookie Policy: How We Use Cookies and Protect Your Health Information” (accountablehq.com).",
+   "AI didn't cite your own website in any answer."
+  ],
+  "layers": [
+   {
+    "layer": "reference",
+    "parent": "reference",
+    "citations": 2,
+    "reliance": 0.0133,
+    "presence": null,
+    "gap": null,
+    "status": "unknown",
+    "coverage": {
+     "checked_citations": 0,
+     "citations": 2,
+     "ratio": 0.0
+    },
+    "pages": [
+     {
+      "url": "ftc.gov/system/files/documents/public_events/1548288/privacycon-2020-danfeng_yao.pdf",
+      "citations": 1,
+      "page_type": null,
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "pcisecuritystandards.org/standards/pci-dss",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 1,
+    "unknown_pages": [
+     {
+      "url": "ftc.gov/system/files/documents/public_events/1548288/privacycon-2020-danfeng_yao.pdf",
+      "citations": 1,
+      "error": "HTTPError"
+     }
+    ],
+    "domains": [
+     {
+      "domain": "ftc.gov",
+      "citations": 1
+     },
+     {
+      "domain": "pcisecuritystandards.org",
+      "citations": 1
+     }
+    ]
+   },
+   {
+    "layer": "review_media",
+    "parent": "review_media",
+    "citations": 6,
+    "reliance": 0.04,
+    "presence": null,
+    "gap": null,
+    "status": "unknown",
+    "coverage": {
+     "checked_citations": 0,
+     "citations": 6,
+     "ratio": 0.0
+    },
+    "pages": [
+     {
+      "url": "g2.com/categories/cookie-tracking",
+      "citations": 2,
+      "page_type": null,
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "capterra.com/p/227709/Cookie-Script",
+      "citations": 1,
+      "page_type": null,
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "g2.com/categories/cookie-tracking/free",
+      "citations": 1,
+      "page_type": null,
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "g2.com/categories/cookie-tracking?order=g2_score&page=3",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "sourceforge.net/software/cookie-scanners",
+      "citations": 1,
+      "page_type": null,
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 2,
+    "unknown_pages": [
+     {
+      "url": "g2.com/categories/cookie-tracking",
+      "citations": 2,
+      "error": "HTTPError"
+     },
+     {
+      "url": "capterra.com/p/227709/Cookie-Script",
+      "citations": 1,
+      "error": "HTTPError"
+     },
+     {
+      "url": "g2.com/categories/cookie-tracking/free",
+      "citations": 1,
+      "error": "HTTPError"
+     }
+    ],
+    "domains": [
+     {
+      "domain": "g2.com",
+      "citations": 4
+     },
+     {
+      "domain": "capterra.com",
+      "citations": 1
+     },
+     {
+      "domain": "sourceforge.net",
+      "citations": 1
+     }
+    ]
+   },
+   {
+    "layer": "community",
+    "parent": "community",
+    "citations": 0,
+    "reliance": 0.0,
+    "presence": null,
+    "gap": 0.0,
+    "status": "not_used",
+    "coverage": {
+     "checked_citations": 0,
+     "citations": 0,
+     "ratio": null
+    },
+    "pages": [],
+    "pages_not_checked": 0,
+    "unknown_pages": [],
+    "domains": []
+   },
+   {
+    "layer": "own_site",
+    "parent": "own_site",
+    "citations": 0,
+    "reliance": 0.0,
+    "presence": null,
+    "gap": 0.0,
+    "status": "not_used",
+    "coverage": {
+     "checked_citations": 0,
+     "citations": 0,
+     "ratio": null
+    },
+    "pages": [],
+    "pages_not_checked": 0,
+    "unknown_pages": [],
+    "domains": []
+   },
+   {
+    "layer": "lists",
+    "parent": "other_companies",
+    "citations": 49,
+    "reliance": 0.3267,
+    "presence": 0.0263,
+    "gap": 0.3181,
+    "status": "gap",
+    "coverage": {
+     "checked_citations": 38,
+     "citations": 49,
+     "ratio": 0.7755
+    },
+    "pages": [
+     {
+      "url": "trackingplan.com/blog/cookie-scanner-tool-8-en",
+      "citations": 5,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Top 8 Cookie Scanner Tools 2026 | Trackingplan",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "usercentrics.com/knowledge-hub/cookie-tracking-software",
+      "citations": 3,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "11 Best Cookie Tracking Software: Best Options in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "enzuzo.com/blog/best-cookie-tracking-software",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Cookie Tracking Software: 9 Tools Evaluated (2026)",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "guideflow.com/blog/cookie-tracking-software",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "11 best cookie tracking software for 2026 - Guideflow Blog",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "immuniweb.com/resources/best-compliance-scanning-tools",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Compliance Scanning Tools — GDPR, PCI DSS, HIPAA (2026)",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "itechguides.com/best/cookie-tracking-software",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Cookie Tracking Software in 2026: Researched & Ranked",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "trackingplan.com/blog/cookies-audit-tools",
+      "citations": 2,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The 12 Best Cookies Audit Tools for Compliance and Data Quality in 2026 | Trackingplan",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "airlockdigital.com/learn/browser-security-key-risks-and-best-practices",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Browser Security: 9 Key Risks and 5 Best Practices",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "axiobench.com/best/real-estate-tracking-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Real Estate Tracking Software: 2026 Comparison",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cloud.google.com/blog/topics/threat-intelligence/data-protection-best-practices",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Data Protection Best Practices | Mandiant | Google Cloud Blog",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cloudeagle.ai/blogs/data-loss-prevention-tools",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Top 10 Data Loss Prevention Solutions for Enterprises in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "consentstack.io/compare/cookie-scanners",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The Best Cookie Compliance Scanners in 2026, Tested | ConsentStack",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cookie-script.com/compare/cookiescript-vs-enterprice-cmp",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "CookieScript vs. Enterprise Consent Management Platforms (CMPs)",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cookie-script.com/compare/gdpr-vs-hipaa",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "GDPR vs HIPAA Compliance in Healthcare Explained",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cookieinspector.com/support/action-plans/best-practices-and-monitoring",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Cookie Inspector: Free Website Cookie Checker â GDPR & CCPA",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cside.com/blog/script-monitoring",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Script Monitoring for Websites: 5 Best Platforms Compared",
+      "mentions_you": true,
+      "rule": "name_in_text",
+      "snippet": "rver-side, archives it, and covers frameworks beyond PCI including HIPAA, GDPR, and CPRA. Feroot Security Best for: Compliance-driven teams that want a JavaScript-agent behavioural monitor for PC",
+      "near_miss": null
+     },
+     {
+      "url": "curvecompliance.com/consent-management-platform-healthcare-cmp-comparison-setup",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best Consent Management Platforms for Healthcare (2026) | Curve",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cyera.com/blog/21-best-data-loss-prevention-software-for-2026",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "21 Best Data Loss Prevention Software [2026 Review]",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "elementor.com/blog/document-log",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best How To Document And Log Cookie Consent in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "elementor.com/blog/enterprise-cookie",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best Enterprise Cookie Consent Vs Small Business Solutions in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "elementor.com/blog/scan-website",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "10 Best How To Scan Your Website For Cookies in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "enzuzo.com/blog/best-consent-management-platforms-for-education",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The Best Consent Management Platforms for Education in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "enzuzo.com/blog/best-consent-management-platforms-for-healthcare",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "The Best Consent Management Platforms for Healthcare in 2026",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "expertinsights.com/compliance/the-top-cookie-consent-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best 12 Cookie Consent Software For Business (2026)",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "factors.ai/blog/free-website-traffic-analysis-tools",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Website Traffic Analysis Tools: How to Check & Compare (Free + Paid)",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "fanruan.com/en/blog/top-10-data-protection-tools-for-businesses",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Top 10 Data Protection Tools Every Business Should Know",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "fraudio.com/roundups/best-ai-transaction-monitoring-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "checked",
+      "error": null,
+      "title": "Best AI Transaction Monitoring Software in 2026 (Reviewed)",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "gitnux.org/best/listings-management-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "host-tracker.com/en/blog/best-website-monitoring-tools-2026",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "lemwatch.com/best/website-monitoring",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "plerdy.com/blog/best-website-monitoring-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "safeguard.sh/resources/blog/best-dependency-scanning-tools-2026",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "securebin.ai/blog/best-free-website-security-scanners-2026",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "sphinxhq.com/blog-posts/best-compliance-software-financial-services",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "trackingplan.com/blog/best-cookie-audit-tools-2026-7-en",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "trainingcamp.com/articles/best-cybersecurity-tools-for-nonprofit-organizations",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "upguard.com/blog/best-dark-web-monitoring-tools",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "zipdo.co/best/cookie-tracking-software",
+      "citations": 1,
+      "page_type": "lists",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 11,
+    "unknown_pages": [],
+    "domains": [
+     {
+      "domain": "trackingplan.com",
+      "citations": 8
+     },
+     {
+      "domain": "enzuzo.com",
+      "citations": 4
+     },
+     {
+      "domain": "elementor.com",
+      "citations": 3
+     },
+     {
+      "domain": "usercentrics.com",
+      "citations": 3
+     },
+     {
+      "domain": "cookie-script.com",
+      "citations": 2
+     },
+     {
+      "domain": "guideflow.com",
+      "citations": 2
+     },
+     {
+      "domain": "immuniweb.com",
+      "citations": 2
+     },
+     {
+      "domain": "itechguides.com",
+      "citations": 2
+     },
+     {
+      "domain": "airlockdigital.com",
+      "citations": 1
+     },
+     {
+      "domain": "axiobench.com",
+      "citations": 1
+     },
+     {
+      "domain": "cloud.google.com",
+      "citations": 1
+     },
+     {
+      "domain": "cloudeagle.ai",
+      "citations": 1
+     },
+     {
+      "domain": "consentstack.io",
+      "citations": 1
+     },
+     {
+      "domain": "cookieinspector.com",
+      "citations": 1
+     },
+     {
+      "domain": "cside.com",
+      "citations": 1
+     },
+     {
+      "domain": "curvecompliance.com",
+      "citations": 1
+     },
+     {
+      "domain": "cyera.com",
+      "citations": 1
+     },
+     {
+      "domain": "expertinsights.com",
+      "citations": 1
+     },
+     {
+      "domain": "factors.ai",
+      "citations": 1
+     },
+     {
+      "domain": "fanruan.com",
+      "citations": 1
+     },
+     {
+      "domain": "fraudio.com",
+      "citations": 1
+     },
+     {
+      "domain": "gitnux.org",
+      "citations": 1
+     },
+     {
+      "domain": "host-tracker.com",
+      "citations": 1
+     },
+     {
+      "domain": "lemwatch.com",
+      "citations": 1
+     },
+     {
+      "domain": "plerdy.com",
+      "citations": 1
+     },
+     {
+      "domain": "safeguard.sh",
+      "citations": 1
+     },
+     {
+      "domain": "securebin.ai",
+      "citations": 1
+     },
+     {
+      "domain": "sphinxhq.com",
+      "citations": 1
+     },
+     {
+      "domain": "trainingcamp.com",
+      "citations": 1
+     },
+     {
+      "domain": "upguard.com",
+      "citations": 1
+     },
+     {
+      "domain": "zipdo.co",
+      "citations": 1
+     }
+    ]
+   },
+   {
+    "layer": "guides",
+    "parent": "other_companies",
+    "citations": 44,
+    "reliance": 0.2933,
+    "presence": 0.0,
+    "gap": 0.2933,
+    "status": "gap",
+    "coverage": {
+     "checked_citations": 15,
+     "citations": 44,
+     "ratio": 0.3409
+    },
+    "pages": [
+     {
+      "url": "cside.com/blog/openclaw-scanner-for-third-party-scripts",
+      "citations": 2,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "OpenClaw Scanner for Third-Party Scripts",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "blog.cloudflare.com/collect-all-your-cookies-in-one-jar",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "Collect all your cookies in one jar with Page Shield Cookie Monitor | Cloudflare Blog",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cloud.google.com/blog/products/chrome-enterprise/new-ways-to-protect-your-sensitive-data-with-chrome-enterprise",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "New ways to protect your sensitive data with Chrome Enterprise | Google Cloud Blog",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "clunky.ai/blog/ultimate-guide-to-third-party-script-compliance",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "Ultimate Guide to Third-Party Script Compliance | Clunky AI",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "concord.tech/docs/scanning-trackers-cookies-scripts",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "Scanning Your Site for Trackers and Cookies | Concord",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "consently.net/blog/cookie-compliance-by-industry",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "Cookie Compliance by Industry: How the Rules and Risk Change by Sector",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "consentpixel.com/blogs/free-website-tracker-scanners",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "Free Tools to Scan Your Website for Trackers (2026)",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cookie-script.com/guides/edtech-coppa-gdprk-ferpa/amp",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "EdTech & School Websites: Navigating COPPA, GDPR-K, and FERPA",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cookie-script.com/guides/education-platforms-student-privacy-managing-cookies-under-coppa-and-gdpr/amp",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "Education Platforms & Student Privacy: Managing Cookies Under COPPA and GDPR",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cookie-script.com/guides/healthcare-website-compliance-2025",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "Healthcare Website Compliance Guide 2025",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cookie-script.com/guides/page-2?amp=1&sb_category=44",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "Guides",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cookie-script.com/privacy-laws/hipaa-guide-2026/amp",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "HIPAA Compliance 2026: A Practical Guide to PHI Security and Patient Trust",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "docs.tenable.com/cyber-exposure-studies/pci-dss/Content/PDF/Tenable_Cyber_Exposure_Study-PCI-DSS.pdf",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": null,
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "dojah.io/blog/transaction-monitoring-banks",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "checked",
+      "error": null,
+      "title": "Transaction Monitoring for Banks: A Complete Guide",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "getastra.com/blog/compliance/pci/pci-service-provider",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "goanywhere.com/resources/datasheets/pci-compliant-file-transfers-banking-finance",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "helpyousponsor.com/blog/cost-effective-data-compliance-tips-nonprofits",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "immuniweb.com/resources/free-online-vulnerability-scanner",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "kiteworks.com/managed-file-transfer/financial-services-buyers-guide",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "netwrix.com/en/resources/blog/pii-discovery-tools",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "netwrix.com/en/resources/blog/remote-work-security",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "oursprivacy.com/blog/web-scanner-automatic-script-detection",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pagecrawl.io/blog/complete-guide-website-monitoring-2026",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pagecrawl.io/blog/real-estate-investor-monitoring",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pagecrawl.io/blog/zillow-redfin-monitoring-home-prices-new-listings",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pagespeed.deployhq.com/guides/third-party-scripts",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pagewatch.tech/blog/detecting-unauthorized-javascript-injection-website-monitoring",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "safeguard.sh/resources/blog/how-to-choose-an-sca-tool-faq",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "safeguard.sh/resources/blog/nonprofit-organization-cybersecurity-guide",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "scanner.blacksight.io/blog/audit-third-party-scripts-guide",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "secureprivacy.ai/blog/privacy-software-for-schools",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "securitymetrics.com/blog/comparing-code-free-pci-solutions",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "seon.io/resources/transaction-monitoring-software-how-it-works-and-tips",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "slash.com/blog/transaction-monitoring-software",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "supervizor.com/blog/grc/compliance/software/ai-compliance-monitoring",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "swetrix.com/blog/web-analytics/for-edtech",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "taskade.com/blog/ai-script-generators",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "trackingplan.com/blog/data-breach-prevention-tools",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "trackingplan.com/blog/marketing-observability-tools",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "trajectorywebdesign.com/blog/nonprofit-website-security",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "tryhoverify.com/blog/how-to-measure-third-party-script-performance",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "vitalsfixer.com/blog/third-party-scripts-performance",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "yassersoliman.com/blog/third-party-scripts-website",
+      "citations": 1,
+      "page_type": "guides",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 29,
+    "unknown_pages": [],
+    "domains": [
+     {
+      "domain": "cookie-script.com",
+      "citations": 5
+     },
+     {
+      "domain": "pagecrawl.io",
+      "citations": 3
+     },
+     {
+      "domain": "cside.com",
+      "citations": 2
+     },
+     {
+      "domain": "netwrix.com",
+      "citations": 2
+     },
+     {
+      "domain": "safeguard.sh",
+      "citations": 2
+     },
+     {
+      "domain": "trackingplan.com",
+      "citations": 2
+     },
+     {
+      "domain": "blog.cloudflare.com",
+      "citations": 1
+     },
+     {
+      "domain": "cloud.google.com",
+      "citations": 1
+     },
+     {
+      "domain": "clunky.ai",
+      "citations": 1
+     },
+     {
+      "domain": "concord.tech",
+      "citations": 1
+     },
+     {
+      "domain": "consently.net",
+      "citations": 1
+     },
+     {
+      "domain": "consentpixel.com",
+      "citations": 1
+     },
+     {
+      "domain": "docs.tenable.com",
+      "citations": 1
+     },
+     {
+      "domain": "dojah.io",
+      "citations": 1
+     },
+     {
+      "domain": "getastra.com",
+      "citations": 1
+     },
+     {
+      "domain": "goanywhere.com",
+      "citations": 1
+     },
+     {
+      "domain": "helpyousponsor.com",
+      "citations": 1
+     },
+     {
+      "domain": "immuniweb.com",
+      "citations": 1
+     },
+     {
+      "domain": "kiteworks.com",
+      "citations": 1
+     },
+     {
+      "domain": "oursprivacy.com",
+      "citations": 1
+     },
+     {
+      "domain": "pagespeed.deployhq.com",
+      "citations": 1
+     },
+     {
+      "domain": "pagewatch.tech",
+      "citations": 1
+     },
+     {
+      "domain": "scanner.blacksight.io",
+      "citations": 1
+     },
+     {
+      "domain": "secureprivacy.ai",
+      "citations": 1
+     },
+     {
+      "domain": "securitymetrics.com",
+      "citations": 1
+     },
+     {
+      "domain": "seon.io",
+      "citations": 1
+     },
+     {
+      "domain": "slash.com",
+      "citations": 1
+     },
+     {
+      "domain": "supervizor.com",
+      "citations": 1
+     },
+     {
+      "domain": "swetrix.com",
+      "citations": 1
+     },
+     {
+      "domain": "taskade.com",
+      "citations": 1
+     },
+     {
+      "domain": "trajectorywebdesign.com",
+      "citations": 1
+     },
+     {
+      "domain": "tryhoverify.com",
+      "citations": 1
+     },
+     {
+      "domain": "vitalsfixer.com",
+      "citations": 1
+     },
+     {
+      "domain": "yassersoliman.com",
+      "citations": 1
+     }
+    ]
+   },
+   {
+    "layer": "product_pages",
+    "parent": "other_companies",
+    "citations": 49,
+    "reliance": 0.3267,
+    "presence": 0.0,
+    "gap": 0.3267,
+    "status": "biggest_gap",
+    "coverage": {
+     "checked_citations": 17,
+     "citations": 49,
+     "ratio": 0.3469
+    },
+    "pages": [
+     {
+      "url": "captaincompliance.com/education/complete-list-of-cookie-scanner-tools-free-paid",
+      "citations": 3,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Complete List of Cookie Scanner Tools (Free & Paid) - Captain Compliance",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "iabaustralia.com.au/guideline/guidance-on-establishing-and-maintaining-website-and-app-tracking-audits",
+      "citations": 2,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Guidance on Establishing and Maintaining Website (and App) Tracking Audits – IAB Australia",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "accountablehq.com/post/healthcare-cookie-policy-how-we-use-cookies-and-protect-your-health-information",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Healthcare Cookie Policy: How We Use Cookies and Protect Your Health Information",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "acunetix.com/websitesecurity/pci-dss",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "PCI-DSS: Payment Card Industry Data Security Standard | Invicti",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "apify.com/artifact-machine/artifact-machine-third-party-script-auditor",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "unknown",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": "HTTPError"
+     },
+     {
+      "url": "chromewebstore.google.com/detail/website-tracking-scanner/kalenefadipiiogajgnpaddokacmomje?hl=en",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Website Tracking Scanner - Chrome Web Store",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "clym.io/products/cookie-scanner",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Clym Cookie Scanner – Free Cookie Audit and Compliance Insights | Clym",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cookie-script.com/privacy-laws/website-tracking-mhmda/amp",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "MHMDA and Website Tracking: What Health-Related Businesses Should Know About Cookies, Pixels, and Consent",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cookieinspector.com/cookie-audit-tool",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Cookie Audit Tool & Software: Free, for WordPress & Any Site",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "cookieinspector.com/cookie-scanner",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Free Cookie Scanner â Online Website Cookie & Tracker Scan",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "currentware.com/solutions/data-loss-prevention",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Data Loss Prevention (DLP) Software for Endpoint Security",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "doc.commandersact.com/features/realtime-cookie-scanner",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Realtime Cookie Scanner | Commanders Act X",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "endpointprotector.com/solutions/source-code-protection",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Source Code Protection | Endpoint Protector",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "fortwatch.ai/industries/nonprofits",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Nonprofit Cybersecurity & Donor Data Protection | FortWatch.ai",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "freshpaint.io/consent-manager",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "checked",
+      "error": null,
+      "title": "Healthcare Consent Management Platform | Freshpaint",
+      "mentions_you": false,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null
+     },
+     {
+      "url": "getsitewatch.com/features/third-party-script-monitoring",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "gitnux.org/service/property-listing",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "internettoolset.com/privacy/script-auditor",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "kiteworks.com/cybersecurity-risk-management/cross-border-data-transfer-risks-banks",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "lemwatch.com/tools/third-party-scripts-checker",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "manageengine.com/data-security?lhs-idaccess",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "monity.ai/for/real-estate",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "nordlayer.com/browser/dlp-elements",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "onescraper.com/solutions/real-estate",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "oursprivacy.com/product/consent-management-platform",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pacgie.com/cookie-scanner",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pagecrawl.io/use-cases/real-estate-listings",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pandasecurity.com/en/mediacenter/dark-web-monitoring-tools",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "pcicompliance.com/start-your-scan",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "privacychecker.pro",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "rtila.com/use-cases/real-estate",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "scancomply.com",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "scriptscanner.com/pricing",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "security.googleblog.com/2024/04/prevent-generative-ai-data-leaks-with.html?hl=es_MX",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "sitecurl.com/for/nonprofits",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "southrivertech.com/industries/financial-services-secure-file-transfer",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "tldtrack.com",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "topbusinesssoftware.com/categories/cookie-scanners",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "topbusinesssoftware.com/categories/cookie-scanners/enterprise-orgs",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "topbusinesssoftware.com/categories/cookie-scanners/government-orgs",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "trellix.com/assets/events/partner-tech-summit-2024-emea-ltam/workshop-data-protection-partner-tech-summit-2024.pdf",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "urlscan.io",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "vectra.ai/topics/exfiltration",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "web.dev/articles/optimizing-content-efficiency-loading-third-party-javascript",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "worldmetrics.org/service/real-estate-website",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     },
+     {
+      "url": "xerago.ai/xtelligence/tag-management-solution",
+      "citations": 1,
+      "page_type": "product_pages",
+      "status": "not_checked",
+      "mentions_you": null,
+      "rule": null,
+      "snippet": null,
+      "near_miss": null,
+      "title": null,
+      "error": null
+     }
+    ],
+    "pages_not_checked": 31,
+    "unknown_pages": [
+     {
+      "url": "apify.com/artifact-machine/artifact-machine-third-party-script-auditor",
+      "citations": 1,
+      "error": "HTTPError"
+     }
+    ],
+    "domains": [
+     {
+      "domain": "captaincompliance.com",
+      "citations": 3
+     },
+     {
+      "domain": "topbusinesssoftware.com",
+      "citations": 3
+     },
+     {
+      "domain": "cookieinspector.com",
+      "citations": 2
+     },
+     {
+      "domain": "iabaustralia.com.au",
+      "citations": 2
+     },
+     {
+      "domain": "accountablehq.com",
+      "citations": 1
+     },
+     {
+      "domain": "acunetix.com",
+      "citations": 1
+     },
+     {
+      "domain": "apify.com",
+      "citations": 1
+     },
+     {
+      "domain": "chromewebstore.google.com",
+      "citations": 1
+     },
+     {
+      "domain": "clym.io",
+      "citations": 1
+     },
+     {
+      "domain": "cookie-script.com",
+      "citations": 1
+     },
+     {
+      "domain": "currentware.com",
+      "citations": 1
+     },
+     {
+      "domain": "doc.commandersact.com",
+      "citations": 1
+     },
+     {
+      "domain": "endpointprotector.com",
+      "citations": 1
+     },
+     {
+      "domain": "fortwatch.ai",
+      "citations": 1
+     },
+     {
+      "domain": "freshpaint.io",
+      "citations": 1
+     },
+     {
+      "domain": "getsitewatch.com",
+      "citations": 1
+     },
+     {
+      "domain": "gitnux.org",
+      "citations": 1
+     },
+     {
+      "domain": "internettoolset.com",
+      "citations": 1
+     },
+     {
+      "domain": "kiteworks.com",
+      "citations": 1
+     },
+     {
+      "domain": "lemwatch.com",
+      "citations": 1
+     },
+     {
+      "domain": "manageengine.com",
+      "citations": 1
+     },
+     {
+      "domain": "monity.ai",
+      "citations": 1
+     },
+     {
+      "domain": "nordlayer.com",
+      "citations": 1
+     },
+     {
+      "domain": "onescraper.com",
+      "citations": 1
+     },
+     {
+      "domain": "oursprivacy.com",
+      "citations": 1
+     },
+     {
+      "domain": "pacgie.com",
+      "citations": 1
+     },
+     {
+      "domain": "pagecrawl.io",
+      "citations": 1
+     },
+     {
+      "domain": "pandasecurity.com",
+      "citations": 1
+     },
+     {
+      "domain": "pcicompliance.com",
+      "citations": 1
+     },
+     {
+      "domain": "privacychecker.pro",
+      "citations": 1
+     },
+     {
+      "domain": "rtila.com",
+      "citations": 1
+     },
+     {
+      "domain": "scancomply.com",
+      "citations": 1
+     },
+     {
+      "domain": "scriptscanner.com",
+      "citations": 1
+     },
+     {
+      "domain": "security.googleblog.com",
+      "citations": 1
+     },
+     {
+      "domain": "sitecurl.com",
+      "citations": 1
+     },
+     {
+      "domain": "southrivertech.com",
+      "citations": 1
+     },
+     {
+      "domain": "tldtrack.com",
+      "citations": 1
+     },
+     {
+      "domain": "trellix.com",
+      "citations": 1
+     },
+     {
+      "domain": "urlscan.io",
+      "citations": 1
+     },
+     {
+      "domain": "vectra.ai",
+      "citations": 1
+     },
+     {
+      "domain": "web.dev",
+      "citations": 1
+     },
+     {
+      "domain": "worldmetrics.org",
+      "citations": 1
+     },
+     {
+      "domain": "xerago.ai",
+      "citations": 1
+     }
+    ]
+   }
+  ]
+ },
+ "provenance": {
+  "run_date": "2026-10-19",
+  "run_at": "2026-10-19T03:03:45.485496+00:00",
+  "method_versions": {
+   "citation_visibility": "v4",
+   "topic_relevance": "v1",
+   "evidence_density": "v3.2-rules",
+   "content_recency": "v1",
+   "fact_consistency": "v4",
+   "technical_readability": "v1",
+   "source_layers": "v3"
+  },
+  "source_layer_list_version": "v2",
+  "page_type_rules_version": "v1",
+  "question_set": {
+   "category_id": "web-script-and-tracker-compliance-monitoring",
+   "category_name": "Web Script and Tracker Compliance Monitoring",
+   "version": 4,
+   "status": "frozen"
+  },
+  "pages": {
+   "topic_relevance": [
+    {
+     "url": "https://www.feroot.com/index.html",
+     "text_sha256": "bcd35e8b0c104b1ddef14c07448a1413a22a42988a54f97564d5c6089f922038",
+     "text_length": 3000
+    },
+    {
+     "url": "https://www.feroot.com/news/feroot-security-research-reveals-deepseek-ais-hidden-data-pipeline-to-china/",
+     "text_sha256": "ea2a932f70b3960cedba844082f098c9f4da7229d892e43e72417a3deb8d123d",
+     "text_length": 1275
+    },
+    {
+     "url": "https://www.feroot.com/",
+     "text_sha256": "bcd35e8b0c104b1ddef14c07448a1413a22a42988a54f97564d5c6089f922038",
+     "text_length": 3000
+    },
+    {
+     "url": "https://www.feroot.com/dxcomply/",
+     "text_sha256": "507be42b214d5fde119c44db5e3b59d40d33b4222750f297983ef40f9ee1e935",
+     "text_length": 3000
+    }
+   ],
+   "evidence_density": [
+    {
+     "url": "https://feroot.com",
+     "text_sha256": "7f3d2cfb41ea6dfdf20c3216ea063198cd3cdeb9c321c74cc22deb291aefed30",
+     "text_length": 5006
+    },
+    {
+     "url": "https://trust.feroot.com",
+     "text_sha256": "a8eaeb967815de4a9c8390582a775f4b4d8a9d99648c2a35652d9e6ecb7faa8a",
+     "text_length": 19
+    },
+    {
+     "url": "https://feroot.com/about",
+     "text_sha256": "e4a3d46d4cb6dfab7f248ff121751f973de716c9d1a8512028d0ffb81ff817d5",
+     "text_length": 3857
+    }
+   ],
+   "content_recency": [
+    {
+     "url": "https://www.feroot.com/index.html",
+     "text_sha256": "3e4d1487c9fe8014afaffddcc6f1a1719e0e4d16147a0e8868cc3aa80c7aedd5",
+     "text_length": 3578
+    }
+   ],
+   "fact_consistency": [
+    {
+     "url": "https://feroot.com",
+     "text_sha256": "3e4d1487c9fe8014afaffddcc6f1a1719e0e4d16147a0e8868cc3aa80c7aedd5",
+     "text_length": 3578
+    },
+    {
+     "url": "https://feroot.com/pricing",
+     "text_sha256": "bfcffbdb27826eaac5ccbded924551dc8b724d7013b2dade0a65a8040b55ea44",
+     "text_length": 7675
+    }
+   ],
+   "technical_readability": [
+    {
+     "url": "https://feroot.com",
+     "text_sha256": "3e4d1487c9fe8014afaffddcc6f1a1719e0e4d16147a0e8868cc3aa80c7aedd5",
+     "text_length": 3578
+    }
+   ]
+  }
+ },
+ "previous_citation_interval": null,
+ "competitors": null,
+ "competitor_comparison": null,
+ "previous_provenance": null,
+ "source_bars": {
+  "rows": [
+   {
+    "key": "lists",
+    "name": "Best tools lists",
+    "pages": 27,
+    "mention_pages": 1,
+    "could_not_open": 0,
+    "not_checked": 11
+   },
+   {
+    "key": "guides",
+    "name": "Guides and articles",
+    "pages": 14,
+    "mention_pages": 0,
+    "could_not_open": 0,
+    "not_checked": 29
+   },
+   {
+    "key": "review_media",
+    "name": "Review sites and news",
+    "pages": 0,
+    "mention_pages": 0,
+    "could_not_open": 3,
+    "not_checked": 2
+   }
+  ],
+  "max_pages": 27,
+  "most_missing": "lists"
+ },
+ "site_readiness": {
+  "total": 60,
+  "level": "Needs work",
+  "items": [
+   {
+    "key": "topic_relevance",
+    "name": "Answers customer questions",
+    "score": 63,
+    "level": "Needs work"
+   },
+   {
+    "key": "evidence_density",
+    "name": "Has real numbers and proof",
+    "score": 45,
+    "level": "Needs work"
+   },
+   {
+    "key": "content_recency",
+    "name": "Up to date",
+    "score": 60,
+    "level": "Needs work"
+   },
+   {
+    "key": "technical_readability",
+    "name": "Easy for AI to read",
+    "score": 70,
+    "level": "Good"
+   }
+  ],
+  "sentence": "Start by fixing these:",
+  "fix_first": [
+   "Has real numbers and proof",
+   "Up to date"
+  ]
+ }
+}

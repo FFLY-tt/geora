@@ -26,6 +26,7 @@ _BACKEND_DIR = _SERVICE_DIR.parent  # backend/
 
 sys.path.insert(0, str(_BACKEND_DIR))
 sys.path.insert(0, str(_SERVICE_DIR))
+sys.path.insert(0, str(_THIS_DIR))
 
 import engines._question_sets as question_sets  # noqa: E402
 import engines._state_store as state_store  # noqa: E402
@@ -38,19 +39,14 @@ import engines.technical_engine as technical_engine  # noqa: E402
 import provenance  # noqa: E402
 import result_cache  # noqa: E402
 from shared.config import Settings  # noqa: E402
+from _question_fixtures import QUESTIONS_15, distinct_questions  # noqa: E402
 
 _FAKE_SETTINGS = Settings(perplexity_api_key="test-key", deepseek_api_key="test-key")
 _FAKE_PLAIN_FINDING = ({"what_we_found": "stub", "what_it_costs_you": "", "fix_it_today": ""}, [])
 
-QUESTIONS = [
-    "How can I see which scripts run on my checkout page?",
-    "What tools detect card skimming code on a website?",
-    "How do I keep third party tags compliant with privacy laws?",
-    "How can a small team audit the JavaScript on its site?",
-    "What should I check before adding a new tracking script?",
-]
+QUESTIONS = list(QUESTIONS_15)
 CATEGORY = {"name": "Client side web security", "description": "Tools that monitor scripts running in visitors' browsers."}
-ALL_PASS = [{"passes": True, "reason": "A real buyer would ask this."}] * 5
+ALL_PASS = [{"passes": True, "reason": "A real buyer would ask this."}] * 15
 
 
 class _StateDirTestCase(unittest.TestCase):
@@ -93,14 +89,14 @@ def _citation_patches(stack: ExitStack, *, queries_side_effect=None, match=None,
             patch.object(
                 citation_engine,
                 "_call_deepseek_for_queries",
-                side_effect=queries_side_effect or (lambda description: list(QUESTIONS)),
+                side_effect=queries_side_effect or (lambda description, count=None, existing=(), avoid_names=(): list(QUESTIONS)),
             )
         ),
         review=stack.enter_context(
             patch.object(
                 citation_engine,
                 "_call_deepseek_for_question_review",
-                side_effect=review if callable(review) else (lambda description, questions: list(review)),
+                side_effect=review if callable(review) else (lambda description, questions, existing=(): list(review)),
             )
         ),
     )
@@ -123,7 +119,7 @@ class QuestionSetPerCategoryTests(_StateDirTestCase):
         second.match.assert_not_called()
         second.queries.assert_not_called()
         second.review.assert_not_called()
-        self.assertEqual(result2.details["queries_total"], 5)
+        self.assertEqual(result2.details["queries_total"], 15)
         self.assertEqual(result1.details["question_set"]["category_id"], result2.details["question_set"]["category_id"])
         self.assertEqual(result2.details["question_set"]["source"], "existing_company_assignment")
         self.assertEqual([e["query"] for e in result2.details["per_query_results"]], QUESTIONS)
@@ -213,7 +209,7 @@ class QuestionSetAutoCheckTests(_StateDirTestCase):
             ]
         )
         with ExitStack() as stack:
-            mocks = _citation_patches(stack, review=lambda description, questions: next(reviews))
+            mocks = _citation_patches(stack, review=lambda description, questions, existing=(): next(reviews))
             result = citation_engine.check_citation_visibility("Feroot Security", "feroot.com")
 
         self.assertEqual(mocks.queries.call_count, 2)
@@ -221,18 +217,18 @@ class QuestionSetAutoCheckTests(_StateDirTestCase):
         self.assertNotIn("note", result.details["question_set"])
 
     def test_three_failed_attempts_use_best_batch_marked_needs_attention(self):
-        batches = iter([[f"Batch {n} question {i}?" for i in range(1, 6)] for n in (1, 2, 3)])
-        pass_counts = iter([2, 4, 3])
+        batches = iter([distinct_questions(15 * n, 15) for n in (0, 1, 2)])
+        pass_counts = iter([8, 14, 11])
 
-        def review(description, questions):
+        def review(description, questions, existing=()):
             passing = next(pass_counts)
             return [
                 {"passes": i < passing, "reason": "ok" if i < passing else "Not a real buyer question."}
-                for i in range(5)
+                for i in range(15)
             ]
 
         with ExitStack() as stack:
-            mocks = _citation_patches(stack, queries_side_effect=lambda d: next(batches), review=review)
+            mocks = _citation_patches(stack, queries_side_effect=lambda d, count=None, existing=(), avoid_names=(): next(batches), review=review)
             result = citation_engine.check_citation_visibility("Feroot Security", "feroot.com")
 
         self.assertEqual(mocks.queries.call_count, citation_engine.MAX_GENERATION_ATTEMPTS)
@@ -240,7 +236,7 @@ class QuestionSetAutoCheckTests(_StateDirTestCase):
         info = result.details["question_set"]
         self.assertEqual(info["status"], "needs_attention")
         self.assertIn("Question set quality pending review", info["note"])
-        self.assertTrue(all(e["query"].startswith("Batch 2") for e in result.details["per_query_results"]))
+        self.assertEqual([e["query"] for e in result.details["per_query_results"]], distinct_questions(15, 15))
 
         stored = question_sets.get_current_question_set(info["category_id"])
         self.assertEqual(stored["status"], "needs_attention")
@@ -251,12 +247,12 @@ class QuestionSetAutoCheckTests(_StateDirTestCase):
         batches = iter(
             [
                 ["Is Feroot Security good?"] + QUESTIONS[1:],
-                QUESTIONS[:4],
+                QUESTIONS[:14],
                 ["Should I buy from feroot.com?"] + QUESTIONS[1:],
             ]
         )
         with ExitStack() as stack:
-            _citation_patches(stack, queries_side_effect=lambda d: next(batches))
+            _citation_patches(stack, queries_side_effect=lambda d, count=None, existing=(), avoid_names=(): next(batches))
             result = citation_engine.check_citation_visibility("Feroot Security", "feroot.com")
 
         self.assertEqual(result.score, -1)

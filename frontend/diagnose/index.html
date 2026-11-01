@@ -283,23 +283,153 @@
         margin: 0;
       }
 
-      /* LayerConclusion */
-      .layer-conclusion {
-        margin: 18px 0 0;
-        padding: 16px 18px;
-        border-left: 3px solid var(--color-accent);
-        background: rgba(52, 82, 255, 0.05);
+      /* CompetitorList */
+      .competitor-list {
+        margin: 16px 0 0;
       }
 
-      .layer-conclusion p {
+      .competitor-list-title {
+        font-family: var(--font-body);
+        color: var(--color-ink-muted);
+        font-size: 0.85rem;
         margin: 0 0 6px;
-        font-size: 1.02rem;
-        line-height: 1.5;
+      }
+
+      .competitor-list ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .competitor-list li {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 6px 0;
+        border-bottom: 1px solid var(--color-border, rgba(128, 128, 128, 0.25));
+        font-family: var(--font-body);
+        color: var(--color-ink);
+        font-size: 0.95rem;
+      }
+
+      .competitor-list li.competitor-you {
+        font-weight: 600;
+      }
+
+      /* SourceBars and SiteReadiness */
+      .bars-block {
+        margin-top: 48px;
+      }
+
+      .bars-heading {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 4px 16px;
+      }
+
+      .bars-title {
+        font-family: var(--font-headline);
+        font-weight: 600;
+        font-size: 1.25rem;
+        line-height: 1.2;
+        margin: 0;
         color: var(--color-ink);
       }
 
-      .layer-conclusion p:last-child {
-        margin-bottom: 0;
+      .bars-total {
+        margin: 0;
+        font-family: var(--font-headline);
+        font-weight: 600;
+        font-size: 1.25rem;
+        color: var(--color-ink);
+      }
+
+      .bars {
+        display: grid;
+        row-gap: 20px;
+        margin-top: 20px;
+      }
+
+      /* Name, bar, number, level. Both groups of bars use the same columns, so their bars start and
+         end on the same vertical lines. The level cell is empty in the first group. */
+      .bar-row {
+        display: grid;
+        grid-template-columns: 200px minmax(0, 1fr) 72px 96px;
+        column-gap: 16px;
+        align-items: center;
+        font-size: 0.95rem;
+        line-height: 1.3;
+      }
+
+      .bar-name {
+        text-align: left;
+        color: var(--color-ink);
+        overflow-wrap: anywhere;
+      }
+
+      .bar-track {
+        display: block;
+        min-width: 0;
+        height: 14px;
+      }
+
+      .bar-track-full {
+        display: flex;
+        border-radius: 7px;
+        background: #E6E3DC;
+        overflow: hidden;
+      }
+
+      .bar-fill {
+        display: flex;
+        height: 100%;
+        border-radius: 7px;
+        overflow: hidden;
+      }
+
+      .bar-part {
+        display: block;
+        height: 100%;
+      }
+
+      .bar-part-blue {
+        background: var(--color-accent);
+      }
+
+      .bar-part-gray {
+        background: #E6E3DC;
+      }
+
+      .bar-number {
+        text-align: right;
+        color: var(--color-ink-muted);
+        white-space: nowrap;
+      }
+
+      .bar-level {
+        text-align: left;
+        color: var(--color-ink-muted);
+        white-space: nowrap;
+      }
+
+      /* On a narrow screen the name sits on its own line above the bar, and the bar and the
+         numbers share the line below. */
+      @media (max-width: 639px) {
+        .bar-row {
+          grid-template-columns: minmax(0, 1fr) 64px 84px;
+          column-gap: 12px;
+          row-gap: 8px;
+        }
+
+        .bar-name {
+          grid-column: 1 / -1;
+        }
+      }
+
+      .details-toggle {
+        margin-top: 48px;
       }
 
       /* SourceLayerTable */
