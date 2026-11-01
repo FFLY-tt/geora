@@ -32,6 +32,14 @@
 - Do not refactor existing code unless asked. List anything you noticed in your final report instead.
 - Code, comments and commit messages in English.
 
+## Read first
+- Before building anything a customer can see (the result page, the Content agent, Monitor, pricing,
+  sales material), read docs/product_positioning.md.
+- The owner's requirements are in docs/00_requirements.md. The target architecture is in
+  docs/01_architecture.md and the reasons for each technical choice are in docs/02_decisions.md. Current
+  progress and the next pull requests are in docs/03_progress.md. After a pull request is merged, update
+  docs/03_progress.md.
+
 ## Customer-facing UI
 - frontend/diagnose and frontend/dashboard are customer-facing.
   Never show internal details (method versions, cache, engine names,
@@ -57,6 +65,28 @@
   real result page from saved real results, reads all visible text and fails when a rule is broken.
   Text written by the backend for customers is held to the same rules, see backend/shared/_text_format.py.
   Keep that test passing. Do not weaken it to make a change pass; change the wording instead.
+
+## Production checklist
+Every feature is built to production level (docs/00_requirements.md, R15). Check every pull request against
+this list, and write each answer in the pull request description. "Not relevant" is an allowed answer when
+it is true, with one sentence of why.
+1. Many users at the same time: what happens when two people do this together? Shared data needs a
+   database constraint or a lock, not a hope.
+2. Doing it twice: is repeating the same action safe (idempotent)? A double click, a retry by the browser
+   or a restart of a worker must not double the work, the cost or the data.
+3. External services: does every call to another service have a timeout, a limited number of retries and a
+   limit on how many run at once?
+4. Local files: does the code write state to a file on the server? State belongs in the database.
+5. Logs: is there a log line with the diagnosis id for each important step, so one diagnosis can be traced?
+6. Tests: are there tests, including the error cases (the service is down, the input is bad, two things
+   run at once)?
+7. Cost: can this make the API bill grow without a limit? Is there a cap, and are the calls counted?
+
+## Working method
+- Write the plan before the work. Say what will change, what will not, and how it will be checked.
+- Every task list has verification steps. A task without a way to check it is not finished.
+- Change only the code the task is about. Write down what else you noticed, in the report, and do not fix it.
+- Done means the tests pass. Never say "done" for a change whose tests were not run.
 
 ## Language
 - Always reply to the repo owner in Simplified Chinese: explanations, questions, progress updates,
