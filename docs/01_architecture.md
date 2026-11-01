@@ -235,7 +235,7 @@ by the worker count; a shared limiter in PostgreSQL comes later if needed.
 - Settings come from environment variables (`DATABASE_URL`, API keys, limits, allowed origins,
   Turnstile secret). No file on the server holds state.
 - Migrations run as a separate step before a new version starts.
-- CI runs the tests against a real PostgreSQL service container.
+- CI runs the tests against a real PostgreSQL 16 service container (`postgres:16`).
 
 ### How it grows
 
@@ -253,11 +253,23 @@ smaller. Check the real number after the first month.
 
 ## 13. Local tools
 
-`psql --version` was run on the owner's computer on 2026-10-31. The result was `command not found`: the
-PostgreSQL command line tools are not installed or are not on the PATH on this machine, so no version
-can be recorded. The target is a current major version of PostgreSQL as offered by the managed service
-(16 or later) [PROPOSAL]. When PostgreSQL is installed locally, or a container is used for development,
-write the real version here.
+Local PostgreSQL on the owner's Windows computer, installed on 2026-10-31 with
+`winget install --id PostgreSQL.PostgreSQL.16 -e --interactive` (package version 16.15-5; the owner set the
+administrator password in the installer window). The server runs as the Windows service
+`postgresql-x64-16` on port 5432, and `C:\Program Files\PostgreSQL\16\bin` is on the user's PATH.
+
+`psql --version` result:
+
+```
+psql (PostgreSQL) 16.15
+```
+
+Before the install the same command gave `command not found`.
+
+The major version is **16** everywhere [DECISION]: the local computer, the CI service container
+(`postgres:16`, to be added in pull request P3) and the managed database (choose a plan that offers
+PostgreSQL 16). Do not change the major version in one place without the others. Today
+`.github/workflows/ci.yml` has no PostgreSQL service at all, because no code uses a database yet.
 
 For reference, on the same machine: Python 3.13.12 and Node v24.13.0. CI uses Python 3.13.13 and
 Node 22.

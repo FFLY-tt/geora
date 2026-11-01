@@ -38,8 +38,9 @@ competitors, buying questions without product names, plain text rules, the two b
    add the file.
 3. **`docs/source_layers_known_limits.md` is out of date.** It says each question is asked three times and
    talks about five independent samples. The method now asks 15 different questions once.
-4. **No PostgreSQL on the owner's machine.** `psql --version` gave `command not found` on 2026-10-31. A
-   container or a local install is needed for development (see P3).
+4. **PostgreSQL 16 is installed on the owner's machine** (`psql (PostgreSQL) 16.15`, checked 2026-10-31). The
+   geora database and user are not created yet; the owner does that by hand, and the connection string goes
+   into `backend/.env`. CI has no PostgreSQL service yet; P3 adds `postgres:16`.
 5. **A new category is created while a diagnosis runs.** This writes configuration at run time and will not
    be allowed in production. See `01_architecture.md`, open question 1.
 6. **`topic_relevance` judges 15 questions one after another.** A fresh run takes a minute or more longer
@@ -88,8 +89,9 @@ packages it.
 ### P3. PostgreSQL foundation, results and leads
 
 - **Does.** SQLAlchemy 2 and Alembic set up. Tables `diagnosis_results`, `leads`, `api_call_log`. The 24 hour
-  result cache and the leads store move to PostgreSQL. A development database with Docker Compose. CI gets a
-  PostgreSQL service and a migration check. `DATABASE_URL` in settings. Remove `result_cache.py`,
+  result cache and the leads store move to PostgreSQL. The development database is the local PostgreSQL 16
+  (an optional Docker Compose file may be added). CI gets a
+  PostgreSQL 16 service (`postgres:16`) and a migration check. `DATABASE_URL` in settings. Remove `result_cache.py`,
   `leads_store.py` and their `data/` folder use.
 - **Does not.** No queue, no new API shape, no change to judgments or question sets.
 - **Closes.** G1, G4, G7, G9, G28, and the storage half of G17.
